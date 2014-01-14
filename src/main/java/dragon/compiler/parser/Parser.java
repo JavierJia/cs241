@@ -38,7 +38,9 @@ public class Parser {
 			;
 
 		verifyType(TokenType.BEGIN_BRACE);
-		statSequence();
+		if (!statSequence()){
+			throwFormatException("statSequence missing");
+		};
 		verifyType(TokenType.END_BRACE);
 		verifyType(TokenType.FIN);
 		if (lexer.getCurrentToken().getType() != TokenType.EOF) {
