@@ -28,5 +28,10 @@ public enum TokenType {
 	NUMBER, // 0 ~ 9
 	IDENTIRIER, // LETTER
 	EOF, // End of file
-	UNKNOWN,
+	UNKNOWN;
+
+	public static boolean isComparison(TokenType type) {
+		return type == EQL || type == NEQ || type == LSS || type == GRE
+				|| type == LEQ || type == GEQ;
+	}
 }
