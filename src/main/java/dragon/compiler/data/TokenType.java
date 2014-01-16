@@ -1,37 +1,48 @@
 package dragon.compiler.data;
 
 public enum TokenType {
+
 	/** keyword **/
-	LET, CALL, IF, THEN, ELSE, FI, WHILE, DO, OD, RETURN, VAR, ARRAY, FUNCTION, PROCEDURE, MAIN,
+	LET(100), CALL(101), IF(102), THEN(41), ELSE(90), FI(82), WHILE(103), DO(42), OD(
+			81), RETURN(104), VAR(110), ARRAY(111), FUNCTION(112), PROCEDURE(
+			113), MAIN(200),
 
 	/** designator **/
-	DESIGNATOR, // <-
+	DESIGNATOR(40), // <-
 
 	/** Operator **/
-	PLUS, MINUS, TIMES, DIVIDE, // +,-,*,/
+	PLUS(11), MINUS(12), TIMES(1), DIVIDE(2), // +,-,*,/
 
 	/** Comparison **/
-	EQL, NEQ, LSS, GRE, LEQ, GEQ, // ==, !=, <, >, <=, >=
+	EQL(20), NEQ(21), LSS(22), GEQ(23), LEQ(24), GRE(25), // ==, !=, <, >, <=,
+															// >=
 
 	/** Punctuation **/
-	COMMA, SEMICOMA, COLON, // . , ; :
+	PERIOD(30), COMMA(31), SEMICOMA(70), // . , ; :
 
 	/** Block **/
-	BEGIN_PARENTHESIS, END_PARENTHESIS, // (, )
-	BEGIN_BRACKET, END_BRACKET, // [, ]
-	BEGIN_BRACE, END_BRACE, // {, }
-
-	/** end of program **/
-	FIN,
+	BEGIN_PARENTHESIS(50), END_PARENTHESIS(35), // (, )
+	BEGIN_BRACKET(32), END_BRACKET(34), // [, ]
+	BEGIN_BRACE(150), END_BRACE(80), // {, }
 
 	/** Others **/
-	NUMBER, // 0 ~ 9
-	IDENTIRIER, // LETTER
-	EOF, // End of file
-	UNKNOWN;
+	NUMBER(60), // 0 ~ 9
+	IDENTIRIER(61), // LETTER
+	EOF(255), // End of file, Period Token
+	UNKNOWN(0);
 
 	public static boolean isComparison(TokenType type) {
 		return type == EQL || type == NEQ || type == LSS || type == GRE
 				|| type == LEQ || type == GEQ;
+	}
+
+	private final byte value;
+
+	public byte getTypeCode() {
+		return value;
+	}
+
+	TokenType(int value) {
+		this.value = (byte) (value & 0xff);
 	}
 }

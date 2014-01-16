@@ -43,8 +43,7 @@ public class Parser {
 		}
 		;
 		checkAndMoveNext(TokenType.END_BRACE);
-		checkAndMoveNext(TokenType.FIN);
-		checkAndMoveNext(TokenType.EOF);
+		checkAndMoveNext(TokenType.PERIOD);
 	}
 
 	private boolean varDecl() throws SyntaxFormatException, IOException {
@@ -55,7 +54,7 @@ public class Parser {
 				lexer.moveToNextToken();
 				checkAndMoveNext(TokenType.IDENTIRIER);
 			}
-			checkAndMoveNext(TokenType.COLON);
+			checkAndMoveNext(TokenType.SEMICOMA);
 		}
 		return false;
 	}
@@ -94,9 +93,9 @@ public class Parser {
 			if (formalParam()) {
 				// do nothing.
 			}
-			checkAndMoveNext(TokenType.COLON);
+			checkAndMoveNext(TokenType.SEMICOMA);
 			funcBody();
-			checkAndMoveNext(TokenType.COLON);
+			checkAndMoveNext(TokenType.SEMICOMA);
 			return true;
 		}
 		return false;
@@ -115,7 +114,7 @@ public class Parser {
 
 	private boolean statSequence() throws IOException, SyntaxFormatException {
 		if (statement()) {
-			while (lexer.getCurrentToken().getType() == TokenType.COLON) {
+			while (lexer.getCurrentToken().getType() == TokenType.SEMICOMA) {
 				lexer.moveToNextToken();
 				if (!statement()) {
 					throwFormatException("missing statement after colon");

@@ -92,16 +92,13 @@ public class Lexer {
 			// if punctuation(. , ; :)
 		case '.':
 			scanner.next();
-			return new Token(TokenType.FIN);
+			return new Token(TokenType.PERIOD);
 		case ',':
 			scanner.next();
 			return new Token(TokenType.COMMA);
 		case ';':
 			scanner.next();
 			return new Token(TokenType.SEMICOMA);
-		case ':':
-			scanner.next();
-			return new Token(TokenType.COLON);
 			// if block (, ), [, ], {, }
 		case '(':
 			scanner.next();
