@@ -12,7 +12,7 @@ public class ParserTest {
 	public static String exptprogs = "src/test/resources/expected/lexer";
 
 	@Test
-	public void TestLexer() throws IOException, SyntaxFormatException {
+	public void TestAllShouldPassed() throws IOException, SyntaxFormatException {
 		for (File file : new File("src/test/resources/testprogs").listFiles()) {
 			System.out.println(file);
 			Parser parser = new Parser(file.getAbsolutePath());
