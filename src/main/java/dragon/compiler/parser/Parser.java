@@ -41,7 +41,6 @@ public class Parser {
 		if (!statSequence()) {
 			throwFormatException("statSequence is missing");
 		}
-		;
 		checkAndMoveNext(TokenType.END_BRACE);
 		checkAndMoveNext(TokenType.PERIOD);
 	}
@@ -50,74 +49,84 @@ public class Parser {
 		if (typeDecl()) {
 			checkAndMoveNext(TokenType.IDENTIRIER);
 
-			while (lexer.getCurrentToken().getType() == TokenType.COMMA) {
-				lexer.moveToNextToken();
+			while (checkCurrentType(TokenType.COMMA)) {
+				moveToNextToken();
 				checkAndMoveNext(TokenType.IDENTIRIER);
 			}
 			checkAndMoveNext(TokenType.SEMICOMA);
+			return true;
 		}
 		return false;
 	}
 
 	private boolean typeDecl() throws IOException, SyntaxFormatException {
-		if (lexer.getCurrentToken().getType() == TokenType.VAR) {
-			lexer.moveToNextToken();
+		if (checkCurrentType(TokenType.VAR)) {
+			moveToNextToken();
 			return true;
 		}
-		if (lexer.getCurrentToken().getType() == TokenType.ARRAY) {
-			lexer.moveToNextToken();
-			arrayNumberOneAndPlus();
-			while (lexer.getCurrentToken().getType() == TokenType.BEGIN_BRACKET) {
-				arrayNumberOneAndPlus();
+		if (checkCurrentType(TokenType.ARRAY)) {
+			moveToNextToken();
+			if (!isArrayNumberBlock()) {
+				throwFormatException("typeDecl: array number block [] is missing");
 			}
+			while (isArrayNumberBlock())
+				;
 			return true;
 		}
 		return false;
 	}
 
-	private void arrayNumberOneAndPlus() throws SyntaxFormatException,
+	private boolean isArrayNumberBlock() throws SyntaxFormatException,
 			IOException {
-		checkAndMoveNext(TokenType.BEGIN_BRACKET);
-		checkAndMoveNext(TokenType.NUMBER);
-		checkAndMoveNext(TokenType.END_BRACKET);
+		if (checkCurrentType(TokenType.BEGIN_BRACKET)) {
+			moveToNextToken();
+			checkAndMoveNext(TokenType.NUMBER);
+			checkAndMoveNext(TokenType.END_BRACKET);
+			return true;
+		}
+		return false;
 	}
 
 	private boolean funcDecl() throws IOException, SyntaxFormatException {
-		if (lexer.getCurrentToken().getType() == TokenType.FUNCTION
-				|| lexer.getCurrentToken().getType() == TokenType.PROCEDURE) {
+		if (checkCurrentType(TokenType.FUNCTION)
+				|| checkCurrentType(TokenType.PROCEDURE)) {
 			compilecode(lexer.getCurrentToken());
-			lexer.moveToNextToken();
+			moveToNextToken();
 
 			checkAndMoveNext(TokenType.IDENTIRIER);
-			// TODO some complier code
-			if (formalParam()) {
+			if (formalParam()) { // 0 or 1 time
 				// do nothing.
 			}
 			checkAndMoveNext(TokenType.SEMICOMA);
-			funcBody();
+			if (!funcBody()) {
+				throwFormatException("Function body expected");
+			}
 			checkAndMoveNext(TokenType.SEMICOMA);
 			return true;
 		}
 		return false;
 	}
 
-	private void funcBody() throws SyntaxFormatException, IOException {
-		if (!varDecl()) {
-			throwFormatException("missing variable declaration");
+	private boolean funcBody() throws SyntaxFormatException, IOException {
+		while (varDecl()) {
 		}
-		checkAndMoveNext(TokenType.BEGIN_BRACE);
-		if (statSequence()) {
-			// do nothing;
+		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
+			moveToNextToken();
+			if (statSequence()) { // 0 or 1 times
+				// do nothing;
+			}
+			checkAndMoveNext(TokenType.END_BRACE);
+			return true;
 		}
-		checkAndMoveNext(TokenType.END_BRACE);
+		return false;
 	}
 
 	private boolean statSequence() throws IOException, SyntaxFormatException {
 		if (statement()) {
-			while (lexer.getCurrentToken().getType() == TokenType.SEMICOMA) {
-				lexer.moveToNextToken();
+			while (checkCurrentType(TokenType.SEMICOMA)) {
+				moveToNextToken();
 				if (!statement()) {
-					throwFormatException("missing statement after colon");
+					throwFormatException("missing statement after semicoma");
 				}
 			}
 			return true;
@@ -131,9 +140,9 @@ public class Parser {
 	}
 
 	private boolean returnStatement() throws IOException, SyntaxFormatException {
-		if (lexer.getCurrentToken().getType() == TokenType.RETURN) {
-			lexer.moveToNextToken();
-			if (expression()) {
+		if (checkCurrentType(TokenType.RETURN)) {
+			moveToNextToken();
+			if (expression()) { // 0 or 1 times
 				// do nothing.
 			}
 			return true;
@@ -143,8 +152,9 @@ public class Parser {
 
 	private boolean expression() throws IOException, SyntaxFormatException {
 		if (term()) {
-			while (checkType(TokenType.PLUS) || checkType(TokenType.MINUS)) {
-				moveNext();
+			while (checkCurrentType(TokenType.PLUS)
+					|| checkCurrentType(TokenType.MINUS)) {
+				moveToNextToken();
 				if (!term()) {
 					throwFormatException("Term expected!");
 				}
@@ -156,8 +166,9 @@ public class Parser {
 
 	private boolean term() throws IOException, SyntaxFormatException {
 		if (factor()) {
-			while (checkType(TokenType.TIMES) || checkType(TokenType.DIVIDE)) {
-				moveNext();
+			while (checkCurrentType(TokenType.TIMES)
+					|| checkCurrentType(TokenType.DIVIDE)) {
+				moveToNextToken();
 				if (!factor()) {
 					throwFormatException("Factor expected!");
 				}
@@ -171,26 +182,30 @@ public class Parser {
 		if (designator() || funcCall()) {
 			return true;
 		}
-		if (checkType(TokenType.NUMBER)) {
-			moveNext();
+		if (checkCurrentType(TokenType.NUMBER)) {
+			moveToNextToken();
 			return true;
 		}
-		if (checkType(TokenType.BEGIN_PARENTHESIS)) {
+		if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) {
+			moveToNextToken();
 			if (!expression()) {
-				throwFormatException("Expression expected!");
+				throwFormatException("factor: expression expected!");
 			}
 			checkAndMoveNext(TokenType.END_PARENTHESIS);
+			return true;
 		}
 		return false;
 	}
 
 	private boolean whileStatement() throws IOException, SyntaxFormatException {
-		if (lexer.getCurrentToken().getType() == TokenType.WHILE) {
-			lexer.moveToNextToken();
-			relation();
+		if (checkCurrentType(TokenType.WHILE)) {
+			moveToNextToken();
+			if (!relation()) {
+				throwFormatException("relation expression expected");
+			}
 			checkAndMoveNext(TokenType.DO);
 			if (!statSequence()) {
-				throwFormatException("no statSequence detected");
+				throwFormatException("statSequence expected");
 			}
 			checkAndMoveNext(TokenType.OD);
 			return true;
@@ -201,7 +216,7 @@ public class Parser {
 	private boolean relation() throws IOException, SyntaxFormatException {
 		if (expression()) {
 			if (TokenType.isComparison(lexer.getCurrentToken().getType())) {
-				moveNext();
+				moveToNextToken();
 				if (!expression()) {
 					throwFormatException("Expression expected");
 				}
@@ -214,15 +229,19 @@ public class Parser {
 	}
 
 	private boolean ifStatement() throws IOException, SyntaxFormatException {
-		if (lexer.getCurrentToken().getType() == TokenType.IF) {
-			relation();
+		if (checkCurrentType(TokenType.IF)) {
+			moveToNextToken();
+			if (!relation()) {
+				throwFormatException("if statement relation expression expected");
+			}
 			checkAndMoveNext(TokenType.THEN);
 			if (!statSequence()) {
-				throwFormatException("no statSequence detected");
+				throwFormatException("if statement statSequence expected");
 			}
-			if (lexer.getCurrentToken().getType() == TokenType.ELSE) {
+			if (checkCurrentType(TokenType.ELSE)) {
+				moveToNextToken();
 				if (!statSequence()) {
-					throwFormatException("no statSequence detected");
+					throwFormatException("if statement else statSequence expected");
 				}
 			}
 			checkAndMoveNext(TokenType.FI);
@@ -233,14 +252,14 @@ public class Parser {
 	}
 
 	private boolean funcCall() throws IOException, SyntaxFormatException {
-		if (checkType(TokenType.CALL)) {
-			moveNext();
+		if (checkCurrentType(TokenType.CALL)) {
+			moveToNextToken();
 			checkAndMoveNext(TokenType.IDENTIRIER);
-			if (checkType(TokenType.BEGIN_PARENTHESIS)) {
-				moveNext();
+			if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) { // 0 or 1 time
+				moveToNextToken();
 				if (expression()) {
-					while (checkType(TokenType.COMMA)) {
-						moveNext();
+					while (checkCurrentType(TokenType.COMMA)) {
+						moveToNextToken();
 						if (!expression()) {
 							throwFormatException("no expression after comma");
 						}
@@ -253,24 +272,15 @@ public class Parser {
 		return false;
 	}
 
-	private boolean checkType(TokenType type) throws IOException,
-			SyntaxFormatException {
-		return lexer.getCurrentToken().getType() == type;
-	}
-
-	private void moveNext() throws IOException, SyntaxFormatException {
-		lexer.moveToNextToken();
-	}
-
 	private boolean assignment() throws IOException, SyntaxFormatException {
-		if (checkType(TokenType.LET)) {
-			moveNext();
+		if (checkCurrentType(TokenType.LET)) {
+			moveToNextToken();
 			if (!designator()) {
-				throwFormatException("missing designator");
+				throwFormatException("assignment missing designator");
 			}
 			checkAndMoveNext(TokenType.DESIGNATOR);
 			if (!expression()) {
-				throwFormatException("expression expected");
+				throwFormatException("assignment expression expected");
 			}
 			return true;
 		}
@@ -278,9 +288,10 @@ public class Parser {
 	}
 
 	private boolean designator() throws SyntaxFormatException, IOException {
-		if (checkAndMoveNext(TokenType.IDENTIRIER)) {
-			if (checkType(TokenType.BEGIN_BRACKET)) {
-				moveNext();
+		if (checkCurrentType(TokenType.IDENTIRIER)) {
+			moveToNextToken();
+			while (checkCurrentType(TokenType.BEGIN_BRACKET)) {
+				moveToNextToken();
 				if (!expression()) {
 					throwFormatException("expression expected");
 				}
@@ -292,11 +303,12 @@ public class Parser {
 	}
 
 	private boolean formalParam() throws SyntaxFormatException, IOException {
-		if (lexer.getCurrentToken().getType() == TokenType.BEGIN_PARENTHESIS) {
-			lexer.moveToNextToken();
-			if (lexer.getCurrentToken().getType() == TokenType.IDENTIRIER) {
-				while (lexer.getCurrentToken().getType() == TokenType.COMMA) {
-					lexer.moveToNextToken();
+		if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) {
+			moveToNextToken();
+			if (checkCurrentType(TokenType.IDENTIRIER)) { // 0 or 1 time
+				moveToNextToken();
+				while (checkCurrentType(TokenType.COMMA)) {
+					moveToNextToken();
 					checkAndMoveNext(TokenType.IDENTIRIER);
 				}
 			}
@@ -327,23 +339,32 @@ public class Parser {
 	 * @throws SyntaxFormatException
 	 * @throws IOException
 	 */
-	private boolean checkAndMoveNext(TokenType type)
+	private boolean checkAndMoveNext(TokenType expectedType)
 			throws SyntaxFormatException, IOException {
-		if (lexer.getCurrentToken().getType() == type) {
+		if (lexer.getCurrentToken().getType() == expectedType) {
 			lexer.moveToNextToken();
 			return true;
 		}
-		type = lexer.getCurrentToken().getType();
-		if (type == TokenType.IDENTIRIER) {
+		TokenType curType = lexer.getCurrentToken().getType();
+		if (expectedType == TokenType.IDENTIRIER) {
 			throwFormatException("should be an indentifier, but now is"
-					+ type.name());
-		} else if (type == TokenType.NUMBER) {
+					+ curType.name());
+		} else if (expectedType == TokenType.NUMBER) {
 			throwFormatException("should be an number, but now is"
-					+ type.name());
+					+ curType.name());
 		} else {
-			throwFormatException("missing:" + type.name());
+			throwFormatException("missing:" + expectedType.name());
 		}
 		return false;
+	}
+
+	private boolean checkCurrentType(TokenType type) throws IOException,
+			SyntaxFormatException {
+		return lexer.getCurrentToken().getType() == type;
+	}
+
+	private void moveToNextToken() throws IOException, SyntaxFormatException {
+		lexer.moveToNextToken();
 	}
 
 }

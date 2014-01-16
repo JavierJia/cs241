@@ -34,4 +34,22 @@ public class LexerTest {
 		lexer.close();
 		lnr.close();
 	}
+
+	@Test
+	public void TestAllFiles() throws IOException, SyntaxFormatException {
+		for (File testFile : new File("src/test/resources/testprogs")
+				.listFiles()) {
+			if (!testFile.isFile()) {
+				continue;
+			}
+			Lexer lexer = new Lexer(testFile.getAbsolutePath());
+			lexer.open();
+			System.out.println(testFile);
+			while (lexer.getCurrentToken().getType() != TokenType.EOF) {
+				// System.out.println(lexer.getCurrentToken());
+				lexer.moveToNextToken();
+			}
+			lexer.close();
+		}
+	}
 }

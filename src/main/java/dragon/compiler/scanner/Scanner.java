@@ -45,11 +45,14 @@ public class Scanner {
 
 	public void nextLine() throws IOException {
 		line = br.readLine();
-		lineNumber++;
-		charPosition = 0;
-		if (line != null && line.trim().length() == 0) {
-			// skip empty line.
-			nextLine();
+		if (line != null) {
+			lineNumber++;
+			charPosition = 0;
+			while (line != null && line.trim().length() == 0) {
+				line = br.readLine();
+				lineNumber++;
+				charPosition = 0;
+			}
 		}
 	}
 
@@ -58,7 +61,7 @@ public class Scanner {
 	}
 
 	public int getLineNumber() {
-		return lineNumber;
+		return lineNumber + 1;
 	}
 
 	public int getPositionInLine() {
