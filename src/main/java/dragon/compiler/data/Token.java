@@ -42,7 +42,17 @@ public class Token {
 
 	public TokenType getType() {
 		return type;
-
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder toString = new StringBuilder(type.toString());
+		if (type == TokenType.IDENTIRIER) {
+			toString.append('\t').append(identifierName);
+		}
+		if (type == TokenType.NUMBER) {
+			toString.append('\t').append(numberValue);
+		}
+		return toString.toString();
+	}
 }

@@ -86,7 +86,11 @@ public class Lexer {
 			if (scanner.getCurrentChar() == '=') {
 				scanner.next();
 				return new Token(TokenType.LEQ);
+			} else if (scanner.getCurrentChar() == '-') {
+				scanner.next();
+				return new Token(TokenType.DESIGNATOR);
 			} else {
+				scanner.next();
 				return new Token(TokenType.LSS);
 			}
 			// if punctuation(. , ; :)
@@ -173,7 +177,7 @@ public class Lexer {
 	}
 
 	public void moveToNextToken() throws IOException, SyntaxFormatException {
-		parseToken();
+		curToken = parseToken();
 	}
 
 	public int getCurrentLineNumber() {
