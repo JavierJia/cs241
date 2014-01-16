@@ -1,15 +1,13 @@
 package dragon.compiler.driver;
 
 import dragon.compiler.parser.Parser;
-import dragon.compiler.scanner.Scanner;
 
-public class driver {
+public class Driver {
 
-    public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner("testprogs/test001.txt");
+	public static void main(String[] args) throws Exception {
 
-        Parser ps = new Parser(sc);
-        ps.parse();
-    }
+		Parser ps = new Parser("testprogs/test001.txt");
+		ps.parse();
+	}
 
 }

@@ -1,367 +1,349 @@
 package dragon.compiler.parser;
 
-import dragon.compiler.scanner.Scanner;
-import dragon.compiler.scanner.Token;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import dragon.compiler.data.SyntaxFormatException;
+import dragon.compiler.data.Token;
+import dragon.compiler.data.TokenType;
+import dragon.compiler.lexer.Lexer;
 
 public class Parser {
 
-    private Scanner scanner;
-    private Token token;
+	private Lexer lexer;
 
-    public Parser(Scanner scanner) {
-        this.scanner = scanner;
-        this.token = next();
-    }
+	public Parser(String filename) throws FileNotFoundException {
+		this.lexer = new Lexer(filename);
+	}
 
-    public Token next() {
-        return scanner.getNextToken();
-    }
-    
-    public void parse(){
-        computation();
-    }
-    
-    private void computation() {
-        if (token == Token.MAIN) {
-            next();
-            while (token == Token.VAR || token == Token.ARRAY) {
-                varDecl();
-            }
-            while (token == Token.FUNCTION || token == Token.PROCEDURE) {
-                funcDecl();
-            }
-            if (token == Token.BEGIN_BRACE) {
-                next();
-                statSequence();
-                if (token == Token.END_BRACE) {
-                    next();
-                    if (token == Token.PERIOD) {
-                        next();
-                    } else
-                        printSyntaxError(token.toString()
-                                + " is not a valid ., which is required in the end of computation!");
-                } else
-                    printSyntaxError(token.toString() + " is not a valid }, which is required in computation!");
-            } else
-                printSyntaxError(token.toString() + " is not a valid {, which is required in computation!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Main, which is required to be the first token in computation!");
-    }
+	private void throwFormatException(String string)
+			throws SyntaxFormatException {
+		string = "Parser error: Line " + lexer.getCurrentLineNumber() + ": "
+				+ string;
+		throw new SyntaxFormatException(string);
+	}
 
-    private void designator() {
-        if (token == Token.IDENTIRIER) {
-            next();
-            while (token == Token.BEGIN_BRACKET) {
-                next();
-                expression();
-                if (token == Token.END_BRACKET)
-                    next();
-                else
-                    printSyntaxError("[ should be followed by ]");
-            }
-        } else {
-            printSyntaxError(token.toString()
-                    + " is not a valid IDENTIRIER, which is required to be the first token in designator!");
-        }
-    }
+	public void parse() throws IOException, SyntaxFormatException {
+		lexer.open();
+		computation();
+		lexer.close();
+	}
 
-    private void factor() {
-        if (token == Token.IDENTIRIER) {
-            designator();
-        } else if (token == Token.NUMBER) {
-            // TODO return a val here
-        } else if (token == Token.BEGIN_PARENTHESIS) {
-            next();
-            expression();
-            if (token == Token.END_PARENTHESIS)
-                next();
-            else
-                printSyntaxError("( should be followed by )");
-        } else if (token == Token.CALL) {
-            funcCall();
-        } else
-            printSyntaxError(token.toString() + " is not a valid factor!");
-    }
+	private void computation() throws IOException, SyntaxFormatException {
+		checkAndMoveNext(TokenType.MAIN);
 
-    private void term() {
-        factor();
-        while (token == Token.TIMES || token == Token.DIVIDE) {
-            next();
-            factor();
-        }
-    }
+		while (varDecl())
+			;
+		while (funcDecl())
+			;
 
-    private void expression() {
-        term();
-        while (token == Token.PLUS || token == Token.MINUS) {
-            next();
-            term();
-        }
-    }
+		checkAndMoveNext(TokenType.BEGIN_BRACE);
+		if (!statSequence()) {
+			throwFormatException("statSequence is missing");
+		}
+		;
+		checkAndMoveNext(TokenType.END_BRACE);
+		checkAndMoveNext(TokenType.PERIOD);
+	}
 
-    private boolean isRelOp() {
-        return token == Token.EQL || token == Token.NEQ || token == Token.LSS || token == Token.LEQ
-                || token == Token.GRE || token == Token.GEQ;
-    }
+	private boolean varDecl() throws SyntaxFormatException, IOException {
+		if (typeDecl()) {
+			checkAndMoveNext(TokenType.IDENTIRIER);
 
-    private void relation() {
-        expression();
-        if (isRelOp()) {
-            next();
-            expression();
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid relOp, which is required to be followed by expression in relation!");
-    }
+			while (lexer.getCurrentToken().getType() == TokenType.COMMA) {
+				lexer.moveToNextToken();
+				checkAndMoveNext(TokenType.IDENTIRIER);
+			}
+			checkAndMoveNext(TokenType.SEMICOMA);
+		}
+		return false;
+	}
 
-    private void assignment() {
-        if (token == Token.LET) {
-            next();
-            designator();
-            if (token == Token.DESIGNATOR) {
-                next();
-                expression();
-            } else {
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.DESIGNATOR, which is required to be followed by designator"
-                        + " in assignment!");
-            }
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.LET, which is required to be the first token in assignment!");
-    }
+	private boolean typeDecl() throws IOException, SyntaxFormatException {
+		if (lexer.getCurrentToken().getType() == TokenType.VAR) {
+			lexer.moveToNextToken();
+			return true;
+		}
+		if (lexer.getCurrentToken().getType() == TokenType.ARRAY) {
+			lexer.moveToNextToken();
+			arrayNumberOneAndPlus();
+			while (lexer.getCurrentToken().getType() == TokenType.BEGIN_BRACKET) {
+				arrayNumberOneAndPlus();
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void funcCall() {
-        if (token == Token.CALL) {
-            next();
-            if (token == Token.IDENTIRIER) {
-                next();
-                if (token == Token.BEGIN_PARENTHESIS) {
-                    next();
-                    if (token == Token.IDENTIRIER) { // expression -> term -> factor -> designator -> identifier
-                        expression();
-                        while (token == Token.COMMA) {
-                            next();
-                            expression();
-                        }
-                    }
-                    if (token == Token.END_PARENTHESIS) {
-                        next();
-                    } else
-                        printSyntaxError(token.toString()
-                                + " is not a valid ), which is required to be followed by ( in funcCall!");
-                }
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.IDENTIRIER, which is required to be the first token in funcCall!");
-        }
-    }
+	private void arrayNumberOneAndPlus() throws SyntaxFormatException,
+			IOException {
+		checkAndMoveNext(TokenType.BEGIN_BRACKET);
+		checkAndMoveNext(TokenType.NUMBER);
+		checkAndMoveNext(TokenType.END_BRACKET);
+	}
 
-    private void ifStatement() {
-        if (token == Token.IF) {
-            next();
-            relation();
-            if (token == Token.THEN) {
-                next();
-                statSequence();
-                if (token == Token.ELSE) {
-                    next();
-                    statSequence();
-                }
-                if (token == Token.FI) {
-                    next();
-                } else
-                    printSyntaxError(token.toString()
-                            + " is not a valid Token.FI, which is required to be the last token in ifStatement!");
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.THEN, which is required to be followed by if in ifStatement!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.IF, which is required to be the first token in ifStatement!");
-    }
+	private boolean funcDecl() throws IOException, SyntaxFormatException {
+		if (lexer.getCurrentToken().getType() == TokenType.FUNCTION
+				|| lexer.getCurrentToken().getType() == TokenType.PROCEDURE) {
+			compilecode(lexer.getCurrentToken());
+			lexer.moveToNextToken();
 
-    private void whileStatement() {
-        if (token == Token.WHILE) {
-            next();
-            relation();
-            if (token == Token.DO) {
-                next();
-                statSequence();
-                if (token == Token.OD) {
-                    next();
-                } else
-                    printSyntaxError(token.toString()
-                            + " is not a valid Token.OD, which is required to be the last token in whileStatement!");
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.DO, which is required to be followed by while in whileStatement!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.WHILE, which is required to be the first token in whileStatement!");
-    }
+			checkAndMoveNext(TokenType.IDENTIRIER);
+			// TODO some complier code
+			if (formalParam()) {
+				// do nothing.
+			}
+			checkAndMoveNext(TokenType.SEMICOMA);
+			funcBody();
+			checkAndMoveNext(TokenType.SEMICOMA);
+			return true;
+		}
+		return false;
+	}
 
-    private void returnStatement() {
-        if (token == Token.RETURN) {
-            next();
-            if (token == Token.IDENTIRIER) { // expression -> term -> factor -> designator -> identifier
-                expression();
-            }
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.RETURN, which is required to be the first token in returnStatement!");
-    }
+	private void funcBody() throws SyntaxFormatException, IOException {
+		if (!varDecl()) {
+			throwFormatException("missing variable declaration");
+		}
+		checkAndMoveNext(TokenType.BEGIN_BRACE);
+		if (statSequence()) {
+			// do nothing;
+		}
+		checkAndMoveNext(TokenType.END_BRACE);
+	}
 
-    private boolean isStatement() {
-        return token == Token.LET || token == Token.CALL || token == Token.IF || token == Token.WHILE
-                || token == Token.RETURN;
-    }
+	private boolean statSequence() throws IOException, SyntaxFormatException {
+		if (statement()) {
+			while (lexer.getCurrentToken().getType() == TokenType.SEMICOMA) {
+				lexer.moveToNextToken();
+				if (!statement()) {
+					throwFormatException("missing statement after colon");
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void statement() {
-        if (token == Token.LET) { // assignment
-            assignment();
-        } else if (token == Token.CALL) { // funcCall
-            funcCall();
-        } else if (token == Token.IF) { // ifStatement
-            ifStatement();
-        } else if (token == Token.WHILE) { // whileStatement
-            whileStatement();
-        } else if (token == Token.RETURN) { // returnStatement
-            returnStatement();
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid statement token, which is required to be the first token in statement!");
-    }
+	private boolean statement() throws IOException, SyntaxFormatException {
+		return assignment() || funcCall() || ifStatement() || whileStatement()
+				|| returnStatement();
+	}
 
-    private void statSequence() {
-        statement();
-        while (token == Token.SEMICOMA) {
-            next();
-            statement();
-        }
-    }
+	private boolean returnStatement() throws IOException, SyntaxFormatException {
+		if (lexer.getCurrentToken().getType() == TokenType.RETURN) {
+			lexer.moveToNextToken();
+			if (expression()) {
+				// do nothing.
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void typeDecl() {
-        if (token == Token.VAR) {
-            // TODO
-        } else if (token == Token.ARRAY) {
-            boolean delDimension = false;
-            while (token == Token.BEGIN_BRACKET) {
-                delDimension = true;
-                next();
-                if (token == Token.NUMBER) {
-                    // TODO return val
-                } else
-                    printSyntaxError(token.toString()
-                            + " is not a valid number, which is required for an array in typeDel!");
-                if (token == Token.END_BRACKET) {
-                    next();
-                } else
-                    printSyntaxError(token.toString()
-                            + " is not a valid ], which is required to be followed by [ for an array in typeDel!");
-            }
-            if (!delDimension)
-                printSyntaxError("no dimension information in array declare!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid var or array, which is required to be the first token in typeDel!");
-    }
+	private boolean expression() throws IOException, SyntaxFormatException {
+		if (term()) {
+			while (checkType(TokenType.PLUS) || checkType(TokenType.MINUS)) {
+				moveNext();
+				if (!term()) {
+					throwFormatException("Term expected!");
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void varDecl() {
-        typeDecl();
-        if (token == Token.IDENTIRIER) {
-            next();
-            while (token == Token.COMMA) {
-                next();
-                if (token == Token.IDENTIRIER)
-                    next();
-                else
-                    printSyntaxError(token.toString()
-                            + " is not a valid Token.IDENTIRIER, which is required to be followed by , in varDel!");
-            }
-            if (token == Token.SEMICOMA) {
-                next();
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.SEMICOMA, which is required to be the last token in varDel!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.IDENTIRIER, which is required to be followed by typeDel in varDel!");
-    }
+	private boolean term() throws IOException, SyntaxFormatException {
+		if (factor()) {
+			while (checkType(TokenType.TIMES) || checkType(TokenType.DIVIDE)) {
+				moveNext();
+				if (!factor()) {
+					throwFormatException("Factor expected!");
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void funcDecl() {
-        if (token == Token.FUNCTION || token == Token.PROCEDURE) {
-            next();
-            if (token == Token.IDENTIRIER) {
-                next();
-                if (token == Token.BEGIN_BRACE) { // formalParam
-                    formalParam();
-                }
-                if (token == Token.SEMICOMA) {
-                    next();
-                    funcBody();
-                    if (token == Token.SEMICOMA) {
-                        next();
-                    } else
-                        printSyntaxError(token.toString()
-                                + " is not a valid ;, which is required to be followed by funcBody in funcDecl!");
-                } else
-                    printSyntaxError(token.toString()
-                            + " is not a valid ;, which is required to be ahead of funcBody in funcDecl!");
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid Token.IDENTIRIER, which is required to be followed by function or "
-                        + "procedure in funcDel!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid Token.FUNCTION or Token.PROCEDURE, which is required to be the first token "
-                    + "in funcDel!");
-    }
+	private boolean factor() throws SyntaxFormatException, IOException {
+		if (designator() || funcCall()) {
+			return true;
+		}
+		if (checkType(TokenType.NUMBER)) {
+			moveNext();
+			return true;
+		}
+		if (checkType(TokenType.BEGIN_PARENTHESIS)) {
+			if (!expression()) {
+				throwFormatException("Expression expected!");
+			}
+			checkAndMoveNext(TokenType.END_PARENTHESIS);
+		}
+		return false;
+	}
 
-    private void formalParam() {
-        if (token == Token.BEGIN_PARENTHESIS) {
-            if (token == Token.IDENTIRIER) {
-                next();
-                while (token == Token.COMMA) {
-                    next();
-                    if (token == Token.IDENTIRIER) {
-                        next();
-                    } else
-                        printSyntaxError(token.toString()
-                                + " is not a valid Token.IDENTIRIER, which is required to be followed by , as non-first"
-                                + " parameter in formalParam!");
-                }
-            }
-            if (token == Token.BEGIN_PARENTHESIS) {
-                next();
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid ), which is required to be the last token in formalParam!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid (, which is required to be the first token in formalParam!");
-    }
+	private boolean whileStatement() throws IOException, SyntaxFormatException {
+		if (lexer.getCurrentToken().getType() == TokenType.WHILE) {
+			lexer.moveToNextToken();
+			relation();
+			checkAndMoveNext(TokenType.DO);
+			if (!statSequence()) {
+				throwFormatException("no statSequence detected");
+			}
+			checkAndMoveNext(TokenType.OD);
+			return true;
+		}
+		return false;
+	}
 
-    private void funcBody() {
-        while(token == Token.VAR || token == Token.ARRAY){
-            varDecl();
-        }
-        if(token == Token.BEGIN_BRACE){
-            if(isStatement()){ // statSequence -> statement
-                statSequence();
-            }
-            if(token == Token.END_BRACE){
-                next();
-            } else
-                printSyntaxError(token.toString()
-                        + " is not a valid }, which is required to be the last token in funcBody!");
-        } else
-            printSyntaxError(token.toString()
-                    + " is not a valid {, which is required to be the first token followed by main in funcBody!");
-    }
+	private boolean relation() throws IOException, SyntaxFormatException {
+		if (expression()) {
+			if (TokenType.isComparison(lexer.getCurrentToken().getType())) {
+				moveNext();
+				if (!expression()) {
+					throwFormatException("Expression expected");
+				}
+			} else {
+				throwFormatException("relation operator expected");
+			}
+			return true;
+		}
+		return false;
+	}
 
-    private void printSyntaxError(String errMsg) {
-        scanner.printSyntaxError(errMsg);
-    }
+	private boolean ifStatement() throws IOException, SyntaxFormatException {
+		if (lexer.getCurrentToken().getType() == TokenType.IF) {
+			relation();
+			checkAndMoveNext(TokenType.THEN);
+			if (!statSequence()) {
+				throwFormatException("no statSequence detected");
+			}
+			if (lexer.getCurrentToken().getType() == TokenType.ELSE) {
+				if (!statSequence()) {
+					throwFormatException("no statSequence detected");
+				}
+			}
+			checkAndMoveNext(TokenType.FI);
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean funcCall() throws IOException, SyntaxFormatException {
+		if (checkType(TokenType.CALL)) {
+			moveNext();
+			checkAndMoveNext(TokenType.IDENTIRIER);
+			if (checkType(TokenType.BEGIN_PARENTHESIS)) {
+				moveNext();
+				if (expression()) {
+					while (checkType(TokenType.COMMA)) {
+						moveNext();
+						if (!expression()) {
+							throwFormatException("no expression after comma");
+						}
+					}
+				}
+				checkAndMoveNext(TokenType.END_PARENTHESIS);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private boolean checkType(TokenType type) throws IOException,
+			SyntaxFormatException {
+		return lexer.getCurrentToken().getType() == type;
+	}
+
+	private void moveNext() throws IOException, SyntaxFormatException {
+		lexer.moveToNextToken();
+	}
+
+	private boolean assignment() throws IOException, SyntaxFormatException {
+		if (checkType(TokenType.LET)) {
+			moveNext();
+			if (!designator()) {
+				throwFormatException("missing designator");
+			}
+			checkAndMoveNext(TokenType.DESIGNATOR);
+			if (!expression()) {
+				throwFormatException("expression expected");
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private boolean designator() throws SyntaxFormatException, IOException {
+		if (checkAndMoveNext(TokenType.IDENTIRIER)) {
+			if (checkType(TokenType.BEGIN_BRACKET)) {
+				moveNext();
+				if (!expression()) {
+					throwFormatException("expression expected");
+				}
+				checkAndMoveNext(TokenType.END_BRACKET);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private boolean formalParam() throws SyntaxFormatException, IOException {
+		if (lexer.getCurrentToken().getType() == TokenType.BEGIN_PARENTHESIS) {
+			lexer.moveToNextToken();
+			if (lexer.getCurrentToken().getType() == TokenType.IDENTIRIER) {
+				while (lexer.getCurrentToken().getType() == TokenType.COMMA) {
+					lexer.moveToNextToken();
+					checkAndMoveNext(TokenType.IDENTIRIER);
+				}
+			}
+			checkAndMoveNext(TokenType.END_PARENTHESIS);
+			return true;
+		}
+		return false;
+	}
+
+	// Temparary method to print out the compiled code
+	private void compilecode(Token currentToken) {
+		if (currentToken.getType() == TokenType.NUMBER) {
+			System.out.println("number:" + currentToken.getNumberValue());
+		} else if (currentToken.getType() == TokenType.IDENTIRIER) {
+			System.out.println("ident:" + currentToken.getIdentifierName());
+		} else {
+			System.out.println("operations:" + currentToken.getType().name());
+		}
+	}
+
+	/**
+	 * Verify the markers, throw the exceptions if not valid, It used to verify,
+	 * not to detect.
+	 * 
+	 * If we are sure the current type is a must to have, use this method to
+	 * save life.
+	 * 
+	 * @throws SyntaxFormatException
+	 * @throws IOException
+	 */
+	private boolean checkAndMoveNext(TokenType type)
+			throws SyntaxFormatException, IOException {
+		if (lexer.getCurrentToken().getType() == type) {
+			lexer.moveToNextToken();
+			return true;
+		}
+		type = lexer.getCurrentToken().getType();
+		if (type == TokenType.IDENTIRIER) {
+			throwFormatException("should be an indentifier, but now is"
+					+ type.name());
+		} else if (type == TokenType.NUMBER) {
+			throwFormatException("should be an number, but now is"
+					+ type.name());
+		} else {
+			throwFormatException("missing:" + type.name());
+		}
+		return false;
+	}
+
 }
