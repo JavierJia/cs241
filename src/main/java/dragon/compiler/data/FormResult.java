@@ -2,7 +2,27 @@ package dragon.compiler.data;
 
 public class FormResult {
 	public static enum Kind {
-		CONST, VAR, REG, CONDITION,
+		CONST, VAR, REG, CONDITION, SIZE,
+	}
+
+	public FormResult(Token token) {
+		switch (token.getType()) {
+		case IDENTIRIER:
+			kind = Kind.VAR;
+			address = VariableTable.lookUpAddress(token.getIdentifierName());
+			break;
+		case NUMBER:
+			kind = Kind.CONST;
+			value = token.getNumberValue();
+			break;
+		case VAR:
+		case ARRAY:
+			kind = Kind.SIZE;
+			break;
+		default:
+			throw new IllegalArgumentException("Is not valid FormResult type:"
+					+ token);
+		}
 	}
 
 	public Kind kind;

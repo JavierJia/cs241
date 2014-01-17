@@ -2,7 +2,9 @@ package dragon.compiler.parser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import dragon.compiler.data.FormResult;
 import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.Token;
 import dragon.compiler.data.TokenType;
@@ -32,301 +34,368 @@ public class Parser {
 	private void computation() throws IOException, SyntaxFormatException {
 		checkAndMoveNext(TokenType.MAIN);
 
-		while (varDecl())
-			;
-		while (funcDecl())
-			;
+		ArrayList<FormResult> varList = new ArrayList<FormResult>();
+		for (FormResult var = varDecl(); var != null; var = varDecl()) {
+			varList.add(var);
+		}
+		ArrayList<FormResult> funcList = new ArrayList<FormResult>();
+		for (FormResult func = funcDecl(); func != null; func = funcDecl()) {
+			funcList.add(func);
+		}
 
 		checkAndMoveNext(TokenType.BEGIN_BRACE);
-		if (!statSequence()) {
+		FormResult allStateSequence = statSequence();
+		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
 		}
 		checkAndMoveNext(TokenType.END_BRACE);
 		checkAndMoveNext(TokenType.PERIOD);
 	}
 
-	private boolean varDecl() throws SyntaxFormatException, IOException {
-		if (typeDecl()) {
+	private FormResult varDecl() throws SyntaxFormatException, IOException {
+		FormResult type = typeDecl();
+		if (type != null) {
+			ArrayList<FormResult> varList = new ArrayList<FormResult>();
+			FormResult varName = new FormResult(lexer.getCurrentToken());
 			checkAndMoveNext(TokenType.IDENTIRIER);
+			varList.add(varName);
 
 			while (checkCurrentType(TokenType.COMMA)) {
 				moveToNextToken();
+				varList.add(new FormResult(lexer.getCurrentToken()));
 				checkAndMoveNext(TokenType.IDENTIRIER);
 			}
 			checkAndMoveNext(TokenType.SEMICOMA);
-			return true;
+			return Computor.computeVarDecl(type, varList);
 		}
-		return false;
+		return null;
 	}
 
-	private boolean typeDecl() throws IOException, SyntaxFormatException {
+	private FormResult typeDecl() throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.VAR)) {
+			FormResult sizeVar = new FormResult(lexer.getCurrentToken());
 			moveToNextToken();
-			return true;
+			return sizeVar;
 		}
 		if (checkCurrentType(TokenType.ARRAY)) {
 			moveToNextToken();
-			if (!isArrayNumberBlock()) {
+			ArrayList<FormResult> numberList = new ArrayList<FormResult>();
+			for (FormResult number = arrayNumberBlock(); number != null; number = arrayNumberBlock()) {
+				numberList.add(number);
+			}
+			if (numberList.size() == 0) {
 				throwFormatException("typeDecl: array number block [] is missing");
 			}
-			while (isArrayNumberBlock())
-				;
-			return true;
+			return Computor.computeArrayTypeDecl(numberList);
 		}
-		return false;
+		return null;
 	}
 
-	private boolean isArrayNumberBlock() throws SyntaxFormatException,
+	private FormResult arrayNumberBlock() throws SyntaxFormatException,
 			IOException {
 		if (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 			moveToNextToken();
+			FormResult num = new FormResult(lexer.getCurrentToken());
 			checkAndMoveNext(TokenType.NUMBER);
 			checkAndMoveNext(TokenType.END_BRACKET);
-			return true;
+			return num;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean funcDecl() throws IOException, SyntaxFormatException {
+	private FormResult funcDecl() throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.FUNCTION)
 				|| checkCurrentType(TokenType.PROCEDURE)) {
-			compilecode(lexer.getCurrentToken());
 			moveToNextToken();
 
+			FormResult funcName = new FormResult(lexer.getCurrentToken());
 			checkAndMoveNext(TokenType.IDENTIRIER);
-			if (formalParam()) { // 0 or 1 time
-				// do nothing.
-			}
+			FormResult params = formalParam();
 			checkAndMoveNext(TokenType.SEMICOMA);
-			if (!funcBody()) {
+
+			FormResult body = funcBody();
+			if (body == null) {
 				throwFormatException("Function body expected");
 			}
 			checkAndMoveNext(TokenType.SEMICOMA);
-			return true;
+			return Computor.computeFuncDecl(funcName, params, body);
 		}
-		return false;
+		return null;
 	}
 
-	private boolean funcBody() throws SyntaxFormatException, IOException {
-		while (varDecl()) {
+	private FormResult funcBody() throws SyntaxFormatException, IOException {
+		ArrayList<FormResult> declarations = new ArrayList<FormResult>();
+		for (FormResult declaration = varDecl(); declaration != null; declaration = varDecl()) {
+			declarations.add(declaration);
 		}
+		FormResult body = null;
 		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
 			moveToNextToken();
-			if (statSequence()) { // 0 or 1 times
-				// do nothing;
-			}
+			body = statSequence();
 			checkAndMoveNext(TokenType.END_BRACE);
-			return true;
+			return Computor.computeFuncBody(declarations, body);
 		}
-		return false;
+		return null;
 	}
 
-	private boolean statSequence() throws IOException, SyntaxFormatException {
-		if (statement()) {
+	private FormResult statSequence() throws IOException, SyntaxFormatException {
+		ArrayList<FormResult> statementBlock = new ArrayList<FormResult>();
+		FormResult statementResult = statement();
+		if (statementResult != null) {
+			statementBlock.add(statementResult);
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
-				if (!statement()) {
+				statementResult = statement();
+				if (statementResult == null) {
 					throwFormatException("missing statement after semicoma");
 				}
+				statementBlock.add(statementResult);
 			}
-			return true;
+			return Computor.computeStatSequence(statementBlock);
 		}
-		return false;
+		return statementResult;
 	}
 
-	private boolean statement() throws IOException, SyntaxFormatException {
-		return assignment() || funcCall() || ifStatement() || whileStatement()
-				|| returnStatement();
+	private FormResult statement() throws IOException, SyntaxFormatException {
+		FormResult result = assignment();
+		if (result == null) {
+			result = funcCall();
+			if (result == null) {
+				result = ifStatement();
+				if (result == null) {
+					result = whileStatement();
+					if (result == null) {
+						result = returnStatement();
+					}
+				}
+			}
+		}
+		return result;
 	}
 
-	private boolean returnStatement() throws IOException, SyntaxFormatException {
+	private FormResult returnStatement() throws IOException,
+			SyntaxFormatException {
 		if (checkCurrentType(TokenType.RETURN)) {
 			moveToNextToken();
-			if (expression()) { // 0 or 1 times
-				// do nothing.
-			}
-			return true;
+			FormResult expr = expression();
+			Computor.computeRetureExpression(expr);
+			return expr;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean expression() throws IOException, SyntaxFormatException {
-		if (term()) {
+	private FormResult expression() throws IOException, SyntaxFormatException {
+		FormResult leftTerm = term();
+		if (leftTerm != null) {
 			while (checkCurrentType(TokenType.PLUS)
 					|| checkCurrentType(TokenType.MINUS)) {
+				Token op = lexer.getCurrentToken();
 				moveToNextToken();
-				if (!term()) {
+
+				FormResult rightTerm = term();
+				if (rightTerm == null) {
 					throwFormatException("Term expected!");
 				}
+				Computor.computeExpression(op, leftTerm, rightTerm);
 			}
-			return true;
+			return leftTerm;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean term() throws IOException, SyntaxFormatException {
-		if (factor()) {
+	private FormResult term() throws IOException, SyntaxFormatException {
+		FormResult leftFactor = factor();
+		if (leftFactor != null) {
 			while (checkCurrentType(TokenType.TIMES)
 					|| checkCurrentType(TokenType.DIVIDE)) {
+				Token op = lexer.getCurrentToken();
 				moveToNextToken();
-				if (!factor()) {
+				FormResult rightFactor = factor();
+				if (rightFactor == null) {
 					throwFormatException("Factor expected!");
 				}
+				Computor.computeTerm(op, leftFactor, rightFactor);
 			}
-			return true;
 		}
-		return false;
+		return leftFactor;
 	}
 
-	private boolean factor() throws SyntaxFormatException, IOException {
-		if (designator() || funcCall()) {
-			return true;
+	private FormResult factor() throws SyntaxFormatException, IOException {
+		FormResult designatorResult = designator();
+		if (designatorResult != null) {
+			return designatorResult;
 		}
+
+		FormResult funcCallResult = funcCall();
+		if (funcCallResult != null) {
+			return funcCallResult;
+		}
+
 		if (checkCurrentType(TokenType.NUMBER)) {
+			FormResult numberResult = new FormResult(lexer.getCurrentToken());
 			moveToNextToken();
-			return true;
+			return numberResult;
 		}
+
 		if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) {
 			moveToNextToken();
-			if (!expression()) {
+			FormResult expressionResult = expression();
+			if (expressionResult == null) {
 				throwFormatException("factor: expression expected!");
 			}
 			checkAndMoveNext(TokenType.END_PARENTHESIS);
-			return true;
+			return expressionResult;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean whileStatement() throws IOException, SyntaxFormatException {
+	private FormResult whileStatement() throws IOException,
+			SyntaxFormatException {
 		if (checkCurrentType(TokenType.WHILE)) {
 			moveToNextToken();
-			if (!relation()) {
+			FormResult condition = relation();
+			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
 			checkAndMoveNext(TokenType.DO);
-			if (!statSequence()) {
+			FormResult loopBody = statSequence();
+			if (loopBody == null) {
 				throwFormatException("statSequence expected");
 			}
 			checkAndMoveNext(TokenType.OD);
-			return true;
+			Computor.computeWhileStatement(condition, loopBody);
+			return condition;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean relation() throws IOException, SyntaxFormatException {
-		if (expression()) {
+	private FormResult relation() throws IOException, SyntaxFormatException {
+		FormResult leftExp = expression();
+		if (leftExp != null) {
 			if (TokenType.isComparison(lexer.getCurrentToken().getType())) {
+				Token op = lexer.getCurrentToken();
 				moveToNextToken();
-				if (!expression()) {
+				FormResult rightExp = expression();
+				if (rightExp == null) {
 					throwFormatException("Expression expected");
 				}
+				Computor.computeRelation(op, leftExp, rightExp);
 			} else {
 				throwFormatException("relation operator expected");
 			}
-			return true;
 		}
-		return false;
+		return leftExp;
 	}
 
-	private boolean ifStatement() throws IOException, SyntaxFormatException {
+	private FormResult ifStatement() throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.IF)) {
 			moveToNextToken();
-			if (!relation()) {
+			FormResult cond = relation();
+			if (cond == null) {
 				throwFormatException("if statement relation expression expected");
 			}
 			checkAndMoveNext(TokenType.THEN);
-			if (!statSequence()) {
+			FormResult then = statSequence();
+			if (then == null) {
 				throwFormatException("if statement statSequence expected");
 			}
+			FormResult elseResult = null;
 			if (checkCurrentType(TokenType.ELSE)) {
 				moveToNextToken();
-				if (!statSequence()) {
+				elseResult = statSequence();
+				if (elseResult == null) {
 					throwFormatException("if statement else statSequence expected");
 				}
 			}
 			checkAndMoveNext(TokenType.FI);
-			return true;
+			Computor.computeIf(cond, then, elseResult);
+			return cond;
 		}
 
-		return false;
+		return null;
 	}
 
-	private boolean funcCall() throws IOException, SyntaxFormatException {
+	private FormResult funcCall() throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.CALL)) {
 			moveToNextToken();
+			FormResult funcIdenti = new FormResult(lexer.getCurrentToken());
 			checkAndMoveNext(TokenType.IDENTIRIER);
+			ArrayList<FormResult> argumentList = new ArrayList<FormResult>();
 			if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) { // 0 or 1 time
 				moveToNextToken();
-				if (expression()) {
+				FormResult argument = expression();
+				if (argument != null) {
+					argumentList.add(argument);
 					while (checkCurrentType(TokenType.COMMA)) {
 						moveToNextToken();
-						if (!expression()) {
+						FormResult moreArgs = expression();
+						if (moreArgs == null) {
 							throwFormatException("no expression after comma");
 						}
+						argumentList.add(moreArgs);
 					}
 				}
 				checkAndMoveNext(TokenType.END_PARENTHESIS);
 			}
-			return true;
+			Computor.comuteFunctionCall(funcIdenti, argumentList);
+			return funcIdenti;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean assignment() throws IOException, SyntaxFormatException {
+	private FormResult assignment() throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.LET)) {
 			moveToNextToken();
-			if (!designator()) {
+			FormResult assignTarget = designator();
+			if (assignTarget == null) {
 				throwFormatException("assignment missing designator");
 			}
 			checkAndMoveNext(TokenType.DESIGNATOR);
-			if (!expression()) {
+			FormResult assignValue = expression();
+			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
 			}
-			return true;
+			Computor.computeAssignment(assignTarget, assignValue);
+			return assignTarget;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean designator() throws SyntaxFormatException, IOException {
+	private FormResult designator() throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.IDENTIRIER)) {
+			FormResult identiResult = new FormResult(lexer.getCurrentToken());
 			moveToNextToken();
 			while (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 				moveToNextToken();
-				if (!expression()) {
+				FormResult offsetResult = expression();
+				if (offsetResult == null) {
 					throwFormatException("expression expected");
 				}
+				Computor.loadArrayAddress(identiResult, offsetResult);
 				checkAndMoveNext(TokenType.END_BRACKET);
 			}
-			return true;
+			return identiResult;
 		}
-		return false;
+		return null;
 	}
 
-	private boolean formalParam() throws SyntaxFormatException, IOException {
+	private FormResult formalParam() throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) {
 			moveToNextToken();
+			ArrayList<FormResult> params = new ArrayList<FormResult>();
 			if (checkCurrentType(TokenType.IDENTIRIER)) { // 0 or 1 time
+				params.add(new FormResult(lexer.getCurrentToken()));
 				moveToNextToken();
 				while (checkCurrentType(TokenType.COMMA)) {
 					moveToNextToken();
+					params.add(new FormResult(lexer.getCurrentToken()));
 					checkAndMoveNext(TokenType.IDENTIRIER);
 				}
 			}
 			checkAndMoveNext(TokenType.END_PARENTHESIS);
-			return true;
+			return Computor.computeFormalParam(params);
 		}
-		return false;
-	}
-
-	// Temparary method to print out the compiled code
-	private void compilecode(Token currentToken) {
-		if (currentToken.getType() == TokenType.NUMBER) {
-			System.out.println("number:" + currentToken.getNumberValue());
-		} else if (currentToken.getType() == TokenType.IDENTIRIER) {
-			System.out.println("ident:" + currentToken.getIdentifierName());
-		} else {
-			System.out.println("operations:" + currentToken.getType().name());
-		}
+		return null;
 	}
 
 	/**

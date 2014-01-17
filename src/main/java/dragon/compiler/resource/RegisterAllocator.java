@@ -1,4 +1,4 @@
-package dragon.compiler.register;
+package dragon.compiler.resource;
 
 public class RegisterAllocator {
 
