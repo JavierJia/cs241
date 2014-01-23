@@ -8,6 +8,8 @@ import java.io.LineNumberReader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import dragon.compiler.lexer.Scanner;
+
 public class ScannerTest {
 
 	@Test

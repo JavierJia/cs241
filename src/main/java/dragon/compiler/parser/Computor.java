@@ -3,61 +3,65 @@ package dragon.compiler.parser;
 import java.util.ArrayList;
 
 import dragon.compiler.data.FormResult;
+import dragon.compiler.data.FormResult.Kind;
 import dragon.compiler.data.Token;
 import dragon.compiler.data.TokenType;
+import dragon.compiler.data.VariableTable;
 
 public class Computor {
+	private static VariableTable vTable = new VariableTable();
 
-	public static void loadArrayAddress(FormResult identiResult,
+	public static FormResult loadArrayAddress(FormResult identiResult,
 			FormResult offsetResult) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeExpression(Token op, FormResult leftTerm,
+	public static FormResult computeExpression(Token op, FormResult leftTerm,
 			FormResult rightTerm) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeTerm(Token op, FormResult leftFactor,
+	public static FormResult computeTerm(Token op, FormResult leftFactor,
 			FormResult rightFactor) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeRelation(Token op, FormResult leftExp,
+	public static FormResult computeRelation(Token op, FormResult leftExp,
 			FormResult rightExp) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeRetureExpression(FormResult expr) {
+	public static FormResult computeRetureExpression(FormResult expr) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void comuteFunctionCall(FormResult funcIdenti, ArrayList<FormResult> argumentList) {
+	public static FormResult comuteFunctionCall(FormResult funcIdenti,
+			ArrayList<FormResult> argumentList) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeAssignment(FormResult assignTarget,
+	public static FormResult computeAssignment(FormResult assignTarget,
 			FormResult assignValue) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeWhileStatement(FormResult condition,
+	public static FormResult computeWhileStatement(FormResult condition,
 			FormResult loopBody) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	public static void computeIf(FormResult cond, FormResult then,
+	public static FormResult computeIf(FormResult cond, FormResult then,
 			FormResult elseResult) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	public static FormResult computeStatSequence(
@@ -80,15 +84,34 @@ public class Computor {
 
 	public static FormResult computeVarDecl(FormResult type,
 			ArrayList<FormResult> varList) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (type.kind) {
+		case ARRAY_DECL:
+			for (FormResult identi : varList) {
+				vTable.registerArray(identi.varName, type.sizeList);
+			}
+			break;
+		case VAR_DECL:
+			for (FormResult identi : varList) {
+				vTable.registerVar(identi.varName);
+			}
+			break;
+		default:
+			throw new IllegalArgumentException(
+					"in var declaration only allowed VAR and ARRAY, but now is:"
+							+ type.kind);
+		}
+		return new FormResult();
 	}
 
 	public static FormResult computeFormalParam(ArrayList<FormResult> params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	public static FormResult computeArrayTypeDecl(ArrayList<Integer> numberList) {
+		return new FormResult(numberList);
+	}
+
 	// Temparary method to print out the compiled code
 	private void compilecode(Token currentToken) {
 		if (currentToken.getType() == TokenType.NUMBER) {
@@ -99,12 +122,5 @@ public class Computor {
 			System.out.println("operations:" + currentToken.getType().name());
 		}
 	}
-
-	public static FormResult computeArrayTypeDecl(
-			ArrayList<FormResult> numberList) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

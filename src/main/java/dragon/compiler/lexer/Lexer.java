@@ -6,7 +6,6 @@ import java.io.IOException;
 import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.Token;
 import dragon.compiler.data.TokenType;
-import dragon.compiler.scanner.Scanner;
 
 public class Lexer {
 	private Scanner scanner;

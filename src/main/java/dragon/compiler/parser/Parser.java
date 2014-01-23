@@ -79,9 +79,9 @@ public class Parser {
 		}
 		if (checkCurrentType(TokenType.ARRAY)) {
 			moveToNextToken();
-			ArrayList<FormResult> numberList = new ArrayList<FormResult>();
+			ArrayList<Integer> numberList = new ArrayList<Integer>();
 			for (FormResult number = arrayNumberBlock(); number != null; number = arrayNumberBlock()) {
-				numberList.add(number);
+				numberList.add(number.value);
 			}
 			if (numberList.size() == 0) {
 				throwFormatException("typeDecl: array number block [] is missing");
@@ -178,8 +178,7 @@ public class Parser {
 		if (checkCurrentType(TokenType.RETURN)) {
 			moveToNextToken();
 			FormResult expr = expression();
-			Computor.computeRetureExpression(expr);
-			return expr;
+			return Computor.computeRetureExpression(expr);
 		}
 		return null;
 	}
@@ -196,7 +195,7 @@ public class Parser {
 				if (rightTerm == null) {
 					throwFormatException("Term expected!");
 				}
-				Computor.computeExpression(op, leftTerm, rightTerm);
+				leftTerm = Computor.computeExpression(op, leftTerm, rightTerm);
 			}
 			return leftTerm;
 		}
@@ -214,7 +213,7 @@ public class Parser {
 				if (rightFactor == null) {
 					throwFormatException("Factor expected!");
 				}
-				Computor.computeTerm(op, leftFactor, rightFactor);
+				leftFactor = Computor.computeTerm(op, leftFactor, rightFactor);
 			}
 		}
 		return leftFactor;
@@ -263,8 +262,7 @@ public class Parser {
 				throwFormatException("statSequence expected");
 			}
 			checkAndMoveNext(TokenType.OD);
-			Computor.computeWhileStatement(condition, loopBody);
-			return condition;
+			return Computor.computeWhileStatement(condition, loopBody);
 		}
 		return null;
 	}
@@ -279,7 +277,7 @@ public class Parser {
 				if (rightExp == null) {
 					throwFormatException("Expression expected");
 				}
-				Computor.computeRelation(op, leftExp, rightExp);
+				return Computor.computeRelation(op, leftExp, rightExp);
 			} else {
 				throwFormatException("relation operator expected");
 			}
@@ -308,8 +306,7 @@ public class Parser {
 				}
 			}
 			checkAndMoveNext(TokenType.FI);
-			Computor.computeIf(cond, then, elseResult);
-			return cond;
+			return Computor.computeIf(cond, then, elseResult);
 		}
 
 		return null;
@@ -337,8 +334,7 @@ public class Parser {
 				}
 				checkAndMoveNext(TokenType.END_PARENTHESIS);
 			}
-			Computor.comuteFunctionCall(funcIdenti, argumentList);
-			return funcIdenti;
+			return Computor.comuteFunctionCall(funcIdenti, argumentList);
 		}
 		return null;
 	}
@@ -355,8 +351,7 @@ public class Parser {
 			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
 			}
-			Computor.computeAssignment(assignTarget, assignValue);
-			return assignTarget;
+			return Computor.computeAssignment(assignTarget, assignValue);
 		}
 		return null;
 	}
@@ -371,7 +366,8 @@ public class Parser {
 				if (offsetResult == null) {
 					throwFormatException("expression expected");
 				}
-				Computor.loadArrayAddress(identiResult, offsetResult);
+				identiResult = Computor.loadArrayAddress(identiResult,
+						offsetResult);
 				checkAndMoveNext(TokenType.END_BRACKET);
 			}
 			return identiResult;
