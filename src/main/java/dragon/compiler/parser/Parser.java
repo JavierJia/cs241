@@ -14,9 +14,11 @@ import dragon.compiler.lexer.Lexer;
 public class Parser {
 
 	private Lexer lexer;
+	private Interpretor inter;
 
 	public Parser(String filename) throws FileNotFoundException {
 		this.lexer = new Lexer(filename);
+		this.inter = new Interpretor();
 	}
 
 	private void throwFormatException(String string)
@@ -67,7 +69,7 @@ public class Parser {
 				assertAndMoveNext(TokenType.IDENTIRIER);
 			}
 			assertAndMoveNext(TokenType.SEMICOMA);
-			return Computor.computeVarDecl(type, varList);
+			return inter.computeVarDecl(type, varList);
 		}
 		return null;
 	}
@@ -87,7 +89,7 @@ public class Parser {
 			if (numberList.size() == 0) {
 				throwFormatException("typeDecl: array number block [] is missing");
 			}
-			return Computor.computeArrayTypeDecl(numberList);
+			return inter.computeArrayTypeDecl(numberList);
 		}
 		return null;
 	}
@@ -119,7 +121,7 @@ public class Parser {
 				throwFormatException("Function body expected");
 			}
 			assertAndMoveNext(TokenType.SEMICOMA);
-			return Computor.computeFuncDecl(funcName, params, body);
+			return inter.computeFuncDecl(funcName, params, body);
 		}
 		return null;
 	}
@@ -134,7 +136,7 @@ public class Parser {
 			moveToNextToken();
 			body = statSequence();
 			assertAndMoveNext(TokenType.END_BRACE);
-			return Computor.computeFuncBody(declarations, body);
+			return inter.computeFuncBody(declarations, body);
 		}
 		return null;
 	}
@@ -153,7 +155,7 @@ public class Parser {
 				}
 				statementBlock.add(statementResult);
 			}
-			return Computor.computeStatSequence(statementBlock);
+			return inter.computeStatSequence(statementBlock);
 		}
 		return statementResult;
 	}
@@ -180,7 +182,7 @@ public class Parser {
 		if (checkCurrentType(TokenType.RETURN)) {
 			moveToNextToken();
 			FormResult expr = expression();
-			return Computor.computeReturnExpression(expr);
+			return inter.computeReturnExpression(expr);
 		}
 		return null;
 	}
@@ -197,7 +199,7 @@ public class Parser {
 				if (rightTerm == null) {
 					throwFormatException("Term expected!");
 				}
-				leftTerm = Computor.computeExpression(op, leftTerm, rightTerm);
+				leftTerm = inter.computeExpression(op, leftTerm, rightTerm);
 			}
 			return leftTerm;
 		}
@@ -215,7 +217,7 @@ public class Parser {
 				if (rightFactor == null) {
 					throwFormatException("Factor expected!");
 				}
-				leftFactor = Computor.computeTerm(op, leftFactor, rightFactor);
+				leftFactor = inter.computeTerm(op, leftFactor, rightFactor);
 			}
 		}
 		return leftFactor;
@@ -258,15 +260,15 @@ public class Parser {
 			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
-			Computor.condNegBraFwd(condition);
+			inter.condNegBraFwd(condition);
 			assertAndMoveNext(TokenType.DO);
 			FormResult loopBody = statSequence();
 			if (loopBody == null) {
 				throwFormatException("statSequence expected");
 			}
 			assertAndMoveNext(TokenType.OD);
-			Computor.fixUpJumpTo(condition);
-			return Computor.computeWhileStatement(condition, loopBody);
+			inter.fixUpJumpTo(condition);
+			return inter.computeWhileStatement(condition, loopBody);
 		}
 		return null;
 	}
@@ -281,7 +283,7 @@ public class Parser {
 				if (rightExp == null) {
 					throwFormatException("Expression expected");
 				}
-				return Computor.computeRelation(op, leftExp, rightExp);
+				return inter.computeRelation(op, leftExp, rightExp);
 			} else {
 				throwFormatException("relation operator expected");
 			}
@@ -297,7 +299,7 @@ public class Parser {
 				throwFormatException("if statement relation expression expected");
 			}
 			assertAndMoveNext(TokenType.THEN);
-			Computor.condNegBraFwd(cond);
+			inter.condNegBraFwd(cond);
 			FormResult then = statSequence();
 			if (then == null) {
 				throwFormatException("if statement statSequence expected");
@@ -305,16 +307,16 @@ public class Parser {
 			FormResult elseResult = null;
 			if (checkCurrentType(TokenType.ELSE)) {
 				moveToNextToken();
-				Computor.fixUpJumpTo(cond);
+				inter.fixUpJumpTo(cond);
 				elseResult = statSequence();
 				if (elseResult == null) {
 					throwFormatException("if statement else statSequence expected");
 				}
 			} else {
-				Computor.fixUpJumpTo(cond);
+				inter.fixUpJumpTo(cond);
 			}
 			assertAndMoveNext(TokenType.FI);
-			return Computor.computeIf(cond, then, elseResult);
+			return inter.computeIf(cond, then, elseResult);
 		}
 
 		return null;
@@ -342,7 +344,7 @@ public class Parser {
 				}
 				assertAndMoveNext(TokenType.END_PARENTHESIS);
 			}
-			return Computor.comuteFunctionCall(funcIdenti, argumentList);
+			return inter.comuteFunctionCall(funcIdenti, argumentList);
 		}
 		return null;
 	}
@@ -359,7 +361,7 @@ public class Parser {
 			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
 			}
-			return Computor.computeAssignment(assignTarget, assignValue);
+			return inter.computeAssignment(assignTarget, assignValue);
 		}
 		return null;
 	}
@@ -378,7 +380,7 @@ public class Parser {
 				arrayOffsets.add(offsetResult);
 				assertAndMoveNext(TokenType.END_BRACKET);
 			}
-			return Computor.lookUpVarAddress(identiResult, arrayOffsets);
+			return inter.lookUpVarAddress(identiResult, arrayOffsets);
 		}
 		return null;
 	}
@@ -397,7 +399,7 @@ public class Parser {
 				}
 			}
 			assertAndMoveNext(TokenType.END_PARENTHESIS);
-			return Computor.computeFormalParam(params);
+			return inter.computeFormalParam(params);
 		}
 		return null;
 	}

@@ -10,26 +10,27 @@ import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
 import dragon.compiler.resource.RegisterAllocator;
 
-public class Computor {
-	private static VariableTable vTable = new VariableTable();
-	private static RegisterAllocator regAllocator = new RegisterAllocator();
+public class Interpretor {
 
-	public static FormResult computeArrayTypeDecl(ArrayList<Integer> numberList) {
+	private VariableTable vTable = new VariableTable();
+	private RegisterAllocator regAllocator = new RegisterAllocator();
+
+	public FormResult computeArrayTypeDecl(ArrayList<Integer> numberList) {
 		return new FormResult(numberList);
 	}
 
-	public static FormResult computeAssignment(FormResult assignTarget,
+	public FormResult computeAssignment(FormResult assignTarget,
 			FormResult assignValue) {
 		loadToRegister(assignTarget);
 		loadToRegister(assignValue);
-		// TODO
+		// TODO : SSA
 		// const and reg0
 		putCode(OP.MOVE, assignTarget.regno, assignValue.regno);
 		return null;
 	}
 
-	public static FormResult computeExpression(Token tokenOp,
-			FormResult leftTerm, FormResult rightTerm) {
+	public FormResult computeExpression(Token tokenOp, FormResult leftTerm,
+			FormResult rightTerm) {
 		if (tokenOp.getType() == TokenType.PLUS
 				|| tokenOp.getType() == TokenType.MINUS) {
 			optimizedCompute(tokenOp.getType(), leftTerm, rightTerm);
@@ -40,30 +41,30 @@ public class Computor {
 		return leftTerm;
 	}
 
-	public static FormResult computeFormalParam(ArrayList<FormResult> params) {
+	public FormResult computeFormalParam(ArrayList<FormResult> params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult computeFuncBody(
-			ArrayList<FormResult> declarations, FormResult body) {
+	public FormResult computeFuncBody(ArrayList<FormResult> declarations,
+			FormResult body) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult computeFuncDecl(FormResult funcName,
-			FormResult params, FormResult body) {
+	public FormResult computeFuncDecl(FormResult funcName, FormResult params,
+			FormResult body) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult computeIf(FormResult cond, FormResult then,
+	public FormResult computeIf(FormResult cond, FormResult then,
 			FormResult elseResult) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult computeRelation(Token op, FormResult leftExp,
+	public FormResult computeRelation(Token op, FormResult leftExp,
 			FormResult rightExp) {
 		optimizedCompute(op.getType(), leftExp, rightExp);
 		leftExp.kind = Kind.CONDITION;
@@ -72,17 +73,16 @@ public class Computor {
 		return leftExp;
 	}
 
-	public static FormResult computeReturnExpression(FormResult expr) {
+	public FormResult computeReturnExpression(FormResult expr) {
 		return expr;
 	}
 
-	public static FormResult computeStatSequence(
-			ArrayList<FormResult> statementBlock) {
+	public FormResult computeStatSequence(ArrayList<FormResult> statementBlock) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult computeTerm(Token tokenOp, FormResult leftFactor,
+	public FormResult computeTerm(Token tokenOp, FormResult leftFactor,
 			FormResult rightFactor) {
 		if (tokenOp.getType() == TokenType.TIMES
 				|| tokenOp.getType() == TokenType.DIVIDE) {
@@ -94,7 +94,7 @@ public class Computor {
 		return leftFactor;
 	}
 
-	public static FormResult computeVarDecl(FormResult type,
+	public FormResult computeVarDecl(FormResult type,
 			ArrayList<FormResult> varList) {
 		switch (type.kind) {
 		case ARRAY_DECL:
@@ -117,19 +117,19 @@ public class Computor {
 		return new FormResult();
 	}
 
-	public static FormResult computeWhileStatement(FormResult condition,
+	public FormResult computeWhileStatement(FormResult condition,
 			FormResult loopBody) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult comuteFunctionCall(FormResult funcIdenti,
+	public FormResult comuteFunctionCall(FormResult funcIdenti,
 			ArrayList<FormResult> argumentList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static FormResult lookUpVarAddress(FormResult identiResult,
+	public FormResult lookUpVarAddress(FormResult identiResult,
 			ArrayList<FormResult> arrayOffsets) {
 		if (identiResult.kind == Kind.VAR) {
 			identiResult.address = vTable.lookUpAddress(identiResult.varName,
@@ -173,7 +173,7 @@ public class Computor {
 		}
 	}
 
-	private static void optimizedCompute(TokenType tokenType, FormResult left,
+	private void optimizedCompute(TokenType tokenType, FormResult left,
 			FormResult right) {
 		if (left.kind == Kind.CONST && right.kind == Kind.CONST) {
 			switch (tokenType) {
@@ -212,39 +212,39 @@ public class Computor {
 		}
 	}
 
-	private static void putCode(OP op, int regTarget, int regSource) {
+	private void putCode(OP op, int regTarget, int regSource) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void loadToRegister(FormResult assignTarget) {
+	private void loadToRegister(FormResult assignTarget) {
 		// TODO Auto-generated method stub
 	}
 
-	private static void unloadFromRegister(FormResult right) {
+	private void unloadFromRegister(FormResult right) {
 		// TODO Auto-generated method stub
 	}
 
-	public static void condNegBraFwd(FormResult cond) {
+	public void condNegBraFwd(FormResult cond) {
 		cond.jumpTo = getCurrentPC();
 		putCode(negetedBranchOp(cond.cond), cond.regno, 0);
 	}
 
-	private static OP negetedBranchOp(int cond) {
+	private OP negetedBranchOp(int cond) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private static int getCurrentPC() {
+	private int getCurrentPC() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public static void fixUpJumpTo(FormResult cond) {
+	public void fixUpJumpTo(FormResult cond) {
 		fixUpJumpToCode(cond.jumpTo, getCurrentPC());
 	}
 
-	private static void fixUpJumpToCode(int jumpTo, int currentPC) {
+	private void fixUpJumpToCode(int jumpTo, int currentPC) {
 		// TODO Auto-generated method stub
 
 	}
