@@ -37,12 +37,12 @@ public class FormResult {
 		kind = Kind.ARRAY_DECL;
 	}
 
-	public final Kind kind;
+	public Kind kind;
 	public int value; // if is a constant
 	public String varName; // if is var or array
 	public ArrayList<Integer> sizeList; // if is a array declaration
 	public int address; // if is a variable
 	public int regno; // if is a reg or condition
 	public int cond; // if condition, should be the compare TokenType ?
-	public int fixupLocation; // fix up the previous location ?
+	public int jumpTo; // fix up the previous location ?
 }

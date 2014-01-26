@@ -3,6 +3,7 @@ package dragon.compiler.parser;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import dragon.compiler.data.FormResult;
 import dragon.compiler.data.SyntaxFormatException;
@@ -32,7 +33,7 @@ public class Parser {
 	}
 
 	private void computation() throws IOException, SyntaxFormatException {
-		checkAndMoveNext(TokenType.MAIN);
+		assertAndMoveNext(TokenType.MAIN);
 
 		ArrayList<FormResult> varList = new ArrayList<FormResult>();
 		for (FormResult var = varDecl(); var != null; var = varDecl()) {
@@ -43,13 +44,13 @@ public class Parser {
 			funcList.add(func);
 		}
 
-		checkAndMoveNext(TokenType.BEGIN_BRACE);
+		assertAndMoveNext(TokenType.BEGIN_BRACE);
 		FormResult allStateSequence = statSequence();
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
 		}
-		checkAndMoveNext(TokenType.END_BRACE);
-		checkAndMoveNext(TokenType.PERIOD);
+		assertAndMoveNext(TokenType.END_BRACE);
+		assertAndMoveNext(TokenType.PERIOD);
 	}
 
 	private FormResult varDecl() throws SyntaxFormatException, IOException {
@@ -57,15 +58,15 @@ public class Parser {
 		if (type != null) {
 			ArrayList<FormResult> varList = new ArrayList<FormResult>();
 			FormResult varName = new FormResult(lexer.getCurrentToken());
-			checkAndMoveNext(TokenType.IDENTIRIER);
+			assertAndMoveNext(TokenType.IDENTIRIER);
 			varList.add(varName);
 
 			while (checkCurrentType(TokenType.COMMA)) {
 				moveToNextToken();
 				varList.add(new FormResult(lexer.getCurrentToken()));
-				checkAndMoveNext(TokenType.IDENTIRIER);
+				assertAndMoveNext(TokenType.IDENTIRIER);
 			}
-			checkAndMoveNext(TokenType.SEMICOMA);
+			assertAndMoveNext(TokenType.SEMICOMA);
 			return Computor.computeVarDecl(type, varList);
 		}
 		return null;
@@ -96,8 +97,8 @@ public class Parser {
 		if (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 			moveToNextToken();
 			FormResult num = new FormResult(lexer.getCurrentToken());
-			checkAndMoveNext(TokenType.NUMBER);
-			checkAndMoveNext(TokenType.END_BRACKET);
+			assertAndMoveNext(TokenType.NUMBER);
+			assertAndMoveNext(TokenType.END_BRACKET);
 			return num;
 		}
 		return null;
@@ -109,15 +110,15 @@ public class Parser {
 			moveToNextToken();
 
 			FormResult funcName = new FormResult(lexer.getCurrentToken());
-			checkAndMoveNext(TokenType.IDENTIRIER);
+			assertAndMoveNext(TokenType.IDENTIRIER);
 			FormResult params = formalParam();
-			checkAndMoveNext(TokenType.SEMICOMA);
+			assertAndMoveNext(TokenType.SEMICOMA);
 
 			FormResult body = funcBody();
 			if (body == null) {
 				throwFormatException("Function body expected");
 			}
-			checkAndMoveNext(TokenType.SEMICOMA);
+			assertAndMoveNext(TokenType.SEMICOMA);
 			return Computor.computeFuncDecl(funcName, params, body);
 		}
 		return null;
@@ -132,17 +133,18 @@ public class Parser {
 		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
 			moveToNextToken();
 			body = statSequence();
-			checkAndMoveNext(TokenType.END_BRACE);
+			assertAndMoveNext(TokenType.END_BRACE);
 			return Computor.computeFuncBody(declarations, body);
 		}
 		return null;
 	}
 
 	private FormResult statSequence() throws IOException, SyntaxFormatException {
-		ArrayList<FormResult> statementBlock = new ArrayList<FormResult>();
+		ArrayList<FormResult> statementBlock = null;
 		FormResult statementResult = statement();
 		if (statementResult != null) {
-			statementBlock.add(statementResult);
+			statementBlock = new ArrayList<FormResult>(
+					Arrays.asList(statementResult));
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
 				statementResult = statement();
@@ -178,7 +180,7 @@ public class Parser {
 		if (checkCurrentType(TokenType.RETURN)) {
 			moveToNextToken();
 			FormResult expr = expression();
-			return Computor.computeRetureExpression(expr);
+			return Computor.computeReturnExpression(expr);
 		}
 		return null;
 	}
@@ -242,7 +244,7 @@ public class Parser {
 			if (expressionResult == null) {
 				throwFormatException("factor: expression expected!");
 			}
-			checkAndMoveNext(TokenType.END_PARENTHESIS);
+			assertAndMoveNext(TokenType.END_PARENTHESIS);
 			return expressionResult;
 		}
 		return null;
@@ -256,12 +258,14 @@ public class Parser {
 			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
-			checkAndMoveNext(TokenType.DO);
+			Computor.condNegBraFwd(condition);
+			assertAndMoveNext(TokenType.DO);
 			FormResult loopBody = statSequence();
 			if (loopBody == null) {
 				throwFormatException("statSequence expected");
 			}
-			checkAndMoveNext(TokenType.OD);
+			assertAndMoveNext(TokenType.OD);
+			Computor.fixUpJumpTo(condition);
 			return Computor.computeWhileStatement(condition, loopBody);
 		}
 		return null;
@@ -292,7 +296,8 @@ public class Parser {
 			if (cond == null) {
 				throwFormatException("if statement relation expression expected");
 			}
-			checkAndMoveNext(TokenType.THEN);
+			assertAndMoveNext(TokenType.THEN);
+			Computor.condNegBraFwd(cond);
 			FormResult then = statSequence();
 			if (then == null) {
 				throwFormatException("if statement statSequence expected");
@@ -300,12 +305,15 @@ public class Parser {
 			FormResult elseResult = null;
 			if (checkCurrentType(TokenType.ELSE)) {
 				moveToNextToken();
+				Computor.fixUpJumpTo(cond);
 				elseResult = statSequence();
 				if (elseResult == null) {
 					throwFormatException("if statement else statSequence expected");
 				}
+			} else {
+				Computor.fixUpJumpTo(cond);
 			}
-			checkAndMoveNext(TokenType.FI);
+			assertAndMoveNext(TokenType.FI);
 			return Computor.computeIf(cond, then, elseResult);
 		}
 
@@ -316,7 +324,7 @@ public class Parser {
 		if (checkCurrentType(TokenType.CALL)) {
 			moveToNextToken();
 			FormResult funcIdenti = new FormResult(lexer.getCurrentToken());
-			checkAndMoveNext(TokenType.IDENTIRIER);
+			assertAndMoveNext(TokenType.IDENTIRIER);
 			ArrayList<FormResult> argumentList = new ArrayList<FormResult>();
 			if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) { // 0 or 1 time
 				moveToNextToken();
@@ -332,7 +340,7 @@ public class Parser {
 						argumentList.add(moreArgs);
 					}
 				}
-				checkAndMoveNext(TokenType.END_PARENTHESIS);
+				assertAndMoveNext(TokenType.END_PARENTHESIS);
 			}
 			return Computor.comuteFunctionCall(funcIdenti, argumentList);
 		}
@@ -346,7 +354,7 @@ public class Parser {
 			if (assignTarget == null) {
 				throwFormatException("assignment missing designator");
 			}
-			checkAndMoveNext(TokenType.DESIGNATOR);
+			assertAndMoveNext(TokenType.DESIGNATOR);
 			FormResult assignValue = expression();
 			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
@@ -360,17 +368,17 @@ public class Parser {
 		if (checkCurrentType(TokenType.IDENTIRIER)) {
 			FormResult identiResult = new FormResult(lexer.getCurrentToken());
 			moveToNextToken();
+			ArrayList<FormResult> arrayOffsets = new ArrayList<FormResult>();
 			while (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 				moveToNextToken();
 				FormResult offsetResult = expression();
 				if (offsetResult == null) {
 					throwFormatException("expression expected");
 				}
-				identiResult = Computor.loadArrayAddress(identiResult,
-						offsetResult);
-				checkAndMoveNext(TokenType.END_BRACKET);
+				arrayOffsets.add(offsetResult);
+				assertAndMoveNext(TokenType.END_BRACKET);
 			}
-			return identiResult;
+			return Computor.lookUpVarAddress(identiResult, arrayOffsets);
 		}
 		return null;
 	}
@@ -385,10 +393,10 @@ public class Parser {
 				while (checkCurrentType(TokenType.COMMA)) {
 					moveToNextToken();
 					params.add(new FormResult(lexer.getCurrentToken()));
-					checkAndMoveNext(TokenType.IDENTIRIER);
+					assertAndMoveNext(TokenType.IDENTIRIER);
 				}
 			}
-			checkAndMoveNext(TokenType.END_PARENTHESIS);
+			assertAndMoveNext(TokenType.END_PARENTHESIS);
 			return Computor.computeFormalParam(params);
 		}
 		return null;
@@ -404,7 +412,7 @@ public class Parser {
 	 * @throws SyntaxFormatException
 	 * @throws IOException
 	 */
-	private boolean checkAndMoveNext(TokenType expectedType)
+	private boolean assertAndMoveNext(TokenType expectedType)
 			throws SyntaxFormatException, IOException {
 		if (lexer.getCurrentToken().getType() == expectedType) {
 			lexer.moveToNextToken();

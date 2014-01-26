@@ -75,7 +75,8 @@ public class VariableTable {
 		variableTable.get(var).add(insId);
 	}
 
-	public static int lookUpAddress(String identifierName) {
+	public int lookUpAddress(String identifierName,
+			ArrayList<FormResult> arrayOffsets) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
