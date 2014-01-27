@@ -1,251 +1,225 @@
 package dragon.compiler.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import dragon.compiler.data.FormResult;
-import dragon.compiler.data.FormResult.Kind;
+import dragon.compiler.cfg.Block;
+import dragon.compiler.data.ArithmeticResult;
+import dragon.compiler.data.ArithmeticResult.Kind;
+import dragon.compiler.data.CFGResult;
+import dragon.compiler.data.DeclResult;
+import dragon.compiler.data.FunctionTable;
 import dragon.compiler.data.Instruction.OP;
-import dragon.compiler.data.Token;
 import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
 import dragon.compiler.resource.RegisterAllocator;
 
 public class Interpretor {
 
-	private VariableTable vTable = new VariableTable();
+	private static HashMap<TokenType, OP> mapTokenToOP = new HashMap<TokenType, OP>();
+	static {
+		mapTokenToOP.put(TokenType.PLUS, OP.ADD);
+		mapTokenToOP.put(TokenType.MINUS, OP.SUB);
+		mapTokenToOP.put(TokenType.TIMES, OP.MUL);
+		mapTokenToOP.put(TokenType.DIVIDE, OP.DIV);
+	}
+
 	private RegisterAllocator regAllocator = new RegisterAllocator();
+	private FunctionTable functionTable = new FunctionTable();
+	private VariableTable mainVarTable = new VariableTable();
+	private VariableTable localVarTable = new VariableTable();
 
-	public FormResult computeArrayTypeDecl(ArrayList<Integer> numberList) {
-		return new FormResult(numberList);
-	}
-
-	public FormResult computeAssignment(FormResult assignTarget,
-			FormResult assignValue) {
-		loadToRegister(assignTarget);
-		loadToRegister(assignValue);
-		// TODO : SSA
-		// const and reg0
-		putCode(OP.MOVE, assignTarget.regno, assignValue.regno);
-		return null;
-	}
-
-	public FormResult computeExpression(Token tokenOp, FormResult leftTerm,
-			FormResult rightTerm) {
-		if (tokenOp.getType() == TokenType.PLUS
-				|| tokenOp.getType() == TokenType.MINUS) {
-			optimizedCompute(tokenOp.getType(), leftTerm, rightTerm);
-		} else {
-			throw new IllegalArgumentException(
-					"The token Opeartion should be * or /, now is :" + tokenOp);
-		}
-		return leftTerm;
-	}
-
-	public FormResult computeFormalParam(ArrayList<FormResult> params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public FormResult computeFuncBody(ArrayList<FormResult> declarations,
-			FormResult body) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public FormResult computeFuncDecl(FormResult funcName, FormResult params,
-			FormResult body) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public FormResult computeIf(FormResult cond, FormResult then,
-			FormResult elseResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public FormResult computeRelation(Token op, FormResult leftExp,
-			FormResult rightExp) {
-		optimizedCompute(op.getType(), leftExp, rightExp);
-		leftExp.kind = Kind.CONDITION;
-		leftExp.cond = op.getType().getTypeCode();
-		leftExp.jumpTo = 0;
-		return leftExp;
-	}
-
-	public FormResult computeReturnExpression(FormResult expr) {
-		return expr;
-	}
-
-	public FormResult computeStatSequence(ArrayList<FormResult> statementBlock) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public FormResult computeTerm(Token tokenOp, FormResult leftFactor,
-			FormResult rightFactor) {
-		if (tokenOp.getType() == TokenType.TIMES
-				|| tokenOp.getType() == TokenType.DIVIDE) {
-			optimizedCompute(tokenOp.getType(), leftFactor, rightFactor);
-		} else {
-			throw new IllegalArgumentException(
-					"The token Opeartion should be * or /, now is :" + tokenOp);
-		}
-		return leftFactor;
-	}
-
-	public FormResult computeVarDecl(FormResult type,
-			ArrayList<FormResult> varList) {
-		switch (type.kind) {
-		case ARRAY_DECL:
-			for (FormResult identi : varList) {
-				vTable.registerArray(identi.varName, type.sizeList);
+	public VariableTable registerVarDecl(DeclResult type,
+			ArrayList<String> varList) {
+		VariableTable vTable = new VariableTable();
+		switch (type.getType()) {
+		case VAR:
+			for (String identi : varList) {
+				vTable.registerVar(identi);
 			}
 			break;
-		case VAR_DECL:
-			for (FormResult identi : varList) {
-				vTable.registerVar(identi.varName);
+		case ARRAY:
+			for (String identi : varList) {
+				vTable.registerArray(identi, type.getSizeList());
 			}
 			break;
 		default:
 			throw new IllegalArgumentException(
 					"in var declaration only allowed VAR and ARRAY, but now is:"
-							+ type.kind);
+							+ type.getType());
 		}
-		// The VarDecl just register the variables into the VariableTable.
-		// Return an NO_OP Result.
-		return new FormResult();
+		return vTable;
 	}
 
-	public FormResult computeWhileStatement(FormResult condition,
-			FormResult loopBody) {
+	public VariableTable registerFormalParam(ArrayList<String> params) {
+		VariableTable vTable = new VariableTable();
+		for (String param : params) {
+			vTable.registerVar(param);
+		}
+		return vTable;
+	}
+
+	public FunctionTable registerFunction(String funcName,
+			VariableTable paramsTable, CFGResult body) {
+		functionTable.addNewFunction(funcName, paramsTable, body);
+		return functionTable;
+	}
+
+	public ArithmeticResult computeExpression(TokenType tokenOp,
+			ArithmeticResult leftTerm, ArithmeticResult rightTerm,
+			Block codeBlock) {
+		optimizedCompute(tokenOp, leftTerm, rightTerm, codeBlock);
+		return leftTerm;
+	}
+
+	// declaration can be null
+	public CFGResult computeFuncBody(VariableTable declarations, CFGResult body) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public FormResult comuteFunctionCall(FormResult funcIdenti,
-			ArrayList<FormResult> argumentList) {
+	// elseResult could be null
+	public CFGResult computeIf(ArithmeticResult cond, CFGResult then,
+			CFGResult elseResult) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public FormResult lookUpVarAddress(FormResult identiResult,
-			ArrayList<FormResult> arrayOffsets) {
-		if (identiResult.kind == Kind.VAR) {
-			identiResult.address = vTable.lookUpAddress(identiResult.varName,
-					arrayOffsets);
-		} else {
-			throw new IllegalArgumentException(
-					"The FormResult should be VAR, now is:" + identiResult.kind);
+	public ArithmeticResult computeRelation(TokenType op,
+			ArithmeticResult leftExp, ArithmeticResult rightExp, Block codeBlock) {
+		optimizedCompute(op, leftExp, rightExp, codeBlock);
+		leftExp.setRelation(op);
+		return leftExp;
+	}
+
+	public ArithmeticResult computeTerm(TokenType op,
+			ArithmeticResult leftFactor, ArithmeticResult rightFactor,
+			Block codeBlock) {
+		optimizedCompute(op, leftFactor, rightFactor, codeBlock);
+		return leftFactor;
+	}
+
+	public CFGResult computeWhileStatement(ArithmeticResult condition,
+			CFGResult loopBody) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArithmeticResult computeDesignator(String identiName,
+			ArrayList<ArithmeticResult> arrayOffsets) {
+		ArithmeticResult result = new ArithmeticResult(Kind.VAR);
+		result.setAddress(localVarTable.lookUpAddress(identiName));
+		if (result.getAddress() == 0) {
+			result.setAddress(mainVarTable.lookUpAddress(identiName));
 		}
-		return identiResult;
+		if (result.getAddress() == 0) {
+			throw new IllegalArgumentException("identifier undefined:"
+					+ identiName);
+		}
+		return result;
 	}
 
 	private static OP mapTokenTypeToImmOP(TokenType tokenType) {
-		switch (tokenType) {
-		case PLUS:
-			return OP.ADD;
-		case MINUS:
-			return OP.SUB;
-		case TIMES:
-			return OP.MUL;
-		case DIVIDE:
-			return OP.DIV;
-		default:
-			throw new IllegalArgumentException("Can not map " + tokenType
-					+ " to OP code");
-		}
+		return mapTokenToOP.get(tokenType);
 	}
 
 	private static OP mapTokenTypeToOP(TokenType tokenType) {
-		switch (tokenType) {
-		case PLUS:
-			return OP.ADDI;
-		case MINUS:
-			return OP.SUBI;
-		case TIMES:
-			return OP.MULI;
-		case DIVIDE:
-			return OP.DIVI;
-		default:
-			throw new IllegalArgumentException("Can not map " + tokenType
-					+ " to OP code");
-		}
+		return mapTokenToOP.get(tokenType);
 	}
 
-	private void optimizedCompute(TokenType tokenType, FormResult left,
-			FormResult right) {
-		if (left.kind == Kind.CONST && right.kind == Kind.CONST) {
+	private void optimizedCompute(TokenType tokenType, ArithmeticResult left,
+			ArithmeticResult right, Block codeBlock) {
+		if (left.getKind() == Kind.CONST && right.getKind() == Kind.CONST) {
 			switch (tokenType) {
 			case PLUS:
-				left.value += right.value;
+				left.setValue(left.getValue() + right.getValue());
 				break;
 			case MINUS:
-				left.value -= right.value;
+				left.setValue(left.getValue() - right.getValue());
 				break;
 			case TIMES:
-				left.value *= right.value;
+				left.setValue(left.getValue() * right.getValue());
 				break;
 			case DIVIDE:
-				left.value /= right.value;
+				left.setValue(left.getValue() / right.getValue());
 				break;
-			// TODO: case CMP:
+			case EQL:
+				left.setCond(left.getValue() == right.getValue());
+				break;
+			case NEQ:
+				left.setCond(left.getValue() != right.getValue());
+				break;
+			case LSS:
+				left.setCond(left.getValue() < right.getValue());
+				break;
+			case GEQ:
+				left.setCond(left.getValue() >= right.getValue());
+				break;
+			case LEQ:
+				left.setCond(left.getValue() <= right.getValue());
+				break;
+			case GRE:
+				left.setCond(left.getValue() > right.getValue());
+				break;
 			default:
 				throw new IllegalArgumentException(
 						"The tokenType should be +,-,*,/ only, now is:"
 								+ tokenType);
 			}
 		} else {
-			loadToRegister(left);
-			if (left.regno == 0) {
+			loadToRegister(left, codeBlock);
+			if (left.getRegNum() == 0) {
 				// target reg # can't be 0
-				left.regno = regAllocator.allocateReg();
-				putCode(OP.ADD, left.regno, 0);
+				left.setRegNum(regAllocator.allocateReg());
+				codeBlock.putCode(OP.ADD, left.getRegNum(), 0);
 			}
-			if (right.kind == Kind.CONST) {
-				putCode(mapTokenTypeToImmOP(tokenType), left.regno, right.value);
+			if (right.getKind() == Kind.CONST) {
+				codeBlock.putCode(mapTokenTypeToImmOP(tokenType),
+						left.getRegNum(), right.getValue());
 			} else {
-				loadToRegister(right);
-				putCode(mapTokenTypeToOP(tokenType), left.regno, right.regno);
+				loadToRegister(right, codeBlock);
+				codeBlock.putCode(mapTokenTypeToOP(tokenType),
+						left.getRegNum(), right.getRegNum());
 				unloadFromRegister(right);
 			}
 		}
 	}
 
-	private void putCode(OP op, int regTarget, int regSource) {
+	private void loadToRegister(ArithmeticResult assignTarget, Block codeBlock) {
+		// TODO Auto-generated method stub
+	}
+
+	private void unloadFromRegister(ArithmeticResult right) {
+		// TODO Auto-generated method stub
+	}
+
+	public void condNegBraFwd(ArithmeticResult cond) {
+		// cond.jumpTo = getCurrentPC();
+		// putCode(negetedBranchOp(cond.cond), cond.regno, 0);
+	}
+
+	public void computeMain(VariableTable varList, FunctionTable funcList,
+			CFGResult allStateSequence) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void loadToRegister(FormResult assignTarget) {
-		// TODO Auto-generated method stub
-	}
-
-	private void unloadFromRegister(FormResult right) {
-		// TODO Auto-generated method stub
-	}
-
-	public void condNegBraFwd(FormResult cond) {
-		cond.jumpTo = getCurrentPC();
-		putCode(negetedBranchOp(cond.cond), cond.regno, 0);
-	}
-
-	private OP negetedBranchOp(int cond) {
+	public CFGResult computeAssignment(ArithmeticResult assignTarget,
+			ArithmeticResult assignValue, Block targetBlock) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private int getCurrentPC() {
+	public ArithmeticResult comuteFunctionCall(String funcName,
+			ArrayList<ArithmeticResult> argumentList, Block codeBlock) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	public void fixUpJumpTo(FormResult cond) {
-		fixUpJumpToCode(cond.jumpTo, getCurrentPC());
-	}
-
-	private void fixUpJumpToCode(int jumpTo, int currentPC) {
+	public CFGResult connectStatSequence(CFGResult statementResult,
+			CFGResult nextStatement) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
+
 }
