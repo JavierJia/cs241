@@ -7,6 +7,8 @@ import dragon.compiler.data.Instruction.OP;
 
 public class Block {
 
+	private ArrayList<Block> outgoingBlocks;
+
 	public int getID() {
 		// TODO
 		return 0;
@@ -18,8 +20,7 @@ public class Block {
 	}
 
 	public ArrayList<Block> getOutgoingBlocks() {
-		// TODO
-		return null;
+		return outgoingBlocks;
 	}
 
 	public void addInstruction(Instruction ins) {

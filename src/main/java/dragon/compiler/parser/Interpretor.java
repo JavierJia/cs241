@@ -24,7 +24,7 @@ public class Interpretor {
 		mapTokenToOP.put(TokenType.DIVIDE, OP.DIV);
 	}
 
-	private RegisterAllocator regAllocator = new RegisterAllocator();
+	private RegisterAllocator regAllocator = new RegisterAllocator(8);
 	private FunctionTable functionTable = new FunctionTable();
 	private VariableTable mainVarTable = new VariableTable();
 	private VariableTable localVarTable = new VariableTable();
@@ -79,8 +79,8 @@ public class Interpretor {
 	}
 
 	// elseResult could be null
-	public CFGResult computeIf(ArithmeticResult cond, CFGResult then,
-			CFGResult elseResult) {
+	public CFGResult computeIf(Block condBlock, ArithmeticResult cond,
+			CFGResult then, CFGResult elseResult) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -186,11 +186,13 @@ public class Interpretor {
 	}
 
 	private void loadToRegister(ArithmeticResult assignTarget, Block codeBlock) {
-		// TODO Auto-generated method stub
+		assignTarget.setRegNum(regAllocator.allocateReg());
+		codeBlock.putCode(OP.MOVE, assignTarget.getRegNum(),
+				assignTarget.getAddress());
 	}
 
 	private void unloadFromRegister(ArithmeticResult right) {
-		// TODO Auto-generated method stub
+		regAllocator.deAllocateReg(right.getRegNum());
 	}
 
 	public void condNegBraFwd(ArithmeticResult cond) {
@@ -206,8 +208,7 @@ public class Interpretor {
 
 	public CFGResult computeAssignment(ArithmeticResult assignTarget,
 			ArithmeticResult assignValue, Block targetBlock) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CFGResult(targetBlock, assignTarget);
 	}
 
 	public ArithmeticResult comuteFunctionCall(String funcName,

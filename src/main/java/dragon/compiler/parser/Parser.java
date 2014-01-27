@@ -188,7 +188,7 @@ public class Parser {
 			Block codeBlock = new Block();
 			ArithmeticResult funcCallResult = funcCall(codeBlock);
 			if (funcCallResult != null) {
-				return new CFGResult(funcCall(codeBlock));
+				return new CFGResult(codeBlock, funcCall(codeBlock));
 			}
 			if (result == null) {
 				result = ifStatement();
@@ -196,7 +196,8 @@ public class Parser {
 					result = whileStatement();
 					if (result == null) {
 						// TODO any special for return ?
-						result = new CFGResult(returnStatement(codeBlock));
+						result = new CFGResult(codeBlock,
+								returnStatement(codeBlock));
 					}
 				}
 			}
@@ -256,7 +257,7 @@ public class Parser {
 				}
 			}
 			assertAndMoveNext(TokenType.FI);
-			return inter.computeIf(cond, then, elseResult);
+			return inter.computeIf(condBlock, cond, then, elseResult);
 		}
 
 		return null;
