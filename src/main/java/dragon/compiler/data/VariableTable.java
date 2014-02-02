@@ -1,53 +1,18 @@
 package dragon.compiler.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class VariableTable {
-	private HashMap<Variable, ArrayList<Integer>> variableTable;
+	private HashMap<String, Variable> variableTable = new HashMap<String, Variable>();
 
-	public static class Variable {
-		public final String name;
-		public final ArrayList<Integer> sizeList;
-
-		// var
-		protected Variable(String name) {
-			this.name = name;
-			this.sizeList = (ArrayList<Integer>) Collections.singletonList(1);
+	public VariableTable clone() {
+		VariableTable vtable = new VariableTable();
+		for (Entry<String, Variable> entry : variableTable.entrySet()) {
+			vtable.variableTable.put(entry.getKey(), entry.getValue().clone());
 		}
-
-		// array
-		protected Variable(String name, ArrayList<Integer> list) {
-			this.name = name;
-			this.sizeList = list;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Variable other = (Variable) obj;
-			if (name == null) {
-				if (other.name != null)
-					return false;
-			} else if (!name.equals(other.name))
-				return false;
-			return true;
-		}
-
+		return vtable;
 	}
 
 	public void registerVar(String var) {
@@ -55,8 +20,7 @@ public class VariableTable {
 			throw new IllegalArgumentException("var is already registered : "
 					+ var);
 		}
-		variableTable.put(new Variable(var),
-				new ArrayList<Integer>(Collections.singletonList(0)));
+		variableTable.put(var, new Variable(var));
 	}
 
 	public void registerArray(String var, ArrayList<Integer> sizeList) {
@@ -64,24 +28,45 @@ public class VariableTable {
 			throw new IllegalArgumentException("var is already registered : "
 					+ var);
 		}
-		variableTable.put(new Variable(var, sizeList), new ArrayList<Integer>(
-				Collections.singletonList(0)));
+		variableTable.put(var, new Variable(var, sizeList));
 	}
 
-	public void rename(String var, int insId) {
+	public void renameSSAVar(String var, int insId) {
 		if (!variableTable.containsKey(var)) {
 			throw new IllegalArgumentException("var is not exist:" + var);
 		}
-		variableTable.get(var).add(insId);
+		((SSAVar) variableTable.get(var)).setVersion(insId);
 	}
 
 	public void append(VariableTable newDecl) {
-		// TODO Auto-generated method stub
-
+		for (Entry<String, Variable> entry : newDecl.variableTable.entrySet()) {
+			if (variableTable.containsKey(entry.getKey())) {
+				throw new IllegalArgumentException(
+						"conflict varTable, var already defined: "
+								+ entry.getKey());
+			}
+			variableTable.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	public int lookUpAddress(String identiName) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public Variable lookUpVar(String identiName) {
+		if (variableTable.containsKey(identiName)) {
+			return variableTable.get(identiName);
+		} else {
+			throw new IllegalArgumentException("var not defined: " + identiName);
+		}
+	}
+
+	// public SSAVar generateSSA(String identiName) {
+	// if (variableTable.containsKey(identiName)) {
+	// ArrayList<Integer> versions = variableTable.get(identiName);
+	// return new SSAVar(identiName, versions.get(versions.size() - 1));
+	// }
+	// return null;
+	// }
 }

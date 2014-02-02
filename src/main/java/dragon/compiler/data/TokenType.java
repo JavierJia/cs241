@@ -45,4 +45,24 @@ public enum TokenType {
 	TokenType(int value) {
 		this.value = (byte) (value & 0xff);
 	}
+
+	public static TokenType getNegRelation(TokenType relation) {
+		switch (relation) {
+		case EQL:
+			return TokenType.NEQ;
+		case LSS:
+			return TokenType.GEQ;
+		case LEQ:
+			return TokenType.GRE;
+		case NEQ:
+			return TokenType.EQL;
+		case GEQ:
+			return TokenType.LSS;
+		case GRE:
+			return TokenType.LEQ;
+		default:
+			throw new IllegalArgumentException(
+					"The relation value is not comparator:" + relation);
+		}
+	}
 }

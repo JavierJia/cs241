@@ -51,7 +51,8 @@ public class Parser {
 		}
 
 		assertAndMoveNext(TokenType.BEGIN_BRACE);
-		CFGResult allStateSequence = statSequence();
+		Block firstBlock = new Block(varList);
+		CFGResult allStateSequence = statSequence(firstBlock);
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
 		}
@@ -158,20 +159,23 @@ public class Parser {
 		}
 		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
 			moveToNextToken();
-			CFGResult body = statSequence();
+			Block codeBlock = new Block(declarations);
+			CFGResult body = statSequence(codeBlock);
 			assertAndMoveNext(TokenType.END_BRACE);
 			return inter.computeFuncBody(declarations, body);
 		}
 		return null;
 	}
 
-	private CFGResult statSequence() throws IOException, SyntaxFormatException {
-		CFGResult statementResult = statement();
+	private CFGResult statSequence(Block lastBlock) throws IOException,
+			SyntaxFormatException {
+		CFGResult statementResult = statement(lastBlock);
 		if (statementResult != null) {
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
-				CFGResult nextStatement = statement();
-				if (statementResult == null) {
+				CFGResult nextStatement = statement(statementResult
+						.getLastBlock());
+				if (nextStatement == null) {
 					throwFormatException("missing statement after semicoma");
 				}
 				statementResult = inter.connectStatSequence(statementResult,
@@ -181,23 +185,23 @@ public class Parser {
 		return statementResult;
 	}
 
-	private CFGResult statement() throws IOException, SyntaxFormatException {
-		CFGResult result = assignment();
+	private CFGResult statement(Block lastBlock) throws IOException,
+			SyntaxFormatException {
+		CFGResult result = assignment(lastBlock);
 		if (result == null) {
 			// TODO what's is funcCall
-			Block codeBlock = new Block();
-			ArithmeticResult funcCallResult = funcCall(codeBlock);
+			ArithmeticResult funcCallResult = funcCall(lastBlock);
 			if (funcCallResult != null) {
-				return new CFGResult(codeBlock, funcCall(codeBlock));
+				return new CFGResult(lastBlock, funcCall(lastBlock));
 			}
 			if (result == null) {
-				result = ifStatement();
+				result = ifStatement(lastBlock);
 				if (result == null) {
-					result = whileStatement();
+					result = whileStatement(lastBlock);
 					if (result == null) {
 						// TODO any special for return ?
-						result = new CFGResult(codeBlock,
-								returnStatement(codeBlock));
+						result = new CFGResult(lastBlock,
+								returnStatement(lastBlock));
 					}
 				}
 			}
@@ -215,17 +219,17 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult whileStatement() throws IOException,
+	private CFGResult whileStatement(Block lastBlock) throws IOException,
 			SyntaxFormatException {
 		if (checkCurrentType(TokenType.WHILE)) {
 			moveToNextToken();
-			Block condBlock = new Block();
-			ArithmeticResult condition = relation(condBlock);
+			ArithmeticResult condition = relation(lastBlock);
 			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
 			assertAndMoveNext(TokenType.DO);
-			CFGResult loopBody = statSequence();
+			Block loopBodyBlock = new Block(lastBlock.getVarTable());
+			CFGResult loopBody = statSequence(loopBodyBlock);
 			if (loopBody == null) {
 				throwFormatException("statSequence expected");
 			}
@@ -235,29 +239,31 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult ifStatement() throws IOException, SyntaxFormatException {
+	private CFGResult ifStatement(Block lastBlock) throws IOException,
+			SyntaxFormatException {
 		if (checkCurrentType(TokenType.IF)) {
 			moveToNextToken();
-			Block condBlock = new Block();
-			ArithmeticResult cond = relation(condBlock);
+			ArithmeticResult cond = relation(lastBlock);
 			if (cond == null) {
 				throwFormatException("if statement relation expression expected");
 			}
 			assertAndMoveNext(TokenType.THEN);
-			CFGResult then = statSequence();
-			if (then == null) {
+			Block thenBlock = new Block(lastBlock.getVarTable());
+			CFGResult thenResult = statSequence(thenBlock);
+			if (thenResult == null) {
 				throwFormatException("if statement statSequence expected");
 			}
 			CFGResult elseResult = null;
 			if (checkCurrentType(TokenType.ELSE)) {
 				moveToNextToken();
-				elseResult = statSequence();
+				Block elseBlock = new Block(lastBlock.getVarTable());
+				elseResult = statSequence(elseBlock);
 				if (elseResult == null) {
 					throwFormatException("if statement else statSequence expected");
 				}
 			}
 			assertAndMoveNext(TokenType.FI);
-			return inter.computeIf(condBlock, cond, then, elseResult);
+			return inter.computeIf(lastBlock, cond, thenResult, elseResult);
 		}
 
 		return null;
@@ -291,26 +297,26 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult assignment() throws IOException, SyntaxFormatException {
+	private CFGResult assignment(Block lastBlock) throws IOException,
+			SyntaxFormatException {
 		if (checkCurrentType(TokenType.LET)) {
 			moveToNextToken();
-			Block targetBlock = new Block();
-			ArithmeticResult assignTarget = designator(targetBlock);
+			ArithmeticResult assignTarget = designator(lastBlock);
 			if (assignTarget == null) {
 				throwFormatException("assignment missing designator");
 			}
 			assertAndMoveNext(TokenType.DESIGNATOR);
-			ArithmeticResult assignValue = expression(targetBlock);
+			ArithmeticResult assignValue = expression(lastBlock);
 			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
 			}
-			return inter.computeAssignment(assignTarget, assignValue,
-					targetBlock);
+			return inter
+					.computeAssignment(assignTarget, assignValue, lastBlock);
 		}
 		return null;
 	}
 
-	private ArithmeticResult designator(Block codeBlock)
+	private ArithmeticResult designator(Block lastBlock)
 			throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.IDENTIRIER)) {
 			String identiName = lexer.getCurrentToken().getIdentifierName();
@@ -318,14 +324,14 @@ public class Parser {
 			ArrayList<ArithmeticResult> arrayOffsets = new ArrayList<ArithmeticResult>();
 			while (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 				moveToNextToken();
-				ArithmeticResult offsetResult = expression(codeBlock);
+				ArithmeticResult offsetResult = expression(lastBlock);
 				if (offsetResult == null) {
 					throwFormatException("expression expected");
 				}
 				arrayOffsets.add(offsetResult);
 				assertAndMoveNext(TokenType.END_BRACKET);
 			}
-			return inter.computeDesignator(identiName, arrayOffsets);
+			return inter.computeDesignator(identiName, arrayOffsets, lastBlock);
 		}
 		return null;
 	}
@@ -442,7 +448,7 @@ public class Parser {
 			throwFormatException("should be an number, but now is"
 					+ curType.name());
 		} else {
-			throwFormatException("missing:" + expectedType.name());
+			throwFormatException("missing:" + expectedType);
 		}
 		return false;
 	}

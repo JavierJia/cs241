@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DeclResult extends Result {
 	public enum Type {
-		VAR, ARRAY, FUNC, ARGS
+		VAR, ARRAY, FUNC
 	}
 
 	private Type type;

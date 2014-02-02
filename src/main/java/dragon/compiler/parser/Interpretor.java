@@ -10,6 +10,7 @@ import dragon.compiler.data.CFGResult;
 import dragon.compiler.data.DeclResult;
 import dragon.compiler.data.FunctionTable;
 import dragon.compiler.data.Instruction.OP;
+import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
 import dragon.compiler.resource.RegisterAllocator;
@@ -24,10 +25,7 @@ public class Interpretor {
 		mapTokenToOP.put(TokenType.DIVIDE, OP.DIV);
 	}
 
-	private RegisterAllocator regAllocator = new RegisterAllocator(8);
 	private FunctionTable functionTable = new FunctionTable();
-	private VariableTable mainVarTable = new VariableTable();
-	private VariableTable localVarTable = new VariableTable();
 
 	public VariableTable registerVarDecl(DeclResult type,
 			ArrayList<String> varList) {
@@ -81,14 +79,27 @@ public class Interpretor {
 	// elseResult could be null
 	public CFGResult computeIf(Block condBlock, ArithmeticResult cond,
 			CFGResult then, CFGResult elseResult) {
-		// TODO Auto-generated method stub
-		return null;
+		if (cond.getKind() == Kind.CONST) { // the branch result is fixed.
+			if (cond.getConstValue() > 0) {
+				return then;
+			} else if (elseResult != null) {
+				return elseResult;
+			} else {
+				return CFGResult.EMPTY_CFG_RESULT;
+			}
+		} else {
+			CFGResult result = new CFGResult(condBlock, cond);
+			result.connect(then);
+			if (elseResult != null) {
+				result.condNegBranch(elseResult);
+			}
+			return result;
+		}
 	}
 
 	public ArithmeticResult computeRelation(TokenType op,
 			ArithmeticResult leftExp, ArithmeticResult rightExp, Block codeBlock) {
 		optimizedCompute(op, leftExp, rightExp, codeBlock);
-		leftExp.setRelation(op);
 		return leftExp;
 	}
 
@@ -106,25 +117,20 @@ public class Interpretor {
 	}
 
 	public ArithmeticResult computeDesignator(String identiName,
-			ArrayList<ArithmeticResult> arrayOffsets) {
-		ArithmeticResult result = new ArithmeticResult(Kind.VAR);
-		result.setAddress(localVarTable.lookUpAddress(identiName));
-		if (result.getAddress() == 0) {
-			result.setAddress(mainVarTable.lookUpAddress(identiName));
-		}
-		if (result.getAddress() == 0) {
-			throw new IllegalArgumentException("identifier undefined:"
-					+ identiName);
-		}
-		return result;
-	}
-
-	private static OP mapTokenTypeToImmOP(TokenType tokenType) {
-		return mapTokenToOP.get(tokenType);
-	}
-
-	private static OP mapTokenTypeToOP(TokenType tokenType) {
-		return mapTokenToOP.get(tokenType);
+			ArrayList<ArithmeticResult> arrayOffsets, Block codeBlock) {
+		// ArithmeticResult result = new ArithmeticResult(Kind.VAR);
+		// result.setAddress(localVarTable.lookUpAddress(identiName));
+		// if (result.getAddress() == 0) {
+		// result.setAddress(mainVarTable.lookUpAddress(identiName));
+		// }
+		// if (result.getAddress() == 0) {
+		// throw new IllegalArgumentException("identifier undefined:"
+		// + identiName);
+		// }
+		// ArithmeticResult result = new ArithmeticResult(new SSAVar(identiName,
+		// localVarTable.lookUpVersion(identiName)));
+		return new ArithmeticResult(new SSAVar(identiName,
+				codeBlock.getLatestVersion(identiName)));
 	}
 
 	private void optimizedCompute(TokenType tokenType, ArithmeticResult left,
@@ -132,34 +138,34 @@ public class Interpretor {
 		if (left.getKind() == Kind.CONST && right.getKind() == Kind.CONST) {
 			switch (tokenType) {
 			case PLUS:
-				left.setValue(left.getValue() + right.getValue());
+				left.setConstValue(left.getConstValue() + right.getConstValue());
 				break;
 			case MINUS:
-				left.setValue(left.getValue() - right.getValue());
+				left.setConstValue(left.getConstValue() - right.getConstValue());
 				break;
 			case TIMES:
-				left.setValue(left.getValue() * right.getValue());
+				left.setConstValue(left.getConstValue() * right.getConstValue());
 				break;
 			case DIVIDE:
-				left.setValue(left.getValue() / right.getValue());
+				left.setConstValue(left.getConstValue() / right.getConstValue());
 				break;
 			case EQL:
-				left.setCond(left.getValue() == right.getValue());
+				left.setCondConst(left.getConstValue() == right.getConstValue());
 				break;
 			case NEQ:
-				left.setCond(left.getValue() != right.getValue());
+				left.setCondConst(left.getConstValue() != right.getConstValue());
 				break;
 			case LSS:
-				left.setCond(left.getValue() < right.getValue());
+				left.setCondConst(left.getConstValue() < right.getConstValue());
 				break;
 			case GEQ:
-				left.setCond(left.getValue() >= right.getValue());
+				left.setCondConst(left.getConstValue() >= right.getConstValue());
 				break;
 			case LEQ:
-				left.setCond(left.getValue() <= right.getValue());
+				left.setCondConst(left.getConstValue() <= right.getConstValue());
 				break;
 			case GRE:
-				left.setCond(left.getValue() > right.getValue());
+				left.setCondConst(left.getConstValue() > right.getConstValue());
 				break;
 			default:
 				throw new IllegalArgumentException(
@@ -167,37 +173,60 @@ public class Interpretor {
 								+ tokenType);
 			}
 		} else {
-			loadToRegister(left, codeBlock);
-			if (left.getRegNum() == 0) {
-				// target reg # can't be 0
-				left.setRegNum(regAllocator.allocateReg());
-				codeBlock.putCode(OP.ADD, left.getRegNum(), 0);
+			// Old style, need to change it to SSA
+			// loadToRegister(left, codeBlock);
+			// if (left.getRegNum() == 0) {
+			// // target reg # can't be 0
+			// left.setRegNum(regAllocator.allocateReg());
+			// codeBlock.putCode(OP.ADD, left.getRegNum(), 0);
+			// }
+			// if (right.getKind() == Kind.CONST) {
+			// codeBlock.putCode(mapTokenTypeToImmOP(tokenType),
+			// left.getRegNum(), right.getValue());
+			// } else {
+			// loadToRegister(right, codeBlock);
+			// codeBlock.putCode(mapTokenTypeToOP(tokenType),
+			// left.getRegNum(), right.getRegNum());
+			// unloadFromRegister(right);
+			// }
+			// if (TokenType.isComparison(tokenType)) {
+			// left.setRelation(tokenType);
+			// }
+			if (left.getKind() == Kind.CONST) {
+				ArithmeticResult temp = left;
+				left = right;
+				right = temp;
+				if (TokenType.isComparison(tokenType)) {
+					tokenType = TokenType.getNegRelation(tokenType);
+				}
 			}
 			if (right.getKind() == Kind.CONST) {
-				codeBlock.putCode(mapTokenTypeToImmOP(tokenType),
-						left.getRegNum(), right.getValue());
-			} else {
-				loadToRegister(right, codeBlock);
 				codeBlock.putCode(mapTokenTypeToOP(tokenType),
-						left.getRegNum(), right.getRegNum());
-				unloadFromRegister(right);
+						left.getVariable(), right.getConstValue());
+			} else {
+				codeBlock.putCode(mapTokenTypeToOP(tokenType),
+						left.getVariable(), right.getVariable());
 			}
 		}
 	}
 
-	private void loadToRegister(ArithmeticResult assignTarget, Block codeBlock) {
-		assignTarget.setRegNum(regAllocator.allocateReg());
-		codeBlock.putCode(OP.MOVE, assignTarget.getRegNum(),
-				assignTarget.getAddress());
-	}
+	// private void loadToRegister(ArithmeticResult assignTarget, Block
+	// codeBlock) {
+	// assignTarget.setRegNum(regAllocator.allocateReg());
+	// codeBlock.putCode(OP.MOVE, assignTarget.getRegNum(),
+	// assignTarget.getAddress());
+	// }
+	//
+	// private void unloadFromRegister(ArithmeticResult right) {
+	// regAllocator.deAllocateReg(right.getRegNum());
+	// }
 
-	private void unloadFromRegister(ArithmeticResult right) {
-		regAllocator.deAllocateReg(right.getRegNum());
-	}
-
-	public void condNegBraFwd(ArithmeticResult cond) {
-		// cond.jumpTo = getCurrentPC();
-		// putCode(negetedBranchOp(cond.cond), cond.regno, 0);
+	// private static OP mapTokenTypeToImmOP(TokenType tokenType) {
+	// return mapTokenToOP.get(tokenType);
+	// }
+	//
+	private static OP mapTokenTypeToOP(TokenType tokenType) {
+		return mapTokenToOP.get(tokenType);
 	}
 
 	public void computeMain(VariableTable varList, FunctionTable funcList,
@@ -219,8 +248,8 @@ public class Interpretor {
 
 	public CFGResult connectStatSequence(CFGResult statementResult,
 			CFGResult nextStatement) {
-		// TODO Auto-generated method stub
-		return null;
+		statementResult.connect(nextStatement);
+		return statementResult;
 	}
 
 }
