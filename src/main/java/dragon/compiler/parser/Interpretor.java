@@ -9,11 +9,11 @@ import dragon.compiler.data.ArithmeticResult.Kind;
 import dragon.compiler.data.CFGResult;
 import dragon.compiler.data.DeclResult;
 import dragon.compiler.data.FunctionTable;
+import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
 import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
-import dragon.compiler.resource.RegisterAllocator;
 
 public class Interpretor {
 
@@ -88,26 +88,36 @@ public class Interpretor {
 				return CFGResult.EMPTY_CFG_RESULT;
 			}
 		} else {
-			CFGResult result = new CFGResult(condBlock, cond);
-			result.connect(then);
+			CFGResult result = new CFGResult(condBlock);
+			condBlock.setNext(then.getFirstBlock());
 			if (elseResult != null) {
-				result.condNegBranch(elseResult);
+				condBlock.condNegBranch(elseResult.getFirstBlock());
+				Block phiIfBlock = new Block(then.getLastBlock().getVarTable(),
+						elseResult.getLastBlock().getVarTable());
+				then.getLastBlock().setNext(phiIfBlock);
+				elseResult.getLastBlock().setNext(phiIfBlock);
+				result.setTail(phiIfBlock);
+			} else {
+				Block phiIfBlock = new Block(then.getLastBlock().getVarTable(),
+						condBlock.getVarTable());
+				condBlock.condNegBranch(phiIfBlock);
+				then.getLastBlock().setNext(phiIfBlock);
+				result.setTail(phiIfBlock);
 			}
+
 			return result;
 		}
 	}
 
 	public ArithmeticResult computeRelation(TokenType op,
 			ArithmeticResult leftExp, ArithmeticResult rightExp, Block codeBlock) {
-		optimizedCompute(op, leftExp, rightExp, codeBlock);
-		return leftExp;
+		return optimizedCompute(op, leftExp, rightExp, codeBlock);
 	}
 
 	public ArithmeticResult computeTerm(TokenType op,
 			ArithmeticResult leftFactor, ArithmeticResult rightFactor,
 			Block codeBlock) {
-		optimizedCompute(op, leftFactor, rightFactor, codeBlock);
-		return leftFactor;
+		return optimizedCompute(op, leftFactor, rightFactor, codeBlock);
 	}
 
 	public CFGResult computeWhileStatement(ArithmeticResult condition,
@@ -133,40 +143,41 @@ public class Interpretor {
 				codeBlock.getLatestVersion(identiName)));
 	}
 
-	private void optimizedCompute(TokenType tokenType, ArithmeticResult left,
-			ArithmeticResult right, Block codeBlock) {
+	private ArithmeticResult optimizedCompute(TokenType tokenType,
+			ArithmeticResult left, ArithmeticResult right, Block codeBlock) {
+
 		if (left.getKind() == Kind.CONST && right.getKind() == Kind.CONST) {
 			switch (tokenType) {
 			case PLUS:
-				left.setConstValue(left.getConstValue() + right.getConstValue());
-				break;
+				return new ArithmeticResult(left.getConstValue()
+						+ right.getConstValue());
 			case MINUS:
-				left.setConstValue(left.getConstValue() - right.getConstValue());
-				break;
+				return new ArithmeticResult(left.getConstValue()
+						- right.getConstValue());
 			case TIMES:
-				left.setConstValue(left.getConstValue() * right.getConstValue());
-				break;
+				return new ArithmeticResult(left.getConstValue()
+						* right.getConstValue());
 			case DIVIDE:
-				left.setConstValue(left.getConstValue() / right.getConstValue());
-				break;
+				return new ArithmeticResult(left.getConstValue()
+						/ right.getConstValue());
 			case EQL:
-				left.setCondConst(left.getConstValue() == right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() == right.getConstValue());
 			case NEQ:
-				left.setCondConst(left.getConstValue() != right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() != right.getConstValue());
 			case LSS:
-				left.setCondConst(left.getConstValue() < right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() < right.getConstValue());
 			case GEQ:
-				left.setCondConst(left.getConstValue() >= right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() >= right.getConstValue());
 			case LEQ:
-				left.setCondConst(left.getConstValue() <= right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() <= right.getConstValue());
 			case GRE:
-				left.setCondConst(left.getConstValue() > right.getConstValue());
-				break;
+				return new ArithmeticResult(
+						left.getConstValue() > right.getConstValue());
 			default:
 				throw new IllegalArgumentException(
 						"The tokenType should be +,-,*,/ only, now is:"
@@ -192,7 +203,7 @@ public class Interpretor {
 			// if (TokenType.isComparison(tokenType)) {
 			// left.setRelation(tokenType);
 			// }
-			if (left.getKind() == Kind.CONST) {
+			if (left.getKind() == Kind.CONST) { // swap left <-> right
 				ArithmeticResult temp = left;
 				left = right;
 				right = temp;
@@ -207,6 +218,7 @@ public class Interpretor {
 				codeBlock.putCode(mapTokenTypeToOP(tokenType),
 						left.getVariable(), right.getVariable());
 			}
+			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
 		}
 	}
 
@@ -237,11 +249,32 @@ public class Interpretor {
 
 	public CFGResult computeAssignment(ArithmeticResult assignTarget,
 			ArithmeticResult assignValue, Block targetBlock) {
-		return new CFGResult(targetBlock, assignTarget);
+		if (assignValue.getKind() == Kind.CONST) {
+			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(),
+					assignValue.getConstValue());
+		} else if (assignValue.getKind() == Kind.VAR) {
+			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(),
+					assignValue.getVariable());
+		} else {
+			throw new IllegalArgumentException("assign value kind is not valid");
+		}
+		targetBlock.updateVarVersion(assignTarget.getVariable().getVarName());
+		return new CFGResult(targetBlock);
 	}
 
 	public ArithmeticResult comuteFunctionCall(String funcName,
 			ArrayList<ArithmeticResult> argumentList, Block codeBlock) {
+		// Predefined func
+		if (funcName.equals("InputNum")) {
+			codeBlock.putFuncCode(OP.READ);
+			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
+		} else if (funcName.equals("OutputNum")) {
+			codeBlock.putFuncCode(OP.WRITE);
+			// TODO, get the x from vtable
+		} else if (funcName.equals("OutputNewLine")) {
+			codeBlock.putFuncCode(OP.WLN);
+			return ArithmeticResult.NO_OP_RESULT;
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}

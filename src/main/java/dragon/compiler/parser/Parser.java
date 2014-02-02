@@ -192,7 +192,7 @@ public class Parser {
 			// TODO what's is funcCall
 			ArithmeticResult funcCallResult = funcCall(lastBlock);
 			if (funcCallResult != null) {
-				return new CFGResult(lastBlock, funcCall(lastBlock));
+				return new CFGResult(lastBlock);
 			}
 			if (result == null) {
 				result = ifStatement(lastBlock);
@@ -200,8 +200,9 @@ public class Parser {
 					result = whileStatement(lastBlock);
 					if (result == null) {
 						// TODO any special for return ?
-						result = new CFGResult(lastBlock,
-								returnStatement(lastBlock));
+						// I prefer to fix the return value to one reg#
+						returnStatement(lastBlock);
+						result = new CFGResult(lastBlock);
 					}
 				}
 			}

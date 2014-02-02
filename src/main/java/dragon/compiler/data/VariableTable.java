@@ -2,9 +2,10 @@ package dragon.compiler.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
-public class VariableTable {
+public class VariableTable implements Iterable<Variable> {
 	private HashMap<String, Variable> variableTable = new HashMap<String, Variable>();
 
 	public VariableTable clone() {
@@ -13,6 +14,14 @@ public class VariableTable {
 			vtable.variableTable.put(entry.getKey(), entry.getValue().clone());
 		}
 		return vtable;
+	}
+
+	public void registerExistVar(Variable var) {
+		if (variableTable.containsKey(var.getVarName())) {
+			throw new IllegalArgumentException("var is already registered : "
+					+ var);
+		}
+		variableTable.put(var.getVarName(), var);
 	}
 
 	public void registerVar(String var) {
@@ -60,6 +69,11 @@ public class VariableTable {
 		} else {
 			throw new IllegalArgumentException("var not defined: " + identiName);
 		}
+	}
+
+	@Override
+	public Iterator<Variable> iterator() {
+		return variableTable.values().iterator();
 	}
 
 	// public SSAVar generateSSA(String identiName) {

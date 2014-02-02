@@ -1,5 +1,6 @@
 package dragon.compiler.data;
 
+
 public class SSAInstruction extends Instruction {
 
 	private OP op;
@@ -24,6 +25,11 @@ public class SSAInstruction extends Instruction {
 	public int getId() {
 		return super.insID;
 	}
+	
+	public void fixUpNegBranch(int id) {
+		right = new SSAVar(id);
+	}
+	
 
 	@Override
 	public String toString() {
@@ -33,4 +39,9 @@ public class SSAInstruction extends Instruction {
 			return getId() + " " + op + " " + left + " " + right;
 		}
 	}
+
+	public OP getOP() {
+		return op;
+	}
+
 }

@@ -7,6 +7,8 @@ public class ArithmeticResult extends Result {
 		CONDITION,
 	}
 
+	public static final ArithmeticResult NO_OP_RESULT = new ArithmeticResult(42);
+
 	private Kind kind;
 	private int value;
 	private TokenType relation;
@@ -21,8 +23,18 @@ public class ArithmeticResult extends Result {
 		this.kind = Kind.VAR;
 		this.var = var;
 	}
-	
-	public Variable getVariable(){
+
+	public ArithmeticResult(boolean bool) {
+		kind = Kind.CONST;
+		value = bool ? 1 : 0;
+	}
+
+	public ArithmeticResult(TokenType tokenType) {
+		relation = tokenType;
+		kind = Kind.CONDITION;
+	}
+
+	public Variable getVariable() {
 		return var;
 	}
 
@@ -34,30 +46,8 @@ public class ArithmeticResult extends Result {
 		return value;
 	}
 
-	public void setConstValue(int val) {
-		value = val;
-	}
-
-	public void setCondConst(boolean b) {
-		kind = Kind.CONST;
-		value = b ? 1 : 0;
-	}
-
-	public void setRelation(TokenType tokenType) {
-		relation = tokenType;
-		kind = Kind.CONDITION;
-	}
-
 	public TokenType getRelation() {
 		return relation;
 	}
-
-	// public void setAddress(int lookUpAddress) {
-	// address = lookUpAddress;
-	// }
-	//
-	// public int getAddress() {
-	// return address;
-	// }
 
 }

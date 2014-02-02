@@ -5,7 +5,6 @@ import dragon.compiler.cfg.Block;
 public class CFGResult extends Result {
 	public static CFGResult EMPTY_CFG_RESULT = new CFGResult();
 
-	private ArithmeticResult result;
 	private Block head;
 	private Block tail;
 
@@ -15,10 +14,9 @@ public class CFGResult extends Result {
 	 * @param targetBlock
 	 * @param returnResult
 	 */
-	public CFGResult(Block targetBlock, ArithmeticResult returnResult) {
+	public CFGResult(Block targetBlock) {
 		head = targetBlock;
 		tail = targetBlock;
-		result = returnResult;
 	}
 
 	// Should be the empty one;
@@ -26,30 +24,36 @@ public class CFGResult extends Result {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void condNegBranch(CFGResult elseResult) {
-		// TODO Auto-generated method stub
+	public void connect(CFGResult next) {
+		if (next == EMPTY_CFG_RESULT) {
+			return;
+		}
+		if (this == EMPTY_CFG_RESULT) {
+			this.head = next.head;
+			this.tail = next.tail;
+		}
 
+		if (this.tail != next.head) {
+			if (this.tail.getNextBlock() != null) {
+				throw new IllegalStateException(
+						"The tail's next block is not empty");
+			}
+			this.tail.setNext(next.head);
+		} else {
+			// TODO do nothing ?
+		}
 	}
 
-	public void connect(CFGResult then) {
-		// TODO Auto-generated method stub
-		// 1. Assign + Any ==> prepend
-		// 2. If : cond
-		// / \
-		// then else
-		// \ /
-		// phi ?
-		// 3. While: cond
-		// / \
-		// do nul
-		// \ /
-		// phi ?
-		// connect head, and tail.
-		// so just connect with head and tail.
+	public Block getFirstBlock() {
+		return head;
 	}
 
 	public Block getLastBlock() {
 		return tail;
+	}
+
+	public void setTail(Block tailBlock) {
+		tail = tailBlock;
 	}
 
 }

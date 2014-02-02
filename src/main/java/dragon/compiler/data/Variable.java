@@ -5,8 +5,8 @@ import java.util.Collections;
 
 public class Variable {
 
-	public final String name;
-	public final ArrayList<Integer> sizeList;
+	private final String name;
+	private final ArrayList<Integer> sizeList;
 
 	protected Variable clone() {
 		return new Variable(this.name, this.sizeList);
@@ -59,6 +59,11 @@ public class Variable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString(){
+		return name;
 	}
 
 }
