@@ -18,6 +18,7 @@ public class Parser {
 
 	private Lexer lexer;
 	private Interpretor inter;
+	private Block rootBlock;
 
 	public Parser(String filename) throws FileNotFoundException {
 		this.lexer = new Lexer(filename);
@@ -51,8 +52,8 @@ public class Parser {
 		}
 
 		assertAndMoveNext(TokenType.BEGIN_BRACE);
-		Block firstBlock = new Block(varList);
-		CFGResult allStateSequence = statSequence(firstBlock);
+		rootBlock = new Block(varList);
+		CFGResult allStateSequence = statSequence(rootBlock);
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
 		}
@@ -270,14 +271,13 @@ public class Parser {
 		return null;
 	}
 
-	private ArithmeticResult funcCall(Block codeBlock2) throws IOException,
+	private ArithmeticResult funcCall(Block codeBlock) throws IOException,
 			SyntaxFormatException {
 		if (checkCurrentType(TokenType.CALL)) {
 			moveToNextToken();
 			String funcName = lexer.getCurrentToken().getIdentifierName();
 			assertAndMoveNext(TokenType.IDENTIRIER);
 			ArrayList<ArithmeticResult> argumentList = new ArrayList<ArithmeticResult>();
-			Block codeBlock = new Block();
 			if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) { // 0 or 1 time
 				moveToNextToken();
 				argumentList.add(expression(codeBlock));
@@ -463,4 +463,7 @@ public class Parser {
 		lexer.moveToNextToken();
 	}
 
+	public Block getRootBlock() {
+		return rootBlock;
+	}
 }

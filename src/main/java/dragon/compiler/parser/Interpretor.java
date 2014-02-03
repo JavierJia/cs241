@@ -23,6 +23,12 @@ public class Interpretor {
 		mapTokenToOP.put(TokenType.MINUS, OP.SUB);
 		mapTokenToOP.put(TokenType.TIMES, OP.MUL);
 		mapTokenToOP.put(TokenType.DIVIDE, OP.DIV);
+		mapTokenToOP.put(TokenType.EQL, OP.BEQ);
+		mapTokenToOP.put(TokenType.NEQ, OP.BNE);
+		mapTokenToOP.put(TokenType.LSS, OP.BLT);
+		mapTokenToOP.put(TokenType.LEQ, OP.BLE);
+		mapTokenToOP.put(TokenType.GRE, OP.BGT);
+		mapTokenToOP.put(TokenType.GEQ, OP.BGE);
 	}
 
 	private FunctionTable functionTable = new FunctionTable();
@@ -66,8 +72,7 @@ public class Interpretor {
 	public ArithmeticResult computeExpression(TokenType tokenOp,
 			ArithmeticResult leftTerm, ArithmeticResult rightTerm,
 			Block codeBlock) {
-		optimizedCompute(tokenOp, leftTerm, rightTerm, codeBlock);
-		return leftTerm;
+		return optimizedCompute(tokenOp, leftTerm, rightTerm, codeBlock);
 	}
 
 	// declaration can be null
@@ -89,20 +94,24 @@ public class Interpretor {
 			}
 		} else {
 			CFGResult result = new CFGResult(condBlock);
+			condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond
+					.getRelation())), cond.getVariable());
 			condBlock.setNext(then.getFirstBlock());
 			if (elseResult != null) {
 				condBlock.condNegBranch(elseResult.getFirstBlock());
-				Block phiIfBlock = new Block(then.getLastBlock().getVarTable(),
+				Block phiBlock = new Block(then.getLastBlock().getVarTable(),
 						elseResult.getLastBlock().getVarTable());
-				then.getLastBlock().setNext(phiIfBlock);
-				elseResult.getLastBlock().setNext(phiIfBlock);
-				result.setTail(phiIfBlock);
+				then.getLastBlock().putCode(OP.BRA,
+						new SSAVar(phiBlock.getID()));
+				then.getLastBlock().setNext(phiBlock);
+				elseResult.getLastBlock().setNext(phiBlock);
+				result.setTail(phiBlock);
 			} else {
-				Block phiIfBlock = new Block(then.getLastBlock().getVarTable(),
+				Block phiBlock = new Block(then.getLastBlock().getVarTable(),
 						condBlock.getVarTable());
-				condBlock.condNegBranch(phiIfBlock);
-				then.getLastBlock().setNext(phiIfBlock);
-				result.setTail(phiIfBlock);
+				condBlock.condNegBranch(phiBlock);
+				then.getLastBlock().setNext(phiBlock);
+				result.setTail(phiBlock);
 			}
 
 			return result;
@@ -139,6 +148,10 @@ public class Interpretor {
 		// }
 		// ArithmeticResult result = new ArithmeticResult(new SSAVar(identiName,
 		// localVarTable.lookUpVersion(identiName)));
+		if (!arrayOffsets.isEmpty()) {
+			throw new IllegalArgumentException(
+					"Array designator haven't been implemented");
+		}
 		return new ArithmeticResult(new SSAVar(identiName,
 				codeBlock.getLatestVersion(identiName)));
 	}
@@ -211,32 +224,30 @@ public class Interpretor {
 					tokenType = TokenType.getNegRelation(tokenType);
 				}
 			}
-			if (right.getKind() == Kind.CONST) {
-				codeBlock.putCode(mapTokenTypeToOP(tokenType),
-						left.getVariable(), right.getConstValue());
+			if (TokenType.isComparison(tokenType)) {
+				if (right.getKind() == Kind.CONST) {
+					codeBlock.putCode(OP.CMP, left.getVariable(),
+							right.getConstValue());
+				} else {
+					codeBlock.putCode(OP.CMP, left.getVariable(),
+							right.getVariable());
+				}
+				return new ArithmeticResult(tokenType, new SSAVar(
+						Instruction.getPC()));
 			} else {
-				codeBlock.putCode(mapTokenTypeToOP(tokenType),
-						left.getVariable(), right.getVariable());
+				if (right.getKind() == Kind.CONST) {
+					codeBlock.putCode(mapTokenTypeToOP(tokenType),
+							left.getVariable(), right.getConstValue());
+				} else {
+					codeBlock.putCode(mapTokenTypeToOP(tokenType),
+							left.getVariable(), right.getVariable());
+				}
+				return new ArithmeticResult(new SSAVar(Instruction.getPC()));
 			}
-			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
+
 		}
 	}
 
-	// private void loadToRegister(ArithmeticResult assignTarget, Block
-	// codeBlock) {
-	// assignTarget.setRegNum(regAllocator.allocateReg());
-	// codeBlock.putCode(OP.MOVE, assignTarget.getRegNum(),
-	// assignTarget.getAddress());
-	// }
-	//
-	// private void unloadFromRegister(ArithmeticResult right) {
-	// regAllocator.deAllocateReg(right.getRegNum());
-	// }
-
-	// private static OP mapTokenTypeToImmOP(TokenType tokenType) {
-	// return mapTokenToOP.get(tokenType);
-	// }
-	//
 	private static OP mapTokenTypeToOP(TokenType tokenType) {
 		return mapTokenToOP.get(tokenType);
 	}
@@ -258,7 +269,7 @@ public class Interpretor {
 		} else {
 			throw new IllegalArgumentException("assign value kind is not valid");
 		}
-		targetBlock.updateVarVersion(assignTarget.getVariable().getVarName());
+		targetBlock.updateVarVersion(assignTarget.getVariable());
 		return new CFGResult(targetBlock);
 	}
 
@@ -266,13 +277,13 @@ public class Interpretor {
 			ArrayList<ArithmeticResult> argumentList, Block codeBlock) {
 		// Predefined func
 		if (funcName.equals("InputNum")) {
-			codeBlock.putFuncCode(OP.READ);
-			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
+			codeBlock.putInputFuncCode(argumentList.get(0).getVariable());
+			return new ArithmeticResult(new SSAVar(argumentList.get(0)
+					.getVariable().getVarName(), Instruction.getPC()));
 		} else if (funcName.equals("OutputNum")) {
-			codeBlock.putFuncCode(OP.WRITE);
-			// TODO, get the x from vtable
+			codeBlock.putOutputFuncCode(argumentList.get(0).getVariable());
 		} else if (funcName.equals("OutputNewLine")) {
-			codeBlock.putFuncCode(OP.WLN);
+			codeBlock.putOutputFuncCode(null);
 			return ArithmeticResult.NO_OP_RESULT;
 		}
 		// TODO Auto-generated method stub
@@ -281,7 +292,7 @@ public class Interpretor {
 
 	public CFGResult connectStatSequence(CFGResult statementResult,
 			CFGResult nextStatement) {
-		statementResult.connect(nextStatement);
+		statementResult.merge(nextStatement);
 		return statementResult;
 	}
 

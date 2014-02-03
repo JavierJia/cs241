@@ -28,7 +28,7 @@ public class SSAVar extends Variable {
 
 	@Override
 	public String toString() {
-		if (getVarName().length() > 1) {
+		if (getVarName().length() > 0) {
 			return getVarName() + "_" + version;
 		} else {
 			return "(" + version + ")";

@@ -1,21 +1,28 @@
 package dragon.compiler.data;
 
+import java.util.EnumSet;
+
 public class Instruction {
 
 	protected static int PC = 0;
 	protected int insID;
 
 	protected Instruction() {
-		insID = PC++;
+		insID = ++PC;
 	}
 
 	public enum OP {
-		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BGE, BGT, READ, WRITE, WLN,
+		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN,
 	}
 
+	public static EnumSet<OP> BRACH_SET = EnumSet.of(OP.BRA, OP.BNE, OP.BEQ,
+			OP.BLE, OP.BLT, OP.BGE, OP.BGT);
+
+	public static EnumSet<OP> SINGLE_ARGS_SET = EnumSet.of(OP.END, OP.READ,
+			OP.WRITE, OP.WLN);
+
 	public static boolean isBranchInstruction(OP op) {
-		return op == OP.BRA || op == OP.BNE || op == OP.BEQ || op == OP.BLE
-				|| op == OP.BGE || op == OP.BGT;
+		return BRACH_SET.contains(op);
 	}
 
 	public static int getPC() {

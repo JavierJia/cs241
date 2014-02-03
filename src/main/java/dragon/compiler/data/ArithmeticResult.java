@@ -29,8 +29,9 @@ public class ArithmeticResult extends Result {
 		value = bool ? 1 : 0;
 	}
 
-	public ArithmeticResult(TokenType tokenType) {
+	public ArithmeticResult(TokenType tokenType, Variable varResult) {
 		relation = tokenType;
+		var = varResult;
 		kind = Kind.CONDITION;
 	}
 

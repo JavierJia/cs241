@@ -15,7 +15,7 @@ public class Variable {
 	// var
 	protected Variable(String name) {
 		this.name = name;
-		this.sizeList = (ArrayList<Integer>) Collections.singletonList(1);
+		this.sizeList = new ArrayList<Integer>(Collections.singletonList(1));
 	}
 
 	// array
@@ -60,9 +60,9 @@ public class Variable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 

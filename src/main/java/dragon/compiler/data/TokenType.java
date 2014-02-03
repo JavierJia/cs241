@@ -1,5 +1,7 @@
 package dragon.compiler.data;
 
+import java.util.EnumSet;
+
 public enum TokenType {
 
 	/** keyword **/
@@ -31,9 +33,12 @@ public enum TokenType {
 	EOF(255), // End of file, Period Token
 	UNKNOWN(0);
 
+	public static EnumSet<TokenType> COMPARATION_SET = EnumSet.of(
+			TokenType.EQL, TokenType.NEQ, TokenType.LSS, TokenType.GRE,
+			TokenType.LEQ, TokenType.GEQ);
+
 	public static boolean isComparison(TokenType type) {
-		return type == EQL || type == NEQ || type == LSS || type == GRE
-				|| type == LEQ || type == GEQ;
+		return COMPARATION_SET.contains(type);
 	}
 
 	private final byte value;

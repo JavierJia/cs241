@@ -18,7 +18,7 @@ public class Block {
 	private VariableTable vTable;
 	private ArrayList<SSAInstruction> instructions = new ArrayList<SSAInstruction>();
 
-	public Block() {
+	protected Block() {
 		myID = STATIC_SEQ++;
 	}
 
@@ -33,7 +33,7 @@ public class Block {
 		this.vTable = new VariableTable();
 		for (Variable left : varTableLeft) {
 			Variable right = varTableRight.lookUpVar(left.getVarName());
-			if (left.getClass().isInstance(SSAVar.class)) {
+			if (left instanceof SSAVar) {
 				if (((SSAVar) left).getVersion() != ((SSAVar) right)
 						.getVersion()) {
 					instructions.add(new SSAInstruction(OP.PHI, (SSAVar) left,
@@ -61,7 +61,7 @@ public class Block {
 	}
 
 	public void putCode(OP op, Variable var, int value) {
-		if (var.getClass().isInstance(SSAVar.class)) {
+		if (var instanceof SSAVar) {
 			instructions.add(new SSAInstruction(op, (SSAVar) var, value));
 		} else {
 			throw new IllegalArgumentException("Haven't implemented yet");
@@ -70,10 +70,17 @@ public class Block {
 	}
 
 	public void putCode(OP op, Variable varLeft, Variable varRight) {
-		if (varLeft.getClass().isInstance(SSAVar.class)
-				&& varRight.getClass().isInstance(SSAVar.class)) {
+		if (varLeft instanceof SSAVar && varRight instanceof SSAVar) {
 			instructions.add(new SSAInstruction(op, (SSAVar) varLeft,
 					(SSAVar) varRight));
+		} else {
+			throw new IllegalArgumentException("Haven't implemented yet");
+		}
+	}
+
+	public void putCode(OP op, Variable varLeft) {
+		if (varLeft instanceof SSAVar) {
+			instructions.add(new SSAInstruction(op, (SSAVar) varLeft));
 		} else {
 			throw new IllegalArgumentException("Haven't implemented yet");
 		}
@@ -83,13 +90,13 @@ public class Block {
 		return vTable;
 	}
 
-	public void updateVarVersion(String varName) {
-		vTable.renameSSAVar(varName, Instruction.getPC());
-	}
-
-	public void putFuncCode(OP read) {
-		// TODO Auto-generated method stub
-
+	public void updateVarVersion(Variable variable) {
+		if (variable instanceof SSAVar) {
+			vTable.renameSSAVar(variable.getVarName(), Instruction.getPC());
+			((SSAVar) variable).setVersion(Instruction.getPC());
+		} else {
+			// TODO
+		}
 	}
 
 	private SSAInstruction getLastInstruction() {
@@ -105,6 +112,10 @@ public class Block {
 	}
 
 	public void setNext(Block next) {
+		if (getNextBlock() != null) {
+			throw new IllegalStateException(
+					"The tail's next block is not empty");
+		}
 		condNextBlock = next;
 	}
 
@@ -116,12 +127,27 @@ public class Block {
 		return condFalseBranchBlock;
 	}
 
+	public void putInputFuncCode(Variable var) {
+		instructions.add(new SSAInstruction(OP.READ, (SSAVar) var));
+		vTable.renameSSAVar(var.getVarName(), Instruction.getPC());
+	}
+
+	public void putOutputFuncCode(Variable variable) {
+		if (variable == null) {
+			instructions.add(new SSAInstruction(OP.WLN));
+		} else {
+			instructions.add(new SSAInstruction(OP.WRITE, (SSAVar) variable));
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("BLOCK:").append(getID()).append('\n');
 		for (SSAInstruction ins : instructions) {
 			sb.append(ins.toString()).append('\n');
 		}
 		return sb.toString();
 	}
+
 }

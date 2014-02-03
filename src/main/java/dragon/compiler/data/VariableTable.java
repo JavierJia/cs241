@@ -29,7 +29,7 @@ public class VariableTable implements Iterable<Variable> {
 			throw new IllegalArgumentException("var is already registered : "
 					+ var);
 		}
-		variableTable.put(var, new Variable(var));
+		variableTable.put(var, new SSAVar(var, 0));
 	}
 
 	public void registerArray(String var, ArrayList<Integer> sizeList) {

@@ -24,7 +24,7 @@ public class CFGResult extends Result {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void connect(CFGResult next) {
+	public void merge(CFGResult next) {
 		if (next == EMPTY_CFG_RESULT) {
 			return;
 		}
@@ -34,14 +34,11 @@ public class CFGResult extends Result {
 		}
 
 		if (this.tail != next.head) {
-			if (this.tail.getNextBlock() != null) {
-				throw new IllegalStateException(
-						"The tail's next block is not empty");
-			}
 			this.tail.setNext(next.head);
 		} else {
 			// TODO do nothing ?
 		}
+		this.tail = next.tail;
 	}
 
 	public Block getFirstBlock() {
@@ -53,6 +50,10 @@ public class CFGResult extends Result {
 	}
 
 	public void setTail(Block tailBlock) {
+		if (tail != head && tail != null) {
+			throw new IllegalStateException(
+					"The tail block is not null, should not be set to something else");
+		}
 		tail = tailBlock;
 	}
 
