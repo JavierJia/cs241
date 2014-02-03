@@ -16,7 +16,7 @@ public class StatementTest {
 		Parser parser = new Parser(simpleIFTestFile);
 		parser.parse();
 		Block blk = parser.getRootBlock();
-		Block.printAllGraph(blk);
+		System.out.print(Block.printAllGraph(blk));
 	}
 
 	@Test

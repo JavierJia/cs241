@@ -181,6 +181,10 @@ public class Block {
 
 	public static String printAllGraph(Block root) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("graph: {title: \"CFG\"").append('\n');
+//		sb.append("layoutalgorithm:bfs").append('\n');
+		sb.append("manhattan_edges:yes").append('\n');
+		sb.append("smanhattan_edges:yes").append('\n');
 		Queue<Block> queue = new LinkedList<Block>();
 		HashSet<Block> visited = new HashSet<Block>();
 		queue.add(root);
@@ -190,10 +194,30 @@ public class Block {
 				continue;
 			}
 			visited.add(b);
+			sb.append("node: {").append('\n');
+			sb.append("title: \"" + b.getID() + "\"").append('\n');
+			sb.append("label: \"" + b.getID() + "\n[");
 			sb.append(b.toString());
+			sb.append("]\"\n").append("}\n");
+			if (b.getNextBlock() != null) {
+				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append(
+						'\n');
+				sb.append("targetname: \"" + b.getNextBlock().getID() + "\"")
+						.append('\n');
+				sb.append("}\n");
+			}
+			if (b.getNegBranchBlock() != null) {
+				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append(
+						'\n');
+				sb.append(
+						"targetname: \"" + b.getNegBranchBlock().getID() + "\"")
+						.append('\n');
+				sb.append("}\n");
+			}
 			queue.add(b.getNextBlock());
 			queue.add(b.getNegBranchBlock());
 		}
+		sb.append('}');
 		return sb.toString();
 	}
 }
