@@ -1,5 +1,7 @@
 package dragon.compiler.data;
 
+import java.util.ArrayList;
+
 public class SSAInstruction extends Instruction {
 
 	private OP op;
@@ -57,4 +59,18 @@ public class SSAInstruction extends Instruction {
 		return op;
 	}
 
+	public void updateVersion(ArrayList<SSAInstruction> phiInstructions) {
+		if (Instruction.REFRESHABLE_SET.contains(getOP())) {
+			// left and right don't matter so much,
+			// left and right of phi is equal name
+			for (SSAInstruction ins : phiInstructions) {
+				if (ins.left.equals(left)) {
+					left.setVersion(ins.getId());
+				}
+				if (ins.left.equals(right)) {
+					right.setVersion(ins.getId());
+				}
+			}
+		}
+	}
 }

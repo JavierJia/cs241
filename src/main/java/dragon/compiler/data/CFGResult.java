@@ -1,9 +1,14 @@
 package dragon.compiler.data;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import dragon.compiler.cfg.Block;
 
 public class CFGResult extends Result {
-	public static CFGResult EMPTY_CFG_RESULT = new CFGResult();
+	public static CFGResult EMPTY_CFG_RESULT = new CFGResult(null);
 
 	private Block head;
 	private Block tail;
@@ -17,11 +22,6 @@ public class CFGResult extends Result {
 	public CFGResult(Block targetBlock) {
 		head = targetBlock;
 		tail = targetBlock;
-	}
-
-	// Should be the empty one;
-	protected CFGResult() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void merge(CFGResult next) {
@@ -55,6 +55,22 @@ public class CFGResult extends Result {
 					"The tail block is not null, should not be set to something else");
 		}
 		tail = tailBlock;
+	}
+
+	public void updateLoopVTable(ArrayList<SSAInstruction> phiIns) {
+		Queue<Block> queue = new LinkedList<Block>();
+		HashSet<Block> visted = new HashSet<Block>();
+		queue.add(head);
+		while (!queue.isEmpty()) {
+			Block b = queue.remove();
+			if (b == null || visted.contains(b)) {
+				continue;
+			}
+			b.updateInstructionPhi(phiIns);
+			visted.add(b);
+			queue.add(b.getNextBlock());
+			queue.add(b.getNegBranchBlock());
+		}
 	}
 
 }

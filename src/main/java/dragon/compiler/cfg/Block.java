@@ -1,6 +1,9 @@
 package dragon.compiler.cfg;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
@@ -31,21 +34,30 @@ public class Block {
 	public Block(VariableTable varTableLeft, VariableTable varTableRight) {
 		this();
 		this.vTable = new VariableTable();
+		this.instructions.addAll(mergeVTable(this.vTable, varTableLeft,
+				varTableRight));
+	}
+
+	private static ArrayList<SSAInstruction> mergeVTable(
+			VariableTable newTable, VariableTable varTableLeft,
+			VariableTable varTableRight) {
+		ArrayList<SSAInstruction> phiInstructions = new ArrayList<SSAInstruction>();
 		for (Variable left : varTableLeft) {
 			Variable right = varTableRight.lookUpVar(left.getVarName());
 			if (left instanceof SSAVar) {
 				if (((SSAVar) left).getVersion() != ((SSAVar) right)
 						.getVersion()) {
-					instructions.add(new SSAInstruction(OP.PHI, (SSAVar) left,
-							(SSAVar) right));
-					this.vTable.registerExistVar(new SSAVar(left.getVarName(),
+					phiInstructions.add(new SSAInstruction(OP.PHI,
+							(SSAVar) left, (SSAVar) right));
+					newTable.registerExistVar(new SSAVar(left.getVarName(),
 							Instruction.getPC()));
 					continue;
 				}
 			}
 			// else left var not changed from two branch.
-			this.vTable.registerExistVar(left);
+			newTable.registerExistVar(left);
 		}
+		return phiInstructions;
 	}
 
 	public int getID() {
@@ -113,8 +125,9 @@ public class Block {
 
 	public void setNext(Block next) {
 		if (getNextBlock() != null) {
-			throw new IllegalStateException(
-					"The tail's next block is not empty");
+			if (getNextBlock() == next) {
+				return;
+			}
 		}
 		condNextBlock = next;
 	}
@@ -140,6 +153,22 @@ public class Block {
 		}
 	}
 
+	public ArrayList<SSAInstruction> updateLoopVTable(VariableTable otherTable) {
+		VariableTable oldVTable = this.vTable;
+		this.vTable = new VariableTable();
+		ArrayList<SSAInstruction> phiInstructions = mergeVTable(this.vTable,
+				oldVTable, otherTable);
+		updateInstructionPhi(phiInstructions);
+		instructions.addAll(0, phiInstructions);
+		return phiInstructions;
+	}
+
+	public void updateInstructionPhi(ArrayList<SSAInstruction> phiInstructions) {
+		for (SSAInstruction ins : instructions) {
+			ins.updateVersion(phiInstructions);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -150,4 +179,21 @@ public class Block {
 		return sb.toString();
 	}
 
+	public static String printAllGraph(Block root) {
+		StringBuilder sb = new StringBuilder();
+		Queue<Block> queue = new LinkedList<Block>();
+		HashSet<Block> visited = new HashSet<Block>();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			Block b = queue.remove();
+			if (b == null || visited.contains(b)) {
+				continue;
+			}
+			visited.add(b);
+			sb.append(b.toString());
+			queue.add(b.getNextBlock());
+			queue.add(b.getNegBranchBlock());
+		}
+		return sb.toString();
+	}
 }

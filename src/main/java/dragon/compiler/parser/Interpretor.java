@@ -11,6 +11,7 @@ import dragon.compiler.data.DeclResult;
 import dragon.compiler.data.FunctionTable;
 import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
+import dragon.compiler.data.SSAInstruction;
 import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
@@ -129,10 +130,30 @@ public class Interpretor {
 		return optimizedCompute(op, leftFactor, rightFactor, codeBlock);
 	}
 
-	public CFGResult computeWhileStatement(ArithmeticResult condition,
-			CFGResult loopBody) {
-		// TODO Auto-generated method stub
-		return null;
+	public CFGResult computeWhileStatement(Block lastBlock,
+			ArithmeticResult cond, Block condBlock, CFGResult loopBody) {
+		lastBlock.setNext(condBlock);
+		CFGResult result = new CFGResult(condBlock);
+
+		condBlock.putCode(
+				mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
+				cond.getVariable());
+
+		ArrayList<SSAInstruction> phiIns = condBlock.updateLoopVTable(loopBody
+				.getLastBlock().getVarTable());
+
+		loopBody.updateLoopVTable(phiIns);
+
+		// change graph link at last
+		condBlock.setNext(loopBody.getFirstBlock());
+		loopBody.getLastBlock().putCode(OP.BRA, new SSAVar(condBlock.getID()));
+		loopBody.getLastBlock().setNext(condBlock);
+
+		// add one new block at the end for the afterward computation.
+		Block nextBlock = new Block(condBlock.getVarTable());
+		condBlock.condNegBranch(nextBlock);
+		result.setTail(nextBlock);
+		return result;
 	}
 
 	public ArithmeticResult computeDesignator(String identiName,

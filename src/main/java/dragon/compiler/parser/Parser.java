@@ -225,18 +225,22 @@ public class Parser {
 			SyntaxFormatException {
 		if (checkCurrentType(TokenType.WHILE)) {
 			moveToNextToken();
-			ArithmeticResult condition = relation(lastBlock);
+
+			Block whileBlock = new Block(lastBlock.getVarTable());
+			ArithmeticResult condition = relation(whileBlock);
+
 			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
 			assertAndMoveNext(TokenType.DO);
-			Block loopBodyBlock = new Block(lastBlock.getVarTable());
+			Block loopBodyBlock = new Block(whileBlock.getVarTable());
 			CFGResult loopBody = statSequence(loopBodyBlock);
 			if (loopBody == null) {
 				throwFormatException("statSequence expected");
 			}
 			assertAndMoveNext(TokenType.OD);
-			return inter.computeWhileStatement(condition, loopBody);
+			return inter.computeWhileStatement(lastBlock, condition,
+					whileBlock, loopBody);
 		}
 		return null;
 	}
@@ -466,4 +470,5 @@ public class Parser {
 	public Block getRootBlock() {
 		return rootBlock;
 	}
+	
 }
