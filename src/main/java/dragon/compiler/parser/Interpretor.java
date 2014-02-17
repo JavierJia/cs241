@@ -14,6 +14,7 @@ import dragon.compiler.data.Instruction.OP;
 import dragon.compiler.data.SSAInstruction;
 import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.TokenType;
+import dragon.compiler.data.Variable;
 import dragon.compiler.data.VariableTable;
 
 public class Interpretor {
@@ -158,23 +159,14 @@ public class Interpretor {
 
 	public ArithmeticResult computeDesignator(String identiName,
 			ArrayList<ArithmeticResult> arrayOffsets, Block codeBlock) {
-		// ArithmeticResult result = new ArithmeticResult(Kind.VAR);
-		// result.setAddress(localVarTable.lookUpAddress(identiName));
-		// if (result.getAddress() == 0) {
-		// result.setAddress(mainVarTable.lookUpAddress(identiName));
-		// }
-		// if (result.getAddress() == 0) {
-		// throw new IllegalArgumentException("identifier undefined:"
-		// + identiName);
-		// }
-		// ArithmeticResult result = new ArithmeticResult(new SSAVar(identiName,
-		// localVarTable.lookUpVersion(identiName)));
-		if (!arrayOffsets.isEmpty()) {
-			throw new IllegalArgumentException(
-					"Array designator haven't been implemented");
+		if (!arrayOffsets.isEmpty()) { // array, no SSA
+			return new ArithmeticResult(codeBlock.getArrayVar(identiName, arrayOffsets));
 		}
-		return new ArithmeticResult(new SSAVar(identiName,
-				codeBlock.getLatestVersion(identiName)));
+		Variable var = codeBlock.getSSAVar(identiName);
+		if (var == null) {
+			var = codeBlock.getGlobalVar(identiName);
+		}
+		return new ArithmeticResult(var);
 	}
 
 	private ArithmeticResult optimizedCompute(TokenType tokenType,
@@ -218,25 +210,7 @@ public class Interpretor {
 								+ tokenType);
 			}
 		} else {
-			// Old style, need to change it to SSA
-			// loadToRegister(left, codeBlock);
-			// if (left.getRegNum() == 0) {
-			// // target reg # can't be 0
-			// left.setRegNum(regAllocator.allocateReg());
-			// codeBlock.putCode(OP.ADD, left.getRegNum(), 0);
-			// }
-			// if (right.getKind() == Kind.CONST) {
-			// codeBlock.putCode(mapTokenTypeToImmOP(tokenType),
-			// left.getRegNum(), right.getValue());
-			// } else {
-			// loadToRegister(right, codeBlock);
-			// codeBlock.putCode(mapTokenTypeToOP(tokenType),
-			// left.getRegNum(), right.getRegNum());
-			// unloadFromRegister(right);
-			// }
-			// if (TokenType.isComparison(tokenType)) {
-			// left.setRelation(tokenType);
-			// }
+			
 			if (left.getKind() == Kind.CONST) { // swap left <-> right
 				ArithmeticResult temp = left;
 				left = right;

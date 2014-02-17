@@ -16,7 +16,7 @@ public class VariableTable implements Iterable<Variable> {
 		return vtable;
 	}
 
-	public void registerExistVar(Variable var) {
+	public void registerVar(Variable var) {
 		if (variableTable.containsKey(var.getVarName())) {
 			throw new IllegalArgumentException("var is already registered : "
 					+ var);
@@ -58,11 +58,6 @@ public class VariableTable implements Iterable<Variable> {
 		}
 	}
 
-	public int lookUpAddress(String identiName) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public Variable lookUpVar(String identiName) {
 		if (variableTable.containsKey(identiName)) {
 			return variableTable.get(identiName);
@@ -71,16 +66,13 @@ public class VariableTable implements Iterable<Variable> {
 		}
 	}
 
+	public boolean hasDecl(String identiName) {
+		return variableTable.containsKey(identiName);
+	}
+
 	@Override
 	public Iterator<Variable> iterator() {
 		return variableTable.values().iterator();
 	}
 
-	// public SSAVar generateSSA(String identiName) {
-	// if (variableTable.containsKey(identiName)) {
-	// ArrayList<Integer> versions = variableTable.get(identiName);
-	// return new SSAVar(identiName, versions.get(versions.size() - 1));
-	// }
-	// return null;
-	// }
 }

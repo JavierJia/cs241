@@ -13,15 +13,20 @@ public class Variable {
 	}
 
 	// var
-	protected Variable(String name) {
+	public Variable(String name) {
 		this.name = name;
 		this.sizeList = new ArrayList<Integer>(Collections.singletonList(1));
 	}
 
 	// array
-	protected Variable(String name, ArrayList<Integer> list) {
+	public Variable(String name, ArrayList<Integer> list) {
 		this.name = name;
 		this.sizeList = list;
+	}
+
+	public Variable(Variable lookUpVar) {
+		this.name = lookUpVar.name;
+		this.sizeList = lookUpVar.sizeList;
 	}
 
 	public String getVarName() {
@@ -66,4 +71,11 @@ public class Variable {
 		return name;
 	}
 
+	public boolean isVar() {
+		return sizeList.size() == 1 && sizeList.get(0) == 1;
+	}
+
+	public boolean isArray() {
+		return !isVar();
+	}
 }

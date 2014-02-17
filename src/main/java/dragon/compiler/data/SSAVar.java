@@ -29,9 +29,14 @@ public class SSAVar extends Variable {
 	@Override
 	public String toString() {
 		if (getVarName().length() > 0) {
+			if (this == FPVar) {
+				return "FP";
+			}
 			return getVarName() + "_" + version;
 		} else {
 			return "(" + version + ")";
 		}
 	}
+
+	public static SSAVar FPVar = new SSAVar("FP", 0);
 }
