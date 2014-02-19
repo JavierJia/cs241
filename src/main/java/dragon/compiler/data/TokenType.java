@@ -5,9 +5,8 @@ import java.util.EnumSet;
 public enum TokenType {
 
 	/** keyword **/
-	LET(100), CALL(101), IF(102), THEN(41), ELSE(90), FI(82), WHILE(103), DO(42), OD(
-			81), RETURN(104), VAR(110), ARRAY(111), FUNCTION(112), PROCEDURE(
-			113), MAIN(200),
+	LET(100), CALL(101), IF(102), THEN(41), ELSE(90), FI(82), WHILE(103), DO(42), OD(81), RETURN(
+			104), VAR(110), ARRAY(111), FUNCTION(112), PROCEDURE(113), MAIN(200),
 
 	/** designator **/
 	DESIGNATOR(40), // <-
@@ -33,9 +32,8 @@ public enum TokenType {
 	EOF(255), // End of file, Period Token
 	UNKNOWN(0);
 
-	public static EnumSet<TokenType> COMPARATION_SET = EnumSet.of(
-			TokenType.EQL, TokenType.NEQ, TokenType.LSS, TokenType.GRE,
-			TokenType.LEQ, TokenType.GEQ);
+	public static EnumSet<TokenType> COMPARATION_SET = EnumSet.of(TokenType.EQL, TokenType.NEQ,
+			TokenType.LSS, TokenType.GRE, TokenType.LEQ, TokenType.GEQ);
 
 	public static boolean isComparison(TokenType type) {
 		return COMPARATION_SET.contains(type);
@@ -66,8 +64,7 @@ public enum TokenType {
 		case GRE:
 			return TokenType.LEQ;
 		default:
-			throw new IllegalArgumentException(
-					"The relation value is not comparator:" + relation);
+			throw new IllegalArgumentException("The relation value is not comparator:" + relation);
 		}
 	}
 }

@@ -8,7 +8,7 @@ import dragon.compiler.cfg.Block;
 import dragon.compiler.data.ArithmeticResult;
 import dragon.compiler.data.CFGResult;
 import dragon.compiler.data.DeclResult;
-import dragon.compiler.data.FunctionTable;
+import dragon.compiler.data.Function;
 import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.TokenType;
 import dragon.compiler.data.VariableTable;
@@ -25,10 +25,8 @@ public class Parser {
 		this.inter = new Interpretor();
 	}
 
-	private void throwFormatException(String string)
-			throws SyntaxFormatException {
-		string = "Parser error: Line " + lexer.getCurrentLineNumber() + ": "
-				+ string;
+	private void throwFormatException(String string) throws SyntaxFormatException {
+		string = "Parser error: Line " + lexer.getCurrentLineNumber() + ": " + string;
 		throw new SyntaxFormatException(string);
 	}
 
@@ -41,23 +39,22 @@ public class Parser {
 	private void computation() throws IOException, SyntaxFormatException {
 		assertAndMoveNext(TokenType.MAIN);
 
-		VariableTable varList = varDecl();
+		VariableTable globalVarList = varDecl();
 		for (VariableTable moreVar = varDecl(); moreVar != null; moreVar = varDecl()) {
-			varList.append(moreVar);
+			globalVarList.append(moreVar);
 		}
 
-		FunctionTable funcList = funcDecl();
-		for (FunctionTable func = funcDecl(); func != null; func = funcDecl()) {
-			funcList.append(func);
+		Function funcList = funcDecl(globalVarList);
+		for (Function func = funcDecl(globalVarList); func != null; func = funcDecl(globalVarList)) {
 		}
 
 		assertAndMoveNext(TokenType.BEGIN_BRACE);
-		rootBlock = new Block(varList);
+		rootBlock = new Block(globalVarList);
 		CFGResult allStateSequence = statSequence(rootBlock);
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
 		}
-		inter.computeMain(varList, funcList, allStateSequence);
+		inter.computeMain(globalVarList, funcList, allStateSequence);
 		assertAndMoveNext(TokenType.END_BRACE);
 		assertAndMoveNext(TokenType.PERIOD);
 	}
@@ -101,8 +98,7 @@ public class Parser {
 		return null;
 	}
 
-	private Integer arrayNumberBlock() throws SyntaxFormatException,
-			IOException {
+	private Integer arrayNumberBlock() throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.BEGIN_BRACKET)) {
 			moveToNextToken();
 			Integer num = lexer.getCurrentToken().getNumberValue();
@@ -113,28 +109,27 @@ public class Parser {
 		return null;
 	}
 
-	private FunctionTable funcDecl() throws IOException, SyntaxFormatException {
-		if (checkCurrentType(TokenType.FUNCTION)
-				|| checkCurrentType(TokenType.PROCEDURE)) {
+	private Function funcDecl(VariableTable globalVarList) throws IOException,
+			SyntaxFormatException {
+		if (checkCurrentType(TokenType.FUNCTION) || checkCurrentType(TokenType.PROCEDURE)) {
 			moveToNextToken();
 
 			String funcName = lexer.getCurrentToken().getIdentifierName();
 			assertAndMoveNext(TokenType.IDENTIRIER);
-			VariableTable paramsTable = formalParam();
+			ArrayList<String> paramsList = formalParam();
 			assertAndMoveNext(TokenType.SEMICOMA);
 
-			CFGResult body = funcBody();
+			CFGResult body = funcBody(globalVarList, paramsList);
 			if (body == null) {
 				throwFormatException("Function body expected");
 			}
 			assertAndMoveNext(TokenType.SEMICOMA);
-			return inter.registerFunction(funcName, paramsTable, body);
+			return inter.registerFunction(funcName, paramsList, body);
 		}
 		return null;
 	}
 
-	private VariableTable formalParam() throws SyntaxFormatException,
-			IOException {
+	private ArrayList<String> formalParam() throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) {
 			moveToNextToken();
 			ArrayList<String> params = new ArrayList<String>();
@@ -148,49 +143,57 @@ public class Parser {
 				}
 			}
 			assertAndMoveNext(TokenType.END_PARENTHESIS);
-			return inter.registerFormalParam(params);
+			return params;
 		}
 		return null;
 	}
 
-	private CFGResult funcBody() throws SyntaxFormatException, IOException {
-		VariableTable declarations = varDecl();
+	private CFGResult funcBody(VariableTable globalVarList, ArrayList<String> paramsList)
+			throws SyntaxFormatException, IOException {
+		VariableTable localVar = varDecl();
 		for (VariableTable newDecl = varDecl(); newDecl != null; newDecl = varDecl()) {
-			declarations.append(newDecl);
+			localVar.append(newDecl);
 		}
+		// Take every params as a local variable.
+		// Then we need to load these params from caller stack into params table
+		// param table stored inside function
+		if (localVar == null) {
+			localVar = new VariableTable();
+		}
+		VariableTable paramTable = inter.registerFormalParam(paramsList);
+		localVar.append(paramTable);
+
 		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
 			moveToNextToken();
-			Block codeBlock = new Block(declarations);
+			Block codeBlock = new Block(localVar, globalVarList);
+			if (paramTable != null) {
+				inter.stubLoadParams(codeBlock, paramsList);
+			}
 			CFGResult body = statSequence(codeBlock);
 			assertAndMoveNext(TokenType.END_BRACE);
-			return inter.computeFuncBody(declarations, body);
+			return body;
 		}
 		return null;
 	}
 
-	private CFGResult statSequence(Block lastBlock) throws IOException,
-			SyntaxFormatException {
+	private CFGResult statSequence(Block lastBlock) throws IOException, SyntaxFormatException {
 		CFGResult statementResult = statement(lastBlock);
 		if (statementResult != null) {
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
-				CFGResult nextStatement = statement(statementResult
-						.getLastBlock());
+				CFGResult nextStatement = statement(statementResult.getLastBlock());
 				if (nextStatement == null) {
 					throwFormatException("missing statement after semicoma");
 				}
-				statementResult = inter.connectStatSequence(statementResult,
-						nextStatement);
+				statementResult = inter.connectStatSequence(statementResult, nextStatement);
 			}
 		}
 		return statementResult;
 	}
 
-	private CFGResult statement(Block lastBlock) throws IOException,
-			SyntaxFormatException {
+	private CFGResult statement(Block lastBlock) throws IOException, SyntaxFormatException {
 		CFGResult result = assignment(lastBlock);
 		if (result == null) {
-			// TODO what's is funcCall
 			ArithmeticResult funcCallResult = funcCall(lastBlock);
 			if (funcCallResult != null) {
 				return new CFGResult(lastBlock);
@@ -202,8 +205,9 @@ public class Parser {
 					if (result == null) {
 						// TODO any special for return ?
 						// I prefer to fix the return value to one reg#
-						returnStatement(lastBlock);
+						ArithmeticResult ret = returnStatement(lastBlock);
 						result = new CFGResult(lastBlock);
+						result.setRet(ret);
 					}
 				}
 			}
@@ -211,8 +215,8 @@ public class Parser {
 		return result;
 	}
 
-	private ArithmeticResult returnStatement(Block codeBlock)
-			throws IOException, SyntaxFormatException {
+	private ArithmeticResult returnStatement(Block codeBlock) throws IOException,
+			SyntaxFormatException {
 		if (checkCurrentType(TokenType.RETURN)) {
 			moveToNextToken();
 			ArithmeticResult expr = expression(codeBlock);
@@ -221,8 +225,7 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult whileStatement(Block lastBlock) throws IOException,
-			SyntaxFormatException {
+	private CFGResult whileStatement(Block lastBlock) throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.WHILE)) {
 			moveToNextToken();
 
@@ -239,14 +242,12 @@ public class Parser {
 				throwFormatException("statSequence expected");
 			}
 			assertAndMoveNext(TokenType.OD);
-			return inter.computeWhileStatement(lastBlock, condition,
-					whileBlock, loopBody);
+			return inter.computeWhileStatement(lastBlock, condition, whileBlock, loopBody);
 		}
 		return null;
 	}
 
-	private CFGResult ifStatement(Block lastBlock) throws IOException,
-			SyntaxFormatException {
+	private CFGResult ifStatement(Block lastBlock) throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.IF)) {
 			moveToNextToken();
 			ArithmeticResult cond = relation(lastBlock);
@@ -275,8 +276,7 @@ public class Parser {
 		return null;
 	}
 
-	private ArithmeticResult funcCall(Block codeBlock) throws IOException,
-			SyntaxFormatException {
+	private ArithmeticResult funcCall(Block codeBlock) throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.CALL)) {
 			moveToNextToken();
 			String funcName = lexer.getCurrentToken().getIdentifierName();
@@ -302,8 +302,7 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult assignment(Block lastBlock) throws IOException,
-			SyntaxFormatException {
+	private CFGResult assignment(Block lastBlock) throws IOException, SyntaxFormatException {
 		if (checkCurrentType(TokenType.LET)) {
 			moveToNextToken();
 			ArithmeticResult assignTarget = designator(lastBlock);
@@ -315,14 +314,12 @@ public class Parser {
 			if (assignValue == null) {
 				throwFormatException("assignment expression expected");
 			}
-			return inter
-					.computeAssignment(assignTarget, assignValue, lastBlock);
+			return inter.computeAssignment(assignTarget, assignValue, lastBlock);
 		}
 		return null;
 	}
 
-	private ArithmeticResult designator(Block lastBlock)
-			throws SyntaxFormatException, IOException {
+	private ArithmeticResult designator(Block lastBlock) throws SyntaxFormatException, IOException {
 		if (checkCurrentType(TokenType.IDENTIRIER)) {
 			String identiName = lexer.getCurrentToken().getIdentifierName();
 			moveToNextToken();
@@ -341,12 +338,10 @@ public class Parser {
 		return null;
 	}
 
-	private ArithmeticResult expression(Block codeBlock) throws IOException,
-			SyntaxFormatException {
+	private ArithmeticResult expression(Block codeBlock) throws IOException, SyntaxFormatException {
 		ArithmeticResult leftTerm = term(codeBlock);
 		if (leftTerm != null) {
-			while (checkCurrentType(TokenType.PLUS)
-					|| checkCurrentType(TokenType.MINUS)) {
+			while (checkCurrentType(TokenType.PLUS) || checkCurrentType(TokenType.MINUS)) {
 				TokenType op = lexer.getCurrentToken().getType();
 				moveToNextToken();
 
@@ -354,34 +349,29 @@ public class Parser {
 				if (rightTerm == null) {
 					throwFormatException("Term expected!");
 				}
-				leftTerm = inter.computeExpression(op, leftTerm, rightTerm,
-						codeBlock);
+				leftTerm = inter.computeExpression(op, leftTerm, rightTerm, codeBlock);
 			}
 		}
 		return leftTerm;
 	}
 
-	private ArithmeticResult term(Block codeBlock) throws IOException,
-			SyntaxFormatException {
+	private ArithmeticResult term(Block codeBlock) throws IOException, SyntaxFormatException {
 		ArithmeticResult leftFactor = factor(codeBlock);
 		if (leftFactor != null) {
-			while (checkCurrentType(TokenType.TIMES)
-					|| checkCurrentType(TokenType.DIVIDE)) {
+			while (checkCurrentType(TokenType.TIMES) || checkCurrentType(TokenType.DIVIDE)) {
 				TokenType op = lexer.getCurrentToken().getType();
 				moveToNextToken();
 				ArithmeticResult rightFactor = factor(codeBlock);
 				if (rightFactor == null) {
 					throwFormatException("Factor expected!");
 				}
-				leftFactor = inter.computeTerm(op, leftFactor, rightFactor,
-						codeBlock);
+				leftFactor = inter.computeTerm(op, leftFactor, rightFactor, codeBlock);
 			}
 		}
 		return leftFactor;
 	}
 
-	private ArithmeticResult factor(Block codeBlock)
-			throws SyntaxFormatException, IOException {
+	private ArithmeticResult factor(Block codeBlock) throws SyntaxFormatException, IOException {
 		ArithmeticResult designatorResult = designator(codeBlock);
 		if (designatorResult != null) {
 			return designatorResult;
@@ -410,8 +400,7 @@ public class Parser {
 		return null;
 	}
 
-	private ArithmeticResult relation(Block codeBlock) throws IOException,
-			SyntaxFormatException {
+	private ArithmeticResult relation(Block codeBlock) throws IOException, SyntaxFormatException {
 		ArithmeticResult leftExp = expression(codeBlock);
 		if (leftExp != null) {
 			if (TokenType.isComparison(lexer.getCurrentToken().getType())) {
@@ -439,27 +428,24 @@ public class Parser {
 	 * @throws SyntaxFormatException
 	 * @throws IOException
 	 */
-	private boolean assertAndMoveNext(TokenType expectedType)
-			throws SyntaxFormatException, IOException {
+	private boolean assertAndMoveNext(TokenType expectedType) throws SyntaxFormatException,
+			IOException {
 		if (lexer.getCurrentToken().getType() == expectedType) {
 			lexer.moveToNextToken();
 			return true;
 		}
 		TokenType curType = lexer.getCurrentToken().getType();
 		if (expectedType == TokenType.IDENTIRIER) {
-			throwFormatException("should be an indentifier, but now is"
-					+ curType.name());
+			throwFormatException("should be an indentifier, but now is" + curType.name());
 		} else if (expectedType == TokenType.NUMBER) {
-			throwFormatException("should be an number, but now is"
-					+ curType.name());
+			throwFormatException("should be an number, but now is" + curType.name());
 		} else {
 			throwFormatException("missing:" + expectedType);
 		}
 		return false;
 	}
 
-	private boolean checkCurrentType(TokenType type) throws IOException,
-			SyntaxFormatException {
+	private boolean checkCurrentType(TokenType type) throws IOException, SyntaxFormatException {
 		return lexer.getCurrentToken().getType() == type;
 	}
 
@@ -470,5 +456,5 @@ public class Parser {
 	public Block getRootBlock() {
 		return rootBlock;
 	}
-	
+
 }

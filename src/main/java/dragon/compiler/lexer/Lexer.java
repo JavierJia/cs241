@@ -169,8 +169,7 @@ public class Lexer {
 		return curToken;
 	}
 
-	private void throwFormatException(String string)
-			throws SyntaxFormatException {
+	private void throwFormatException(String string) throws SyntaxFormatException {
 		string = "Lexer error: Line " + scanner.getLineNumber() + ": " + string;
 		throw new SyntaxFormatException(string);
 	}

@@ -18,24 +18,21 @@ public class VariableTable implements Iterable<Variable> {
 
 	public void registerVar(Variable var) {
 		if (variableTable.containsKey(var.getVarName())) {
-			throw new IllegalArgumentException("var is already registered : "
-					+ var);
+			throw new IllegalArgumentException("var is already registered : " + var);
 		}
 		variableTable.put(var.getVarName(), var);
 	}
 
 	public void registerVar(String var) {
 		if (variableTable.containsKey(var)) {
-			throw new IllegalArgumentException("var is already registered : "
-					+ var);
+			throw new IllegalArgumentException("var is already registered : " + var);
 		}
 		variableTable.put(var, new SSAVar(var, 0));
 	}
 
 	public void registerArray(String var, ArrayList<Integer> sizeList) {
 		if (variableTable.containsKey(var)) {
-			throw new IllegalArgumentException("var is already registered : "
-					+ var);
+			throw new IllegalArgumentException("var is already registered : " + var);
 		}
 		variableTable.put(var, new Variable(var, sizeList));
 	}
@@ -50,9 +47,8 @@ public class VariableTable implements Iterable<Variable> {
 	public void append(VariableTable newDecl) {
 		for (Entry<String, Variable> entry : newDecl.variableTable.entrySet()) {
 			if (variableTable.containsKey(entry.getKey())) {
-				throw new IllegalArgumentException(
-						"conflict varTable, var already defined: "
-								+ entry.getKey());
+				throw new IllegalArgumentException("conflict varTable, var already defined: "
+						+ entry.getKey());
 			}
 			variableTable.put(entry.getKey(), entry.getValue());
 		}

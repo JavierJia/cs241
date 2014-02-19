@@ -8,7 +8,7 @@ import dragon.compiler.data.ArithmeticResult;
 import dragon.compiler.data.ArithmeticResult.Kind;
 import dragon.compiler.data.CFGResult;
 import dragon.compiler.data.DeclResult;
-import dragon.compiler.data.FunctionTable;
+import dragon.compiler.data.Function;
 import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
 import dragon.compiler.data.SSAInstruction;
@@ -33,10 +33,7 @@ public class Interpretor {
 		mapTokenToOP.put(TokenType.GEQ, OP.BGE);
 	}
 
-	private FunctionTable functionTable = new FunctionTable();
-
-	public VariableTable registerVarDecl(DeclResult type,
-			ArrayList<String> varList) {
+	public VariableTable registerVarDecl(DeclResult type, ArrayList<String> varList) {
 		VariableTable vTable = new VariableTable();
 		switch (type.getType()) {
 		case VAR:
@@ -51,8 +48,7 @@ public class Interpretor {
 			break;
 		default:
 			throw new IllegalArgumentException(
-					"in var declaration only allowed VAR and ARRAY, but now is:"
-							+ type.getType());
+					"in var declaration only allowed VAR and ARRAY, but now is:" + type.getType());
 		}
 		return vTable;
 	}
@@ -65,27 +61,20 @@ public class Interpretor {
 		return vTable;
 	}
 
-	public FunctionTable registerFunction(String funcName,
-			VariableTable paramsTable, CFGResult body) {
-		functionTable.addNewFunction(funcName, paramsTable, body);
-		return functionTable;
+	public Function registerFunction(String funcName, ArrayList<String> paramsList, CFGResult body) {
+		Function func = new Function(funcName, paramsList, body);
+		Function.registerFunction(func);
+		return func;
 	}
 
-	public ArithmeticResult computeExpression(TokenType tokenOp,
-			ArithmeticResult leftTerm, ArithmeticResult rightTerm,
-			Block codeBlock) {
+	public ArithmeticResult computeExpression(TokenType tokenOp, ArithmeticResult leftTerm,
+			ArithmeticResult rightTerm, Block codeBlock) {
 		return optimizedCompute(tokenOp, leftTerm, rightTerm, codeBlock);
 	}
 
-	// declaration can be null
-	public CFGResult computeFuncBody(VariableTable declarations, CFGResult body) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// elseResult could be null
-	public CFGResult computeIf(Block condBlock, ArithmeticResult cond,
-			CFGResult then, CFGResult elseResult) {
+	public CFGResult computeIf(Block condBlock, ArithmeticResult cond, CFGResult then,
+			CFGResult elseResult) {
 		if (cond.getKind() == Kind.CONST) { // the branch result is fixed.
 			if (cond.getConstValue() > 0) {
 				return then;
@@ -96,20 +85,19 @@ public class Interpretor {
 			}
 		} else {
 			CFGResult result = new CFGResult(condBlock);
-			condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond
-					.getRelation())), cond.getVariable());
+			condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
+					cond.getVariable());
 			condBlock.setNext(then.getFirstBlock());
 			if (elseResult != null) {
 				condBlock.condNegBranch(elseResult.getFirstBlock());
-				Block phiBlock = new Block(then.getLastBlock().getVarTable(),
+				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getVarTable(),
 						elseResult.getLastBlock().getVarTable());
-				then.getLastBlock().putCode(OP.BRA,
-						new SSAVar(phiBlock.getID()));
+				then.getLastBlock().putCode(OP.BRA, new SSAVar(phiBlock.getID()));
 				then.getLastBlock().setNext(phiBlock);
 				elseResult.getLastBlock().setNext(phiBlock);
 				result.setTail(phiBlock);
 			} else {
-				Block phiBlock = new Block(then.getLastBlock().getVarTable(),
+				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getVarTable(),
 						condBlock.getVarTable());
 				condBlock.condNegBranch(phiBlock);
 				then.getLastBlock().setNext(phiBlock);
@@ -120,28 +108,26 @@ public class Interpretor {
 		}
 	}
 
-	public ArithmeticResult computeRelation(TokenType op,
-			ArithmeticResult leftExp, ArithmeticResult rightExp, Block codeBlock) {
+	public ArithmeticResult computeRelation(TokenType op, ArithmeticResult leftExp,
+			ArithmeticResult rightExp, Block codeBlock) {
 		return optimizedCompute(op, leftExp, rightExp, codeBlock);
 	}
 
-	public ArithmeticResult computeTerm(TokenType op,
-			ArithmeticResult leftFactor, ArithmeticResult rightFactor,
-			Block codeBlock) {
+	public ArithmeticResult computeTerm(TokenType op, ArithmeticResult leftFactor,
+			ArithmeticResult rightFactor, Block codeBlock) {
 		return optimizedCompute(op, leftFactor, rightFactor, codeBlock);
 	}
 
-	public CFGResult computeWhileStatement(Block lastBlock,
-			ArithmeticResult cond, Block condBlock, CFGResult loopBody) {
+	public CFGResult computeWhileStatement(Block lastBlock, ArithmeticResult cond, Block condBlock,
+			CFGResult loopBody) {
 		lastBlock.setNext(condBlock);
 		CFGResult result = new CFGResult(condBlock);
 
-		condBlock.putCode(
-				mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
+		condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
 				cond.getVariable());
 
-		ArrayList<SSAInstruction> phiIns = condBlock.updateLoopVTable(loopBody
-				.getLastBlock().getVarTable());
+		ArrayList<SSAInstruction> phiIns = condBlock.updateLoopVTable(loopBody.getLastBlock()
+				.getVarTable());
 
 		loopBody.updateLoopVTable(phiIns);
 
@@ -169,48 +155,37 @@ public class Interpretor {
 		return new ArithmeticResult(var);
 	}
 
-	private ArithmeticResult optimizedCompute(TokenType tokenType,
-			ArithmeticResult left, ArithmeticResult right, Block codeBlock) {
+	private ArithmeticResult optimizedCompute(TokenType tokenType, ArithmeticResult left,
+			ArithmeticResult right, Block codeBlock) {
 
 		if (left.getKind() == Kind.CONST && right.getKind() == Kind.CONST) {
 			switch (tokenType) {
 			case PLUS:
-				return new ArithmeticResult(left.getConstValue()
-						+ right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() + right.getConstValue());
 			case MINUS:
-				return new ArithmeticResult(left.getConstValue()
-						- right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() - right.getConstValue());
 			case TIMES:
-				return new ArithmeticResult(left.getConstValue()
-						* right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() * right.getConstValue());
 			case DIVIDE:
-				return new ArithmeticResult(left.getConstValue()
-						/ right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() / right.getConstValue());
 			case EQL:
-				return new ArithmeticResult(
-						left.getConstValue() == right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() == right.getConstValue());
 			case NEQ:
-				return new ArithmeticResult(
-						left.getConstValue() != right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() != right.getConstValue());
 			case LSS:
-				return new ArithmeticResult(
-						left.getConstValue() < right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() < right.getConstValue());
 			case GEQ:
-				return new ArithmeticResult(
-						left.getConstValue() >= right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() >= right.getConstValue());
 			case LEQ:
-				return new ArithmeticResult(
-						left.getConstValue() <= right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() <= right.getConstValue());
 			case GRE:
-				return new ArithmeticResult(
-						left.getConstValue() > right.getConstValue());
+				return new ArithmeticResult(left.getConstValue() > right.getConstValue());
 			default:
-				throw new IllegalArgumentException(
-						"The tokenType should be +,-,*,/ only, now is:"
-								+ tokenType);
+				throw new IllegalArgumentException("The tokenType should be +,-,*,/ only, now is:"
+						+ tokenType);
 			}
 		} else {
-			
+
 			if (left.getKind() == Kind.CONST) { // swap left <-> right
 				ArithmeticResult temp = left;
 				left = right;
@@ -221,21 +196,18 @@ public class Interpretor {
 			}
 			if (TokenType.isComparison(tokenType)) {
 				if (right.getKind() == Kind.CONST) {
-					codeBlock.putCode(OP.CMP, left.getVariable(),
-							right.getConstValue());
+					codeBlock.putCode(OP.CMP, left.getVariable(), right.getConstValue());
 				} else {
-					codeBlock.putCode(OP.CMP, left.getVariable(),
-							right.getVariable());
+					codeBlock.putCode(OP.CMP, left.getVariable(), right.getVariable());
 				}
-				return new ArithmeticResult(tokenType, new SSAVar(
-						Instruction.getPC()));
+				return new ArithmeticResult(tokenType, new SSAVar(Instruction.getPC()));
 			} else {
 				if (right.getKind() == Kind.CONST) {
-					codeBlock.putCode(mapTokenTypeToOP(tokenType),
-							left.getVariable(), right.getConstValue());
+					codeBlock.putCode(mapTokenTypeToOP(tokenType), left.getVariable(),
+							right.getConstValue());
 				} else {
-					codeBlock.putCode(mapTokenTypeToOP(tokenType),
-							left.getVariable(), right.getVariable());
+					codeBlock.putCode(mapTokenTypeToOP(tokenType), left.getVariable(),
+							right.getVariable());
 				}
 				return new ArithmeticResult(new SSAVar(Instruction.getPC()));
 			}
@@ -247,20 +219,17 @@ public class Interpretor {
 		return mapTokenToOP.get(tokenType);
 	}
 
-	public void computeMain(VariableTable varList, FunctionTable funcList,
-			CFGResult allStateSequence) {
+	public void computeMain(VariableTable varList, Function funcList, CFGResult allStateSequence) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public CFGResult computeAssignment(ArithmeticResult assignTarget,
-			ArithmeticResult assignValue, Block targetBlock) {
+	public CFGResult computeAssignment(ArithmeticResult assignTarget, ArithmeticResult assignValue,
+			Block targetBlock) {
 		if (assignValue.getKind() == Kind.CONST) {
-			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(),
-					assignValue.getConstValue());
+			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(), assignValue.getConstValue());
 		} else if (assignValue.getKind() == Kind.VAR) {
-			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(),
-					assignValue.getVariable());
+			targetBlock.putCode(OP.MOVE, assignTarget.getVariable(), assignValue.getVariable());
 		} else {
 			throw new IllegalArgumentException("assign value kind is not valid");
 		}
@@ -273,22 +242,34 @@ public class Interpretor {
 		// Predefined func
 		if (funcName.equals("InputNum")) {
 			codeBlock.putInputFuncCode(argumentList.get(0).getVariable());
-			return new ArithmeticResult(new SSAVar(argumentList.get(0)
-					.getVariable().getVarName(), Instruction.getPC()));
+			return new ArithmeticResult(new SSAVar(argumentList.get(0).getVariable().getVarName(),
+					Instruction.getPC()));
 		} else if (funcName.equals("OutputNum")) {
 			codeBlock.putOutputFuncCode(argumentList.get(0).getVariable());
+			return ArithmeticResult.NO_OP_RESULT;
 		} else if (funcName.equals("OutputNewLine")) {
 			codeBlock.putOutputFuncCode(null);
 			return ArithmeticResult.NO_OP_RESULT;
 		}
-		// TODO Auto-generated method stub
-		return null;
+
+		Function func = Function.getFunction(funcName);
+		func.fixupLoadParams(argumentList);
+		codeBlock.push(func.getBody());
+		func.pop(codeBlock);
+		return func.getArithmeticResult() == null ? ArithmeticResult.NO_OP_RESULT : func
+				.getArithmeticResult();
 	}
 
-	public CFGResult connectStatSequence(CFGResult statementResult,
-			CFGResult nextStatement) {
+	public CFGResult connectStatSequence(CFGResult statementResult, CFGResult nextStatement) {
 		statementResult.merge(nextStatement);
 		return statementResult;
+	}
+
+	public void stubLoadParams(Block codeBlock, ArrayList<String> paramsList) {
+		for (String param : paramsList) {
+			codeBlock.putCode(OP.LOAD, codeBlock.getSSAVar(param));
+			codeBlock.updateVarVersion(codeBlock.getSSAVar(param));
+		}
 	}
 
 }

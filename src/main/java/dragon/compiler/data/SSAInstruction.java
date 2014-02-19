@@ -5,28 +5,28 @@ import java.util.ArrayList;
 public class SSAInstruction extends Instruction {
 
 	private OP op;
-	private SSAVar left;
-	private SSAVar right;
+	private SSAVar target;
+	private SSAVar src;
 	private Integer rValue;
 
-	public SSAInstruction(OP op, SSAVar left, SSAVar right) {
+	public SSAInstruction(OP op, SSAVar target, SSAVar src) {
 		super();
 		this.op = op;
-		this.left = left;
-		this.right = right;
+		this.target = target;
+		this.src = src;
 	}
 
-	public SSAInstruction(OP op, SSAVar left, int value) {
+	public SSAInstruction(OP op, SSAVar target, int value) {
 		super();
 		this.op = op;
-		this.left = left;
+		this.target = target;
 		this.rValue = value;
 	}
 
-	public SSAInstruction(OP op, SSAVar left) {
+	public SSAInstruction(OP op, SSAVar target) {
 		super();
 		this.op = op;
-		this.left = left;
+		this.target = target;
 	}
 
 	public SSAInstruction(OP op) {
@@ -39,17 +39,17 @@ public class SSAInstruction extends Instruction {
 	}
 
 	public void fixUpNegBranch(int id) {
-		right = new SSAVar(id);
+		src = new SSAVar(id);
 	}
 
 	@Override
 	public String toString() {
-		if (right != null) {
-			return getId() + " " + op + " " + left + " " + right;
+		if (src != null) {
+			return getId() + " " + op + " " + target + " " + src;
 		} else if (rValue != null) {
-			return getId() + " " + op + " " + left + " " + rValue;
-		} else if (left != null) {
-			return getId() + " " + op + " " + left;
+			return getId() + " " + op + " " + target + " " + rValue;
+		} else if (target != null) {
+			return getId() + " " + op + " " + target;
 		} else {
 			return getId() + " " + op;
 		}
@@ -59,18 +59,37 @@ public class SSAInstruction extends Instruction {
 		return op;
 	}
 
+	public SSAVar getTarget() {
+		return target;
+	}
+
 	public void updateVersion(ArrayList<SSAInstruction> phiInstructions) {
 		if (Instruction.REFRESHABLE_SET.contains(getOP())) {
 			// left and right don't matter so much,
 			// left and right of phi is equal name
 			for (SSAInstruction ins : phiInstructions) {
-				if (ins.left.equals(left)) {
-					left.setVersion(ins.getId());
+				if (ins.target.equals(target)) {
+					target.setVersion(ins.getId());
 				}
-				if (ins.left.equals(right)) {
-					right.setVersion(ins.getId());
+				if (ins.target.equals(src)) {
+					src.setVersion(ins.getId());
 				}
 			}
 		}
+	}
+
+	// Only used by function call loading
+	public void reset(OP opMove, SSAVar target, int constValue) {
+		this.op = opMove;
+		this.target = target;
+		this.rValue = constValue;
+		this.src = null;
+	}
+
+	public void reset(OP opLoad, SSAVar ssaVar) {
+		this.op = opLoad;
+		this.target = ssaVar;
+		this.rValue = null;
+		this.src = null;
 	}
 }

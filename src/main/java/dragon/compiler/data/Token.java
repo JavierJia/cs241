@@ -5,10 +5,9 @@ import java.util.HashSet;
 
 public class Token {
 
-	public static HashSet<String> KEYWORDS = new HashSet<String>(
-			(Arrays.asList("let", "call", "if", "then", "else", "fi", "while",
-					"do", "od", "return", "var", "array", "function",
-					"procedure", "main")));
+	public static HashSet<String> KEYWORDS = new HashSet<String>((Arrays.asList("let", "call",
+			"if", "then", "else", "fi", "while", "do", "od", "return", "var", "array", "function",
+			"procedure", "main")));
 
 	private TokenType type;
 	private Integer numberValue = null;
