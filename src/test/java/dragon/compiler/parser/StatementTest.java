@@ -1,5 +1,6 @@
 package dragon.compiler.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,7 +23,8 @@ public class StatementTest {
 		Parser parser = new Parser(fileName);
 		parser.parse();
 		Block blk = parser.getRootBlock();
-		PrintWriter writer = new PrintWriter(fileName + ".vcg", "UTF-8");
+		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", "vcg") + ".vcg",
+				"UTF-8");
 		writer.print(GraphPrinter.printCFGBody(blk, "main", true));
 		// for (Function func : Function.getAllFunction()) {
 		// writer.print(GraphPrinter.printCFGBody(func.getBody().getFirstBlock(),
@@ -33,28 +35,28 @@ public class StatementTest {
 		writer.close();
 	}
 
-//	@Test
-//	public void TestSimpleIF() throws IOException, SyntaxFormatException {
-//		checkGraph(simpleIFTestFile);
-//	}
-//
-//	@Test
-//	public void TestSimpleLoop() throws IOException, SyntaxFormatException {
-//		checkGraph(simpleLoopTestFile);
-//	}
-//
-//	@Test
-//	public void TestArray() throws IOException, SyntaxFormatException {
-//		checkGraph(simpleArrayTestFile1);
-//	}
-//
-//	@Test(expected = IllegalArgumentException.class)
-//	public void TestFunc() throws IOException, SyntaxFormatException {
-//		checkGraph(simpleFuncTest4);
-//	}
+	// @Test
+	// public void TestSimpleIF() throws IOException, SyntaxFormatException {
+	// checkGraph(simpleIFTestFile);
+	// }
+	//
+	// @Test
+	// public void TestSimpleLoop() throws IOException, SyntaxFormatException {
+	// checkGraph(simpleLoopTestFile);
+	// }
+	//
+	// @Test
+	// public void TestArray() throws IOException, SyntaxFormatException {
+	// checkGraph(simpleArrayTestFile1);
+	// }
+	//
+	// @Test(expected = IllegalArgumentException.class)
+	// public void TestFunc() throws IOException, SyntaxFormatException {
+	// checkGraph(simpleFuncTest4);
+	// }
 
 	@Test
 	public void TestAny() throws IOException, SyntaxFormatException {
-		checkGraph("src/test/resources/testprogs/test009.txt");
+		checkGraph("src/test/resources/testprogs/test010.txt");
 	}
 }

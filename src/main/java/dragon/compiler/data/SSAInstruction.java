@@ -65,15 +65,15 @@ public class SSAInstruction extends Instruction {
 
 	public void updateVersion(ArrayList<SSAInstruction> phiInstructions) {
 		if (Instruction.REFRESHABLE_SET.contains(getOP())) {
-			// left and right don't matter so much,
-			// left and right of phi is equal name
 			for (SSAInstruction ins : phiInstructions) {
+				// target is outside Phi, src is inside statements, should not
+				// change.
 				if (ins.target.equals(target)) {
 					target.setVersion(ins.getId());
 				}
-				if (ins.target.equals(src)) {
-					src.setVersion(ins.getId());
-				}
+				// if (ins.target.equals(src) && op != OP.PHI) {
+				// src.setVersion(ins.getId());
+				// }
 			}
 		}
 	}

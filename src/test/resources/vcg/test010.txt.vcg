@@ -1,0 +1,94 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE a_0 1
+2 MOVE b_0 2
+3 MOVE c_0 3
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+18 PHI b_2 b_15
+19 PHI c_3 c_8
+20 PHI a_1 a_6
+4 CMP a_20 b_2
+17 BGE (4) (6)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+}
+edge: { sourcename: "1"
+targetname: "6"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+5 ADD a_20 1
+6 MOVE a_20 (5)
+7 ADD c_19 1
+8 MOVE c_19 (7)
+9 WRITE a_20
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+22 WRITE a_20
+23 WRITE b_18
+24 WRITE c_19
+]"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+15 PHI b_18 b_13
+10 CMP b_18 c_8
+14 BGE (10) (5)
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+}
+edge: { sourcename: "3"
+targetname: "5"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+11 WRITE c_19
+12 ADD b_18 1
+13 MOVE b_18 (12)
+16 BRA (3)
+]"
+}
+edge: { sourcename: "4"
+targetname: "3"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+21 BRA (1)
+]"
+}
+edge: { sourcename: "5"
+targetname: "1"
+}
+}
