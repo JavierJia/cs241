@@ -141,7 +141,7 @@ public class Lexer {
 	private Token parseNumber() throws IOException, SyntaxFormatException {
 		long num = 0;
 		while (Character.isDigit(scanner.getCurrentChar())) {
-			num += num * 10 + (scanner.getCurrentChar() - '0');
+			num = num * 10 + Integer.parseInt(scanner.getCurrentChar().toString());
 			if (num > Integer.MAX_VALUE || num < Integer.MIN_VALUE) {
 				throwFormatException("number is outof range");
 				return new Token(TokenType.UNKNOWN);
