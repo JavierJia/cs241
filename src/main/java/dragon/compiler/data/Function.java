@@ -1,6 +1,7 @@
 package dragon.compiler.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import dragon.compiler.cfg.Block;
@@ -18,6 +19,10 @@ public class Function {
 
 	public static Function getFunction(String funcName) {
 		return functionTable.get(funcName);
+	}
+
+	public static Collection<Function> getAllFunction() {
+		return functionTable.values();
 	}
 
 	private String funcName;
@@ -74,6 +79,10 @@ public class Function {
 
 	public ArithmeticResult getArithmeticResult() {
 		return body.getRet();
+	}
+
+	public String getName() {
+		return funcName;
 	}
 
 }

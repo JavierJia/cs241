@@ -1,0 +1,54 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+71 MOVE n_71 11
+72 MOVE f_73 1
+73 MOVE f_73 2
+]"
+}
+edge: { sourcename: "5"
+targetname: "6"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+80 PHI f_73 f_80
+81 PHI n_81 n_81
+74 CMP n_81 0
+79 BLE (74) (8)
+]"
+}
+edge: { sourcename: "6"
+targetname: "7"
+}
+edge: { sourcename: "6"
+targetname: "8"
+}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+75 MUL f_80 n_81
+76 MOVE f_80 (75)
+77 SUB n_81 1
+78 MOVE n_81 (77)
+82 BRA (6)
+]"
+}
+edge: { sourcename: "7"
+targetname: "6"
+}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+83 MOVE n_83 f_80
+84 WRITE f_80
+]"
+}
+}

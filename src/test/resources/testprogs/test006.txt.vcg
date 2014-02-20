@@ -1,0 +1,27 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+2 PUSH (0)
+]"
+}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j0"
+color:red}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE i_1 0
+3 POP (1)
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+label: "p1"
+color:red}
+}

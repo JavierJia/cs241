@@ -1,0 +1,93 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+18 MUL i_0 4
+19 ADD FP a_0
+20 ADDA (18) (19)
+21 LOAD (20)
+22 MOVE x_22 (21)
+23 MUL i_0 4
+24 ADD FP a_0
+25 ADDA (23) (24)
+26 LOAD (25)
+27 MOVE k_27 (26)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+62 PHI z_0 z_60
+63 PHI y_0 y_46
+64 PHI x_22 x_41
+28 MUL i_0 4
+29 ADD FP a_0
+30 ADDA (28) (29)
+31 LOAD (30)
+32 MUL j_0 4
+33 ADD FP b_0
+34 ADDA (32) (33)
+35 LOAD (34)
+36 CMP (31) (35)
+61 BGE (36) (4)
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+}
+edge: { sourcename: "2"
+targetname: "4"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+37 MUL i_0 4
+38 ADD FP a_0
+39 ADDA (37) (38)
+40 LOAD (39)
+41 MOVE x_41 (40)
+42 MUL j_0 4
+43 ADD FP a_0
+44 ADDA (42) (43)
+45 LOAD (44)
+46 MOVE y_46 (45)
+47 MUL k_27 4
+48 ADD FP a_0
+49 ADDA (47) (48)
+50 STORE (49) z_60
+51 MUL j_0 4
+52 ADD FP b_0
+53 ADDA (51) (52)
+54 LOAD (53)
+55 MOVE z_60 (54)
+56 MUL j_0 4
+57 ADD FP a_0
+58 ADDA (56) (57)
+59 LOAD (58)
+60 MOVE z_60 (59)
+65 BRA (2)
+]"
+}
+edge: { sourcename: "3"
+targetname: "2"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+66 MUL i_0 4
+67 ADD FP a_0
+68 ADDA (66) (67)
+69 LOAD (68)
+70 MOVE w_70 (69)
+]"
+}
+}

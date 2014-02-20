@@ -1,9 +1,6 @@
 package dragon.compiler.cfg;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import dragon.compiler.data.ArithmeticResult;
 import dragon.compiler.data.ArithmeticResult.Kind;
@@ -26,21 +23,24 @@ public class Block {
 	private VariableTable globalVTable;
 	private ArrayList<SSAInstruction> instructions = new ArrayList<SSAInstruction>();
 
+	// The function call related CFG. These blk should not involved into
+	protected Block functionJumpToBlock;
+	protected Block functionPopBackToBlock;
+	protected int jumpToInstructionIdx;
+	protected int popBackToInstructionIdx;
+
 	// Merge the two varTable to phi functions
-	public static Block createJoinPointBlock(VariableTable varTableLeft, VariableTable varTableRight) {
+	public static Block createJoinPointBlock(VariableTable varTableLeft,
+			VariableTable varTableRight, VariableTable globalVarTable) {
 		Block blk = new Block();
 		blk.localVTable = new VariableTable();
 		blk.instructions.addAll(mergeVTable(blk.localVTable, varTableLeft, varTableRight));
+		blk.globalVTable = globalVarTable;
 		return blk;
 	}
 
 	protected Block() {
 		myID = STATIC_SEQ++;
-	}
-
-	// TODO tobedeleted
-	public Block(VariableTable vTable) {
-		this(vTable, null);
 	}
 
 	public Block(VariableTable localVar, VariableTable globalVarList) {
@@ -215,8 +215,12 @@ public class Block {
 		instructions.add(new SSAInstruction(op, ssa));
 	}
 
-	public VariableTable getVarTable() {
+	public VariableTable getLocalVarTable() {
 		return localVTable;
+	}
+
+	public VariableTable getGlobalVarTable() {
+		return globalVTable;
 	}
 
 	public void updateVarVersion(Variable variable) {
@@ -300,43 +304,6 @@ public class Block {
 		return sb.toString();
 	}
 
-	public static String printAllGraph(Block root) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("graph: {title: \"CFG\"").append('\n');
-		// sb.append("layoutalgorithm:bfs").append('\n');
-		sb.append("manhattan_edges:yes").append('\n');
-		sb.append("smanhattan_edges:yes").append('\n');
-		Queue<Block> queue = new LinkedList<Block>();
-		HashSet<Block> visited = new HashSet<Block>();
-		queue.add(root);
-		while (!queue.isEmpty()) {
-			Block b = queue.remove();
-			if (b == null || visited.contains(b)) {
-				continue;
-			}
-			visited.add(b);
-			sb.append("node: {").append('\n');
-			sb.append("title: \"" + b.getID() + "\"").append('\n');
-			sb.append("label: \"" + b.getID() + "\n[");
-			sb.append(b.toString());
-			sb.append("]\"\n").append("}\n");
-			if (b.getNextBlock() != null) {
-				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
-				sb.append("targetname: \"" + b.getNextBlock().getID() + "\"").append('\n');
-				sb.append("}\n");
-			}
-			if (b.getNegBranchBlock() != null) {
-				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
-				sb.append("targetname: \"" + b.getNegBranchBlock().getID() + "\"").append('\n');
-				sb.append("}\n");
-			}
-			queue.add(b.getNextBlock());
-			queue.add(b.getNegBranchBlock());
-		}
-		sb.append('}');
-		return sb.toString();
-	}
-
 	public Variable getSSAVar(String identiName) {
 		if (localVTable.hasDecl(identiName)) {
 			return (SSAVar) localVTable.lookUpVar(identiName);
@@ -378,12 +345,17 @@ public class Block {
 	}
 
 	public void push(CFGResult body) {
-		//TODO push everything onto stack
+		// TODO push everything onto stack
 		instructions.add(new SSAInstruction(OP.PUSH, new SSAVar(body.getFirstBlock().getID())));
+		functionJumpToBlock = body.getFirstBlock();
+		jumpToInstructionIdx = instructions.size() - 1;
 	}
 
-	public void pop(Block codeBlock) {
+	public void pop(Block codeBlock) {// , int instructionIdx) {
 		// TODO Auto-generated method stub
 		instructions.add(new SSAInstruction(OP.POP, new SSAVar(codeBlock.getID())));
+		functionPopBackToBlock = codeBlock;
+		popBackToInstructionIdx = codeBlock.instructions.size();
 	}
+
 }

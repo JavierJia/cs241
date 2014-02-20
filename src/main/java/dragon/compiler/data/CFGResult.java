@@ -26,6 +26,11 @@ public class CFGResult extends Result {
 		tail = targetBlock;
 	}
 
+	public CFGResult(Block headBlk, Block tailBlk) {
+		head = headBlk;
+		tail = tailBlk;
+	}
+
 	public void merge(CFGResult next) {
 		if (next == EMPTY_CFG_RESULT) {
 			return;

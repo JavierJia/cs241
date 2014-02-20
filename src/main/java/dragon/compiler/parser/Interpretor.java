@@ -90,15 +90,16 @@ public class Interpretor {
 			condBlock.setNext(then.getFirstBlock());
 			if (elseResult != null) {
 				condBlock.condNegBranch(elseResult.getFirstBlock());
-				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getVarTable(),
-						elseResult.getLastBlock().getVarTable());
+				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getLocalVarTable(),
+						elseResult.getLastBlock().getLocalVarTable(), then.getLastBlock()
+								.getGlobalVarTable());
 				then.getLastBlock().putCode(OP.BRA, new SSAVar(phiBlock.getID()));
 				then.getLastBlock().setNext(phiBlock);
 				elseResult.getLastBlock().setNext(phiBlock);
 				result.setTail(phiBlock);
 			} else {
-				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getVarTable(),
-						condBlock.getVarTable());
+				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getLocalVarTable(),
+						condBlock.getLocalVarTable(), then.getLastBlock().getGlobalVarTable());
 				condBlock.condNegBranch(phiBlock);
 				then.getLastBlock().setNext(phiBlock);
 				result.setTail(phiBlock);
@@ -127,7 +128,7 @@ public class Interpretor {
 				cond.getVariable());
 
 		ArrayList<SSAInstruction> phiIns = condBlock.updateLoopVTable(loopBody.getLastBlock()
-				.getVarTable());
+				.getLocalVarTable());
 
 		loopBody.updateLoopVTable(phiIns);
 
@@ -137,7 +138,7 @@ public class Interpretor {
 		loopBody.getLastBlock().setNext(condBlock);
 
 		// add one new block at the end for the afterward computation.
-		Block nextBlock = new Block(condBlock.getVarTable());
+		Block nextBlock = new Block(condBlock.getLocalVarTable(), condBlock.getGlobalVarTable());
 		condBlock.condNegBranch(nextBlock);
 		result.setTail(nextBlock);
 		return result;
@@ -256,6 +257,7 @@ public class Interpretor {
 		func.fixupLoadParams(argumentList);
 		codeBlock.push(func.getBody());
 		func.pop(codeBlock);
+
 		return func.getArithmeticResult() == null ? ArithmeticResult.NO_OP_RESULT : func
 				.getArithmeticResult();
 	}

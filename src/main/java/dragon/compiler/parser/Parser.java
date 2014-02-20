@@ -49,7 +49,7 @@ public class Parser {
 		}
 
 		assertAndMoveNext(TokenType.BEGIN_BRACE);
-		rootBlock = new Block(globalVarList);
+		rootBlock = new Block(globalVarList, null);
 		CFGResult allStateSequence = statSequence(rootBlock);
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");
@@ -229,14 +229,16 @@ public class Parser {
 		if (checkCurrentType(TokenType.WHILE)) {
 			moveToNextToken();
 
-			Block whileBlock = new Block(lastBlock.getVarTable());
+			Block whileBlock = new Block(lastBlock.getLocalVarTable(),
+					lastBlock.getGlobalVarTable());
 			ArithmeticResult condition = relation(whileBlock);
 
 			if (condition == null) {
 				throwFormatException("relation expression expected");
 			}
 			assertAndMoveNext(TokenType.DO);
-			Block loopBodyBlock = new Block(whileBlock.getVarTable());
+			Block loopBodyBlock = new Block(whileBlock.getLocalVarTable(),
+					whileBlock.getGlobalVarTable());
 			CFGResult loopBody = statSequence(loopBodyBlock);
 			if (loopBody == null) {
 				throwFormatException("statSequence expected");
@@ -255,7 +257,7 @@ public class Parser {
 				throwFormatException("if statement relation expression expected");
 			}
 			assertAndMoveNext(TokenType.THEN);
-			Block thenBlock = new Block(lastBlock.getVarTable());
+			Block thenBlock = new Block(lastBlock.getLocalVarTable(), lastBlock.getGlobalVarTable());
 			CFGResult thenResult = statSequence(thenBlock);
 			if (thenResult == null) {
 				throwFormatException("if statement statSequence expected");
@@ -263,7 +265,8 @@ public class Parser {
 			CFGResult elseResult = null;
 			if (checkCurrentType(TokenType.ELSE)) {
 				moveToNextToken();
-				Block elseBlock = new Block(lastBlock.getVarTable());
+				Block elseBlock = new Block(lastBlock.getLocalVarTable(),
+						lastBlock.getGlobalVarTable());
 				elseResult = statSequence(elseBlock);
 				if (elseResult == null) {
 					throwFormatException("if statement else statSequence expected");
