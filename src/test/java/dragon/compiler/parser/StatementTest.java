@@ -15,7 +15,8 @@ public class StatementTest {
 	String simpleArrayTestFile1 = "src/test/resources/testprogs/test026.txt";
 	String simpleArrayTestFile2 = "src/test/resources/testprogs/test027.txt";
 	String simpleFuncTest = "src/test/resources/testprogs/test006.txt";
-	String simpleFuncTest4 = "src/test/resources/testprogs/test004.txt";	// Bad example
+	String simpleFuncTest4 = "src/test/resources/testprogs/test004.txt"; // Bad
+																			// example
 
 	private void checkGraph(String fileName) throws IOException, SyntaxFormatException {
 		Parser parser = new Parser(fileName);
@@ -32,23 +33,28 @@ public class StatementTest {
 		writer.close();
 	}
 
-	@Test
-	public void TestSimpleIF() throws IOException, SyntaxFormatException {
-		checkGraph(simpleIFTestFile);
-	}
+//	@Test
+//	public void TestSimpleIF() throws IOException, SyntaxFormatException {
+//		checkGraph(simpleIFTestFile);
+//	}
+//
+//	@Test
+//	public void TestSimpleLoop() throws IOException, SyntaxFormatException {
+//		checkGraph(simpleLoopTestFile);
+//	}
+//
+//	@Test
+//	public void TestArray() throws IOException, SyntaxFormatException {
+//		checkGraph(simpleArrayTestFile1);
+//	}
+//
+//	@Test(expected = IllegalArgumentException.class)
+//	public void TestFunc() throws IOException, SyntaxFormatException {
+//		checkGraph(simpleFuncTest4);
+//	}
 
 	@Test
-	public void TestSimpleLoop() throws IOException, SyntaxFormatException {
-		checkGraph(simpleLoopTestFile);
-	}
-
-	@Test
-	public void TestArray() throws IOException, SyntaxFormatException {
-		checkGraph(simpleArrayTestFile1);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void TestFunc() throws IOException, SyntaxFormatException {
-		checkGraph(simpleFuncTest4);
+	public void TestAny() throws IOException, SyntaxFormatException {
+		checkGraph("src/test/resources/testprogs/test009.txt");
 	}
 }

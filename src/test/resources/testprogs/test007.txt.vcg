@@ -2,78 +2,78 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "9"
-label: "9
-[BLOCK:9
-85 MOVE a_85 1
-86 MOVE b_86 2
-87 CMP a_85 b_86
-92 BLE (87) (11)
-]"
-}
-edge: { sourcename: "9"
-targetname: "10"
-}
-edge: { sourcename: "9"
-targetname: "11"
-}
-node: {
-title: "10"
-label: "10
-[BLOCK:10
-88 ADD a_89 1
-89 MOVE a_89 (88)
-95 BRA (12)
-]"
-}
-edge: { sourcename: "10"
-targetname: "12"
-}
-node: {
-title: "11"
-label: "11
-[BLOCK:11
-90 ADD b_91 1
-91 MOVE b_91 (90)
-]"
-}
-edge: { sourcename: "11"
-targetname: "12"
-}
-node: {
-title: "12"
-label: "12
-[BLOCK:12
-93 PHI b_86 b_91
-94 PHI a_89 a_85
-96 CMP a_94 b_93
-99 BGE (96) (14)
-]"
-}
-edge: { sourcename: "12"
-targetname: "13"
-}
-edge: { sourcename: "12"
-targetname: "14"
-}
-node: {
 title: "13"
 label: "13
 [BLOCK:13
-97 SUB a_98 1
-98 MOVE a_98 (97)
+93 MOVE a_93 1
+94 MOVE b_94 2
+95 CMP a_93 b_94
+100 BLE (95) (15)
 ]"
 }
 edge: { sourcename: "13"
 targetname: "14"
 }
+edge: { sourcename: "13"
+targetname: "15"
+}
 node: {
 title: "14"
 label: "14
 [BLOCK:14
-100 PHI a_98 a_94
-101 WRITE a_100
-102 WRITE b_93
+96 ADD a_97 1
+97 MOVE a_97 (96)
+103 BRA (16)
+]"
+}
+edge: { sourcename: "14"
+targetname: "16"
+}
+node: {
+title: "15"
+label: "15
+[BLOCK:15
+98 ADD b_99 1
+99 MOVE b_99 (98)
+]"
+}
+edge: { sourcename: "15"
+targetname: "16"
+}
+node: {
+title: "16"
+label: "16
+[BLOCK:16
+101 PHI b_94 b_99
+102 PHI a_97 a_93
+104 CMP a_102 b_101
+107 BGE (104) (18)
+]"
+}
+edge: { sourcename: "16"
+targetname: "17"
+}
+edge: { sourcename: "16"
+targetname: "18"
+}
+node: {
+title: "17"
+label: "17
+[BLOCK:17
+105 SUB a_106 1
+106 MOVE a_106 (105)
+]"
+}
+edge: { sourcename: "17"
+targetname: "18"
+}
+node: {
+title: "18"
+label: "18
+[BLOCK:18
+108 PHI a_106 a_102
+109 WRITE a_108
+110 WRITE b_101
 ]"
 }
 }

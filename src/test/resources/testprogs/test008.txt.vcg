@@ -1,0 +1,48 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE i_1 0
+2 MOVE j_2 0
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+7 PHI j_2 j_7
+3 CMP i_1 1000
+6 BGE (3) (3)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+}
+edge: { sourcename: "1"
+targetname: "3"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+4 ADD j_7 1
+5 MOVE j_7 (4)
+8 BRA (1)
+]"
+}
+edge: { sourcename: "2"
+targetname: "1"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+]"
+}
+}

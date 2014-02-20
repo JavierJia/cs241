@@ -12,21 +12,21 @@ public class SSAInstruction extends Instruction {
 	public SSAInstruction(OP op, SSAVar target, SSAVar src) {
 		super();
 		this.op = op;
-		this.target = target;
-		this.src = src;
+		this.target = target.clone();
+		this.src = src.clone();
 	}
 
 	public SSAInstruction(OP op, SSAVar target, int value) {
 		super();
 		this.op = op;
-		this.target = target;
+		this.target = target.clone();
 		this.rValue = value;
 	}
 
 	public SSAInstruction(OP op, SSAVar target) {
 		super();
 		this.op = op;
-		this.target = target;
+		this.target = target.clone();
 	}
 
 	public SSAInstruction(OP op) {
@@ -81,14 +81,14 @@ public class SSAInstruction extends Instruction {
 	// Only used by function call loading
 	public void reset(OP opMove, SSAVar target, int constValue) {
 		this.op = opMove;
-		this.target = target;
+		this.target = target.clone();
 		this.rValue = constValue;
 		this.src = null;
 	}
 
 	public void reset(OP opLoad, SSAVar ssaVar) {
 		this.op = opLoad;
-		this.target = ssaVar;
+		this.target = ssaVar.clone();
 		this.rValue = null;
 		this.src = null;
 	}
