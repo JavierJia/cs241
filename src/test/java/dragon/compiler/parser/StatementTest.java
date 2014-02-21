@@ -56,7 +56,12 @@ public class StatementTest {
 	// }
 
 	@Test
-	public void TestAny() throws IOException, SyntaxFormatException {
-		checkGraph("src/test/resources/testprogs/test010.txt");
+	public void TestSimpleNestWhileLoop() throws IOException, SyntaxFormatException {
+		checkGraph("src/test/resources/testprogs/test010.txt"); 
+	}
+	
+	@Test
+	public void TestCrazyNestWhileLoop() throws IOException, SyntaxFormatException {
+		checkGraph("src/test/resources/testprogs/test024.txt"); 
 	}
 }

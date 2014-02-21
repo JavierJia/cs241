@@ -288,10 +288,12 @@ public class Block {
 		return phiInstructions;
 	}
 
-	public void updateInstructionPhi(ArrayList<SSAInstruction> phiInstructions) {
+	public ArrayList<SSAInstruction> updateInstructionPhi(ArrayList<SSAInstruction> phiInstructions) {
+		ArrayList<SSAInstruction> restPhi = new ArrayList<SSAInstruction>(phiInstructions);
 		for (SSAInstruction ins : instructions) {
-			ins.updateVersion(phiInstructions);
+			restPhi = ins.updateVersion(restPhi);
 		}
+		return restPhi;
 	}
 
 	@Override

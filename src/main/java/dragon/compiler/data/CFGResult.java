@@ -1,8 +1,10 @@
 package dragon.compiler.data;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 import dragon.compiler.cfg.Block;
@@ -66,18 +68,22 @@ public class CFGResult extends Result {
 	}
 
 	public void updateLoopVTable(ArrayList<SSAInstruction> phiIns) {
-		Queue<Block> queue = new LinkedList<Block>();
+		Queue<Entry<Block, ArrayList<SSAInstruction>>> queue = new LinkedList<Entry<Block, ArrayList<SSAInstruction>>>();
 		HashSet<Block> visted = new HashSet<Block>();
-		queue.add(head);
+		queue.add(new AbstractMap.SimpleEntry<Block, ArrayList<SSAInstruction>>(head, phiIns));
 		while (!queue.isEmpty()) {
-			Block b = queue.remove();
+			Entry<Block, ArrayList<SSAInstruction>> entry = queue.remove();
+			Block b = entry.getKey();
+			ArrayList<SSAInstruction> bPhi = entry.getValue();
 			if (b == null || visted.contains(b)) {
 				continue;
 			}
-			b.updateInstructionPhi(phiIns);
+			ArrayList<SSAInstruction> childPhi = b.updateInstructionPhi(bPhi);
 			visted.add(b);
-			queue.add(b.getNextBlock());
-			queue.add(b.getNegBranchBlock());
+			queue.add(new AbstractMap.SimpleEntry<Block, ArrayList<SSAInstruction>>(b
+					.getNextBlock(), childPhi));
+			queue.add(new AbstractMap.SimpleEntry<Block, ArrayList<SSAInstruction>>(b
+					.getNegBranchBlock(), childPhi));
 		}
 	}
 

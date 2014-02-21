@@ -1,6 +1,7 @@
 package dragon.compiler.data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SSAInstruction extends Instruction {
 
@@ -63,19 +64,44 @@ public class SSAInstruction extends Instruction {
 		return target;
 	}
 
-	public void updateVersion(ArrayList<SSAInstruction> phiInstructions) {
+	public ArrayList<SSAInstruction> updateVersion(ArrayList<SSAInstruction> phiInstructions) {
+		ArrayList<SSAInstruction> restPhiInstructions = new ArrayList<SSAInstruction>(
+				phiInstructions);
 		if (Instruction.REFRESHABLE_SET.contains(getOP())) {
-			for (SSAInstruction ins : phiInstructions) {
-				// target is outside Phi, src is inside statements, should not
-				// change.
+			for (SSAInstruction ins : restPhiInstructions) {
 				if (ins.target.equals(target)) {
 					target.setVersion(ins.getId());
 				}
-				// if (ins.target.equals(src) && op != OP.PHI) {
-				// src.setVersion(ins.getId());
-				// }
+				if (ins.target.equals(src)) {
+					src.setVersion(ins.getId());
+				}
+			}
+		} else if (op == OP.PHI || op == OP.MOVE) {
+			if (op == OP.PHI) {
+				for (Iterator<SSAInstruction> iter = restPhiInstructions.iterator(); iter.hasNext();) {
+					SSAInstruction ins = iter.next();
+					if (ins.target.equals(target)) {
+						target.setVersion(ins.getId());
+						iter.remove(); // remove the already effected
+										// phiInstructions.
+					}
+				}
+			} else { // Move, the different is the src reg, we need to replace
+						// the src reg
+				for (Iterator<SSAInstruction> iter = restPhiInstructions.iterator(); iter.hasNext();) {
+					SSAInstruction ins = iter.next();
+					if (ins.target.equals(target)) {
+						target.setVersion(ins.getId());
+						iter.remove(); // remove the already effected
+										// phiInstructions.
+					}
+					if (ins.target.equals(src)) {
+						src.setVersion(ins.getId());
+					}
+				}
 			}
 		}
+		return restPhiInstructions;
 	}
 
 	// Only used by function call loading
