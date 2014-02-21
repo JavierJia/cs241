@@ -96,4 +96,8 @@ public class CFGResult extends Result {
 		return ret;
 	}
 
+	public boolean isReturn() {
+		return getLastBlock().isReturn();
+	}
+
 }

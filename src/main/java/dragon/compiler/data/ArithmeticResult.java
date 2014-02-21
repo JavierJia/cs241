@@ -8,6 +8,7 @@ public class ArithmeticResult extends Result {
 	}
 
 	public static final ArithmeticResult NO_OP_RESULT = new ArithmeticResult(42);
+	public static final ArithmeticResult FUNC_RETURN_RESULT = new ArithmeticResult(2046);
 
 	private Kind kind;
 	private int value;

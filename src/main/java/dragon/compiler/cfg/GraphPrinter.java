@@ -2,6 +2,7 @@ package dragon.compiler.cfg;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 public class GraphPrinter {
@@ -46,25 +47,27 @@ public class GraphPrinter {
 				sb.append("targetname: \"" + b.getNegBranchBlock().getID() + "\"").append('\n');
 				sb.append("}\n");
 			}
-			// print function branch
-			if (b.functionJumpToBlock != null) {
-				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
-				sb.append("targetname: \"" + b.functionJumpToBlock.getID() + "\"").append('\n');
-				sb.append("label: \"j" + b.jumpToInstructionIdx + "\"").append('\n');
-				sb.append("color:red");
-				sb.append("}\n");
-			}
-			if (b.functionPopBackToBlock != null) {
-				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
-				sb.append("targetname: \"" + b.functionPopBackToBlock.getID() + "\"").append('\n');
-				sb.append("label: \"p" + b.popBackToInstructionIdx + "\"").append('\n');
-				sb.append("color:red");
-				sb.append("}\n");
-			}
 			queue.add(b.getNextBlock());
 			queue.add(b.getNegBranchBlock());
-			queue.add(b.functionJumpToBlock);
-			queue.add(b.functionPopBackToBlock);
+			// print function branch
+			for (Entry<Block, Integer> entry : b.functionJumpToBlocks) {
+				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
+				sb.append("targetname: \"" + entry.getKey().getID() + "\"").append('\n');
+				sb.append("label: \"j" + entry.getValue() + "\"").append('\n');
+				sb.append("color:red");
+				sb.append("}\n");
+				queue.add(entry.getKey());
+			}
+			// for (Entry<Block, Integer> entry : b.functionPopBackToBlocks) {
+			// sb.append("edge: { sourcename: \"" + b.getID() +
+			// "\"").append('\n');
+			// sb.append("targetname: \"" + entry.getKey().getID() +
+			// "\"").append('\n');
+			// sb.append("label: \"p" + entry.getValue() + "\"").append('\n');
+			// sb.append("color:red");
+			// sb.append("}\n");
+			// queue.add(entry.getKey());
+			// }
 		}
 		if (wholeGraph) {
 			sb.append('}');

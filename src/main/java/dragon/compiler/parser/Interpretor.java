@@ -242,9 +242,8 @@ public class Interpretor {
 			ArrayList<ArithmeticResult> argumentList, Block codeBlock) {
 		// Predefined func
 		if (funcName.equals("InputNum")) {
-			codeBlock.putInputFuncCode(argumentList.get(0).getVariable());
-			return new ArithmeticResult(new SSAVar(argumentList.get(0).getVariable().getVarName(),
-					Instruction.getPC()));
+			codeBlock.putInputFuncCode();
+			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
 		} else if (funcName.equals("OutputNum")) {
 			codeBlock.putOutputFuncCode(argumentList.get(0).getVariable());
 			return ArithmeticResult.NO_OP_RESULT;
@@ -254,12 +253,16 @@ public class Interpretor {
 		}
 
 		Function func = Function.getFunction(funcName);
-		func.fixupLoadParams(argumentList);
+		if (!func.isPending()) {
+			func.fixupLoadParams(argumentList);
+		}
 		codeBlock.push(func.getBody());
 		func.pop(codeBlock);
 
-		return func.getArithmeticResult() == null ? ArithmeticResult.NO_OP_RESULT : func
-				.getArithmeticResult();
+		return new ArithmeticResult(new SSAVar(codeBlock.getLastInstruction().getId()));
+		// return func.getArithmeticResult() == null ?
+		// ArithmeticResult.FUNC_RETURN_RESULT : func
+		// .getArithmeticResult();
 	}
 
 	public CFGResult connectStatSequence(CFGResult statementResult, CFGResult nextStatement) {
@@ -272,6 +275,17 @@ public class Interpretor {
 			codeBlock.putCode(OP.LOAD, codeBlock.getSSAVar(param));
 			codeBlock.updateVarVersion(codeBlock.getSSAVar(param));
 		}
+	}
+
+	public Function finalizedFunction(String funcName, CFGResult body) {
+		return Function.finalizedFunction(funcName, body);
+	}
+
+	public CFGResult computeReturn(Block lastBlock, ArithmeticResult ret) {
+		lastBlock.putCode(OP.POP);
+		CFGResult result = new CFGResult(lastBlock);
+		result.setRet(ret);
+		return result;
 	}
 
 }

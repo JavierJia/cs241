@@ -17,6 +17,19 @@ public class Function {
 		functionTable.put(func.funcName, func);
 	}
 
+	public static Function finalizedFunction(String funcName, CFGResult body) {
+		Function func = functionTable.get(funcName);
+		if (func.body.getFirstBlock() != body.getFirstBlock()) {
+			throw new IllegalArgumentException("the first block of the function is not equal !");
+		}
+		if (body.getLastBlock() != body.getFirstBlock()) {
+			body.getFirstBlock().shiftPopBackList(body.getLastBlock());
+		}
+		func.body = body;
+		func.pending = false;
+		return func;
+	}
+
 	public static Function getFunction(String funcName) {
 		return functionTable.get(funcName);
 	}
@@ -28,6 +41,7 @@ public class Function {
 	private String funcName;
 	private ArrayList<String> paramsList;
 	private CFGResult body;
+	private boolean pending = true;
 
 	public Function(String funcName, ArrayList<String> paramsList, CFGResult body) {
 		this.funcName = funcName;
@@ -83,6 +97,10 @@ public class Function {
 
 	public String getName() {
 		return funcName;
+	}
+
+	public boolean isPending() {
+		return pending;
 	}
 
 }

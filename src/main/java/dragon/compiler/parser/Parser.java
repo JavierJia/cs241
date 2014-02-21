@@ -119,12 +119,12 @@ public class Parser {
 			ArrayList<String> paramsList = formalParam();
 			assertAndMoveNext(TokenType.SEMICOMA);
 
-			CFGResult body = funcBody(globalVarList, paramsList);
+			CFGResult body = funcBody(funcName, globalVarList, paramsList);
 			if (body == null) {
 				throwFormatException("Function body expected");
 			}
 			assertAndMoveNext(TokenType.SEMICOMA);
-			return inter.registerFunction(funcName, paramsList, body);
+			return inter.finalizedFunction(funcName, body);
 		}
 		return null;
 	}
@@ -148,8 +148,8 @@ public class Parser {
 		return null;
 	}
 
-	private CFGResult funcBody(VariableTable globalVarList, ArrayList<String> paramsList)
-			throws SyntaxFormatException, IOException {
+	private CFGResult funcBody(String funcName, VariableTable globalVarList,
+			ArrayList<String> paramsList) throws SyntaxFormatException, IOException {
 		VariableTable localVar = varDecl();
 		for (VariableTable newDecl = varDecl(); newDecl != null; newDecl = varDecl()) {
 			localVar.append(newDecl);
@@ -166,6 +166,8 @@ public class Parser {
 		if (checkCurrentType(TokenType.BEGIN_BRACE)) {
 			moveToNextToken();
 			Block codeBlock = new Block(localVar, globalVarList);
+			CFGResult pendingBody = new CFGResult(codeBlock);
+			Function.registerFunction(new Function(funcName, paramsList, pendingBody));
 			if (paramTable != null) {
 				inter.stubLoadParams(codeBlock, paramsList);
 			}
@@ -181,11 +183,17 @@ public class Parser {
 		if (statementResult != null) {
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
-				CFGResult nextStatement = statement(statementResult.getLastBlock());
+				Block blk = statementResult.getLastBlock();
+				if (statementResult.isReturn()) {
+					blk = new Block(lastBlock.getLocalVarTable(), lastBlock.getGlobalVarTable());
+				}
+				CFGResult nextStatement = statement(blk);
 				if (nextStatement == null) {
 					throwFormatException("missing statement after semicoma");
 				}
-				statementResult = inter.connectStatSequence(statementResult, nextStatement);
+				if (!statementResult.isReturn()) {
+					statementResult = inter.connectStatSequence(statementResult, nextStatement);
+				}
 			}
 		}
 		return statementResult;
@@ -206,8 +214,7 @@ public class Parser {
 						// TODO any special for return ?
 						// I prefer to fix the return value to one reg#
 						ArithmeticResult ret = returnStatement(lastBlock);
-						result = new CFGResult(lastBlock);
-						result.setRet(ret);
+						result = inter.computeReturn(lastBlock, ret);
 					}
 				}
 			}

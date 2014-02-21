@@ -1,6 +1,5 @@
 package dragon.compiler.parser;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -55,13 +54,19 @@ public class StatementTest {
 	// checkGraph(simpleFuncTest4);
 	// }
 
+//	@Test
+//	public void TestSimpleNestWhileLoop() throws IOException, SyntaxFormatException {
+//		checkGraph("src/test/resources/testprogs/test010.txt");
+//	}
+//
+//	@Test
+//	public void TestCrazyNestWhileLoop() throws IOException, SyntaxFormatException {
+//		checkGraph("src/test/resources/testprogs/test024.txt");
+//	}
+
 	@Test
-	public void TestSimpleNestWhileLoop() throws IOException, SyntaxFormatException {
-		checkGraph("src/test/resources/testprogs/test010.txt"); 
+	public void TestFactorialFunction() throws IOException, SyntaxFormatException {
+		checkGraph("src/test/resources/testprogs/factorial.txt");
 	}
-	
-	@Test
-	public void TestCrazyNestWhileLoop() throws IOException, SyntaxFormatException {
-		checkGraph("src/test/resources/testprogs/test024.txt"); 
-	}
+
 }

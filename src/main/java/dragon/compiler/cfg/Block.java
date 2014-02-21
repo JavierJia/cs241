@@ -1,6 +1,8 @@
 package dragon.compiler.cfg;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import dragon.compiler.data.ArithmeticResult;
 import dragon.compiler.data.ArithmeticResult.Kind;
@@ -24,10 +26,8 @@ public class Block {
 	private ArrayList<SSAInstruction> instructions = new ArrayList<SSAInstruction>();
 
 	// The function call related CFG. These blk should not involved into
-	protected Block functionJumpToBlock;
-	protected Block functionPopBackToBlock;
-	protected int jumpToInstructionIdx;
-	protected int popBackToInstructionIdx;
+	protected ArrayList<Entry<Block, Integer>> functionJumpToBlocks = new ArrayList<Entry<Block, Integer>>();
+	protected ArrayList<Entry<Block, Integer>> functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 
 	// Merge the two varTable to phi functions
 	public static Block createJoinPointBlock(VariableTable varTableLeft,
@@ -215,6 +215,10 @@ public class Block {
 		instructions.add(new SSAInstruction(op, ssa));
 	}
 
+	public void putCode(OP op) {
+		instructions.add(new SSAInstruction(op));
+	}
+
 	public VariableTable getLocalVarTable() {
 		return localVTable;
 	}
@@ -232,8 +236,8 @@ public class Block {
 		}
 	}
 
-	private SSAInstruction getLastInstruction() {
-		return instructions.get(instructions.size() - 1);
+	public SSAInstruction getLastInstruction() {
+		return instructions.size() == 0 ? null : instructions.get(instructions.size() - 1);
 	}
 
 	public void condNegBranch(Block condNegBlock) {
@@ -250,7 +254,14 @@ public class Block {
 				return;
 			}
 		}
+		if (isReturn()) {
+			return;
+		}
 		condNextBlock = next;
+	}
+
+	public boolean isReturn() {
+		return getLastInstruction() == null ? false : getLastInstruction().getOP() == OP.POP;
 	}
 
 	public Block getNextBlock() {
@@ -261,13 +272,8 @@ public class Block {
 		return condFalseBranchBlock;
 	}
 
-	public void putInputFuncCode(Variable var) {
-		if (var instanceof SSAVar) {
-			instructions.add(new SSAInstruction(OP.READ, (SSAVar) var));
-			localVTable.renameSSAVar(var.getVarName(), Instruction.getPC());
-		} else {
-			throw new IllegalArgumentException("not implemented yet");
-		}
+	public void putInputFuncCode() {
+		instructions.add(new SSAInstruction(OP.READ));
 	}
 
 	public void putOutputFuncCode(Variable variable) {
@@ -349,15 +355,19 @@ public class Block {
 	public void push(CFGResult body) {
 		// TODO push everything onto stack
 		instructions.add(new SSAInstruction(OP.PUSH, new SSAVar(body.getFirstBlock().getID())));
-		functionJumpToBlock = body.getFirstBlock();
-		jumpToInstructionIdx = instructions.size() - 1;
+		functionJumpToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(body.getFirstBlock(),
+				getLastInstruction().getId()));
 	}
 
 	public void pop(Block codeBlock) {// , int instructionIdx) {
 		// TODO Auto-generated method stub
-		instructions.add(new SSAInstruction(OP.POP, new SSAVar(codeBlock.getID())));
-		functionPopBackToBlock = codeBlock;
-		popBackToInstructionIdx = codeBlock.instructions.size();
+		functionPopBackToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(codeBlock,
+				codeBlock.getLastInstruction().getId()));
+	}
+
+	public void shiftPopBackList(Block realTail) {
+		realTail.functionPopBackToBlocks = this.functionPopBackToBlocks;
+		this.functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 	}
 
 }
