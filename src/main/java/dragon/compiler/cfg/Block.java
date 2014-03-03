@@ -72,7 +72,29 @@ public class Block {
 		return myID;
 	}
 
-	private SSAVar calculateOffset(Variable varTarget, OP op, SSAVar varSrc) {
+	private class SSAorConst {
+		public Integer v;
+		public SSAVar var;
+
+		public SSAorConst(int v) {
+			this.v = v;
+		}
+
+		public SSAorConst(SSAVar var) {
+			this.var = var;
+		}
+
+		public boolean isConst() {
+			return this.v != null;
+		}
+
+		public boolean isVar() {
+			return this.var != null;
+		}
+
+	}
+
+	private SSAVar calculateOffset(Variable varTarget, OP op, SSAorConst varSrc) {
 		ArrayVar aryVar = (ArrayVar) varTarget;
 		ArrayList<Integer> sizeList = localVTable.hasDecl(varTarget.getVarName()) ? localVTable
 				.lookUpVar(varTarget.getVarName()).getSizeList() : globalVTable.lookUpVar(
@@ -119,8 +141,13 @@ public class Block {
 				instructions.add(new SSAInstruction(OP.LOAD, new SSAVar(instructions.get(
 						instructions.size() - 1).getId())));
 			} else if (op == OP.STORE) {
-				instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
-						instructions.size() - 1).getId()), varSrc));
+				if (varSrc.isConst()) {
+					instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
+							instructions.size() - 1).getId()), varSrc.v));
+				} else {
+					instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
+							instructions.size() - 1).getId()), varSrc.var));
+				}
 			} else {
 				throw new IllegalArgumentException("only Load and Store allowed");
 			}
@@ -137,8 +164,13 @@ public class Block {
 			instructions.add(new SSAInstruction(OP.LOAD, new SSAVar(instructions.get(
 					instructions.size() - 1).getId())));
 		} else if (op == OP.STORE) {
-			instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
-					instructions.size() - 1).getId()), varSrc));
+			if (varSrc.isConst()) {
+				instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
+						instructions.size() - 1).getId()), varSrc.v));
+			} else {
+				instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
+						instructions.size() - 1).getId()), varSrc.var));
+			}
 		} else {
 			throw new IllegalArgumentException("only Load and Store allowed");
 		}
@@ -179,7 +211,7 @@ public class Block {
 
 	private void storeSSA(Variable varTarget, SSAVar ssaRight) {
 		if (varTarget instanceof ArrayVar) {
-			calculateOffset(varTarget, OP.STORE, ssaRight);
+			calculateOffset(varTarget, OP.STORE, new SSAorConst(ssaRight));
 		} else if (varTarget.isVar()) {
 			SSAInstruction addr = new SSAInstruction(OP.ADD, SSAVar.FPVar, new SSAVar(
 					varTarget.getVarName(), 0));
@@ -193,9 +225,18 @@ public class Block {
 		}
 	}
 
+	private void storeSSA(ArrayVar varTarget, int value) {
+		calculateOffset(varTarget, OP.STORE, new SSAorConst(value));
+	}
+
 	public void putCode(OP op, Variable var, int value) {
-		SSAVar ssa = var instanceof SSAVar ? (SSAVar) var : loadToSSA(var);
-		instructions.add(new SSAInstruction(op, ssa, value));
+		if (op == OP.MOVE && var instanceof ArrayVar) {
+			// using Store instead of move
+			storeSSA((ArrayVar) var, value);
+		} else {
+			SSAVar ssa = var instanceof SSAVar ? (SSAVar) var : loadToSSA(var);
+			instructions.add(new SSAInstruction(op, ssa, value));
+		}
 	}
 
 	public void putCode(OP op, Variable varLeft, Variable varRight) {

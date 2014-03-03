@@ -66,7 +66,8 @@ public class StatementTest {
 
 	@Test
 	public void TestFactorialFunction() throws IOException, SyntaxFormatException {
-		checkGraph("src/test/resources/testprogs/factorial.txt");
+//		checkGraph("src/test/resources/testprogs/factorial.txt");
+		checkGraph("/Users/jiajianfeng/Downloads/array1.txt");
 	}
 
 }
