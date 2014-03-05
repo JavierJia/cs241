@@ -15,7 +15,7 @@ public class CFGResult extends Result {
 	private Block head;
 	private Block tail;
 
-	private ArithmeticResult ret;
+//	private ArithmeticResult ret;
 
 	/**
 	 * Initialize a new CFG with one block, and package the returnStatement
@@ -48,7 +48,7 @@ public class CFGResult extends Result {
 			// TODO do nothing ?
 		}
 		this.tail = next.tail;
-		this.ret = next.ret;
+//		this.ret = next.ret;
 		return this;
 	}
 
@@ -88,14 +88,14 @@ public class CFGResult extends Result {
 		}
 	}
 
-	// Only used for function declaration, to set the return value
-	public void setRet(ArithmeticResult ret) {
-		this.ret = ret;
-	}
-
-	public ArithmeticResult getRet() {
-		return ret;
-	}
+//	// Only used for function declaration, to set the return value
+//	public void setRet(ArithmeticResult ret) {
+//		this.ret = ret;
+//	}
+//
+//	public ArithmeticResult getRet() {
+//		return ret;
+//	}
 
 	public boolean isReturn() {
 		return getLastBlock() == null ? false : getLastBlock().isReturn();

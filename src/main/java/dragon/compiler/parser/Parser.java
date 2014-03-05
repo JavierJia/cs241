@@ -217,7 +217,9 @@ public class Parser {
 						// TODO any special for return ?
 						// I prefer to fix the return value to one reg#
 						ArithmeticResult ret = returnStatement(lastBlock);
-						result = inter.computeReturn(lastBlock, ret);
+						if (ret != null) {
+							result = inter.computeReturn(lastBlock, ret);
+						}
 					}
 				}
 			}

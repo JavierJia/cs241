@@ -31,7 +31,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-40 PUSH (0)
+40 PUSH foo_0
 41 ADD FP_0 a_0
 42 ADDA (41) 36
 43 STORE (42) (40)
@@ -49,7 +49,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-44 PUSH (0)
+44 PUSH foo_0
 45 ADD FP_0 a_0
 46 ADDA (45) 36
 47 STORE (46) (44)
@@ -89,7 +89,7 @@ label: "0
 10 ADD FP_0 c_0
 11 LOAD (10)
 12 ADD (9) (11)
-13 POP
+13 POP (12)
 ]"
 }
 }

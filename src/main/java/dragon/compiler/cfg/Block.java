@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import dragon.compiler.data.ArithmeticResult;
 import dragon.compiler.data.ArithmeticResult.Kind;
 import dragon.compiler.data.ArrayVar;
-import dragon.compiler.data.CFGResult;
+import dragon.compiler.data.Function;
 import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
 import dragon.compiler.data.SSAInstruction;
@@ -213,8 +213,8 @@ public class Block {
 			SSAInstruction addr = new SSAInstruction(OP.ADD, SSAVar.FPVar, new SSAVar(
 					varTarget.getVarName(), 0));
 			instructions.add(addr);
-			SSAInstruction storeins = new SSAInstruction(OP.STORE, new SSAVar(
-					varTarget.getVarName(), 0), new SSAVar(addr.getId()));
+			SSAInstruction storeins = new SSAInstruction(OP.STORE, new SSAVar(addr.getId()),
+					ssaRight);
 			instructions.add(storeins);
 		} else {
 			throw new IllegalArgumentException("store array or global word, but the type is wrong:"
@@ -252,7 +252,7 @@ public class Block {
 		SSAVar ssa = var instanceof SSAVar ? (SSAVar) var : loadToSSA(var);
 		instructions.add(new SSAInstruction(op, ssa));
 	}
-
+	
 	public void putCode(OP op) {
 		instructions.add(new SSAInstruction(op));
 	}
@@ -390,11 +390,12 @@ public class Block {
 		}
 	}
 
-	public void push(CFGResult body) {
+	public void push(Function func) {
 		// TODO push everything onto stack
-		instructions.add(new SSAInstruction(OP.PUSH, new SSAVar(body.getFirstBlock().getID())));
-		functionJumpToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(body.getFirstBlock(),
-				getLastInstruction().getId()));
+		instructions.add(new SSAInstruction(OP.PUSH, new SSAVar(func.getName(), func.getBody()
+				.getFirstBlock().getID())));
+		functionJumpToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(func.getBody()
+				.getFirstBlock(), getLastInstruction().getId()));
 	}
 
 	public void pop(Block codeBlock) {// , int instructionIdx) {
@@ -407,5 +408,7 @@ public class Block {
 		realTail.functionPopBackToBlocks = this.functionPopBackToBlocks;
 		this.functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 	}
+
+
 
 }

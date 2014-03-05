@@ -91,10 +91,6 @@ public class Function {
 		body.getLastBlock().pop(codeBlock);
 	}
 
-	public ArithmeticResult getArithmeticResult() {
-		return body.getRet();
-	}
-
 	public String getName() {
 		return funcName;
 	}

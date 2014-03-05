@@ -7,10 +7,10 @@ label: "7
 [BLOCK:7
 22 READ
 23 MOVE input_0 (22)
-25 PUSH (0)
+25 PUSH factIter_0
 26 WRITE (25)
 27 WLN
-29 PUSH (4)
+29 PUSH factRec_4
 30 WRITE (29)
 31 WLN
 ]"
@@ -72,7 +72,7 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-16 POP
+16 POP CONST_1
 ]"
 }
 node: {
@@ -80,9 +80,9 @@ title: "6"
 label: "6
 [BLOCK:6
 18 SUB n_14 1
-19 PUSH (4)
+19 PUSH factRec_4
 20 MUL (19) n_14
-21 POP
+21 POP (20)
 ]"
 }
 edge: { sourcename: "6"
@@ -107,7 +107,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-13 POP
+13 POP f_10
 ]"
 }
 }

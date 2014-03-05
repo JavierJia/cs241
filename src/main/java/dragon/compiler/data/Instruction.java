@@ -21,7 +21,7 @@ public class Instruction {
 	public static EnumSet<OP> SINGLE_ARGS_SET = EnumSet.of(OP.END, OP.READ, OP.WRITE, OP.WLN);
 
 	public static EnumSet<OP> REFRESHABLE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV,
-			OP.CMP, OP.READ, OP.WRITE);
+			OP.CMP, OP.READ, OP.WRITE, OP.STORE, OP.POP);
 
 	public static boolean isBranchInstruction(OP op) {
 		return BRACH_SET.contains(op);

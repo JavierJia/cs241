@@ -29,11 +29,12 @@ public class SSAInstruction extends Instruction {
 		this.op = op;
 		this.target = target.clone();
 	}
-
+	
 	public SSAInstruction(OP op) {
 		super();
 		this.op = op;
 	}
+
 
 	public int getId() {
 		return super.insID;

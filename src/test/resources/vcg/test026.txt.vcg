@@ -62,7 +62,7 @@ label: "2
 30 MUL k_10 4
 31 ADD FP_0 a_0
 32 ADDA (30) (31)
-33 STORE (32) z_0
+33 STORE (32) z_45
 34 MUL j_0 4
 35 ADD FP_0 b_0
 36 ADDA (34) (35)

@@ -7,7 +7,7 @@ label: "24
 [BLOCK:24
 156 MOVE ColCount_0 200
 157 MOVE RowCount_0 150
-158 PUSH (2)
+158 PUSH ClearData_2
 159 ADD FP_0 Data_0
 160 ADDA (159) 4
 161 STORE (160) 1
@@ -24,8 +24,8 @@ label: "24
 172 ADDA (171) 800
 173 STORE (172) 1
 174 MOVE Rule_0 110
-175 PUSH (1)
-176 PUSH (20)
+175 PUSH InitRuleBin_1
+176 PUSH Run_20
 ]"
 }
 edge: { sourcename: "24"
@@ -57,21 +57,21 @@ label: "1
 18 ADD FP_0 Rule_0
 19 LOAD (18)
 20 MOVE Bits_0 (19)
-22 PUSH (0)
+22 PUSH SetNextBit_0
 23 MOVE Bits_20 (22)
-25 PUSH (0)
+25 PUSH SetNextBit_0
 26 MOVE Bits_23 (25)
-28 PUSH (0)
+28 PUSH SetNextBit_0
 29 MOVE Bits_26 (28)
-31 PUSH (0)
+31 PUSH SetNextBit_0
 32 MOVE Bits_29 (31)
-34 PUSH (0)
+34 PUSH SetNextBit_0
 35 MOVE Bits_32 (34)
-37 PUSH (0)
+37 PUSH SetNextBit_0
 38 MOVE Bits_35 (37)
-40 PUSH (0)
+40 PUSH SetNextBit_0
 41 MOVE Bits_38 (40)
-43 PUSH (0)
+43 PUSH SetNextBit_0
 44 MOVE Bits_41 (43)
 ]"
 }
@@ -163,7 +163,7 @@ label: "0
 14 ADDA (12) (13)
 15 STORE (14) (7)
 16 DIV Bits_4 2
-17 POP
+17 POP (16)
 ]"
 }
 node: {
@@ -209,8 +209,8 @@ node: {
 title: "22"
 label: "22
 [BLOCK:22
-149 PUSH (6)
-150 PUSH (16)
+149 PUSH Output_6
+150 PUSH CalcNext_16
 151 ADD i_154 1
 152 MOVE i_154 (151)
 155 BRA (21)

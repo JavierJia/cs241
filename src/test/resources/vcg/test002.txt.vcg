@@ -8,8 +8,8 @@ label: "11
 53 MOVE x_0 0
 54 MOVE y_0 0
 55 MOVE z_0 0
-58 PUSH (4)
-59 PUSH (0)
+58 PUSH bar_4
+59 PUSH foo_0
 60 MOVE c_0 (59)
 61 WRITE c_60
 ]"
@@ -108,12 +108,12 @@ label: "2
 4 LOAD (3)
 5 ADD (4) 2
 6 ADD FP_0 y_0
-7 STORE y_0 (6)
+7 STORE (6) (5)
 8 ADD FP_0 x_0
 9 LOAD (8)
 10 ADD (9) 2
 11 ADD FP_0 z_0
-12 STORE z_0 (11)
+12 STORE (11) (10)
 13 ADD FP_0 y_0
 14 LOAD (13)
 15 ADD FP_0 z_0
@@ -132,7 +132,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-25 POP
+25 POP d_22
 ]"
 }
 node: {
@@ -144,7 +144,7 @@ label: "8
 34 ADD (32) (33)
 35 ADD FP_0 b_0
 36 ADDA (34) (35)
-37 STORE (36) j_29
+37 STORE (36) j_41
 38 ADD j_41 1
 39 MOVE j_41 (38)
 42 BRA (7)
@@ -160,7 +160,7 @@ label: "9
 43 MUL i_51 4
 44 ADD FP_0 a_0
 45 ADDA (43) (44)
-46 STORE (45) i_28
+46 STORE (45) i_51
 47 ADD i_51 1
 48 MOVE i_51 (47)
 52 BRA (5)

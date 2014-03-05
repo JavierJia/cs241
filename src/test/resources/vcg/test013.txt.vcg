@@ -5,7 +5,7 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-70 PUSH (0)
+70 PUSH foo_0
 ]"
 }
 edge: { sourcename: "15"

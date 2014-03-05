@@ -267,7 +267,7 @@ public class Interpretor {
 		if (!func.isPending()) {
 			func.fixupLoadParams(argumentList);
 		}
-		codeBlock.push(func.getBody());
+		codeBlock.push(func);
 		func.pop(codeBlock);
 
 		return new ArithmeticResult(new SSAVar(codeBlock.getLastInstruction().getId()));
@@ -292,10 +292,15 @@ public class Interpretor {
 	}
 
 	public CFGResult computeReturn(Block lastBlock, ArithmeticResult ret) {
-		lastBlock.putCode(OP.POP);
+		if (ret.getKind() == Kind.CONST) {
+			lastBlock.putCode(OP.POP, new SSAVar("CONST", ret.getConstValue()));
+		} else if (ret.getKind() == Kind.VAR) {
+			lastBlock.putCode(OP.POP, ret.getVariable());
+		} else {
+			throw new IllegalArgumentException("return value should only be const or var");
+		}
 		CFGResult result = new CFGResult(lastBlock);
-		result.setRet(ret);
+		// result.setRet(ret);
 		return result;
 	}
-
 }
