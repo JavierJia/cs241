@@ -2,92 +2,92 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "5"
-label: "5
-[BLOCK:5
-26 MUL i_0 4
-27 ADD FP a_0
-28 ADDA (26) (27)
-29 LOAD (28)
-30 MOVE x_30 (29)
-31 MUL i_0 4
-32 ADD FP a_0
-33 ADDA (31) (32)
-34 LOAD (33)
-35 MOVE k_35 (34)
+title: "0"
+label: "0
+[BLOCK:0
+1 MUL i_0 4
+2 ADD FP_0 a_0
+3 ADDA (1) (2)
+4 LOAD (3)
+5 MOVE x_0 (4)
+6 MUL i_0 4
+7 ADD FP_0 a_0
+8 ADDA (6) (7)
+9 LOAD (8)
+10 MOVE k_0 (9)
 ]"
 }
-edge: { sourcename: "5"
-targetname: "6"
+edge: { sourcename: "0"
+targetname: "1"
 }
 node: {
-title: "6"
-label: "6
-[BLOCK:6
-70 PHI z_0 z_68
-71 PHI y_0 y_54
-72 PHI x_30 x_49
-36 MUL i_0 4
-37 ADD FP a_0
-38 ADDA (36) (37)
-39 LOAD (38)
-40 MUL j_0 4
-41 ADD FP b_0
-42 ADDA (40) (41)
-43 LOAD (42)
-44 CMP (39) (43)
-69 BGE (44) (8)
+title: "1"
+label: "1
+[BLOCK:1
+45 PHI z_0 z_43
+46 PHI y_0 y_29
+47 PHI x_5 x_24
+11 MUL i_0 4
+12 ADD FP_0 a_0
+13 ADDA (11) (12)
+14 LOAD (13)
+15 MUL j_0 4
+16 ADD FP_0 b_0
+17 ADDA (15) (16)
+18 LOAD (17)
+19 CMP (14) (18)
+44 BGE (19) (3)
 ]"
 }
-edge: { sourcename: "6"
-targetname: "7"
+edge: { sourcename: "1"
+targetname: "2"
 }
-edge: { sourcename: "6"
-targetname: "8"
+edge: { sourcename: "1"
+targetname: "3"
 }
 node: {
-title: "7"
-label: "7
-[BLOCK:7
-45 MUL i_0 4
-46 ADD FP a_0
-47 ADDA (45) (46)
-48 LOAD (47)
-49 MOVE x_49 (48)
-50 MUL j_0 4
-51 ADD FP a_0
-52 ADDA (50) (51)
-53 LOAD (52)
-54 MOVE y_54 (53)
-55 MUL k_35 4
-56 ADD FP a_0
-57 ADDA (55) (56)
-58 STORE (57) z_68
-59 MUL j_0 4
-60 ADD FP b_0
-61 ADDA (59) (60)
-62 LOAD (61)
-63 MOVE z_68 (62)
-64 MUL j_0 4
-65 ADD FP a_0
-66 ADDA (64) (65)
-67 LOAD (66)
-68 MOVE z_68 (67)
-73 BRA (6)
+title: "2"
+label: "2
+[BLOCK:2
+20 MUL i_0 4
+21 ADD FP_0 a_0
+22 ADDA (20) (21)
+23 LOAD (22)
+24 MOVE x_47 (23)
+25 MUL j_0 4
+26 ADD FP_0 a_0
+27 ADDA (25) (26)
+28 LOAD (27)
+29 MOVE y_46 (28)
+30 MUL k_10 4
+31 ADD FP_0 a_0
+32 ADDA (30) (31)
+33 STORE (32) z_0
+34 MUL j_0 4
+35 ADD FP_0 b_0
+36 ADDA (34) (35)
+37 LOAD (36)
+38 MOVE z_45 (37)
+39 MUL j_0 4
+40 ADD FP_0 a_0
+41 ADDA (39) (40)
+42 LOAD (41)
+43 MOVE z_38 (42)
+48 BRA (1)
 ]"
 }
-edge: { sourcename: "7"
-targetname: "6"
+edge: { sourcename: "2"
+targetname: "1"
 }
 node: {
-title: "8"
-label: "8
-[BLOCK:8
-74 MUL i_0 4
-75 ADD FP a_0
-76 ADDA (74) (75)
-77 LOAD (76)
-78 MOVE w_78 (77)
+title: "3"
+label: "3
+[BLOCK:3
+49 MUL i_0 4
+50 ADD FP_0 a_0
+51 ADDA (49) (50)
+52 LOAD (51)
+53 MOVE w_0 (52)
 ]"
 }
 }

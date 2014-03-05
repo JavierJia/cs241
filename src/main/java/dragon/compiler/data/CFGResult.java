@@ -33,9 +33,9 @@ public class CFGResult extends Result {
 		tail = tailBlk;
 	}
 
-	public void merge(CFGResult next) {
+	public CFGResult merge(CFGResult next) {
 		if (next == EMPTY_CFG_RESULT) {
-			return;
+			return this;
 		}
 		if (this == EMPTY_CFG_RESULT) {
 			this.head = next.head;
@@ -49,6 +49,7 @@ public class CFGResult extends Result {
 		}
 		this.tail = next.tail;
 		this.ret = next.ret;
+		return this;
 	}
 
 	public Block getFirstBlock() {
@@ -97,7 +98,7 @@ public class CFGResult extends Result {
 	}
 
 	public boolean isReturn() {
-		return getLastBlock().isReturn();
+		return getLastBlock() == null ? false : getLastBlock().isReturn();
 	}
 
 }

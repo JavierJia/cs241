@@ -5,24 +5,29 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE i_0 0
-2 MOVE j_0 0
+1 MOVE a_0 2
+2 MOVE b_0 3
+3 CMP a_1 b_2
+12 BGE (3) (2)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "1"
 }
+edge: { sourcename: "0"
+targetname: "2"
+}
 node: {
 title: "1"
 label: "1
 [BLOCK:1
-7 PHI j_2 j_5
-3 CMP i_1 1000
-6 BGE (3) (3)
+4 MOVE a_1 1
+5 ADD a_4 1
+6 MOVE b_2 (5)
+7 ADD a_4 1
+8 MOVE a_4 (7)
+16 BRA (3)
 ]"
-}
-edge: { sourcename: "1"
-targetname: "2"
 }
 edge: { sourcename: "1"
 targetname: "3"
@@ -31,18 +36,24 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-4 ADD j_7 1
-5 MOVE j_7 (4)
-8 BRA (1)
+9 ADD a_1 1
+10 MOVE a_1 (9)
+11 MOVE c_0 2
 ]"
 }
 edge: { sourcename: "2"
-targetname: "1"
+targetname: "3"
 }
 node: {
 title: "3"
 label: "3
 [BLOCK:3
+13 PHI b_6 b_2
+14 PHI c_0 c_11
+15 PHI a_8 a_10
+17 ADD a_15 1
+18 MOVE a_15 (17)
+19 WRITE a_18
 ]"
 }
 }

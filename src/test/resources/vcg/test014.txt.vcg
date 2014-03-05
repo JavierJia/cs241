@@ -5,8 +5,7 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE i_0 0
-2 MOVE j_0 0
+1 MOVE a_0 1
 ]"
 }
 edge: { sourcename: "0"
@@ -16,9 +15,10 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-7 PHI j_2 j_5
-3 CMP i_1 1000
-6 BGE (3) (3)
+8 PHI b_0 b_4
+9 PHI a_1 a_6
+2 CMP a_9 b_8
+7 BEQ (2) (3)
 ]"
 }
 edge: { sourcename: "1"
@@ -31,9 +31,11 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-4 ADD j_7 1
-5 MOVE j_7 (4)
-8 BRA (1)
+3 ADD a_9 1
+4 MOVE b_8 (3)
+5 MUL a_9 2
+6 MOVE a_9 (5)
+10 BRA (1)
 ]"
 }
 edge: { sourcename: "2"
@@ -43,6 +45,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
+11 MOVE b_8 a_9
 ]"
 }
 }

@@ -17,10 +17,10 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-10 PHI f_3 f_6
-11 PHI n_1 n_8
-4 CMP n_11 0
-9 BLE (4) (3)
+11 PHI f_3 f_6
+12 PHI n_1 n_8
+4 CMP n_12 0
+10 BLE (4) (3)
 ]"
 }
 edge: { sourcename: "1"
@@ -33,11 +33,12 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-5 MUL f_10 n_11
-6 MOVE f_3 (5)
-7 SUB n_11 1
-8 MOVE n_1 (7)
-12 BRA (1)
+5 MUL f_11 n_12
+6 MOVE f_11 (5)
+7 SUB n_12 1
+8 MOVE n_12 (7)
+9 POP
+13 BRA (1)
 ]"
 }
 edge: { sourcename: "2"
@@ -47,8 +48,9 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-13 MOVE n_11 f_10
-14 WRITE f_10
+14 MOVE n_12 f_11
+15 WRITE f_11
+16 POP
 ]"
 }
 }

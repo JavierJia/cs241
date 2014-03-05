@@ -1,0 +1,15 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE q_0 foo_0
+9 ADD too_0 foo_0
+10 ADD (9) q_1
+11 MOVE af_0 (10)
+12 WRITE af_11
+]"
+}
+}

@@ -43,6 +43,9 @@ public class Parser {
 		for (VariableTable moreVar = varDecl(); moreVar != null; moreVar = varDecl()) {
 			globalVarList.append(moreVar);
 		}
+		if (globalVarList == null) {
+			globalVarList = new VariableTable();
+		}
 
 		Function funcList = funcDecl(globalVarList);
 		for (Function func = funcDecl(globalVarList); func != null; func = funcDecl(globalVarList)) {
@@ -145,7 +148,7 @@ public class Parser {
 			assertAndMoveNext(TokenType.END_PARENTHESIS);
 			return params;
 		}
-		return null;
+		return new ArrayList<String>();
 	}
 
 	private CFGResult funcBody(String funcName, VariableTable globalVarList,
@@ -184,7 +187,7 @@ public class Parser {
 			while (checkCurrentType(TokenType.SEMICOMA)) {
 				moveToNextToken();
 				Block blk = statementResult.getLastBlock();
-				if (statementResult.isReturn()) {
+				if (blk == null || statementResult.isReturn()) {
 					blk = new Block(lastBlock.getLocalVarTable(), lastBlock.getGlobalVarTable());
 				}
 				CFGResult nextStatement = statement(blk);
@@ -294,8 +297,9 @@ public class Parser {
 			ArrayList<ArithmeticResult> argumentList = new ArrayList<ArithmeticResult>();
 			if (checkCurrentType(TokenType.BEGIN_PARENTHESIS)) { // 0 or 1 time
 				moveToNextToken();
-				argumentList.add(expression(codeBlock));
-				if (argumentList != null) {
+				ArithmeticResult args = expression(codeBlock);
+				if (args != null) {
+					argumentList.add(args);
 					while (checkCurrentType(TokenType.COMMA)) {
 						moveToNextToken();
 						ArithmeticResult moreArgs = expression(codeBlock);

@@ -1,0 +1,123 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+34 PUSH (0)
+35 PUSH (1)
+36 MOVE x_0 8
+37 MOVE y_0 1790
+40 PUSH (2)
+41 PUSH (3)
+42 ADD y_37 (41)
+43 MOVE y_37 (42)
+]"
+}
+edge: { sourcename: "7"
+targetname: "0"
+label: "j34"
+color:red}
+edge: { sourcename: "7"
+targetname: "1"
+label: "j35"
+color:red}
+edge: { sourcename: "7"
+targetname: "2"
+label: "j40"
+color:red}
+edge: { sourcename: "7"
+targetname: "3"
+label: "j41"
+color:red}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE a_0 1
+2 MOVE b_0 2
+3 ADD FP_0 x_0
+4 STORE x_0 (3)
+5 ADD FP_0 y_0
+6 STORE y_0 (5)
+]"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+7 MOVE a_0 1
+8 MOVE b_0 1
+9 MOVE c_0 1
+10 ADD FP_0 y_0
+11 STORE y_0 (10)
+]"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+38 ADD FP_0 a_0
+39 ADD FP_0 (0)
+12 LOAD (39)
+13 LOAD b_0
+14 MOVE c_0 1
+]"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+15 MOVE a_0 2
+16 MOVE b_0 4
+17 MOVE i_0 0
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+18 ADD FP_0 y_0
+19 LOAD (18)
+20 CMP i_17 (19)
+28 BGE (20) (6)
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+}
+edge: { sourcename: "4"
+targetname: "6"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+21 ADD FP_0 x_0
+22 LOAD (21)
+23 ADD FP_0 x_0
+24 LOAD (23)
+25 MUL (22) (24)
+26 ADD FP_0 x_0
+27 STORE x_0 (26)
+29 BRA (4)
+]"
+}
+edge: { sourcename: "5"
+targetname: "4"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+30 ADD FP_0 x_0
+31 LOAD (30)
+32 ADD (31) 4
+33 POP
+]"
+}
+}

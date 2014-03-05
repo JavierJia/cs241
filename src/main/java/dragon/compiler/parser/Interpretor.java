@@ -121,6 +121,14 @@ public class Interpretor {
 
 	public CFGResult computeWhileStatement(Block lastBlock, ArithmeticResult cond, Block condBlock,
 			CFGResult loopBody) {
+		if (cond.getKind() == Kind.CONST) { // the branch result is fixed.
+			if (cond.getConstValue() > 0) { // true
+				return loopBody;
+			} else {
+				return CFGResult.EMPTY_CFG_RESULT;
+			}
+		}
+
 		lastBlock.setNext(condBlock);
 		CFGResult result = new CFGResult(condBlock);
 
@@ -148,6 +156,9 @@ public class Interpretor {
 			ArrayList<ArithmeticResult> arrayOffsets, Block codeBlock) {
 		if (!arrayOffsets.isEmpty()) { // array, no SSA
 			return new ArithmeticResult(codeBlock.getArrayVar(identiName, arrayOffsets));
+		}
+		if (codeBlock == null) {
+			throw new IllegalArgumentException("code block is null");
 		}
 		Variable var = codeBlock.getSSAVar(identiName);
 		if (var == null) {
@@ -266,8 +277,7 @@ public class Interpretor {
 	}
 
 	public CFGResult connectStatSequence(CFGResult statementResult, CFGResult nextStatement) {
-		statementResult.merge(nextStatement);
-		return statementResult;
+		return statementResult.merge(nextStatement);
 	}
 
 	public void stubLoadParams(Block codeBlock, ArrayList<String> paramsList) {

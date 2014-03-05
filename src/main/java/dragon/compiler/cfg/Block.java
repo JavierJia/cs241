@@ -16,7 +16,7 @@ import dragon.compiler.data.Variable;
 import dragon.compiler.data.VariableTable;
 
 public class Block {
-	private static int STATIC_SEQ = 0;
+	protected static int STATIC_SEQ = 0;
 
 	private int myID;
 	private Block condNextBlock;
@@ -88,10 +88,6 @@ public class Block {
 			return this.v != null;
 		}
 
-		public boolean isVar() {
-			return this.var != null;
-		}
-
 	}
 
 	private SSAVar calculateOffset(Variable varTarget, OP op, SSAorConst varSrc) {
@@ -116,8 +112,9 @@ public class Block {
 				}
 				constOffset += result.getConstValue() * lowDemSize.get(i) * 4;
 			} else if (result.getKind() == Kind.VAR) {
-				SSAInstruction newIns = new SSAInstruction(OP.MUL, (SSAVar) (result.getVariable()),
-						lowDemSize.get(i) * 4);
+				SSAVar ssaResult = (result.getVariable() instanceof SSAVar) ? (SSAVar) result
+						.getVariable() : loadToSSA(result.getVariable());
+				SSAInstruction newIns = new SSAInstruction(OP.MUL, ssaResult, lowDemSize.get(i) * 4);
 				instructions.add(newIns);
 				if (lastIns != null) {
 					lastIns = new SSAInstruction(OP.ADD, new SSAVar(lastIns.getId()), new SSAVar(

@@ -1,0 +1,172 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+53 MOVE x_0 0
+54 MOVE y_0 0
+55 MOVE z_0 0
+58 PUSH (4)
+59 PUSH (0)
+60 MOVE c_0 (59)
+61 WRITE c_60
+]"
+}
+edge: { sourcename: "11"
+targetname: "4"
+label: "j58"
+color:red}
+edge: { sourcename: "11"
+targetname: "0"
+label: "j59"
+color:red}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+56 ADD FP_0 x_0
+57 ADD FP_0 (0)
+26 LOAD (57)
+27 LOAD z_0
+28 MOVE i_0 0
+29 MOVE j_0 0
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE i_0 0
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+50 PHI j_29 j_41
+51 PHI i_28 i_48
+30 CMP i_51 4
+49 BGE (30) (10)
+]"
+}
+edge: { sourcename: "5"
+targetname: "7"
+}
+edge: { sourcename: "5"
+targetname: "10"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+22 PHI d_0 d_18
+23 PHI i_1 i_20
+2 CMP i_23 10
+21 BGE (2) (3)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+}
+edge: { sourcename: "1"
+targetname: "3"
+}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+41 PHI j_50 j_39
+31 CMP j_41 4
+40 BGE (31) (9)
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+}
+edge: { sourcename: "7"
+targetname: "9"
+}
+node: {
+title: "10"
+label: "10
+[BLOCK:10
+]"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+3 ADD FP_0 y_0
+4 LOAD (3)
+5 ADD (4) 2
+6 ADD FP_0 y_0
+7 STORE y_0 (6)
+8 ADD FP_0 x_0
+9 LOAD (8)
+10 ADD (9) 2
+11 ADD FP_0 z_0
+12 STORE z_0 (11)
+13 ADD FP_0 y_0
+14 LOAD (13)
+15 ADD FP_0 z_0
+16 LOAD (15)
+17 ADD (14) (16)
+18 MOVE d_22 (17)
+19 ADD i_23 1
+20 MOVE i_23 (19)
+24 BRA (1)
+]"
+}
+edge: { sourcename: "2"
+targetname: "1"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+25 POP
+]"
+}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+32 MUL i_51 16
+33 MUL j_41 4
+34 ADD (32) (33)
+35 ADD FP_0 b_0
+36 ADDA (34) (35)
+37 STORE (36) j_29
+38 ADD j_41 1
+39 MOVE j_41 (38)
+42 BRA (7)
+]"
+}
+edge: { sourcename: "8"
+targetname: "7"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+43 MUL i_51 4
+44 ADD FP_0 a_0
+45 ADDA (43) (44)
+46 STORE (45) i_28
+47 ADD i_51 1
+48 MOVE i_51 (47)
+52 BRA (5)
+]"
+}
+edge: { sourcename: "9"
+targetname: "5"
+}
+}

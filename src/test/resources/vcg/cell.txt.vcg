@@ -1,0 +1,454 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "24"
+label: "24
+[BLOCK:24
+156 MOVE ColCount_0 200
+157 MOVE RowCount_0 150
+158 PUSH (2)
+159 ADD FP_0 Data_0
+160 ADDA (159) 4
+161 STORE (160) 1
+162 ADD FP_0 Data_0
+163 ADDA (162) 320
+164 STORE (163) 1
+165 ADD FP_0 Data_0
+166 ADDA (165) 400
+167 STORE (166) 1
+168 ADD FP_0 Data_0
+169 ADDA (168) 480
+170 STORE (169) 1
+171 ADD FP_0 Data_0
+172 ADDA (171) 800
+173 STORE (172) 1
+174 MOVE Rule_0 110
+175 PUSH (1)
+176 PUSH (20)
+]"
+}
+edge: { sourcename: "24"
+targetname: "2"
+label: "j158"
+color:red}
+edge: { sourcename: "24"
+targetname: "1"
+label: "j175"
+color:red}
+edge: { sourcename: "24"
+targetname: "20"
+label: "j176"
+color:red}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+45 MOVE i_0 0
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+18 ADD FP_0 Rule_0
+19 LOAD (18)
+20 MOVE Bits_0 (19)
+22 PUSH (0)
+23 MOVE Bits_20 (22)
+25 PUSH (0)
+26 MOVE Bits_23 (25)
+28 PUSH (0)
+29 MOVE Bits_26 (28)
+31 PUSH (0)
+32 MOVE Bits_29 (31)
+34 PUSH (0)
+35 MOVE Bits_32 (34)
+37 PUSH (0)
+38 MOVE Bits_35 (37)
+40 PUSH (0)
+41 MOVE Bits_38 (40)
+43 PUSH (0)
+44 MOVE Bits_41 (43)
+]"
+}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j22"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j25"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j28"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j31"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j34"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j37"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j40"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j43"
+color:red}
+node: {
+title: "20"
+label: "20
+[BLOCK:20
+145 MOVE i_0 0
+]"
+}
+edge: { sourcename: "20"
+targetname: "21"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+57 PHI i_45 i_55
+46 ADD FP_0 ColCount_0
+47 LOAD (46)
+48 ADD (47) 2
+49 CMP i_57 (48)
+56 BGE (49) (5)
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+}
+edge: { sourcename: "3"
+targetname: "5"
+}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE Last_0 1
+2 MOVE Akt_0 1
+3 MOVE Next_0 1
+42 ADD FP_0 FP_0
+39 LOAD (42)
+36 LOAD (39)
+33 LOAD (36)
+30 LOAD (33)
+27 LOAD (30)
+24 LOAD (27)
+21 LOAD (24)
+4 LOAD (21)
+5 DIV Bits_4 2
+6 MUL (5) 2
+7 SUB Bits_4 (6)
+8 MUL Last_1 16
+9 MUL Akt_2 8
+10 ADD (8) (9)
+11 MUL Next_3 4
+12 ADD (10) (11)
+13 ADD FP_0 RuleBin_0
+14 ADDA (12) (13)
+15 STORE (14) (7)
+16 DIV Bits_4 2
+17 POP
+]"
+}
+node: {
+title: "21"
+label: "21
+[BLOCK:21
+154 PHI i_145 i_152
+146 ADD FP_0 RowCount_0
+147 LOAD (146)
+148 CMP i_154 (147)
+153 BGE (148) (23)
+]"
+}
+edge: { sourcename: "21"
+targetname: "22"
+}
+edge: { sourcename: "21"
+targetname: "23"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+50 MUL i_57 4
+51 ADD FP_0 Data_0
+52 ADDA (50) (51)
+53 STORE (52) 0
+54 ADD i_57 1
+55 MOVE i_57 (54)
+58 BRA (3)
+]"
+}
+edge: { sourcename: "4"
+targetname: "3"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+]"
+}
+node: {
+title: "22"
+label: "22
+[BLOCK:22
+149 PUSH (6)
+150 PUSH (16)
+151 ADD i_154 1
+152 MOVE i_154 (151)
+155 BRA (21)
+]"
+}
+edge: { sourcename: "22"
+targetname: "21"
+}
+edge: { sourcename: "22"
+targetname: "6"
+label: "j149"
+color:red}
+edge: { sourcename: "22"
+targetname: "16"
+label: "j150"
+color:red}
+node: {
+title: "23"
+label: "23
+[BLOCK:23
+]"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+59 MOVE i_0 1
+]"
+}
+edge: { sourcename: "6"
+targetname: "7"
+}
+node: {
+title: "16"
+label: "16
+[BLOCK:16
+86 ADD FP_0 Data_0
+87 ADDA (86) 4
+88 LOAD (87)
+89 ADD FP_0 Data_0
+90 ADDA (89) 0
+91 STORE (90) (88)
+92 ADD FP_0 ColCount_0
+93 LOAD (92)
+94 ADD (93) 1
+95 ADD FP_0 ColCount_0
+96 LOAD (95)
+97 MUL (96) 4
+98 ADD FP_0 Data_0
+99 ADDA (97) (98)
+100 LOAD (99)
+101 MUL (94) 4
+102 ADD FP_0 Data_0
+103 ADDA (101) (102)
+104 STORE (103) (100)
+105 ADD FP_0 Data_0
+106 ADDA (105) 0
+107 LOAD (106)
+108 MOVE Last_0 (107)
+109 ADD FP_0 Data_0
+110 ADDA (109) 4
+111 LOAD (110)
+112 MOVE Akt_0 (111)
+113 MOVE i_0 1
+]"
+}
+edge: { sourcename: "16"
+targetname: "17"
+}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+83 PHI i_59 i_81
+60 ADD FP_0 ColCount_0
+61 LOAD (60)
+62 CMP i_83 (61)
+82 BGT (62) (15)
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+}
+edge: { sourcename: "7"
+targetname: "15"
+}
+node: {
+title: "17"
+label: "17
+[BLOCK:17
+140 PHI Next_0 Next_122
+141 PHI Last_108 Last_135
+142 PHI Akt_112 Akt_136
+143 PHI i_113 i_138
+114 ADD FP_0 ColCount_0
+115 LOAD (114)
+116 CMP i_143 (115)
+139 BGT (116) (19)
+]"
+}
+edge: { sourcename: "17"
+targetname: "18"
+}
+edge: { sourcename: "17"
+targetname: "19"
+}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+63 MUL i_83 4
+64 ADD FP_0 Data_0
+65 ADDA (63) (64)
+66 LOAD (65)
+67 CMP (66) 0
+78 BNE (67) (10)
+]"
+}
+edge: { sourcename: "8"
+targetname: "9"
+}
+edge: { sourcename: "8"
+targetname: "10"
+}
+node: {
+title: "15"
+label: "15
+[BLOCK:15
+85 WLN
+]"
+}
+node: {
+title: "18"
+label: "18
+[BLOCK:18
+117 ADD i_143 1
+118 MUL (117) 4
+119 ADD FP_0 Data_0
+120 ADDA (118) (119)
+121 LOAD (120)
+122 MOVE Next_140 (121)
+123 MUL Last_141 16
+124 MUL Akt_142 8
+125 ADD (123) (124)
+126 MUL Next_122 4
+127 ADD (125) (126)
+128 ADD FP_0 RuleBin_0
+129 ADDA (127) (128)
+130 LOAD (129)
+131 MUL i_143 4
+132 ADD FP_0 Data_0
+133 ADDA (131) (132)
+134 STORE (133) (130)
+135 MOVE Last_141 Akt_142
+136 MOVE Akt_142 Next_122
+137 ADD i_143 1
+138 MOVE i_143 (137)
+144 BRA (17)
+]"
+}
+edge: { sourcename: "18"
+targetname: "17"
+}
+node: {
+title: "19"
+label: "19
+[BLOCK:19
+]"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+68 WLN
+79 BRA (14)
+]"
+}
+edge: { sourcename: "9"
+targetname: "14"
+}
+node: {
+title: "10"
+label: "10
+[BLOCK:10
+69 MUL i_83 4
+70 ADD FP_0 Data_0
+71 ADDA (69) (70)
+72 LOAD (71)
+73 CMP (72) 1
+76 BNE (73) (12)
+]"
+}
+edge: { sourcename: "10"
+targetname: "11"
+}
+edge: { sourcename: "10"
+targetname: "12"
+}
+node: {
+title: "14"
+label: "14
+[BLOCK:14
+80 ADD i_83 1
+81 MOVE i_83 (80)
+84 BRA (7)
+]"
+}
+edge: { sourcename: "14"
+targetname: "7"
+}
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+74 WLN
+77 BRA (13)
+]"
+}
+edge: { sourcename: "11"
+targetname: "13"
+}
+node: {
+title: "12"
+label: "12
+[BLOCK:12
+75 WLN
+]"
+}
+edge: { sourcename: "12"
+targetname: "13"
+}
+node: {
+title: "13"
+label: "13
+[BLOCK:13
+]"
+}
+edge: { sourcename: "13"
+targetname: "14"
+}
+}

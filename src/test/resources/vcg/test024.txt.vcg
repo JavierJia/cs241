@@ -2,17 +2,259 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 MOVE a_0 1
+2 MOVE b_0 2
+3 MOVE c_0 3
+4 MOVE d_0 4
+5 MOVE e_0 5
+6 MOVE f_0 6
+7 MOVE g_0 7
+8 MOVE h_0 8
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+74 PHI f_6 f_67
+75 PHI g_7 g_68
+76 PHI d_4 d_69
+77 PHI e_5 e_70
+78 PHI a_1 a_14
+79 PHI h_8 h_71
+9 DIV b_2 4
+10 ADD (9) 5
+11 CMP (10) 8
+73 BGE (11) (18)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+}
+edge: { sourcename: "1"
+targetname: "18"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+12 MUL a_78 7
+13 ADD (12) 9
+14 MOVE a_78 (13)
+15 CMP c_3 d_76
+66 BGE (15) (7)
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+}
+edge: { sourcename: "2"
+targetname: "7"
+}
+node: {
+title: "18"
+label: "18
+[BLOCK:18
+81 MUL a_78 d_76
+82 MOVE c_3 (81)
+83 ADD g_75 h_79
+84 SUB (83) 7
+85 MOVE h_79 (84)
+86 MUL b_2 c_82
+87 ADD f_74 (86)
+88 MOVE e_77 (87)
+]"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+16 SUB g_75 5
+17 MUL (16) h_79
+18 MOVE g_75 (17)
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+27 CMP c_3 d_76
+58 BLT (27) (12)
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+}
+edge: { sourcename: "7"
+targetname: "12"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+23 PHI h_79 h_21
+19 CMP g_18 h_23
+22 BLE (19) (6)
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+}
+edge: { sourcename: "4"
+targetname: "6"
+}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+28 MUL f_74 f_74
+29 MUL (28) 7
+30 SUB (29) 2
+31 MOVE e_77 (30)
+]"
+}
+edge: { sourcename: "8"
+targetname: "9"
+}
+node: {
+title: "12"
+label: "12
+[BLOCK:12
+44 MOVE g_75 725
+]"
+}
+edge: { sourcename: "12"
+targetname: "13"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+20 ADD h_23 1
+21 MOVE h_23 (20)
+24 BRA (4)
+]"
+}
+edge: { sourcename: "5"
+targetname: "4"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+25 ADD g_18 h_23
+26 MOVE g_18 (25)
+72 BRA (17)
+]"
+}
+edge: { sourcename: "6"
+targetname: "17"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+39 PHI d_76 d_35
+40 PHI e_31 e_37
+32 SUB d_39 7
+33 CMP (32) e_40
+38 BEQ (33) (11)
+]"
+}
+edge: { sourcename: "9"
+targetname: "10"
+}
+edge: { sourcename: "9"
+targetname: "11"
+}
+node: {
+title: "13"
+label: "13
+[BLOCK:13
+52 PHI d_76 d_48
+53 PHI e_77 e_50
+45 SUB d_52 8
+46 CMP (45) e_53
+51 BEQ (46) (15)
+]"
+}
+edge: { sourcename: "13"
+targetname: "14"
+}
+edge: { sourcename: "13"
+targetname: "15"
+}
+node: {
+title: "17"
+label: "17
+[BLOCK:17
+67 PHI f_74 f_59
+68 PHI g_26 g_65
+69 PHI d_76 d_61
+70 PHI e_77 e_62
+71 PHI h_23 h_8
+80 BRA (1)
+]"
+}
+edge: { sourcename: "17"
+targetname: "1"
+}
+node: {
+title: "10"
+label: "10
+[BLOCK:10
+34 SUB d_39 1
+35 MOVE d_39 (34)
+36 ADD e_40 1
+37 MOVE e_40 (36)
+41 BRA (9)
+]"
+}
+edge: { sourcename: "10"
+targetname: "9"
+}
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+42 MUL f_74 e_40
+43 MOVE f_74 (42)
+63 BRA (16)
+]"
+}
+edge: { sourcename: "11"
+targetname: "16"
+}
+node: {
+title: "14"
+label: "14
+[BLOCK:14
+47 SUB d_52 1
+48 MOVE d_52 (47)
+49 ADD e_53 1
+50 MOVE e_53 (49)
+54 BRA (13)
+]"
+}
+edge: { sourcename: "14"
+targetname: "13"
+}
+node: {
 title: "15"
 label: "15
 [BLOCK:15
-56 MOVE a_0 1
-57 MOVE b_0 2
-58 MOVE c_0 3
-59 MOVE d_0 4
-60 MOVE e_0 5
-61 MOVE f_0 6
-62 MOVE g_0 7
-63 MOVE h_0 8
+55 MUL g_44 f_74
+56 DIV (55) 4
+57 MOVE f_74 (56)
 ]"
 }
 edge: { sourcename: "15"
@@ -22,257 +264,15 @@ node: {
 title: "16"
 label: "16
 [BLOCK:16
-129 PHI f_61 f_122
-130 PHI g_62 g_123
-131 PHI d_59 d_124
-132 PHI e_60 e_125
-133 PHI a_56 a_69
-134 PHI h_63 h_126
-64 DIV b_57 4
-65 ADD (64) 5
-66 CMP (65) 8
-128 BGE (66) (33)
+59 PHI f_43 f_57
+60 PHI g_75 g_44
+61 PHI d_39 d_52
+62 PHI e_40 e_53
+64 ADD g_60 h_79
+65 MOVE g_60 (64)
 ]"
 }
 edge: { sourcename: "16"
 targetname: "17"
-}
-edge: { sourcename: "16"
-targetname: "33"
-}
-node: {
-title: "17"
-label: "17
-[BLOCK:17
-67 MUL a_133 7
-68 ADD (67) 9
-69 MOVE a_133 (68)
-70 CMP c_58 d_131
-121 BGE (70) (22)
-]"
-}
-edge: { sourcename: "17"
-targetname: "18"
-}
-edge: { sourcename: "17"
-targetname: "22"
-}
-node: {
-title: "33"
-label: "33
-[BLOCK:33
-136 MUL a_133 d_131
-137 MOVE c_58 (136)
-138 ADD g_130 h_134
-139 SUB (138) 7
-140 MOVE h_134 (139)
-141 MUL b_57 c_137
-142 ADD f_129 (141)
-143 MOVE e_132 (142)
-]"
-}
-node: {
-title: "18"
-label: "18
-[BLOCK:18
-71 SUB g_130 5
-72 MUL (71) h_134
-73 MOVE g_130 (72)
-]"
-}
-edge: { sourcename: "18"
-targetname: "19"
-}
-node: {
-title: "22"
-label: "22
-[BLOCK:22
-82 CMP c_58 d_131
-113 BLT (82) (27)
-]"
-}
-edge: { sourcename: "22"
-targetname: "23"
-}
-edge: { sourcename: "22"
-targetname: "27"
-}
-node: {
-title: "19"
-label: "19
-[BLOCK:19
-78 PHI h_134 h_76
-74 CMP g_73 h_78
-77 BLE (74) (21)
-]"
-}
-edge: { sourcename: "19"
-targetname: "20"
-}
-edge: { sourcename: "19"
-targetname: "21"
-}
-node: {
-title: "23"
-label: "23
-[BLOCK:23
-83 MUL f_129 f_129
-84 MUL (83) 7
-85 SUB (84) 2
-86 MOVE e_132 (85)
-]"
-}
-edge: { sourcename: "23"
-targetname: "24"
-}
-node: {
-title: "27"
-label: "27
-[BLOCK:27
-99 MOVE g_130 725
-]"
-}
-edge: { sourcename: "27"
-targetname: "28"
-}
-node: {
-title: "20"
-label: "20
-[BLOCK:20
-75 ADD h_78 1
-76 MOVE h_78 (75)
-79 BRA (19)
-]"
-}
-edge: { sourcename: "20"
-targetname: "19"
-}
-node: {
-title: "21"
-label: "21
-[BLOCK:21
-80 ADD g_73 h_78
-81 MOVE g_73 (80)
-127 BRA (32)
-]"
-}
-edge: { sourcename: "21"
-targetname: "32"
-}
-node: {
-title: "24"
-label: "24
-[BLOCK:24
-94 PHI d_131 d_90
-95 PHI e_86 e_92
-87 SUB d_94 7
-88 CMP (87) e_95
-93 BEQ (88) (26)
-]"
-}
-edge: { sourcename: "24"
-targetname: "25"
-}
-edge: { sourcename: "24"
-targetname: "26"
-}
-node: {
-title: "28"
-label: "28
-[BLOCK:28
-107 PHI d_131 d_103
-108 PHI e_132 e_105
-100 SUB d_107 8
-101 CMP (100) e_108
-106 BEQ (101) (30)
-]"
-}
-edge: { sourcename: "28"
-targetname: "29"
-}
-edge: { sourcename: "28"
-targetname: "30"
-}
-node: {
-title: "32"
-label: "32
-[BLOCK:32
-122 PHI f_129 f_114
-123 PHI g_81 g_120
-124 PHI d_131 d_116
-125 PHI e_132 e_117
-126 PHI h_78 h_63
-135 BRA (16)
-]"
-}
-edge: { sourcename: "32"
-targetname: "16"
-}
-node: {
-title: "25"
-label: "25
-[BLOCK:25
-89 SUB d_94 1
-90 MOVE d_94 (89)
-91 ADD e_95 1
-92 MOVE e_95 (91)
-96 BRA (24)
-]"
-}
-edge: { sourcename: "25"
-targetname: "24"
-}
-node: {
-title: "26"
-label: "26
-[BLOCK:26
-97 MUL f_129 e_95
-98 MOVE f_129 (97)
-118 BRA (31)
-]"
-}
-edge: { sourcename: "26"
-targetname: "31"
-}
-node: {
-title: "29"
-label: "29
-[BLOCK:29
-102 SUB d_107 1
-103 MOVE d_107 (102)
-104 ADD e_108 1
-105 MOVE e_108 (104)
-109 BRA (28)
-]"
-}
-edge: { sourcename: "29"
-targetname: "28"
-}
-node: {
-title: "30"
-label: "30
-[BLOCK:30
-110 MUL g_99 f_129
-111 DIV (110) 4
-112 MOVE f_129 (111)
-]"
-}
-edge: { sourcename: "30"
-targetname: "31"
-}
-node: {
-title: "31"
-label: "31
-[BLOCK:31
-114 PHI f_98 f_112
-115 PHI g_130 g_99
-116 PHI d_94 d_107
-117 PHI e_95 e_108
-119 ADD g_115 h_134
-120 MOVE g_115 (119)
-]"
-}
-edge: { sourcename: "31"
-targetname: "32"
 }
 }

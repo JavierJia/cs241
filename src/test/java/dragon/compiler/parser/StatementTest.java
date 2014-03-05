@@ -1,5 +1,6 @@
 package dragon.compiler.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -8,6 +9,7 @@ import org.junit.Test;
 import dragon.compiler.cfg.Block;
 import dragon.compiler.cfg.GraphPrinter;
 import dragon.compiler.data.SyntaxFormatException;
+import dragon.compiler.data.TouchDataHelper;
 
 public class StatementTest {
 	String simpleIFTestFile = "src/test/resources/testprogs/test007.txt";
@@ -54,20 +56,39 @@ public class StatementTest {
 	// checkGraph(simpleFuncTest4);
 	// }
 
-//	@Test
-//	public void TestSimpleNestWhileLoop() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test010.txt");
-//	}
-//
-//	@Test
-//	public void TestCrazyNestWhileLoop() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test024.txt");
-//	}
+	// @Test
+	// public void TestSimpleNestWhileLoop() throws IOException,
+	// SyntaxFormatException {
+	// checkGraph("src/test/resources/testprogs/test010.txt");
+	// }
+	//
+	// @Test
+	// public void TestCrazyNestWhileLoop() throws IOException,
+	// SyntaxFormatException {
+	// checkGraph("src/test/resources/testprogs/test024.txt");
+	// }
+
+	// @Test
+	// public void TestFactorialFunction() throws IOException,
+	// SyntaxFormatException {
+	// checkGraph("src/test/resources/testprogs/factorial.txt");
+	// }
 
 	@Test
-	public void TestFactorialFunction() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/factorial.txt");
-		checkGraph("/Users/jiajianfeng/Downloads/array1.txt");
+	public void TestAll() throws IOException, SyntaxFormatException {
+		for (File file : new File("src/test/resources/testprogs/").listFiles()) {
+			if (file.isFile()) {
+				if (file.getPath().indexOf(simpleFuncTest4) >= 0) {
+					continue;
+				}
+				if (!file.getPath().endsWith(".txt")) {
+					continue;
+				}
+				TouchDataHelper.resetAll();
+				System.out.println(file.getPath());
+				checkGraph(file.getPath());
+			}
+		}
 	}
 
 }

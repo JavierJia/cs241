@@ -1,0 +1,95 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+27 ADD FP_0 a_0
+28 ADDA (27) 44
+29 STORE (28) 1
+30 ADD FP_0 a_0
+31 ADDA (30) 40
+32 STORE (31) 2
+33 ADD FP_0 a_0
+34 ADDA (33) 44
+35 LOAD (34)
+36 ADD FP_0 a_0
+37 ADDA (36) 40
+38 LOAD (37)
+39 CMP (35) (38)
+48 BLE (39) (4)
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+}
+edge: { sourcename: "2"
+targetname: "4"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+40 PUSH (0)
+41 ADD FP_0 a_0
+42 ADDA (41) 36
+43 STORE (42) (40)
+49 BRA (5)
+]"
+}
+edge: { sourcename: "3"
+targetname: "5"
+}
+edge: { sourcename: "3"
+targetname: "0"
+label: "j40"
+color:red}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+44 PUSH (0)
+45 ADD FP_0 a_0
+46 ADDA (45) 36
+47 STORE (46) (44)
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+}
+edge: { sourcename: "4"
+targetname: "0"
+label: "j44"
+color:red}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+50 ADD FP_0 a_0
+51 ADDA (50) 36
+52 LOAD (51)
+53 MOVE b_0 (52)
+54 WRITE b_53
+]"
+}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 WLN
+2 ADD FP_0 b_0
+3 LOAD (2)
+4 MOVE (3) 2
+5 ADD FP_0 c_0
+6 LOAD (5)
+7 MOVE (6) 3
+8 ADD FP_0 b_0
+9 LOAD (8)
+10 ADD FP_0 c_0
+11 LOAD (10)
+12 ADD (9) (11)
+13 POP
+]"
+}
+}

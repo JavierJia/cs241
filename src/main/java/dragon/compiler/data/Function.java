@@ -8,7 +8,7 @@ import dragon.compiler.cfg.Block;
 
 public class Function {
 
-	private static HashMap<String, Function> functionTable = new HashMap<String, Function>();
+	protected static HashMap<String, Function> functionTable = new HashMap<String, Function>();
 
 	public static void registerFunction(Function func) {
 		if (functionTable.containsKey(func.funcName)) {
