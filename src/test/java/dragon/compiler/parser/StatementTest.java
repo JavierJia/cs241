@@ -68,11 +68,10 @@ public class StatementTest {
 	// checkGraph("src/test/resources/testprogs/test024.txt");
 	// }
 
-	// @Test
-	// public void TestFactorialFunction() throws IOException,
-	// SyntaxFormatException {
-	// checkGraph("src/test/resources/testprogs/factorial.txt");
-	// }
+//	@Test
+//	public void TestEach() throws IOException, SyntaxFormatException {
+//		checkGraph("src/test/resources/testprogs/test003.txt");
+//	}
 
 	@Test
 	public void TestAll() throws IOException, SyntaxFormatException {

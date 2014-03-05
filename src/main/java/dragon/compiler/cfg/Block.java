@@ -72,7 +72,7 @@ public class Block {
 		return myID;
 	}
 
-	private class SSAorConst {
+	public static class SSAorConst {
 		public Integer v;
 		public SSAVar var;
 
@@ -206,15 +206,15 @@ public class Block {
 		// }
 	}
 
-	private void storeSSA(Variable varTarget, SSAVar ssaRight) {
+	private void storeSSA(Variable varTarget, SSAorConst ssAorConst) {
 		if (varTarget instanceof ArrayVar) {
-			calculateOffset(varTarget, OP.STORE, new SSAorConst(ssaRight));
+			calculateOffset(varTarget, OP.STORE, ssAorConst);
 		} else if (varTarget.isVar()) {
 			SSAInstruction addr = new SSAInstruction(OP.ADD, SSAVar.FPVar, new SSAVar(
 					varTarget.getVarName(), 0));
 			instructions.add(addr);
 			SSAInstruction storeins = new SSAInstruction(OP.STORE, new SSAVar(addr.getId()),
-					ssaRight);
+					ssAorConst);
 			instructions.add(storeins);
 		} else {
 			throw new IllegalArgumentException("store array or global word, but the type is wrong:"
@@ -222,14 +222,14 @@ public class Block {
 		}
 	}
 
-	private void storeSSA(ArrayVar varTarget, int value) {
-		calculateOffset(varTarget, OP.STORE, new SSAorConst(value));
-	}
+	// private void storeSSA(ArrayVar varTarget, int value) {
+	// calculateOffset(varTarget, OP.STORE, new SSAorConst(value));
+	// }
 
 	public void putCode(OP op, Variable var, int value) {
-		if (op == OP.MOVE && var instanceof ArrayVar) {
+		if (op == OP.MOVE && !(var instanceof SSAVar)) {
 			// using Store instead of move
-			storeSSA((ArrayVar) var, value);
+			storeSSA(var, new SSAorConst(value));
 		} else {
 			SSAVar ssa = var instanceof SSAVar ? (SSAVar) var : loadToSSA(var);
 			instructions.add(new SSAInstruction(op, ssa, value));
@@ -240,7 +240,7 @@ public class Block {
 		if (op == OP.MOVE && !(varLeft instanceof SSAVar)) {
 			// using Store instead of move
 			SSAVar ssaRight = varRight instanceof SSAVar ? (SSAVar) varRight : loadToSSA(varRight);
-			storeSSA(varLeft, ssaRight);
+			storeSSA(varLeft, new SSAorConst(ssaRight));
 		} else {
 			SSAVar ssaLeft = varLeft instanceof SSAVar ? (SSAVar) varLeft : loadToSSA(varLeft);
 			SSAVar ssaRight = varRight instanceof SSAVar ? (SSAVar) varRight : loadToSSA(varRight);
@@ -252,7 +252,7 @@ public class Block {
 		SSAVar ssa = var instanceof SSAVar ? (SSAVar) var : loadToSSA(var);
 		instructions.add(new SSAInstruction(op, ssa));
 	}
-	
+
 	public void putCode(OP op) {
 		instructions.add(new SSAInstruction(op));
 	}
@@ -312,6 +312,10 @@ public class Block {
 
 	public void putInputFuncCode() {
 		instructions.add(new SSAInstruction(OP.READ));
+	}
+
+	public void putOutputFuncCode(int constValue) {
+		instructions.add(new SSAInstruction(OP.WRITE, new SSAVar("CONST", constValue)));
 	}
 
 	public void putOutputFuncCode(Variable variable) {
@@ -408,7 +412,5 @@ public class Block {
 		realTail.functionPopBackToBlocks = this.functionPopBackToBlocks;
 		this.functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 	}
-
-
 
 }

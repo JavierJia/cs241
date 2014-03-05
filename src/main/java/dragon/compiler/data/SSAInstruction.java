@@ -3,6 +3,8 @@ package dragon.compiler.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import dragon.compiler.cfg.Block.SSAorConst;
+
 public class SSAInstruction extends Instruction {
 
 	private OP op;
@@ -24,17 +26,25 @@ public class SSAInstruction extends Instruction {
 		this.rValue = value;
 	}
 
+	public SSAInstruction(OP op, SSAVar target, SSAorConst src) {
+		this(op, target);
+		if (src.isConst()) {
+			this.rValue = src.v;
+		} else {
+			this.src = src.var;
+		}
+	}
+
 	public SSAInstruction(OP op, SSAVar target) {
 		super();
 		this.op = op;
 		this.target = target.clone();
 	}
-	
+
 	public SSAInstruction(OP op) {
 		super();
 		this.op = op;
 	}
-
 
 	public int getId() {
 		return super.insID;

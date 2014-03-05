@@ -256,7 +256,11 @@ public class Interpretor {
 			codeBlock.putInputFuncCode();
 			return new ArithmeticResult(new SSAVar(Instruction.getPC()));
 		} else if (funcName.equals("OutputNum")) {
-			codeBlock.putOutputFuncCode(argumentList.get(0).getVariable());
+			if (argumentList.get(0).getKind() == Kind.CONST) {
+				codeBlock.putOutputFuncCode(argumentList.get(0).getConstValue());
+			} else {
+				codeBlock.putOutputFuncCode(argumentList.get(0).getVariable());
+			}
 			return ArithmeticResult.NO_OP_RESULT;
 		} else if (funcName.equals("OutputNewLine")) {
 			codeBlock.putOutputFuncCode(null);

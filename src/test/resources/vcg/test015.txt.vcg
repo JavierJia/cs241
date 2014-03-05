@@ -5,10 +5,10 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-46 ADD too_0 3
-47 MOVE foo_0 (46)
-48 ADD foo_47 6
-49 MOVE af_0 (48)
+45 ADD too_0 3
+46 MOVE foo_0 (45)
+47 ADD foo_46 6
+48 MOVE af_0 (47)
 ]"
 }
 }

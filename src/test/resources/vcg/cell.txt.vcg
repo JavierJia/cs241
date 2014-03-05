@@ -384,7 +384,7 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-68 WLN
+68 WRITE CONST_1
 79 BRA (14)
 ]"
 }
@@ -425,7 +425,7 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-74 WLN
+74 WRITE CONST_8
 77 BRA (13)
 ]"
 }
@@ -436,7 +436,7 @@ node: {
 title: "12"
 label: "12
 [BLOCK:12
-75 WLN
+75 WRITE CONST_0
 ]"
 }
 edge: { sourcename: "12"
