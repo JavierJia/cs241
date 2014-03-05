@@ -10,24 +10,21 @@ public class SSAInstruction extends Instruction {
 	private OP op;
 	private SSAVar target;
 	private SSAVar src;
+	private Integer lValue;
 	private Integer rValue;
 
-	public SSAInstruction(OP op, SSAVar target, SSAVar src) {
+	protected SSAInstruction(OP op, SSAorConst target) {
 		super();
 		this.op = op;
-		this.target = target.clone();
-		this.src = src.clone();
-	}
-
-	public SSAInstruction(OP op, SSAVar target, int value) {
-		super();
-		this.op = op;
-		this.target = target.clone();
-		this.rValue = value;
+		if (target.isConst()) {
+			this.lValue = target.v;
+		} else {
+			this.target = target.var.clone();
+		}
 	}
 
 	public SSAInstruction(OP op, SSAVar target, SSAorConst src) {
-		this(op, target);
+		this(op, new SSAorConst(target));
 		if (src.isConst()) {
 			this.rValue = src.v;
 		} else {
@@ -35,10 +32,20 @@ public class SSAInstruction extends Instruction {
 		}
 	}
 
-	public SSAInstruction(OP op, SSAVar target) {
-		super();
-		this.op = op;
-		this.target = target.clone();
+	public SSAInstruction(OP op, SSAVar target, SSAVar src) {
+		this(op, target, new SSAorConst(src));
+	}
+
+	public SSAInstruction(OP op, SSAVar target, int value) {
+		this(op, target, new SSAorConst(value));
+	}
+
+	public SSAInstruction(OP op, SSAVar ssaVar) {
+		this(op, new SSAorConst(ssaVar));
+	}
+
+	public SSAInstruction(OP op, int value) {
+		this(op, new SSAorConst(value));
 	}
 
 	public SSAInstruction(OP op) {
@@ -62,6 +69,8 @@ public class SSAInstruction extends Instruction {
 			return getId() + " " + op + " " + target + " " + rValue;
 		} else if (target != null) {
 			return getId() + " " + op + " " + target;
+		} else if (lValue != null) {
+			return getId() + " " + op + " " + lValue;
 		} else {
 			return getId() + " " + op;
 		}
@@ -116,17 +125,17 @@ public class SSAInstruction extends Instruction {
 	}
 
 	// Only used by function call loading
-	public void reset(OP opMove, SSAVar target, int constValue) {
-		this.op = opMove;
-		this.target = target.clone();
-		this.rValue = constValue;
-		this.src = null;
-	}
-
-	public void reset(OP opLoad, SSAVar ssaVar) {
-		this.op = opLoad;
-		this.target = ssaVar.clone();
-		this.rValue = null;
-		this.src = null;
-	}
+	// public void reset(OP opMove, SSAVar target, int constValue) {
+	// this.op = opMove;
+	// this.target = target.clone();
+	// this.rValue = constValue;
+	// this.src = null;
+	// }
+	//
+	// public void reset(OP opLoad, SSAVar ssaVar) {
+	// this.op = opLoad;
+	// this.target = ssaVar.clone();
+	// this.rValue = null;
+	// this.src = null;
+	// }
 }

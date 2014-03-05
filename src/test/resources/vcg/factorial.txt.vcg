@@ -5,30 +5,31 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-22 READ
-23 MOVE input_0 (22)
-25 PUSH factIter_0
-26 WRITE (25)
-27 WLN
-29 PUSH factRec_4
-30 WRITE (29)
-31 WLN
+23 READ
+24 MOVE input_0 (23)
+25 PUSH input_24
+26 CALL factIter_0
+27 WRITE (26)
+28 WLN
+29 PUSH input_24
+30 CALL factRec_4
+31 WRITE (30)
+32 WLN
 ]"
 }
 edge: { sourcename: "7"
 targetname: "0"
-label: "j25"
+label: "j26"
 color:red}
 edge: { sourcename: "7"
 targetname: "4"
-label: "j29"
+label: "j30"
 color:red}
 node: {
 title: "0"
 label: "0
 [BLOCK:0
-24 ADD FP_0 n_0
-1 LOAD (24)
+1 POP n_0
 2 MOVE i_0 1
 3 MOVE f_0 1
 ]"
@@ -40,8 +41,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-28 ADD FP_0 n_0
-14 LOAD (28)
+14 POP n_0
 15 CMP n_14 1
 17 BGT (15) (6)
 ]"
@@ -57,7 +57,7 @@ title: "1"
 label: "1
 [BLOCK:1
 10 PHI f_3 f_6
-11 PHI i_2 i_8
+11 PHI i_2 i_11
 4 CMP i_11 n_1
 9 BGT (4) (3)
 ]"
@@ -72,7 +72,7 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-16 POP CONST_1
+16 RETURN CONST_1
 ]"
 }
 node: {
@@ -80,14 +80,15 @@ title: "6"
 label: "6
 [BLOCK:6
 18 SUB n_14 1
-19 PUSH factRec_4
-20 MUL (19) n_14
-21 POP (20)
+19 PUSH (18)
+20 CALL factRec_4
+21 MUL (20) n_14
+22 RETURN (21)
 ]"
 }
 edge: { sourcename: "6"
 targetname: "4"
-label: "j19"
+label: "j20"
 color:red}
 node: {
 title: "2"
@@ -107,7 +108,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-13 POP f_10
+13 RETURN f_10
 ]"
 }
 }

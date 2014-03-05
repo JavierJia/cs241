@@ -53,7 +53,7 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-27 SUB c_3 a_25
+27 SUB c_3 a_31
 28 ADD (27) b_2
 29 MOVE e_5 (28)
 30 ADD a_25 b_2

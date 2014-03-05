@@ -26,7 +26,7 @@ public class Function {
 			body.getFirstBlock().shiftPopBackList(body.getLastBlock());
 		}
 		func.body = body;
-		func.pending = false;
+//		func.pending = false;
 		return func;
 	}
 
@@ -41,7 +41,7 @@ public class Function {
 	private String funcName;
 	private ArrayList<String> paramsList;
 	private CFGResult body;
-	private boolean pending = true;
+//	private boolean pending = true;
 
 	public Function(String funcName, ArrayList<String> paramsList, CFGResult body) {
 		this.funcName = funcName;
@@ -78,25 +78,20 @@ public class Function {
 		return body;
 	}
 
-	public void fixupLoadParams(ArrayList<ArithmeticResult> argumentList) {
-		if (argumentList.size() != paramsList.size()) {
-			throw new IllegalArgumentException(
-					"The function argument size is not valid, expected: " + paramsList.size()
-							+ " now is:" + argumentList.size());
-		}
-		body.getFirstBlock().fixupLoadParams(argumentList);
-	}
-
-	public void pop(Block codeBlock) {
-		body.getLastBlock().pop(codeBlock);
+	public void returnBack(Block codeBlock) {
+		body.getLastBlock().returnBack(codeBlock);
 	}
 
 	public String getName() {
 		return funcName;
 	}
 
-	public boolean isPending() {
-		return pending;
+	public ArrayList<String> getParams() {
+		return paramsList;
 	}
+
+	// public boolean isPending() {
+	// return pending;
+	// }
 
 }

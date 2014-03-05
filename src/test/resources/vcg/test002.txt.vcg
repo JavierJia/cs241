@@ -8,8 +8,10 @@ label: "11
 53 MOVE x_0 0
 54 MOVE y_0 0
 55 MOVE z_0 0
-58 PUSH bar_4
-59 PUSH foo_0
+56 PUSH z_55
+57 PUSH x_53
+58 CALL bar_4
+59 CALL foo_0
 60 MOVE c_0 (59)
 61 WRITE c_60
 ]"
@@ -26,10 +28,8 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-56 ADD FP_0 x_0
-57 ADD FP_0 (0)
-26 LOAD (57)
-27 LOAD z_0
+26 POP x_0
+27 POP z_0
 28 MOVE i_0 0
 29 MOVE j_0 0
 ]"
@@ -52,7 +52,7 @@ title: "5"
 label: "5
 [BLOCK:5
 50 PHI j_29 j_41
-51 PHI i_28 i_48
+51 PHI i_28 i_51
 30 CMP i_51 4
 49 BGE (30) (10)
 ]"
@@ -83,7 +83,7 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-41 PHI j_50 j_39
+41 PHI j_50 j_41
 31 CMP j_41 4
 40 BGE (31) (9)
 ]"
@@ -132,7 +132,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-25 POP d_22
+25 RETURN d_22
 ]"
 }
 node: {

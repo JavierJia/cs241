@@ -18,7 +18,7 @@ title: "1"
 label: "1
 [BLOCK:1
 10 PHI f_3 f_6
-11 PHI n_1 n_8
+11 PHI n_1 n_11
 4 CMP n_11 0
 9 BLE (4) (3)
 ]"

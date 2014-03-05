@@ -268,11 +268,18 @@ public class Interpretor {
 		}
 
 		Function func = Function.getFunction(funcName);
-		if (!func.isPending()) {
-			func.fixupLoadParams(argumentList);
+		// if (!func.isPending()) {
+		// func.fixupLoadParams(argumentList);
+		// }
+		if (argumentList.size() != func.getParams().size()) {
+			throw new IllegalArgumentException(
+					"The function argument size is not valid, expected: " + func.getParams().size()
+							+ " now is:" + argumentList.size());
 		}
-		codeBlock.push(func);
-		func.pop(codeBlock);
+		codeBlock.pushParams(argumentList);
+
+		codeBlock.call(func);
+		func.returnBack(codeBlock);
 
 		return new ArithmeticResult(new SSAVar(codeBlock.getLastInstruction().getId()));
 		// return func.getArithmeticResult() == null ?
@@ -286,7 +293,7 @@ public class Interpretor {
 
 	public void stubLoadParams(Block codeBlock, ArrayList<String> paramsList) {
 		for (String param : paramsList) {
-			codeBlock.putCode(OP.LOAD, codeBlock.getSSAVar(param));
+			codeBlock.putCode(OP.POP, codeBlock.getSSAVar(param));
 			codeBlock.updateVarVersion(codeBlock.getSSAVar(param));
 		}
 	}
@@ -297,9 +304,9 @@ public class Interpretor {
 
 	public CFGResult computeReturn(Block lastBlock, ArithmeticResult ret) {
 		if (ret.getKind() == Kind.CONST) {
-			lastBlock.putCode(OP.POP, new SSAVar("CONST", ret.getConstValue()));
+			lastBlock.putCode(OP.RETURN, new SSAVar("CONST", ret.getConstValue()));
 		} else if (ret.getKind() == Kind.VAR) {
-			lastBlock.putCode(OP.POP, ret.getVariable());
+			lastBlock.putCode(OP.RETURN, ret.getVariable());
 		} else {
 			throw new IllegalArgumentException("return value should only be const or var");
 		}

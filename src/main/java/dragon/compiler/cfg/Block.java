@@ -299,7 +299,7 @@ public class Block {
 	}
 
 	public boolean isReturn() {
-		return getLastInstruction() == null ? false : getLastInstruction().getOP() == OP.POP;
+		return getLastInstruction() == null ? false : getLastInstruction().getOP() == OP.RETURN;
 	}
 
 	public Block getNextBlock() {
@@ -378,31 +378,29 @@ public class Block {
 		throw new IllegalStateException("array not defined:" + identiName);
 	}
 
-	public void fixupLoadParams(ArrayList<ArithmeticResult> argumentList) {
-		for (int i = 0; i < argumentList.size(); i++) {
+	public void pushParams(ArrayList<ArithmeticResult> argumentList) {
+		// ReversePush
+		for (int i = argumentList.size() - 1; i >= 0; --i) {
 			ArithmeticResult result = argumentList.get(i);
-			SSAInstruction ins = instructions.get(i);
 			if (result.getKind() == Kind.CONST) {
-				ins.reset(OP.MOVE, new SSAVar(ins.getTarget().getVarName(), 0),
-						result.getConstValue());
+				instructions.add(new SSAInstruction(OP.PUSH, result.getConstValue()));
 			} else if (result.getKind() == Kind.VAR) {
-				SSAInstruction addr = new SSAInstruction(OP.ADD, SSAVar.FPVar, new SSAVar(ins
-						.getTarget().getVarName(), 0));
-				instructions.add(i, addr);
-				ins.reset(OP.LOAD, new SSAVar(addr.getId()));
+				SSAVar var = result.getVariable() instanceof SSAVar ? (SSAVar) result.getVariable()
+						: loadToSSA(result.getVariable());
+				instructions.add(new SSAInstruction(OP.PUSH, var));
 			}
 		}
 	}
 
-	public void push(Function func) {
+	public void call(Function func) {
 		// TODO push everything onto stack
-		instructions.add(new SSAInstruction(OP.PUSH, new SSAVar(func.getName(), func.getBody()
+		instructions.add(new SSAInstruction(OP.CALL, new SSAVar(func.getName(), func.getBody()
 				.getFirstBlock().getID())));
 		functionJumpToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(func.getBody()
 				.getFirstBlock(), getLastInstruction().getId()));
 	}
 
-	public void pop(Block codeBlock) {// , int instructionIdx) {
+	public void returnBack(Block codeBlock) {// , int instructionIdx) {
 		// TODO Auto-generated method stub
 		functionPopBackToBlocks.add(new AbstractMap.SimpleEntry<Block, Integer>(codeBlock,
 				codeBlock.getLastInstruction().getId()));

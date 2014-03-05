@@ -49,7 +49,7 @@ label: "3
 11 PHI c_0 c_7
 13 ADD b_10 e_1
 14 MOVE a_0 (13)
-15 ADD c_11 d_9
+15 ADD c_11 d_16
 16 MOVE d_9 (15)
 ]"
 }

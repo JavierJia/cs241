@@ -63,7 +63,7 @@ label: "18
 [BLOCK:18
 81 MUL a_78 d_76
 82 MOVE c_3 (81)
-83 ADD g_75 h_79
+83 ADD g_75 h_85
 84 SUB (83) 7
 85 MOVE h_79 (84)
 86 MUL b_2 c_82
@@ -201,7 +201,7 @@ label: "17
 68 PHI g_26 g_65
 69 PHI d_76 d_61
 70 PHI e_77 e_62
-71 PHI h_23 h_8
+71 PHI h_23 h_79
 80 BRA (1)
 ]"
 }
@@ -264,7 +264,7 @@ node: {
 title: "16"
 label: "16
 [BLOCK:16
-59 PHI f_43 f_57
+59 PHI f_43 f_74
 60 PHI g_75 g_44
 61 PHI d_39 d_52
 62 PHI e_40 e_53
