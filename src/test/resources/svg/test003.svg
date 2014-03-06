@@ -45,7 +45,7 @@
         <g font-family="sans-serif" transform="matrix(0.9324,0,0,0.9324,9.3243,22.3784)">
           <text xml:space="preserve" x="60" y="280.4609" stroke="none">3</text>
           <text xml:space="preserve" x="37" y="294.5938" stroke="none">[BLOCK:3</text>
-          <text xml:space="preserve" x="21" y="308.7266" stroke="none">36 PUSH foo_0</text>
+          <text xml:space="preserve" x="22" y="308.7266" stroke="none">36 CALL foo_0</text>
           <text xml:space="preserve" x="13" y="322.8594" stroke="none">37 ADD FP_0 a_0</text>
           <text xml:space="preserve" x="13" y="336.9922" stroke="none">38 ADDA (37) 36</text>
           <text xml:space="preserve" x="7" y="351.125" stroke="none">39 STORE (38) (36)</text>
@@ -63,7 +63,7 @@
         <g font-family="sans-serif" transform="matrix(0.9324,0,0,0.9324,9.3243,22.3784)">
           <text xml:space="preserve" x="208" y="287.5273" stroke="none">4</text>
           <text xml:space="preserve" x="185" y="301.6602" stroke="none">[BLOCK:4</text>
-          <text xml:space="preserve" x="169" y="315.793" stroke="none">40 PUSH foo_0</text>
+          <text xml:space="preserve" x="170" y="315.793" stroke="none">40 CALL foo_0</text>
           <text xml:space="preserve" x="161" y="329.9258" stroke="none">41 ADD FP_0 a_0</text>
           <text xml:space="preserve" x="161" y="344.0586" stroke="none">42 ADDA (41) 36</text>
           <text xml:space="preserve" x="155" y="358.1914" stroke="none">43 STORE (42) (40)</text>
@@ -108,7 +108,7 @@
           <text xml:space="preserve" x="165.5" y="145.7969" stroke="none">8 ADD FP_0 c_0</text>
           <text xml:space="preserve" x="180" y="159.9297" stroke="none">9 LOAD (8)</text>
           <text xml:space="preserve" x="169" y="174.0625" stroke="none">10 ADD (7) (9)</text>
-          <text xml:space="preserve" x="176.5" y="188.1953" stroke="none">11 POP (10)</text>
+          <text xml:space="preserve" x="164" y="188.1953" stroke="none">11 RETURN (10)</text>
           <text xml:space="preserve" x="210" y="202.3281" stroke="none">]</text>
         </g>
       </g>
