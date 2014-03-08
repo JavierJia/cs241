@@ -12,19 +12,20 @@ import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.TouchDataHelper;
 
 public class StatementTest {
-	String simpleIFTestFile = "src/test/resources/testprogs/test007.txt";
-	String simpleLoopTestFile = "src/test/resources/testprogs/test032.txt";
-	String simpleArrayTestFile1 = "src/test/resources/testprogs/test026.txt";
-	String simpleArrayTestFile2 = "src/test/resources/testprogs/test027.txt";
-	String simpleFuncTest = "src/test/resources/testprogs/test006.txt";
-	String simpleFuncTest4 = "src/test/resources/testprogs/test004.txt"; // Bad
+	protected static String simpleIFTestFile = "src/test/resources/testprogs/test007.txt";
+	protected static String simpleLoopTestFile = "src/test/resources/testprogs/test032.txt";
+	protected static String simpleArrayTestFile1 = "src/test/resources/testprogs/test026.txt";
+	protected static String simpleArrayTestFile2 = "src/test/resources/testprogs/test027.txt";
+	protected static String simpleFuncTest = "src/test/resources/testprogs/test006.txt";
+	protected static String simpleFuncTest4 = "src/test/resources/testprogs/test004.txt"; // Bad
 																			// example
 
-	private void checkGraph(String fileName) throws IOException, SyntaxFormatException {
+	protected void checkGraph(String fileName, String dirName) throws IOException,
+			SyntaxFormatException {
 		Parser parser = new Parser(fileName);
 		parser.parse();
 		Block blk = parser.getRootBlock();
-		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", "vcg") + ".vcg",
+		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", dirName) + ".vcg",
 				"UTF-8");
 		writer.print(GraphPrinter.printCFGBody(blk, "main", true));
 		// for (Function func : Function.getAllFunction()) {
@@ -68,10 +69,10 @@ public class StatementTest {
 	// checkGraph("src/test/resources/testprogs/test024.txt");
 	// }
 
-//	@Test
-//	public void TestEach() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test003.txt");
-//	}
+	// @Test
+	// public void TestEach() throws IOException, SyntaxFormatException {
+	// checkGraph("src/test/resources/testprogs/test003.txt");
+	// }
 
 	@Test
 	public void TestAll() throws IOException, SyntaxFormatException {
@@ -85,7 +86,7 @@ public class StatementTest {
 				}
 				TouchDataHelper.resetAll();
 				System.out.println(file.getPath());
-				checkGraph(file.getPath());
+				checkGraph(file.getPath(), "vcg");
 			}
 		}
 	}

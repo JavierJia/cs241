@@ -1,0 +1,66 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+label: "1"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+8 PHI b_0 b_4
+9 PHI a_1 a_6
+2 CMP a_9 b_8
+7 BEQ (2) (3)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+label: "2"
+}
+edge: { sourcename: "1"
+targetname: "3"
+label: "3"
+}
+edge: { sourcename: "0"
+targetname: "1"
+color:green}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+3 ADD a_9 1
+5 MUL a_9 2
+10 BRA (1) 
+]"
+}
+edge: { sourcename: "2"
+targetname: "1"
+label: "1"
+}
+edge: { sourcename: "1"
+targetname: "2"
+color:green}
+edge: { sourcename: "0"
+targetname: "2"
+color:green}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+]"
+}
+edge: { sourcename: "1"
+targetname: "3"
+color:green}
+edge: { sourcename: "0"
+targetname: "3"
+color:green}
+}

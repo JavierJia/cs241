@@ -2,6 +2,10 @@ package dragon.compiler.cfg;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 import dragon.compiler.data.ArithmeticResult;
@@ -16,6 +20,28 @@ import dragon.compiler.data.Variable;
 import dragon.compiler.data.VariableTable;
 
 public class Block {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + myID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Block other = (Block) obj;
+		if (myID != other.myID)
+			return false;
+		return true;
+	}
+
 	protected static int STATIC_SEQ = 0;
 
 	private int myID;
@@ -24,6 +50,8 @@ public class Block {
 	private VariableTable localVTable;
 	private VariableTable globalVTable;
 	private ArrayList<SSAInstruction> instructions = new ArrayList<SSAInstruction>();
+
+	protected HashSet<Block> dominators = new HashSet<Block>(Arrays.asList(this));
 
 	// The function call related CFG. These blk should not involved into
 	protected ArrayList<Entry<Block, Integer>> functionJumpToBlocks = new ArrayList<Entry<Block, Integer>>();
@@ -73,11 +101,11 @@ public class Block {
 	}
 
 	public static class SSAorConst {
-		public Integer v;
-		public SSAVar var;
+		private Integer constV;
+		private SSAVar var;
 
 		public SSAorConst(int v) {
-			this.v = v;
+			this.constV = v;
 		}
 
 		public SSAorConst(SSAVar var) {
@@ -85,9 +113,16 @@ public class Block {
 		}
 
 		public boolean isConst() {
-			return this.v != null;
+			return this.constV != null;
 		}
 
+		public int getConstValue() {
+			return constV;
+		}
+
+		public SSAVar getSSAVar() {
+			return var;
+		}
 	}
 
 	private SSAVar calculateOffset(Variable varTarget, OP op, SSAorConst varSrc) {
@@ -140,7 +175,7 @@ public class Block {
 			} else if (op == OP.STORE) {
 				if (varSrc.isConst()) {
 					instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
-							instructions.size() - 1).getId()), varSrc.v));
+							instructions.size() - 1).getId()), varSrc.constV));
 				} else {
 					instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
 							instructions.size() - 1).getId()), varSrc.var));
@@ -163,7 +198,7 @@ public class Block {
 		} else if (op == OP.STORE) {
 			if (varSrc.isConst()) {
 				instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
-						instructions.size() - 1).getId()), varSrc.v));
+						instructions.size() - 1).getId()), varSrc.constV));
 			} else {
 				instructions.add(new SSAInstruction(OP.STORE, new SSAVar(instructions.get(
 						instructions.size() - 1).getId()), varSrc.var));
@@ -188,22 +223,6 @@ public class Block {
 			throw new IllegalArgumentException("load array or global word, but the type is wrong:"
 					+ var);
 		}
-		// Old style, need to change it to SSA
-		// loadToRegister(left, codeBlock);
-		// if (left.getRegNum() == 0) {
-		// // target reg # can't be 0
-		// left.setRegNum(regAllocator.allocateReg());
-		// codeBlock.putCode(OP.ADD, left.getRegNum(), 0);
-		// }
-		// if (right.getKind() == Kind.CONST) {
-		// codeBlock.putCode(mapTokenTypeToImmOP(tokenType),
-		// left.getRegNum(), right.getValue());
-		// } else {
-		// loadToRegister(right, codeBlock);
-		// codeBlock.putCode(mapTokenTypeToOP(tokenType),
-		// left.getRegNum(), right.getRegNum());
-		// unloadFromRegister(right);
-		// }
 	}
 
 	private void storeSSA(Variable varTarget, SSAorConst ssAorConst) {
@@ -411,4 +430,51 @@ public class Block {
 		this.functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 	}
 
+	public HashMap<Integer, SSAorConst> copyPropagate(Block parent,
+			HashMap<Integer, SSAorConst> propagation) {
+
+		HashMap<Integer, SSAorConst> returnPropagation = new HashMap<Integer, SSAorConst>(
+				propagation);
+		Iterator<SSAInstruction> iter = instructions.iterator();
+		while (iter.hasNext()) {
+			SSAInstruction curIns = iter.next();
+			if (curIns.getOP() == OP.MOVE) {
+				SSAorConst src = curIns.getSrc();
+				while (!src.isConst()
+						&& returnPropagation.containsKey(src.getSSAVar().getVersion())) {
+					src = returnPropagation.get(src.getSSAVar().getVersion());
+				}
+				returnPropagation.put(curIns.getId(), src);
+				iter.remove();
+				continue;
+			}
+			// normal instruction
+			curIns.copyPropagate(returnPropagation);
+		}
+		return returnPropagation;
+	}
+
+	/**
+	 * return if the parent -> this is the back edge;
+	 * 
+	 * @param parent
+	 * @return
+	 */
+	public boolean checkAddDominator(Block parent) {
+		if (parent != this && parent.dominators.contains(this)) { // back edge
+			return true;
+		}
+		if (this.dominators.size() == 1) {
+			this.dominators.addAll(parent.dominators);
+			// this.dominators.add(parent);
+		} else { // join
+			this.dominators.retainAll(parent.dominators);
+			this.dominators.add(this);
+		}
+		return false;
+	}
+
+	public static void deadCodeElimination(Block blk) {
+		// TODO, should be done in the graph level. maybe skip it
+	}
 }

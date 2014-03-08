@@ -1,0 +1,136 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+23 READ 
+25 PUSH input_23 
+26 CALL factIter_0 
+27 WRITE (26) 
+28 WLN 
+29 PUSH input_23 
+30 CALL factRec_4 
+31 WRITE (30) 
+32 WLN 
+]"
+}
+edge: { sourcename: "7"
+targetname: "0"
+label: "j26"
+color:red}
+edge: { sourcename: "7"
+targetname: "4"
+label: "j30"
+color:red}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 POP n_0 
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+label: "1"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+14 POP n_0 
+15 CMP n_14 1
+17 BGT (15) (6)
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+label: "5"
+}
+edge: { sourcename: "4"
+targetname: "6"
+label: "6"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+10 PHI f_3 f_6
+11 PHI i_2 i_8
+4 CMP i_11 n_1
+9 BGT (4) (3)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+label: "2"
+}
+edge: { sourcename: "1"
+targetname: "3"
+label: "3"
+}
+edge: { sourcename: "0"
+targetname: "1"
+color:green}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+16 RETURN CONST_1 
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+color:green}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+18 SUB n_14 1
+19 PUSH (18) 
+20 CALL factRec_4 
+21 MUL (20) n_14
+22 RETURN (21) 
+]"
+}
+edge: { sourcename: "6"
+targetname: "4"
+label: "j20"
+color:red}
+edge: { sourcename: "4"
+targetname: "6"
+color:green}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+5 MUL f_10 i_8
+7 ADD i_11 1
+12 BRA (1) 
+]"
+}
+edge: { sourcename: "2"
+targetname: "1"
+label: "1"
+}
+edge: { sourcename: "1"
+targetname: "2"
+color:green}
+edge: { sourcename: "0"
+targetname: "2"
+color:green}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+13 RETURN f_10 
+]"
+}
+edge: { sourcename: "1"
+targetname: "3"
+color:green}
+edge: { sourcename: "0"
+targetname: "3"
+color:green}
+}

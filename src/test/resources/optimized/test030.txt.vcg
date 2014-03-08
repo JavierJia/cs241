@@ -1,0 +1,161 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+4 CMP 2 3
+20 BGE (4) (8)
+]"
+}
+edge: { sourcename: "0"
+targetname: "2"
+label: "2"
+}
+edge: { sourcename: "0"
+targetname: "8"
+label: "8"
+}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+17 PHI b_2 b_14
+18 PHI a_1 a_8
+5 ADD b_17 1
+6 CMP (5) 3
+16 BGE (6) (7)
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+label: "3"
+}
+edge: { sourcename: "2"
+targetname: "7"
+label: "7"
+}
+edge: { sourcename: "0"
+targetname: "2"
+color:green}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+21 PHI b_17 b_2
+22 PHI a_18 a_1
+23 ADD 3 1
+]"
+}
+edge: { sourcename: "0"
+targetname: "8"
+color:green}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+7 ADD a_18 1
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+label: "4"
+}
+edge: { sourcename: "2"
+targetname: "3"
+color:green}
+edge: { sourcename: "0"
+targetname: "3"
+color:green}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+label: "8"
+}
+edge: { sourcename: "2"
+targetname: "7"
+color:green}
+edge: { sourcename: "0"
+targetname: "7"
+color:green}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+14 PHI b_17 b_12
+9 ADD b_14 2
+10 CMP (9) 3
+13 BGE (10) (6)
+]"
+}
+edge: { sourcename: "4"
+targetname: "5"
+label: "5"
+}
+edge: { sourcename: "4"
+targetname: "6"
+label: "6"
+}
+edge: { sourcename: "3"
+targetname: "4"
+color:green}
+edge: { sourcename: "2"
+targetname: "4"
+color:green}
+edge: { sourcename: "0"
+targetname: "4"
+color:green}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+11 ADD b_14 1
+15 BRA (4) 
+]"
+}
+edge: { sourcename: "5"
+targetname: "4"
+label: "4"
+}
+edge: { sourcename: "3"
+targetname: "5"
+color:green}
+edge: { sourcename: "4"
+targetname: "5"
+color:green}
+edge: { sourcename: "2"
+targetname: "5"
+color:green}
+edge: { sourcename: "0"
+targetname: "5"
+color:green}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+19 BRA (2) 
+]"
+}
+edge: { sourcename: "6"
+targetname: "2"
+label: "2"
+}
+edge: { sourcename: "3"
+targetname: "6"
+color:green}
+edge: { sourcename: "4"
+targetname: "6"
+color:green}
+edge: { sourcename: "2"
+targetname: "6"
+color:green}
+edge: { sourcename: "0"
+targetname: "6"
+color:green}
+}

@@ -20,8 +20,13 @@ public class Instruction {
 
 	public static EnumSet<OP> SINGLE_ARGS_SET = EnumSet.of(OP.END, OP.READ, OP.WRITE, OP.WLN);
 
-	public static EnumSet<OP> REFRESHABLE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV,
-			OP.CMP, OP.READ, OP.WRITE, OP.STORE, OP.RETURN, OP.PUSH);
+	public static EnumSet<OP> PHI_UPDATE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV,
+			OP.CMP, OP.WRITE, OP.STORE, OP.RETURN, OP.PUSH);
+
+	public static EnumSet<OP> PROPAGATING_SET = EnumSet.copyOf(PHI_UPDATE_SET);
+	static {
+		PHI_UPDATE_SET.add(OP.PHI);
+	}
 
 	public static boolean isBranchInstruction(OP op) {
 		return BRACH_SET.contains(op);

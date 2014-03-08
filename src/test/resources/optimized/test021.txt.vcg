@@ -1,0 +1,13 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+3 MUL 1 2
+4 MUL (3) 7
+6 ADD a_4 2
+]"
+}
+}

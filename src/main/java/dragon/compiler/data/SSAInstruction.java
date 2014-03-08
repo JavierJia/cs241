@@ -1,11 +1,58 @@
 package dragon.compiler.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import dragon.compiler.cfg.Block.SSAorConst;
 
 public class SSAInstruction extends Instruction {
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((lValue == null) ? 0 : lValue.hashCode());
+		result = prime * result + ((op == null) ? 0 : op.hashCode());
+		result = prime * result + ((rValue == null) ? 0 : rValue.hashCode());
+		result = prime * result + ((src == null) ? 0 : src.hashCode());
+		result = prime * result + ((target == null) ? 0 : target.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SSAInstruction other = (SSAInstruction) obj;
+		if (lValue == null) {
+			if (other.lValue != null)
+				return false;
+		} else if (!lValue.equals(other.lValue))
+			return false;
+		if (op != other.op)
+			return false;
+		if (rValue == null) {
+			if (other.rValue != null)
+				return false;
+		} else if (!rValue.equals(other.rValue))
+			return false;
+		if (src == null) {
+			if (other.src != null)
+				return false;
+		} else if (!src.equals(other.src))
+			return false;
+		if (target == null) {
+			if (other.target != null)
+				return false;
+		} else if (!target.equals(other.target))
+			return false;
+		return true;
+	}
 
 	private OP op;
 	private SSAVar target;
@@ -17,18 +64,18 @@ public class SSAInstruction extends Instruction {
 		super();
 		this.op = op;
 		if (target.isConst()) {
-			this.lValue = target.v;
+			this.lValue = target.getConstValue();
 		} else {
-			this.target = target.var.clone();
+			this.target = target.getSSAVar().clone();
 		}
 	}
 
 	public SSAInstruction(OP op, SSAVar target, SSAorConst src) {
 		this(op, new SSAorConst(target));
 		if (src.isConst()) {
-			this.rValue = src.v;
+			this.rValue = src.getConstValue();
 		} else {
-			this.src = src.var;
+			this.src = src.getSSAVar();
 		}
 	}
 
@@ -63,17 +110,21 @@ public class SSAInstruction extends Instruction {
 
 	@Override
 	public String toString() {
-		if (src != null) {
-			return getId() + " " + op + " " + target + " " + src;
-		} else if (rValue != null) {
-			return getId() + " " + op + " " + target + " " + rValue;
-		} else if (target != null) {
-			return getId() + " " + op + " " + target;
+		String rslt = getId() + " " + op + " ";
+		if (target != null) {
+			rslt += target + " ";
 		} else if (lValue != null) {
-			return getId() + " " + op + " " + lValue;
-		} else {
-			return getId() + " " + op;
+			rslt += lValue + " ";
+		} else if (src != null || rValue != null) {
+			throw new IllegalStateException("the src is not null, but the target is null");
 		}
+
+		if (src != null) {
+			rslt += src;
+		} else if (rValue != null) {
+			rslt += rValue;
+		}
+		return rslt;
 	}
 
 	public OP getOP() {
@@ -84,10 +135,19 @@ public class SSAInstruction extends Instruction {
 		return target;
 	}
 
+	public SSAorConst getSrc() {
+		if (src != null) {
+			return new SSAorConst(src);
+		} else if (rValue != null) {
+			return new SSAorConst(rValue);
+		}
+		return null;
+	}
+
 	public ArrayList<SSAInstruction> updateVersion(ArrayList<SSAInstruction> phiInstructions) {
 		ArrayList<SSAInstruction> restPhiInstructions = new ArrayList<SSAInstruction>(
 				phiInstructions);
-		if (Instruction.REFRESHABLE_SET.contains(getOP())) {
+		if (Instruction.PHI_UPDATE_SET.contains(getOP())) {
 			for (SSAInstruction ins : restPhiInstructions) {
 				if (ins.target.equals(target)) {
 					target.setVersion(ins.getId());
@@ -124,18 +184,31 @@ public class SSAInstruction extends Instruction {
 		return restPhiInstructions;
 	}
 
-	// Only used by function call loading
-	// public void reset(OP opMove, SSAVar target, int constValue) {
-	// this.op = opMove;
-	// this.target = target.clone();
-	// this.rValue = constValue;
-	// this.src = null;
-	// }
-	//
-	// public void reset(OP opLoad, SSAVar ssaVar) {
-	// this.op = opLoad;
-	// this.target = ssaVar.clone();
-	// this.rValue = null;
-	// this.src = null;
-	// }
+	public void copyPropagate(final HashMap<Integer, SSAorConst> propagation) {
+		if (PROPAGATING_SET.contains(op)) {
+			if (target != null) {
+				SSAorConst mapTo = propagation.get(target.getVersion());
+				if (mapTo != null) {
+					if (mapTo.isConst()) {
+						target = null;
+						lValue = mapTo.getConstValue();
+					} else {
+						target.setVersion(mapTo.getSSAVar().getVersion());
+					}
+				}
+			}
+			if (src != null) {
+				SSAorConst mapTo = propagation.get(src.getVersion());
+				if (mapTo != null) {
+					if (mapTo.isConst()) {
+						src = null;
+						rValue = mapTo.getConstValue();
+					} else {
+						src.setVersion(mapTo.getSSAVar().getVersion());
+					}
+				}
+			}
+		}
+	}
+
 }

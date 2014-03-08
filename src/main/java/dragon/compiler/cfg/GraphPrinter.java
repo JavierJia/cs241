@@ -40,11 +40,13 @@ public class GraphPrinter {
 			if (b.getNextBlock() != null) {
 				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
 				sb.append("targetname: \"" + b.getNextBlock().getID() + "\"").append('\n');
+				sb.append("label: \"" + b.getNextBlock().getID() + "\"").append('\n');
 				sb.append("}\n");
 			}
 			if (b.getNegBranchBlock() != null) {
 				sb.append("edge: { sourcename: \"" + b.getID() + "\"").append('\n');
 				sb.append("targetname: \"" + b.getNegBranchBlock().getID() + "\"").append('\n');
+				sb.append("label: \"" + b.getNegBranchBlock().getID() + "\"").append('\n');
 				sb.append("}\n");
 			}
 			queue.add(b.getNextBlock());
@@ -58,6 +60,17 @@ public class GraphPrinter {
 				sb.append("}\n");
 				queue.add(entry.getKey());
 			}
+			// print dominator
+			for (Block entry : b.dominators) {
+				if (entry == b) {
+					continue;
+				}
+				sb.append("edge: { sourcename: \"" + entry.getID() + "\"").append('\n');
+				sb.append("targetname: \"" + b.getID() + "\"").append('\n');
+				sb.append("color:green");
+				sb.append("}\n");
+			}
+
 			// for (Entry<Block, Integer> entry : b.functionPopBackToBlocks) {
 			// sb.append("edge: { sourcename: \"" + b.getID() +
 			// "\"").append('\n');

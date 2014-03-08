@@ -1,0 +1,334 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "15"
+label: "15
+[BLOCK:15
+70 CALL foo_0 
+]"
+}
+edge: { sourcename: "15"
+targetname: "0"
+label: "j70"
+color:red}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+9 CMP 1 2
+53 BGE (9) (7)
+]"
+}
+edge: { sourcename: "0"
+targetname: "1"
+label: "1"
+}
+edge: { sourcename: "0"
+targetname: "7"
+label: "7"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+10 ADD 1 1
+12 ADD 5 1
+14 CMP 2 3
+23 BGE (14) (6)
+]"
+}
+edge: { sourcename: "1"
+targetname: "2"
+label: "2"
+}
+edge: { sourcename: "1"
+targetname: "6"
+label: "6"
+}
+edge: { sourcename: "0"
+targetname: "1"
+color:green}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+27 SUB 2 1
+29 ADD 6 1
+31 CMP b_27 3
+47 BGE (31) (12)
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+label: "8"
+}
+edge: { sourcename: "7"
+targetname: "12"
+label: "12"
+}
+edge: { sourcename: "0"
+targetname: "7"
+color:green}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+15 MUL 3 3
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+label: "3"
+}
+edge: { sourcename: "1"
+targetname: "2"
+color:green}
+edge: { sourcename: "0"
+targetname: "2"
+color:green}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+24 PHI c_16 c_3
+25 PHI a_21 a_11
+62 BRA (14) 
+]"
+}
+edge: { sourcename: "6"
+targetname: "14"
+label: "14"
+}
+edge: { sourcename: "1"
+targetname: "6"
+color:green}
+edge: { sourcename: "0"
+targetname: "6"
+color:green}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+32 MUL 3 3
+]"
+}
+edge: { sourcename: "8"
+targetname: "9"
+label: "9"
+}
+edge: { sourcename: "7"
+targetname: "8"
+color:green}
+edge: { sourcename: "0"
+targetname: "8"
+color:green}
+node: {
+title: "12"
+label: "12
+[BLOCK:12
+43 MUL 3 4
+45 ADD 4 1
+]"
+}
+edge: { sourcename: "12"
+targetname: "13"
+label: "13"
+}
+edge: { sourcename: "7"
+targetname: "12"
+color:green}
+edge: { sourcename: "0"
+targetname: "12"
+color:green}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+21 PHI a_11 a_19
+17 CMP a_21 c_15
+20 BGE (17) (5)
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+label: "4"
+}
+edge: { sourcename: "3"
+targetname: "5"
+label: "5"
+}
+edge: { sourcename: "1"
+targetname: "3"
+color:green}
+edge: { sourcename: "2"
+targetname: "3"
+color:green}
+edge: { sourcename: "0"
+targetname: "3"
+color:green}
+node: {
+title: "14"
+label: "14
+[BLOCK:14
+54 PHI f_6 f_30
+55 PHI g_26 g_7
+56 PHI d_4 d_48
+57 PHI e_13 e_5
+58 PHI b_2 b_49
+59 PHI c_24 c_50
+60 PHI a_25 a_1
+61 PHI h_8 h_52
+63 WRITE a_60 
+64 WRITE b_58 
+65 WRITE c_59 
+66 WRITE d_56 
+67 WRITE e_57 
+68 WRITE f_54 
+69 WRITE h_61 
+]"
+}
+edge: { sourcename: "0"
+targetname: "14"
+color:green}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+40 PHI b_28 b_36
+41 PHI c_33 c_38
+34 CMP b_40 c_41
+39 BGE (34) (11)
+]"
+}
+edge: { sourcename: "9"
+targetname: "10"
+label: "10"
+}
+edge: { sourcename: "9"
+targetname: "11"
+label: "11"
+}
+edge: { sourcename: "7"
+targetname: "9"
+color:green}
+edge: { sourcename: "8"
+targetname: "9"
+color:green}
+edge: { sourcename: "0"
+targetname: "9"
+color:green}
+node: {
+title: "13"
+label: "13
+[BLOCK:13
+48 PHI d_4 d_46
+49 PHI b_40 b_28
+50 PHI c_41 c_44
+]"
+}
+edge: { sourcename: "13"
+targetname: "14"
+label: "14"
+}
+edge: { sourcename: "7"
+targetname: "13"
+color:green}
+edge: { sourcename: "0"
+targetname: "13"
+color:green}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+18 ADD a_21 1
+22 BRA (3) 
+]"
+}
+edge: { sourcename: "4"
+targetname: "3"
+label: "3"
+}
+edge: { sourcename: "3"
+targetname: "4"
+color:green}
+edge: { sourcename: "1"
+targetname: "4"
+color:green}
+edge: { sourcename: "2"
+targetname: "4"
+color:green}
+edge: { sourcename: "0"
+targetname: "4"
+color:green}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+]"
+}
+edge: { sourcename: "5"
+targetname: "6"
+label: "6"
+}
+edge: { sourcename: "3"
+targetname: "5"
+color:green}
+edge: { sourcename: "1"
+targetname: "5"
+color:green}
+edge: { sourcename: "2"
+targetname: "5"
+color:green}
+edge: { sourcename: "0"
+targetname: "5"
+color:green}
+node: {
+title: "10"
+label: "10
+[BLOCK:10
+35 ADD b_40 1
+37 SUB c_41 1
+42 BRA (9) 
+]"
+}
+edge: { sourcename: "10"
+targetname: "9"
+label: "9"
+}
+edge: { sourcename: "7"
+targetname: "10"
+color:green}
+edge: { sourcename: "8"
+targetname: "10"
+color:green}
+edge: { sourcename: "9"
+targetname: "10"
+color:green}
+edge: { sourcename: "0"
+targetname: "10"
+color:green}
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+51 BRA (13) 
+]"
+}
+edge: { sourcename: "11"
+targetname: "13"
+label: "13"
+}
+edge: { sourcename: "7"
+targetname: "11"
+color:green}
+edge: { sourcename: "8"
+targetname: "11"
+color:green}
+edge: { sourcename: "9"
+targetname: "11"
+color:green}
+edge: { sourcename: "0"
+targetname: "11"
+color:green}
+}
