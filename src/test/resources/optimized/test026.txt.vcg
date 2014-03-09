@@ -9,9 +9,7 @@ label: "0
 2 ADD FP_0 a_0
 3 ADDA (1) (2)
 4 LOAD (3) 
-6 MUL i_0 4
-7 ADD FP_0 a_0
-8 ADDA (6) (7)
+8 ADDA (1) (2)
 9 LOAD (8) 
 ]"
 }
@@ -26,9 +24,7 @@ label: "1
 45 PHI z_0 z_42
 46 PHI y_0 y_28
 47 PHI x_4 x_23
-11 MUL i_0 4
-12 ADD FP_0 a_0
-13 ADDA (11) (12)
+13 ADDA (1) (2)
 14 LOAD (13) 
 15 MUL j_0 4
 16 ADD FP_0 b_0
@@ -46,32 +42,20 @@ edge: { sourcename: "1"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
 [BLOCK:2
-20 MUL i_0 4
-21 ADD FP_0 a_0
-22 ADDA (20) (21)
+22 ADDA (1) (2)
 23 LOAD (22) 
-25 MUL j_0 4
-26 ADD FP_0 a_0
-27 ADDA (25) (26)
+27 ADDA (15) (2)
 28 LOAD (27) 
 30 MUL k_9 4
-31 ADD FP_0 a_0
-32 ADDA (30) (31)
+32 ADDA (30) (2)
 33 STORE (32) z_42
-34 MUL j_0 4
-35 ADD FP_0 b_0
-36 ADDA (34) (35)
+36 ADDA (15) (16)
 37 LOAD (36) 
-39 MUL j_0 4
-40 ADD FP_0 a_0
-41 ADDA (39) (40)
+41 ADDA (15) (2)
 42 LOAD (41) 
 48 BRA (1) 
 ]"
@@ -80,26 +64,12 @@ edge: { sourcename: "2"
 targetname: "1"
 label: "1"
 }
-edge: { sourcename: "1"
-targetname: "2"
-color:green}
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
 [BLOCK:3
-49 MUL i_0 4
-50 ADD FP_0 a_0
-51 ADDA (49) (50)
+51 ADDA (1) (2)
 52 LOAD (51) 
 ]"
 }
-edge: { sourcename: "1"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 }

@@ -90,20 +90,15 @@ edge: { sourcename: "4"
 targetname: "6"
 label: "6"
 }
-edge: { sourcename: "3"
-targetname: "4"
-color:green}
 node: {
 title: "5"
 label: "5
 [BLOCK:5
 21 ADD FP_0 x_0
 22 LOAD (21) 
-23 ADD FP_0 x_0
-24 LOAD (23) 
+24 LOAD (21) 
 25 MUL (22) (24)
-26 ADD FP_0 x_0
-27 STORE (26) (25)
+27 STORE (21) (25)
 29 BRA (4) 
 ]"
 }
@@ -111,12 +106,6 @@ edge: { sourcename: "5"
 targetname: "4"
 label: "4"
 }
-edge: { sourcename: "3"
-targetname: "5"
-color:green}
-edge: { sourcename: "4"
-targetname: "5"
-color:green}
 node: {
 title: "6"
 label: "6
@@ -127,10 +116,4 @@ label: "6
 33 RETURN (32) 
 ]"
 }
-edge: { sourcename: "3"
-targetname: "6"
-color:green}
-edge: { sourcename: "4"
-targetname: "6"
-color:green}
 }

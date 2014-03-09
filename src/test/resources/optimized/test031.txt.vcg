@@ -18,7 +18,7 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-15 PHI d_0 d_6
+15 PHI d_0 d_1
 16 PHI b_0 b_12
 17 PHI c_0 c_8
 5 CMP b_16 c_17
@@ -33,17 +33,12 @@ edge: { sourcename: "1"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
 [BLOCK:2
-6 READ 
 8 ADD c_17 1
-10 WRITE d_6 
-11 WLN 
+10 WRITE d_1 
 12 ADD b_16 1
 18 BRA (1) 
 ]"
@@ -52,22 +47,10 @@ edge: { sourcename: "2"
 targetname: "1"
 label: "1"
 }
-edge: { sourcename: "1"
-targetname: "2"
-color:green}
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
 [BLOCK:3
 ]"
 }
-edge: { sourcename: "1"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 }

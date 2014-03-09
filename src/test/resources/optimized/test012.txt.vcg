@@ -22,7 +22,6 @@ title: "1"
 label: "1
 [BLOCK:1
 5 ADD 1 1
-7 ADD 1 1
 16 BRA (3) 
 ]"
 }
@@ -30,9 +29,6 @@ edge: { sourcename: "1"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
@@ -44,21 +40,15 @@ edge: { sourcename: "2"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
 [BLOCK:3
 13 PHI b_5 3
 14 PHI c_0 2
-15 PHI a_7 a_9
+15 PHI a_5 a_9
 17 ADD a_15 1
 19 WRITE a_17 
 ]"
 }
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 }

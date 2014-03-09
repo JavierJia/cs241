@@ -478,7 +478,7 @@ public class Block {
 			HashMap<SSAInstruction, Integer> history) {
 		HashMap<SSAInstruction, Integer> myHistory = new HashMap<SSAInstruction, Integer>(history);
 		for (SSAInstruction ins : instructions) {
-			if (history.containsKey(ins)) {
+			if (myHistory.containsKey(ins)) {
 				ins.copyCommonExpression(myHistory.get(ins));
 			} else {
 				myHistory.put(ins, ins.getId());

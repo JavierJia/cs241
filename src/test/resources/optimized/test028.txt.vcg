@@ -29,9 +29,6 @@ edge: { sourcename: "1"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
@@ -43,9 +40,6 @@ edge: { sourcename: "2"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
@@ -57,7 +51,4 @@ label: "3
 15 ADD c_11 d_16
 ]"
 }
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 }

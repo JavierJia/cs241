@@ -13,7 +13,12 @@ import dragon.compiler.data.SSAInstruction;
 
 public class Optimizer {
 
-	public void copyPropagate(Block root) {
+	public void optimize(Block root) {
+		copyPropagate(root);
+		commonExpressionEliminate(root);
+	}
+
+	protected void copyPropagate(Block root) {
 		copyPropagateAndUpdateDominator(root, true);
 	}
 
@@ -56,7 +61,7 @@ public class Optimizer {
 		}
 	}
 
-	public void commonExpressionEliminate(Block root) {
+	protected void commonExpressionEliminate(Block root) {
 		commonExpressionChangeToMove(root);
 		copyPropagateAndUpdateDominator(root, false);
 	}
@@ -94,6 +99,9 @@ public class Optimizer {
 			HashMap<Block, HashMap<SSAInstruction, Integer>> blockInstructionHistroy) {
 		HashMap<SSAInstruction, Integer> mergeHash = new HashMap<SSAInstruction, Integer>();
 		for (Block dominator : nextBlock.getDominators()) {
+			if (dominator == nextBlock) {
+				continue;
+			}
 			if (!blockInstructionHistroy.containsKey(dominator)) {
 				throw new IllegalStateException("dominator:" + dominator.getID()
 						+ " is not visited");

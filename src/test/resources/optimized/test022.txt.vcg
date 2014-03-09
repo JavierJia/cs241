@@ -29,9 +29,6 @@ edge: { sourcename: "1"
 targetname: "9"
 label: "9"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
@@ -43,12 +40,6 @@ edge: { sourcename: "2"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "1"
-targetname: "2"
-color:green}
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "9"
 label: "9
@@ -56,12 +47,6 @@ label: "9
 23 ADD 3 1
 ]"
 }
-edge: { sourcename: "1"
-targetname: "9"
-color:green}
-edge: { sourcename: "0"
-targetname: "9"
-color:green}
 node: {
 title: "3"
 label: "3
@@ -80,15 +65,6 @@ edge: { sourcename: "3"
 targetname: "8"
 label: "8"
 }
-edge: { sourcename: "1"
-targetname: "3"
-color:green}
-edge: { sourcename: "2"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 node: {
 title: "5"
 label: "5
@@ -107,18 +83,6 @@ edge: { sourcename: "5"
 targetname: "7"
 label: "7"
 }
-edge: { sourcename: "3"
-targetname: "5"
-color:green}
-edge: { sourcename: "1"
-targetname: "5"
-color:green}
-edge: { sourcename: "2"
-targetname: "5"
-color:green}
-edge: { sourcename: "0"
-targetname: "5"
-color:green}
 node: {
 title: "8"
 label: "8
@@ -130,18 +94,6 @@ edge: { sourcename: "8"
 targetname: "1"
 label: "1"
 }
-edge: { sourcename: "3"
-targetname: "8"
-color:green}
-edge: { sourcename: "1"
-targetname: "8"
-color:green}
-edge: { sourcename: "2"
-targetname: "8"
-color:green}
-edge: { sourcename: "0"
-targetname: "8"
-color:green}
 node: {
 title: "6"
 label: "6
@@ -154,21 +106,6 @@ edge: { sourcename: "6"
 targetname: "5"
 label: "5"
 }
-edge: { sourcename: "3"
-targetname: "6"
-color:green}
-edge: { sourcename: "1"
-targetname: "6"
-color:green}
-edge: { sourcename: "2"
-targetname: "6"
-color:green}
-edge: { sourcename: "5"
-targetname: "6"
-color:green}
-edge: { sourcename: "0"
-targetname: "6"
-color:green}
 node: {
 title: "7"
 label: "7
@@ -180,19 +117,4 @@ edge: { sourcename: "7"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "3"
-targetname: "7"
-color:green}
-edge: { sourcename: "1"
-targetname: "7"
-color:green}
-edge: { sourcename: "2"
-targetname: "7"
-color:green}
-edge: { sourcename: "5"
-targetname: "7"
-color:green}
-edge: { sourcename: "0"
-targetname: "7"
-color:green}
 }

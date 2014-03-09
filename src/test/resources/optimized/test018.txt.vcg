@@ -44,9 +44,6 @@ edge: { sourcename: "1"
 targetname: "5"
 label: "5"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
@@ -64,9 +61,6 @@ edge: { sourcename: "2"
 targetname: "4"
 label: "4"
 }
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "5"
 label: "5
@@ -84,9 +78,6 @@ label: "5
 33 WRITE h_23 
 ]"
 }
-edge: { sourcename: "0"
-targetname: "5"
-color:green}
 node: {
 title: "3"
 label: "3
@@ -97,12 +88,6 @@ edge: { sourcename: "3"
 targetname: "4"
 label: "4"
 }
-edge: { sourcename: "2"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 node: {
 title: "4"
 label: "4
@@ -114,10 +99,4 @@ edge: { sourcename: "4"
 targetname: "5"
 label: "5"
 }
-edge: { sourcename: "2"
-targetname: "4"
-color:green}
-edge: { sourcename: "0"
-targetname: "4"
-color:green}
 }

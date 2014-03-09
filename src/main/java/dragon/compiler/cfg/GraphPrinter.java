@@ -60,16 +60,17 @@ public class GraphPrinter {
 				sb.append("}\n");
 				queue.add(entry.getKey());
 			}
-			// print dominator
-			for (Block entry : b.dominators) {
-				if (entry == b) {
-					continue;
-				}
-				sb.append("edge: { sourcename: \"" + entry.getID() + "\"").append('\n');
-				sb.append("targetname: \"" + b.getID() + "\"").append('\n');
-				sb.append("color:green");
-				sb.append("}\n");
-			}
+			// // print dominator
+			// for (Block entry : b.dominators) {
+			// if (entry == b) {
+			// continue;
+			// }
+			// sb.append("edge: { sourcename: \"" + entry.getID() +
+			// "\"").append('\n');
+			// sb.append("targetname: \"" + b.getID() + "\"").append('\n');
+			// sb.append("color:green");
+			// sb.append("}\n");
+			// }
 
 			// for (Entry<Block, Integer> entry : b.functionPopBackToBlocks) {
 			// sb.append("edge: { sourcename: \"" + b.getID() +

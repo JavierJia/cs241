@@ -32,7 +32,7 @@ public class OptimizerTest {
 
 //	@Test
 //	public void TestDebug() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test007.txt", "optimized");
+//		checkGraph("src/test/resources/testprogs/test003.txt", "optimized");
 //	}
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,
@@ -40,21 +40,19 @@ public class OptimizerTest {
 		Parser parser = new Parser(fileName);
 		parser.parse();
 		Optimizer optimizer = new Optimizer();
-		optimizer.copyPropagate(parser.getRootBlock());
+		// optimizer.copyPropagate(parser.getRootBlock());
+		// optimizer.commonExpressionChangeToMove(parser.getRootBlock());
+		optimizer.optimize(parser.getRootBlock());
 		for (Function func : Function.getAllFunction()) {
-			optimizer.copyPropagate(func.getBody().getFirstBlock());
+			// optimizer.copyPropagate(func.getBody().getFirstBlock());
+			// optimizer.commonExpressionChangeToMove(func.getBody().getFirstBlock());
+			optimizer.optimize(func.getBody().getFirstBlock());
 		}
 
 		Block blk = parser.getRootBlock();
 		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", dirName) + ".vcg",
 				"UTF-8");
 		writer.print(GraphPrinter.printCFGBody(blk, "main", true));
-		// for (Function func : Function.getAllFunction()) {
-		// writer.print(GraphPrinter.printCFGBody(func.getBody().getFirstBlock(),
-		// func.getName(),
-		// false));
-		// }
-		// writer.print(GraphPrinter.printCFGTailer());
 		writer.close();
 	}
 }

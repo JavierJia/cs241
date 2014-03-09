@@ -6,10 +6,9 @@ title: "0"
 label: "0
 [BLOCK:0
 1 ADD b_0 c_0
-3 ADD b_0 c_0
 5 ADD c_0 b_0
-6 ADD (5) d_3
-8 CMP a_1 d_3
+6 ADD (5) d_1
+8 CMP a_1 d_1
 25 BEQ (8) (2)
 ]"
 }
@@ -26,12 +25,12 @@ title: "1"
 label: "1
 [BLOCK:1
 9 ADD c_0 b_17
-10 ADD (9) d_3
-12 MUL a_1 d_3
-14 MUL d_3 a_1
+10 ADD (9) d_1
+12 MUL a_1 d_1
+14 MUL d_1 a_1
 15 ADD (14) 4
 18 ADD c_0 5
-19 ADD (18) d_3
+19 ADD (18) d_1
 30 BRA (3) 
 ]"
 }
@@ -39,24 +38,18 @@ edge: { sourcename: "1"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
 [BLOCK:2
-21 DIV a_1 d_3
-23 DIV d_3 a_1
+21 DIV a_1 d_1
+23 DIV d_1 a_1
 ]"
 }
 edge: { sourcename: "2"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
@@ -65,11 +58,8 @@ label: "3
 27 PHI g_15 g_23
 28 PHI e_19 e_6
 29 PHI 5 b_0
-31 MUL a_1 d_3
-33 DIV d_3 a_1
+31 MUL a_1 d_1
+33 DIV d_1 a_1
 ]"
 }
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 }

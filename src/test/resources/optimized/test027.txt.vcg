@@ -21,11 +21,9 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-8 MUL a_0 2
-9 SUB (8) 6
+9 SUB (1) 6
 10 MUL (9) 4
-11 ADD FP_0 foo_0
-12 ADDA (10) (11)
+12 ADDA (10) (4)
 13 LOAD (12) 
 ]"
 }
@@ -33,18 +31,13 @@ edge: { sourcename: "2"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "3"
 label: "3
 [BLOCK:3
-15 MUL a_0 2
-16 SUB (15) 6
+16 SUB (1) 6
 17 MUL (16) 4
-18 ADD FP_0 foo_0
-19 ADDA (17) (18)
+19 ADDA (17) (4)
 20 LOAD (19) 
 21 CMP (20) 4
 29 BLT (21) (7)
@@ -58,12 +51,6 @@ edge: { sourcename: "3"
 targetname: "7"
 label: "7"
 }
-edge: { sourcename: "2"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 node: {
 title: "5"
 label: "5
@@ -79,40 +66,18 @@ edge: { sourcename: "5"
 targetname: "3"
 label: "3"
 }
-edge: { sourcename: "3"
-targetname: "5"
-color:green}
-edge: { sourcename: "2"
-targetname: "5"
-color:green}
-edge: { sourcename: "0"
-targetname: "5"
-color:green}
 node: {
 title: "7"
 label: "7
 [BLOCK:7
-31 MUL a_0 2
-32 SUB (31) 6
+32 SUB (1) 6
 33 MUL (32) 4
-34 ADD FP_0 foo_0
-35 ADDA (33) (34)
+35 ADDA (33) (4)
 36 LOAD (35) 
-38 MUL a_0 2
-39 SUB (38) 6
+39 SUB (1) 6
 40 MUL (39) 4
-41 ADD FP_0 foo_0
-42 ADDA (40) (41)
+42 ADDA (40) (4)
 43 LOAD (42) 
 ]"
 }
-edge: { sourcename: "3"
-targetname: "7"
-color:green}
-edge: { sourcename: "2"
-targetname: "7"
-color:green}
-edge: { sourcename: "0"
-targetname: "7"
-color:green}
 }

@@ -35,9 +35,6 @@ edge: { sourcename: "1"
 targetname: "18"
 label: "18"
 }
-edge: { sourcename: "0"
-targetname: "1"
-color:green}
 node: {
 title: "2"
 label: "2
@@ -56,12 +53,6 @@ edge: { sourcename: "2"
 targetname: "7"
 label: "7"
 }
-edge: { sourcename: "1"
-targetname: "2"
-color:green}
-edge: { sourcename: "0"
-targetname: "2"
-color:green}
 node: {
 title: "18"
 label: "18
@@ -73,12 +64,6 @@ label: "18
 87 ADD f_74 (86)
 ]"
 }
-edge: { sourcename: "1"
-targetname: "18"
-color:green}
-edge: { sourcename: "0"
-targetname: "18"
-color:green}
 node: {
 title: "3"
 label: "3
@@ -91,20 +76,10 @@ edge: { sourcename: "3"
 targetname: "4"
 label: "4"
 }
-edge: { sourcename: "1"
-targetname: "3"
-color:green}
-edge: { sourcename: "2"
-targetname: "3"
-color:green}
-edge: { sourcename: "0"
-targetname: "3"
-color:green}
 node: {
 title: "7"
 label: "7
 [BLOCK:7
-27 CMP 3 d_76
 58 BLT (27) (12)
 ]"
 }
@@ -116,15 +91,6 @@ edge: { sourcename: "7"
 targetname: "12"
 label: "12"
 }
-edge: { sourcename: "1"
-targetname: "7"
-color:green}
-edge: { sourcename: "2"
-targetname: "7"
-color:green}
-edge: { sourcename: "0"
-targetname: "7"
-color:green}
 node: {
 title: "4"
 label: "4
@@ -142,18 +108,6 @@ edge: { sourcename: "4"
 targetname: "6"
 label: "6"
 }
-edge: { sourcename: "3"
-targetname: "4"
-color:green}
-edge: { sourcename: "1"
-targetname: "4"
-color:green}
-edge: { sourcename: "2"
-targetname: "4"
-color:green}
-edge: { sourcename: "0"
-targetname: "4"
-color:green}
 node: {
 title: "8"
 label: "8
@@ -167,18 +121,6 @@ edge: { sourcename: "8"
 targetname: "9"
 label: "9"
 }
-edge: { sourcename: "1"
-targetname: "8"
-color:green}
-edge: { sourcename: "2"
-targetname: "8"
-color:green}
-edge: { sourcename: "7"
-targetname: "8"
-color:green}
-edge: { sourcename: "0"
-targetname: "8"
-color:green}
 node: {
 title: "12"
 label: "12
@@ -189,18 +131,6 @@ edge: { sourcename: "12"
 targetname: "13"
 label: "13"
 }
-edge: { sourcename: "1"
-targetname: "12"
-color:green}
-edge: { sourcename: "2"
-targetname: "12"
-color:green}
-edge: { sourcename: "7"
-targetname: "12"
-color:green}
-edge: { sourcename: "0"
-targetname: "12"
-color:green}
 node: {
 title: "5"
 label: "5
@@ -213,21 +143,6 @@ edge: { sourcename: "5"
 targetname: "4"
 label: "4"
 }
-edge: { sourcename: "3"
-targetname: "5"
-color:green}
-edge: { sourcename: "4"
-targetname: "5"
-color:green}
-edge: { sourcename: "1"
-targetname: "5"
-color:green}
-edge: { sourcename: "2"
-targetname: "5"
-color:green}
-edge: { sourcename: "0"
-targetname: "5"
-color:green}
 node: {
 title: "6"
 label: "6
@@ -240,21 +155,6 @@ edge: { sourcename: "6"
 targetname: "17"
 label: "17"
 }
-edge: { sourcename: "3"
-targetname: "6"
-color:green}
-edge: { sourcename: "4"
-targetname: "6"
-color:green}
-edge: { sourcename: "1"
-targetname: "6"
-color:green}
-edge: { sourcename: "2"
-targetname: "6"
-color:green}
-edge: { sourcename: "0"
-targetname: "6"
-color:green}
 node: {
 title: "9"
 label: "9
@@ -274,21 +174,6 @@ edge: { sourcename: "9"
 targetname: "11"
 label: "11"
 }
-edge: { sourcename: "1"
-targetname: "9"
-color:green}
-edge: { sourcename: "2"
-targetname: "9"
-color:green}
-edge: { sourcename: "7"
-targetname: "9"
-color:green}
-edge: { sourcename: "8"
-targetname: "9"
-color:green}
-edge: { sourcename: "0"
-targetname: "9"
-color:green}
 node: {
 title: "13"
 label: "13
@@ -308,21 +193,6 @@ edge: { sourcename: "13"
 targetname: "15"
 label: "15"
 }
-edge: { sourcename: "1"
-targetname: "13"
-color:green}
-edge: { sourcename: "2"
-targetname: "13"
-color:green}
-edge: { sourcename: "7"
-targetname: "13"
-color:green}
-edge: { sourcename: "12"
-targetname: "13"
-color:green}
-edge: { sourcename: "0"
-targetname: "13"
-color:green}
 node: {
 title: "17"
 label: "17
@@ -339,15 +209,6 @@ edge: { sourcename: "17"
 targetname: "1"
 label: "1"
 }
-edge: { sourcename: "1"
-targetname: "17"
-color:green}
-edge: { sourcename: "2"
-targetname: "17"
-color:green}
-edge: { sourcename: "0"
-targetname: "17"
-color:green}
 node: {
 title: "10"
 label: "10
@@ -361,24 +222,6 @@ edge: { sourcename: "10"
 targetname: "9"
 label: "9"
 }
-edge: { sourcename: "1"
-targetname: "10"
-color:green}
-edge: { sourcename: "2"
-targetname: "10"
-color:green}
-edge: { sourcename: "7"
-targetname: "10"
-color:green}
-edge: { sourcename: "8"
-targetname: "10"
-color:green}
-edge: { sourcename: "9"
-targetname: "10"
-color:green}
-edge: { sourcename: "0"
-targetname: "10"
-color:green}
 node: {
 title: "11"
 label: "11
@@ -391,24 +234,6 @@ edge: { sourcename: "11"
 targetname: "16"
 label: "16"
 }
-edge: { sourcename: "1"
-targetname: "11"
-color:green}
-edge: { sourcename: "2"
-targetname: "11"
-color:green}
-edge: { sourcename: "7"
-targetname: "11"
-color:green}
-edge: { sourcename: "8"
-targetname: "11"
-color:green}
-edge: { sourcename: "9"
-targetname: "11"
-color:green}
-edge: { sourcename: "0"
-targetname: "11"
-color:green}
 node: {
 title: "14"
 label: "14
@@ -422,24 +247,6 @@ edge: { sourcename: "14"
 targetname: "13"
 label: "13"
 }
-edge: { sourcename: "1"
-targetname: "14"
-color:green}
-edge: { sourcename: "2"
-targetname: "14"
-color:green}
-edge: { sourcename: "7"
-targetname: "14"
-color:green}
-edge: { sourcename: "12"
-targetname: "14"
-color:green}
-edge: { sourcename: "13"
-targetname: "14"
-color:green}
-edge: { sourcename: "0"
-targetname: "14"
-color:green}
 node: {
 title: "15"
 label: "15
@@ -452,24 +259,6 @@ edge: { sourcename: "15"
 targetname: "16"
 label: "16"
 }
-edge: { sourcename: "1"
-targetname: "15"
-color:green}
-edge: { sourcename: "2"
-targetname: "15"
-color:green}
-edge: { sourcename: "7"
-targetname: "15"
-color:green}
-edge: { sourcename: "12"
-targetname: "15"
-color:green}
-edge: { sourcename: "13"
-targetname: "15"
-color:green}
-edge: { sourcename: "0"
-targetname: "15"
-color:green}
 node: {
 title: "16"
 label: "16
@@ -485,16 +274,4 @@ edge: { sourcename: "16"
 targetname: "17"
 label: "17"
 }
-edge: { sourcename: "1"
-targetname: "16"
-color:green}
-edge: { sourcename: "2"
-targetname: "16"
-color:green}
-edge: { sourcename: "7"
-targetname: "16"
-color:green}
-edge: { sourcename: "0"
-targetname: "16"
-color:green}
 }
