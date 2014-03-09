@@ -14,9 +14,11 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 edge: { sourcename: "0"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "1"
@@ -30,9 +32,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "6"
@@ -46,9 +50,11 @@ label: "6
 }
 edge: { sourcename: "6"
 targetname: "7"
+label: "7"
 }
 edge: { sourcename: "6"
 targetname: "8"
+label: "8"
 }
 node: {
 title: "2"
@@ -62,9 +68,11 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 edge: { sourcename: "2"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "5"
@@ -72,11 +80,12 @@ label: "5
 [BLOCK:5
 15 PHI c_13 c_3
 16 PHI a_9 a_6
-31 BRA (10)
+31 BRA (10) 
 ]"
 }
 edge: { sourcename: "5"
 targetname: "10"
+label: "10"
 }
 node: {
 title: "7"
@@ -84,11 +93,12 @@ label: "7
 [BLOCK:7
 20 SUB a_1 2
 21 MOVE a_1 (20)
-26 BRA (9)
+26 BRA (9) 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "8"
@@ -100,6 +110,7 @@ label: "8
 }
 edge: { sourcename: "8"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "3"
@@ -110,6 +121,7 @@ label: "3
 }
 edge: { sourcename: "3"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "4"
@@ -120,6 +132,7 @@ label: "4
 }
 edge: { sourcename: "4"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "10"
@@ -130,7 +143,7 @@ label: "10
 30 PHI a_16 a_25
 32 ADD a_30 1
 33 MOVE a_30 (32)
-34 WRITE a_33
+34 WRITE a_33 
 ]"
 }
 node: {
@@ -142,5 +155,6 @@ label: "9
 }
 edge: { sourcename: "9"
 targetname: "10"
+label: "10"
 }
 }

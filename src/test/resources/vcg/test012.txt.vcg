@@ -13,9 +13,11 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 edge: { sourcename: "0"
 targetname: "2"
+label: "2"
 }
 node: {
 title: "1"
@@ -26,11 +28,12 @@ label: "1
 6 MOVE b_2 (5)
 7 ADD a_4 1
 8 MOVE a_4 (7)
-16 BRA (3)
+16 BRA (3) 
 ]"
 }
 edge: { sourcename: "1"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "2"
@@ -43,6 +46,7 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "3"
@@ -53,7 +57,7 @@ label: "3
 15 PHI a_8 a_10
 17 ADD a_15 1
 18 MOVE a_15 (17)
-19 WRITE a_18
+19 WRITE a_18 
 ]"
 }
 }

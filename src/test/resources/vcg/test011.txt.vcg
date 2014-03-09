@@ -15,9 +15,11 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 edge: { sourcename: "0"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "1"
@@ -29,6 +31,7 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 node: {
 title: "5"
@@ -40,6 +43,7 @@ label: "5
 }
 edge: { sourcename: "5"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "2"
@@ -53,9 +57,11 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 edge: { sourcename: "2"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "6"
@@ -69,9 +75,11 @@ label: "6
 }
 edge: { sourcename: "6"
 targetname: "7"
+label: "7"
 }
 edge: { sourcename: "6"
 targetname: "8"
+label: "8"
 }
 node: {
 title: "3"
@@ -81,21 +89,23 @@ label: "3
 10 MOVE c_15 (9)
 11 ADD d_14 1
 12 MOVE d_14 (11)
-16 BRA (2)
+16 BRA (2) 
 ]"
 }
 edge: { sourcename: "3"
 targetname: "2"
+label: "2"
 }
 node: {
 title: "4"
 label: "4
 [BLOCK:4
-32 BRA (9)
+32 BRA (9) 
 ]"
 }
 edge: { sourcename: "4"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "7"
@@ -105,11 +115,12 @@ label: "7
 21 MOVE c_26 (20)
 22 ADD d_25 2
 23 MOVE d_25 (22)
-27 BRA (6)
+27 BRA (6) 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "8"
@@ -119,6 +130,7 @@ label: "8
 }
 edge: { sourcename: "8"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "9"
@@ -131,6 +143,7 @@ label: "9
 }
 edge: { sourcename: "9"
 targetname: "10"
+label: "10"
 }
 node: {
 title: "10"
@@ -144,9 +157,11 @@ label: "10
 }
 edge: { sourcename: "10"
 targetname: "11"
+label: "11"
 }
 edge: { sourcename: "10"
 targetname: "15"
+label: "15"
 }
 node: {
 title: "11"
@@ -158,9 +173,11 @@ label: "11
 }
 edge: { sourcename: "11"
 targetname: "12"
+label: "12"
 }
 edge: { sourcename: "11"
 targetname: "13"
+label: "13"
 }
 node: {
 title: "15"
@@ -173,11 +190,12 @@ title: "12"
 label: "12
 [BLOCK:12
 35 MOVE b_42 c_43
-40 BRA (14)
+40 BRA (14) 
 ]"
 }
 edge: { sourcename: "12"
 targetname: "14"
+label: "14"
 }
 node: {
 title: "13"
@@ -188,17 +206,19 @@ label: "13
 }
 edge: { sourcename: "13"
 targetname: "14"
+label: "14"
 }
 node: {
 title: "14"
 label: "14
 [BLOCK:14
-38 PHI b_35 b_42
+38 PHI b_35 b_2
 39 PHI c_43 c_36
-44 BRA (10)
+44 BRA (10) 
 ]"
 }
 edge: { sourcename: "14"
 targetname: "10"
+label: "10"
 }
 }

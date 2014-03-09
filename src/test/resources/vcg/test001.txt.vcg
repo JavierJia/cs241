@@ -8,7 +8,7 @@ label: "0
 1 MOVE x_0 51
 2 MUL x_1 2
 3 MOVE y_0 (2)
-4 WRITE y_3
+4 WRITE y_3 
 ]"
 }
 }

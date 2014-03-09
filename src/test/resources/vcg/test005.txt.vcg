@@ -6,7 +6,7 @@ title: "0"
 label: "0
 [BLOCK:0
 1 MOVE a_0 1
-2 WRITE a_1
+2 WRITE a_1 
 ]"
 }
 }

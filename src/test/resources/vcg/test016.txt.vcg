@@ -5,17 +5,17 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-34 CALL foo_0
-35 PUSH 1
-36 CALL bar_1
+34 CALL foo_0 
+35 PUSH 1 
+36 CALL bar_1 
 37 MOVE x_0 8
 38 MOVE y_0 1790
-39 PUSH y_38
-40 PUSH x_37
-41 CALL baz_2
-42 PUSH 4
-43 PUSH 2
-44 CALL boo_3
+39 PUSH y_38 
+40 PUSH x_37 
+41 CALL baz_2 
+42 PUSH 4 
+43 PUSH 2 
+44 CALL boo_3 
 45 ADD y_38 (44)
 46 MOVE y_38 (45)
 ]"
@@ -52,7 +52,7 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-7 POP a_0
+7 POP a_0 
 8 MOVE b_0 1
 9 MOVE c_0 1
 10 ADD FP_0 y_0
@@ -63,8 +63,8 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-12 POP a_0
-13 POP b_0
+12 POP a_0 
+13 POP b_0 
 14 MOVE c_0 1
 ]"
 }
@@ -72,55 +72,59 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-15 POP a_0
-16 POP b_0
+15 POP a_0 
+16 POP b_0 
 17 MOVE i_0 0
 ]"
 }
 edge: { sourcename: "3"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "4"
 label: "4
 [BLOCK:4
 18 ADD FP_0 y_0
-19 LOAD (18)
+19 LOAD (18) 
 20 CMP i_17 (19)
 28 BGE (20) (6)
 ]"
 }
 edge: { sourcename: "4"
 targetname: "5"
+label: "5"
 }
 edge: { sourcename: "4"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "5"
 label: "5
 [BLOCK:5
 21 ADD FP_0 x_0
-22 LOAD (21)
+22 LOAD (21) 
 23 ADD FP_0 x_0
-24 LOAD (23)
+24 LOAD (23) 
 25 MUL (22) (24)
 26 ADD FP_0 x_0
 27 STORE (26) (25)
-29 BRA (4)
+29 BRA (4) 
 ]"
 }
 edge: { sourcename: "5"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "6"
 label: "6
 [BLOCK:6
 30 ADD FP_0 x_0
-31 LOAD (30)
+31 LOAD (30) 
 32 ADD (31) 4
-33 RETURN (32)
+33 RETURN (32) 
 ]"
 }
 }

@@ -24,8 +24,7 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-9 ADD c_0 b_17
-10 ADD (9) d_1
+10 ADD (5) d_1
 12 MUL a_1 d_1
 14 MUL d_1 a_1
 15 ADD (14) 4

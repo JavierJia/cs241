@@ -9,7 +9,7 @@ label: "0
 9 ADD too_0 foo_0
 10 ADD (9) q_1
 11 MOVE af_0 (10)
-12 WRITE af_11
+12 WRITE af_11 
 ]"
 }
 }

@@ -76,7 +76,7 @@ public class SSAInstruction extends Instruction {
 		if (src.isConst()) {
 			this.rValue = src.getConstValue();
 		} else {
-			this.src = src.getSSAVar();
+			this.src = src.getSSAVar().clone();
 		}
 	}
 

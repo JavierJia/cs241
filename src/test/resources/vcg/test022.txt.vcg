@@ -12,6 +12,7 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "1"
@@ -25,9 +26,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "2"
@@ -39,6 +42,7 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "9"
@@ -60,9 +64,11 @@ label: "3
 }
 edge: { sourcename: "3"
 targetname: "5"
+label: "5"
 }
 edge: { sourcename: "3"
 targetname: "8"
+label: "8"
 }
 node: {
 title: "5"
@@ -76,19 +82,22 @@ label: "5
 }
 edge: { sourcename: "5"
 targetname: "6"
+label: "6"
 }
 edge: { sourcename: "5"
 targetname: "7"
+label: "7"
 }
 node: {
 title: "8"
 label: "8
 [BLOCK:8
-22 BRA (1)
+22 BRA (1) 
 ]"
 }
 edge: { sourcename: "8"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "6"
@@ -96,20 +105,22 @@ label: "6
 [BLOCK:6
 11 ADD b_14 1
 12 MOVE b_14 (11)
-15 BRA (5)
+15 BRA (5) 
 ]"
 }
 edge: { sourcename: "6"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "7"
 label: "7
 [BLOCK:7
-18 BRA (3)
+18 BRA (3) 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "3"
+label: "3"
 }
 }

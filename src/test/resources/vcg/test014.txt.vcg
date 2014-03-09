@@ -10,6 +10,7 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "1"
@@ -23,9 +24,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "2"
@@ -35,11 +38,12 @@ label: "2
 4 MOVE b_8 (3)
 5 MUL a_9 2
 6 MOVE a_9 (5)
-10 BRA (1)
+10 BRA (1) 
 ]"
 }
 edge: { sourcename: "2"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "3"

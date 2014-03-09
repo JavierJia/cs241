@@ -12,6 +12,7 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "1"
@@ -26,9 +27,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "2"
@@ -38,19 +41,20 @@ label: "2
 6 MOVE a_20 (5)
 7 ADD c_19 1
 8 MOVE c_19 (7)
-9 WRITE a_6
+9 WRITE a_6 
 ]"
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "6"
 label: "6
 [BLOCK:6
-22 WRITE a_20
-23 WRITE b_18
-24 WRITE c_19
+22 WRITE a_20 
+23 WRITE b_18 
+24 WRITE c_19 
 ]"
 }
 node: {
@@ -64,31 +68,35 @@ label: "3
 }
 edge: { sourcename: "3"
 targetname: "4"
+label: "4"
 }
 edge: { sourcename: "3"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "4"
 label: "4
 [BLOCK:4
-11 WRITE c_8
+11 WRITE c_8 
 12 ADD b_15 1
 13 MOVE b_15 (12)
-16 BRA (3)
+16 BRA (3) 
 ]"
 }
 edge: { sourcename: "4"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "5"
 label: "5
 [BLOCK:5
-21 BRA (1)
+21 BRA (1) 
 ]"
 }
 edge: { sourcename: "5"
 targetname: "1"
+label: "1"
 }
 }

@@ -8,42 +8,45 @@ label: "0
 1 MUL i_0 4
 2 ADD FP_0 a_0
 3 ADDA (1) (2)
-4 LOAD (3)
+4 LOAD (3) 
 5 MOVE x_0 (4)
 6 MUL i_0 4
 7 ADD FP_0 a_0
 8 ADDA (6) (7)
-9 LOAD (8)
+9 LOAD (8) 
 10 MOVE k_0 (9)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "1"
 label: "1
 [BLOCK:1
-45 PHI z_0 z_45
+45 PHI z_0 z_43
 46 PHI y_0 y_29
 47 PHI x_5 x_24
 11 MUL i_0 4
 12 ADD FP_0 a_0
 13 ADDA (11) (12)
-14 LOAD (13)
+14 LOAD (13) 
 15 MUL j_0 4
 16 ADD FP_0 b_0
 17 ADDA (15) (16)
-18 LOAD (17)
+18 LOAD (17) 
 19 CMP (14) (18)
 44 BGE (19) (3)
 ]"
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "2"
@@ -52,12 +55,12 @@ label: "2
 20 MUL i_0 4
 21 ADD FP_0 a_0
 22 ADDA (20) (21)
-23 LOAD (22)
+23 LOAD (22) 
 24 MOVE x_47 (23)
 25 MUL j_0 4
 26 ADD FP_0 a_0
 27 ADDA (25) (26)
-28 LOAD (27)
+28 LOAD (27) 
 29 MOVE y_46 (28)
 30 MUL k_10 4
 31 ADD FP_0 a_0
@@ -66,18 +69,19 @@ label: "2
 34 MUL j_0 4
 35 ADD FP_0 b_0
 36 ADDA (34) (35)
-37 LOAD (36)
+37 LOAD (36) 
 38 MOVE z_45 (37)
 39 MUL j_0 4
 40 ADD FP_0 a_0
 41 ADDA (39) (40)
-42 LOAD (41)
+42 LOAD (41) 
 43 MOVE z_38 (42)
-48 BRA (1)
+48 BRA (1) 
 ]"
 }
 edge: { sourcename: "2"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "3"
@@ -86,7 +90,7 @@ label: "3
 49 MUL i_0 4
 50 ADD FP_0 a_0
 51 ADDA (49) (50)
-52 LOAD (51)
+52 LOAD (51) 
 53 MOVE w_0 (52)
 ]"
 }

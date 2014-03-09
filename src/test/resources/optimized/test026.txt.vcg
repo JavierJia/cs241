@@ -52,7 +52,7 @@ label: "2
 28 LOAD (27) 
 30 MUL k_9 4
 32 ADDA (30) (2)
-33 STORE (32) z_42
+33 STORE (32) z_45
 36 ADDA (15) (16)
 37 LOAD (36) 
 41 ADDA (15) (2)

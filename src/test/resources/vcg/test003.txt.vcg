@@ -13,33 +13,36 @@ label: "2
 28 STORE (27) 2
 29 ADD FP_0 a_0
 30 ADDA (29) 44
-31 LOAD (30)
+31 LOAD (30) 
 32 ADD FP_0 a_0
 33 ADDA (32) 40
-34 LOAD (33)
+34 LOAD (33) 
 35 CMP (31) (34)
 44 BLE (35) (4)
 ]"
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 edge: { sourcename: "2"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "3"
 label: "3
 [BLOCK:3
-36 CALL foo_0
+36 CALL foo_0 
 37 ADD FP_0 a_0
 38 ADDA (37) 36
 39 STORE (38) (36)
-45 BRA (5)
+45 BRA (5) 
 ]"
 }
 edge: { sourcename: "3"
 targetname: "5"
+label: "5"
 }
 edge: { sourcename: "3"
 targetname: "0"
@@ -49,7 +52,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-40 CALL foo_0
+40 CALL foo_0 
 41 ADD FP_0 a_0
 42 ADDA (41) 36
 43 STORE (42) (40)
@@ -57,6 +60,7 @@ label: "4
 }
 edge: { sourcename: "4"
 targetname: "5"
+label: "5"
 }
 edge: { sourcename: "4"
 targetname: "0"
@@ -68,26 +72,26 @@ label: "5
 [BLOCK:5
 46 ADD FP_0 a_0
 47 ADDA (46) 36
-48 LOAD (47)
+48 LOAD (47) 
 49 MOVE b_0 (48)
-50 WRITE b_49
+50 WRITE b_49 
 ]"
 }
 node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 WRITE CONST_55
+1 WRITE CONST_55 
 2 ADD FP_0 b_0
 3 STORE (2) 2
 4 ADD FP_0 c_0
 5 STORE (4) 3
 6 ADD FP_0 b_0
-7 LOAD (6)
+7 LOAD (6) 
 8 ADD FP_0 c_0
-9 LOAD (8)
+9 LOAD (8) 
 10 ADD (7) (9)
-11 RETURN (10)
+11 RETURN (10) 
 ]"
 }
 }

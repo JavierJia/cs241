@@ -53,7 +53,7 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-27 SUB 3 a_31
+27 SUB 3 a_25
 28 ADD (27) 2
 30 ADD a_25 2
 ]"
@@ -63,7 +63,7 @@ title: "3"
 label: "3
 [BLOCK:3
 12 DIV a_25 3
-13 MUL (12) d_16
+13 MUL (12) d_24
 15 SUB d_24 1
 22 BRA (5) 
 ]"

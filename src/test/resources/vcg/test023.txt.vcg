@@ -14,6 +14,7 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 node: {
 title: "1"
@@ -28,9 +29,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "2"
@@ -45,15 +48,17 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 edge: { sourcename: "2"
 targetname: "4"
+label: "4"
 }
 node: {
 title: "6"
 label: "6
 [BLOCK:6
-27 SUB c_3 a_31
+27 SUB c_3 a_25
 28 ADD (27) b_2
 29 MOVE e_5 (28)
 30 ADD a_25 b_2
@@ -69,11 +74,12 @@ label: "3
 14 MOVE a_25 (13)
 15 SUB d_24 1
 16 MOVE d_24 (15)
-22 BRA (5)
+22 BRA (5) 
 ]"
 }
 edge: { sourcename: "3"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "4"
@@ -85,6 +91,7 @@ label: "4
 }
 edge: { sourcename: "4"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "5"
@@ -92,10 +99,11 @@ label: "5
 [BLOCK:5
 20 PHI d_16 d_18
 21 PHI a_14 a_1
-26 BRA (1)
+26 BRA (1) 
 ]"
 }
 edge: { sourcename: "5"
 targetname: "1"
+label: "1"
 }
 }

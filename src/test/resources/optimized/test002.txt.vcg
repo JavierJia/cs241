@@ -140,7 +140,7 @@ label: "8
 34 ADD (32) (33)
 35 ADD FP_0 b_0
 36 ADDA (34) (35)
-37 STORE (36) j_38
+37 STORE (36) j_41
 38 ADD j_41 1
 42 BRA (7) 
 ]"
@@ -156,7 +156,7 @@ label: "9
 43 MUL i_51 4
 44 ADD FP_0 a_0
 45 ADDA (43) (44)
-46 STORE (45) i_47
+46 STORE (45) i_51
 47 ADD i_51 1
 52 BRA (5) 
 ]"

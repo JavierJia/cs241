@@ -18,15 +18,17 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 edge: { sourcename: "0"
 targetname: "2"
+label: "2"
 }
 node: {
 title: "1"
 label: "1
 [BLOCK:1
-9 ADD c_0 b_17
+9 ADD c_0 b_0
 10 ADD (9) d_4
 11 MOVE e_7 (10)
 12 MUL a_2 d_4
@@ -38,11 +40,12 @@ label: "1
 18 ADD c_0 b_17
 19 ADD (18) d_4
 20 MOVE e_11 (19)
-30 BRA (3)
+30 BRA (3) 
 ]"
 }
 edge: { sourcename: "1"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "2"
@@ -56,6 +59,7 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "3"

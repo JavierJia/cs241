@@ -18,7 +18,8 @@ public class StatementTest {
 	protected static String simpleArrayTestFile2 = "src/test/resources/testprogs/test027.txt";
 	protected static String simpleFuncTest = "src/test/resources/testprogs/test006.txt";
 	protected static String simpleFuncTest4 = "src/test/resources/testprogs/test004.txt"; // Bad
-																			// example
+
+	// example
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,
 			SyntaxFormatException {
@@ -69,10 +70,10 @@ public class StatementTest {
 	// checkGraph("src/test/resources/testprogs/test024.txt");
 	// }
 
-	// @Test
-	// public void TestEach() throws IOException, SyntaxFormatException {
-	// checkGraph("src/test/resources/testprogs/test003.txt");
-	// }
+//	@Test
+//	public void TestEach() throws IOException, SyntaxFormatException {
+//		checkGraph("src/test/resources/testprogs/test025.txt", "vcg");
+//	}
 
 	@Test
 	public void TestAll() throws IOException, SyntaxFormatException {

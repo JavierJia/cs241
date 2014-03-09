@@ -5,7 +5,7 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-70 CALL foo_0
+70 CALL foo_0 
 ]"
 }
 edge: { sourcename: "15"
@@ -30,9 +30,11 @@ label: "0
 }
 edge: { sourcename: "0"
 targetname: "1"
+label: "1"
 }
 edge: { sourcename: "0"
 targetname: "7"
+label: "7"
 }
 node: {
 title: "1"
@@ -48,9 +50,11 @@ label: "1
 }
 edge: { sourcename: "1"
 targetname: "2"
+label: "2"
 }
 edge: { sourcename: "1"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "7"
@@ -66,9 +70,11 @@ label: "7
 }
 edge: { sourcename: "7"
 targetname: "8"
+label: "8"
 }
 edge: { sourcename: "7"
 targetname: "12"
+label: "12"
 }
 node: {
 title: "2"
@@ -80,6 +86,7 @@ label: "2
 }
 edge: { sourcename: "2"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "6"
@@ -88,11 +95,12 @@ label: "6
 24 PHI c_16 c_3
 25 PHI a_21 a_11
 26 MOVE g_7 9
-62 BRA (14)
+62 BRA (14) 
 ]"
 }
 edge: { sourcename: "6"
 targetname: "14"
+label: "14"
 }
 node: {
 title: "8"
@@ -104,6 +112,7 @@ label: "8
 }
 edge: { sourcename: "8"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "12"
@@ -117,6 +126,7 @@ label: "12
 }
 edge: { sourcename: "12"
 targetname: "13"
+label: "13"
 }
 node: {
 title: "3"
@@ -129,9 +139,11 @@ label: "3
 }
 edge: { sourcename: "3"
 targetname: "4"
+label: "4"
 }
 edge: { sourcename: "3"
 targetname: "5"
+label: "5"
 }
 node: {
 title: "14"
@@ -145,13 +157,13 @@ label: "14
 59 PHI c_24 c_50
 60 PHI a_25 a_1
 61 PHI h_8 h_52
-63 WRITE a_60
-64 WRITE b_58
-65 WRITE c_59
-66 WRITE d_56
-67 WRITE e_57
-68 WRITE f_54
-69 WRITE h_61
+63 WRITE a_60 
+64 WRITE b_58 
+65 WRITE c_59 
+66 WRITE d_56 
+67 WRITE e_57 
+68 WRITE f_54 
+69 WRITE h_61 
 ]"
 }
 node: {
@@ -166,9 +178,11 @@ label: "9
 }
 edge: { sourcename: "9"
 targetname: "10"
+label: "10"
 }
 edge: { sourcename: "9"
 targetname: "11"
+label: "11"
 }
 node: {
 title: "13"
@@ -182,6 +196,7 @@ label: "13
 }
 edge: { sourcename: "13"
 targetname: "14"
+label: "14"
 }
 node: {
 title: "4"
@@ -189,11 +204,12 @@ label: "4
 [BLOCK:4
 18 ADD a_21 1
 19 MOVE a_21 (18)
-22 BRA (3)
+22 BRA (3) 
 ]"
 }
 edge: { sourcename: "4"
 targetname: "3"
+label: "3"
 }
 node: {
 title: "5"
@@ -203,6 +219,7 @@ label: "5
 }
 edge: { sourcename: "5"
 targetname: "6"
+label: "6"
 }
 node: {
 title: "10"
@@ -212,20 +229,22 @@ label: "10
 36 MOVE b_40 (35)
 37 SUB c_41 1
 38 MOVE c_41 (37)
-42 BRA (9)
+42 BRA (9) 
 ]"
 }
 edge: { sourcename: "10"
 targetname: "9"
+label: "9"
 }
 node: {
 title: "11"
 label: "11
 [BLOCK:11
-51 BRA (13)
+51 BRA (13) 
 ]"
 }
 edge: { sourcename: "11"
 targetname: "13"
+label: "13"
 }
 }
