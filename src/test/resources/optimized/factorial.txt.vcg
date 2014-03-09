@@ -10,8 +10,10 @@ label: "7
 26 CALL factIter_0 
 27 WRITE (26) 
 28 WLN 
+29 PUSH input_23 
 30 CALL factRec_4 
 31 WRITE (30) 
+32 WLN 
 ]"
 }
 edge: { sourcename: "7"

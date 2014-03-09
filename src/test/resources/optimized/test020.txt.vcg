@@ -15,7 +15,8 @@ label: "1
 11 ADD FP_0 a_0
 12 ADDA (10) (11)
 13 STORE (12) 45
-15 ADD (4) 1
+14 CALL foo_0 
+15 ADD (14) 1
 16 MUL 19 1
 17 MUL (15) 80
 18 MUL (16) 4

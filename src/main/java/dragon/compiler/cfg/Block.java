@@ -480,7 +480,7 @@ public class Block {
 		for (SSAInstruction ins : instructions) {
 			if (myHistory.containsKey(ins)) {
 				ins.copyCommonExpression(myHistory.get(ins));
-			} else {
+			} else if (Instruction.COMMON_ELIMINATE_SET.contains(ins.getOP())) {
 				myHistory.put(ins, ins.getId());
 			}
 		}

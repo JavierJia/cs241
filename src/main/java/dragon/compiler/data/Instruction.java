@@ -26,8 +26,10 @@ public class Instruction {
 	public static EnumSet<OP> PROPAGATING_SET = EnumSet.copyOf(PHI_UPDATE_SET);
 	static {
 		PROPAGATING_SET.add(OP.PHI);
-
 	}
+
+	public static EnumSet<OP> COMMON_ELIMINATE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL,
+			OP.DIV, OP.CMP, OP.ADDA, OP.PHI);
 
 	public static boolean isBranchInstruction(OP op) {
 		return BRACH_SET.contains(op);
