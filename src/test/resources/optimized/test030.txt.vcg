@@ -21,8 +21,8 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-17 PHI b_2 b_14
-18 PHI a_1 a_8
+17 PHI 2 b_14
+18 PHI 1 a_7
 5 ADD b_17 1
 6 CMP (5) 3
 16 BGE (6) (7)
@@ -43,8 +43,8 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-21 PHI b_17 b_2
-22 PHI a_18 a_1
+21 PHI b_17 2
+22 PHI a_18 1
 23 ADD 3 1
 ]"
 }
@@ -88,7 +88,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-14 PHI b_17 b_12
+14 PHI b_17 b_11
 9 ADD b_14 2
 10 CMP (9) 3
 13 BGE (10) (6)

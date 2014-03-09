@@ -23,9 +23,9 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-45 PHI z_0 z_43
-46 PHI y_0 y_29
-47 PHI x_5 x_24
+45 PHI z_0 z_42
+46 PHI y_0 y_28
+47 PHI x_4 x_23
 11 MUL i_0 4
 12 ADD FP_0 a_0
 13 ADDA (11) (12)
@@ -64,7 +64,7 @@ label: "2
 30 MUL k_9 4
 31 ADD FP_0 a_0
 32 ADDA (30) (31)
-33 STORE (32) z_43
+33 STORE (32) z_42
 34 MUL j_0 4
 35 ADD FP_0 b_0
 36 ADDA (34) (35)

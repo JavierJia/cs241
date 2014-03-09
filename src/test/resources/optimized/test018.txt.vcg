@@ -71,9 +71,9 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-21 PHI f_7 f_15
-22 PHI c_2 c_19
-23 PHI h_13 h_0
+21 PHI f_6 f_14
+22 PHI c_1 c_19
+23 PHI h_12 h_0
 25 MUL g_4 a_9
 27 WRITE a_9 
 28 WRITE b_25 
@@ -107,7 +107,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-19 PHI c_17 c_2
+19 PHI 2 c_1
 ]"
 }
 edge: { sourcename: "4"

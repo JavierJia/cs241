@@ -49,8 +49,8 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-14 PHI d_4 d_12
-15 PHI c_3 c_10
+14 PHI 4 d_11
+15 PHI 3 c_9
 8 CMP c_15 d_14
 13 BGE (8) (4)
 ]"
@@ -73,8 +73,8 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-25 PHI d_4 d_23
-26 PHI c_3 c_21
+25 PHI 4 d_22
+26 PHI 3 c_20
 19 CMP c_26 d_25
 24 BGE (19) (8)
 ]"
@@ -182,7 +182,7 @@ label: "9
 [BLOCK:9
 29 PHI d_14 d_25
 30 PHI c_15 c_26
-31 PHI a_7 a_18
+31 PHI a_6 a_17
 ]"
 }
 edge: { sourcename: "9"
@@ -196,7 +196,7 @@ node: {
 title: "10"
 label: "10
 [BLOCK:10
-42 PHI b_2 b_38
+42 PHI 2 b_38
 43 PHI c_30 c_39
 33 CMP b_42 d_29
 41 BGE (33) (15)
@@ -305,8 +305,8 @@ node: {
 title: "14"
 label: "14
 [BLOCK:14
-38 PHI b_35 b_42
-39 PHI c_43 c_36
+38 PHI b_43 b_42
+39 PHI c_43 c_42
 44 BRA (10) 
 ]"
 }

@@ -50,9 +50,9 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-9 PHI d_5 d_0
-10 PHI b_4 b_0
-11 PHI c_0 c_7
+9 PHI d_3 d_0
+10 PHI b_3 b_0
+11 PHI c_0 c_6
 13 ADD b_10 e_0
 15 ADD c_11 d_16
 ]"

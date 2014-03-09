@@ -61,10 +61,10 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-26 PHI f_13 f_22
-27 PHI g_16 g_24
-28 PHI e_20 e_7
-29 PHI b_17 b_0
+26 PHI f_12 f_21
+27 PHI g_15 g_23
+28 PHI e_19 e_6
+29 PHI 5 b_0
 31 MUL a_1 d_3
 33 DIV d_3 a_1
 ]"

@@ -15,7 +15,7 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-7 PHI j_2 j_5
+7 PHI 0 j_4
 3 CMP 0 1000
 6 BGE (3) (3)
 ]"

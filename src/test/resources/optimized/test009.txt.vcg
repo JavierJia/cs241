@@ -84,8 +84,8 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-15 PHI c_13 c_3
-16 PHI a_9 a_6
+15 PHI c_13 3
+16 PHI a_8 a_5
 31 BRA (10) 
 ]"
 }
@@ -157,7 +157,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-13 PHI c_11 c_3
+13 PHI c_8 3
 ]"
 }
 edge: { sourcename: "4"
@@ -177,8 +177,8 @@ node: {
 title: "10"
 label: "10
 [BLOCK:10
-28 PHI b_2 b_18
-29 PHI c_15 c_3
+28 PHI 2 b_17
+29 PHI c_15 3
 30 PHI a_16 a_25
 32 ADD a_30 1
 34 WRITE a_32 
@@ -191,7 +191,7 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-25 PHI a_21 a_23
+25 PHI a_20 a_22
 ]"
 }
 edge: { sourcename: "9"

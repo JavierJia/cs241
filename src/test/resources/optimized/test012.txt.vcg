@@ -51,9 +51,9 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-13 PHI b_6 b_2
-14 PHI c_0 c_11
-15 PHI a_8 a_10
+13 PHI b_5 3
+14 PHI c_0 2
+15 PHI a_7 a_9
 17 ADD a_15 1
 19 WRITE a_17 
 ]"

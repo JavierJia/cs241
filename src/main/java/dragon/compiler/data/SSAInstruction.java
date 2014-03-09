@@ -28,13 +28,14 @@ public class SSAInstruction extends Instruction {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+
 		SSAInstruction other = (SSAInstruction) obj;
+		if (op != other.op)
+			return false;
 		if (lValue == null) {
 			if (other.lValue != null)
 				return false;
 		} else if (!lValue.equals(other.lValue))
-			return false;
-		if (op != other.op)
 			return false;
 		if (rValue == null) {
 			if (other.rValue != null)
@@ -209,6 +210,13 @@ public class SSAInstruction extends Instruction {
 				}
 			}
 		}
+	}
+
+	public void copyCommonExpression(Integer integer) {
+		op = OP.MOVE;
+		lValue = rValue = null;
+		target = new SSAVar(getId());
+		src = new SSAVar(integer);
 	}
 
 }

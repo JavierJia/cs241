@@ -50,8 +50,8 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-9 PHI b_2 b_7
-10 PHI a_5 a_1
+9 PHI 2 b_6
+10 PHI a_4 1
 12 CMP a_10 b_9
 15 BGE (12) (5)
 ]"
@@ -88,7 +88,7 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-16 PHI a_14 a_10
+16 PHI a_13 a_10
 17 WRITE a_16 
 18 WRITE b_9 
 ]"

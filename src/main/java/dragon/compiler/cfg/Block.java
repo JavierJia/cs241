@@ -454,16 +454,17 @@ public class Block {
 		return returnPropagation;
 	}
 
+	public boolean isBackEdge(Block from) {
+		return from != this && from.dominators.contains(this);
+	}
+
 	/**
 	 * return if the parent -> this is the back edge;
 	 * 
 	 * @param parent
 	 * @return
 	 */
-	public boolean checkAddDominator(Block parent) {
-		if (parent != this && parent.dominators.contains(this)) { // back edge
-			return true;
-		}
+	public void addDominator(Block parent) {
 		if (this.dominators.size() == 1) {
 			this.dominators.addAll(parent.dominators);
 			// this.dominators.add(parent);
@@ -471,7 +472,23 @@ public class Block {
 			this.dominators.retainAll(parent.dominators);
 			this.dominators.add(this);
 		}
-		return false;
+	}
+
+	public HashMap<SSAInstruction, Integer> copyCommonExpression(
+			HashMap<SSAInstruction, Integer> history) {
+		HashMap<SSAInstruction, Integer> myHistory = new HashMap<SSAInstruction, Integer>(history);
+		for (SSAInstruction ins : instructions) {
+			if (history.containsKey(ins)) {
+				ins.copyCommonExpression(myHistory.get(ins));
+			} else {
+				myHistory.put(ins, ins.getId());
+			}
+		}
+		return myHistory;
+	}
+
+	public HashSet<Block> getDominators() {
+		return dominators;
 	}
 
 	public static void deadCodeElimination(Block blk) {

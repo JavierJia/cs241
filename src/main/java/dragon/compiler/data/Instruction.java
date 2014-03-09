@@ -25,7 +25,7 @@ public class Instruction {
 
 	public static EnumSet<OP> PROPAGATING_SET = EnumSet.copyOf(PHI_UPDATE_SET);
 	static {
-		PHI_UPDATE_SET.add(OP.PHI);
+		PROPAGATING_SET.add(OP.PHI);
 	}
 
 	public static boolean isBranchInstruction(OP op) {

@@ -46,8 +46,8 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-50 PHI j_29 j_41
-51 PHI i_28 i_48
+50 PHI 0 j_41
+51 PHI 0 i_47
 30 CMP i_51 4
 49 BGE (30) (10)
 ]"
@@ -67,8 +67,8 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-22 PHI d_0 d_18
-23 PHI i_1 i_20
+22 PHI d_0 d_17
+23 PHI 0 i_19
 2 CMP i_23 10
 21 BGE (2) (3)
 ]"
@@ -88,7 +88,7 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-41 PHI j_50 j_39
+41 PHI j_50 j_38
 31 CMP j_41 4
 40 BGE (31) (9)
 ]"
@@ -174,7 +174,7 @@ label: "8
 34 ADD (32) (33)
 35 ADD FP_0 b_0
 36 ADDA (34) (35)
-37 STORE (36) j_39
+37 STORE (36) j_38
 38 ADD j_41 1
 42 BRA (7) 
 ]"
@@ -199,7 +199,7 @@ label: "9
 43 MUL i_51 4
 44 ADD FP_0 a_0
 45 ADDA (43) (44)
-46 STORE (45) i_48
+46 STORE (45) i_47
 47 ADD i_51 1
 52 BRA (5) 
 ]"

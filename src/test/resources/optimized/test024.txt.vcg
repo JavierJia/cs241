@@ -15,12 +15,12 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-74 PHI f_6 f_67
-75 PHI g_7 g_68
-76 PHI d_4 d_69
-77 PHI e_5 e_70
-78 PHI a_1 a_14
-79 PHI h_8 h_71
+74 PHI 6 f_67
+75 PHI 7 g_68
+76 PHI 4 d_69
+77 PHI 5 e_70
+78 PHI 1 a_13
+79 PHI 8 h_71
 9 DIV 2 4
 10 ADD (9) 5
 11 CMP (10) 8
@@ -129,7 +129,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-23 PHI h_79 h_21
+23 PHI h_79 h_20
 19 CMP g_17 h_23
 22 BLE (19) (6)
 ]"
@@ -259,8 +259,8 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-39 PHI d_76 d_35
-40 PHI e_31 e_37
+39 PHI d_76 d_34
+40 PHI e_30 e_36
 32 SUB d_39 7
 33 CMP (32) e_40
 38 BEQ (33) (11)
@@ -293,8 +293,8 @@ node: {
 title: "13"
 label: "13
 [BLOCK:13
-52 PHI d_76 d_48
-53 PHI e_77 e_50
+52 PHI d_76 d_47
+53 PHI e_77 e_49
 45 SUB d_52 8
 46 CMP (45) e_53
 51 BEQ (46) (15)
@@ -328,7 +328,7 @@ title: "17"
 label: "17
 [BLOCK:17
 67 PHI f_74 f_59
-68 PHI g_26 g_65
+68 PHI g_25 g_64
 69 PHI d_76 d_61
 70 PHI e_77 e_62
 71 PHI h_23 h_79
@@ -444,7 +444,7 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-55 MUL 725 f_57
+55 MUL 725 f_56
 56 DIV (55) 4
 ]"
 }
@@ -474,8 +474,8 @@ node: {
 title: "16"
 label: "16
 [BLOCK:16
-59 PHI f_43 f_57
-60 PHI g_75 g_44
+59 PHI f_42 f_56
+60 PHI g_75 725
 61 PHI d_39 d_52
 62 PHI e_40 e_53
 64 ADD g_60 h_79

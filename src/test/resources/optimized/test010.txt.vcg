@@ -15,9 +15,9 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-18 PHI b_2 b_15
-19 PHI c_3 c_8
-20 PHI a_1 a_6
+18 PHI 2 b_15
+19 PHI 3 c_7
+20 PHI 1 a_5
 4 CMP a_20 b_18
 17 BGE (4) (6)
 ]"
@@ -71,7 +71,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-15 PHI b_18 b_13
+15 PHI b_18 b_12
 10 CMP b_15 c_7
 14 BGE (10) (5)
 ]"
