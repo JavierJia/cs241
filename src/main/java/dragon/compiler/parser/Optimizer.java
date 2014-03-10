@@ -17,6 +17,10 @@ public class Optimizer {
 		copyPropagate(root);
 		commonExpressionEliminate(root);
 	}
+	
+	protected void constBranchEliminate(Block root){
+		
+	}
 
 	protected void copyPropagate(Block root) {
 		copyPropagateAndUpdateDominator(root, true);

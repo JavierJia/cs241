@@ -88,20 +88,27 @@ public class Interpretor {
 			condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
 					cond.getVariable());
 			condBlock.setNext(then.getFirstBlock());
+			then.getFirstBlock().setNormalPre(condBlock);
 			if (elseResult != null) {
 				condBlock.condNegBranch(elseResult.getFirstBlock());
+				elseResult.getFirstBlock().setNormalPre(condBlock);
+
 				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getLocalVarTable(),
 						elseResult.getLastBlock().getLocalVarTable(), then.getLastBlock()
 								.getGlobalVarTable());
 				then.getLastBlock().putCode(OP.BRA, new SSAVar(phiBlock.getID()));
 				then.getLastBlock().setNext(phiBlock);
 				elseResult.getLastBlock().setNext(phiBlock);
+				phiBlock.setThenPre(then.getLastBlock());
+				phiBlock.setElsePre(elseResult.getLastBlock());
 				result.setTail(phiBlock);
 			} else {
 				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getLocalVarTable(),
 						condBlock.getLocalVarTable(), then.getLastBlock().getGlobalVarTable());
 				condBlock.condNegBranch(phiBlock);
+				phiBlock.setElsePre(condBlock);
 				then.getLastBlock().setNext(phiBlock);
+				phiBlock.setThenPre(then.getLastBlock());
 				result.setTail(phiBlock);
 			}
 
@@ -122,7 +129,11 @@ public class Interpretor {
 	public CFGResult computeWhileStatement(Block lastBlock, ArithmeticResult cond, Block condBlock,
 			CFGResult loopBody) {
 		if (cond.getKind() == Kind.CONST) { // the branch result is fixed.
-			if (cond.getConstValue() > 0) { // true
+			if (cond.getConstValue() > 0) { // true, never break;
+				loopBody.getLastBlock().putCode(OP.BRA,
+						new SSAVar(loopBody.getFirstBlock().getID()));
+				loopBody.getLastBlock().setNext(loopBody.getFirstBlock());
+				loopBody.getFirstBlock().setNormalPre(loopBody.getLastBlock());
 				return loopBody;
 			} else {
 				return CFGResult.EMPTY_CFG_RESULT;
@@ -130,6 +141,7 @@ public class Interpretor {
 		}
 
 		lastBlock.setNext(condBlock);
+		condBlock.setNormalPre(lastBlock);
 		CFGResult result = new CFGResult(condBlock);
 
 		condBlock.putCode(mapTokenTypeToOP(TokenType.getNegRelation(cond.getRelation())),
@@ -142,12 +154,17 @@ public class Interpretor {
 
 		// change graph link at last
 		condBlock.setNext(loopBody.getFirstBlock());
+		loopBody.getFirstBlock().setNormalPre(condBlock);
+
 		loopBody.getLastBlock().putCode(OP.BRA, new SSAVar(condBlock.getID()));
+
 		loopBody.getLastBlock().setNext(condBlock);
+		condBlock.setLoopBackLink(loopBody.getLastBlock());
 
 		// add one new block at the end for the afterward computation.
 		Block nextBlock = new Block(condBlock.getLocalVarTable(), condBlock.getGlobalVarTable());
 		condBlock.condNegBranch(nextBlock);
+		nextBlock.setNormalPre(condBlock);
 		result.setTail(nextBlock);
 		return result;
 	}

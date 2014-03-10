@@ -74,10 +74,15 @@ label: "7
 33 MUL (32) 4
 35 ADDA (33) (4)
 36 LOAD (35) 
-39 SUB (1) 6
-40 MUL (39) 4
-42 ADDA (40) (4)
-43 LOAD (42) 
+38 BRA (2) 
+40 SUB (1) 6
+41 MUL (40) 4
+43 ADDA (41) (4)
+44 LOAD (43) 
 ]"
+}
+edge: { sourcename: "7"
+targetname: "2"
+label: "2"
 }
 }

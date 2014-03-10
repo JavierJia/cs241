@@ -51,6 +51,12 @@ public class Block {
 	private VariableTable globalVTable;
 	private ArrayList<SSAInstruction> instructions = new ArrayList<SSAInstruction>();
 
+	// left and right is corresponding to the left or right for the PHI function
+	protected Block thenPre;
+	protected Block elsePre;
+	protected Block loopBack;
+	protected Block normalPre;
+
 	protected HashSet<Block> dominators = new HashSet<Block>(Arrays.asList(this));
 
 	// The function call related CFG. These blk should not involved into
@@ -315,6 +321,22 @@ public class Block {
 			return;
 		}
 		condNextBlock = next;
+	}
+
+	public void setThenPre(Block pre) {
+		thenPre = pre;
+	}
+
+	public void setElsePre(Block blk) {
+		elsePre = blk;
+	}
+
+	public void setNormalPre(Block blk) {
+		normalPre = blk;
+	}
+
+	public void setLoopBackLink(Block blk) {
+		loopBack = blk;
 	}
 
 	public boolean isReturn() {

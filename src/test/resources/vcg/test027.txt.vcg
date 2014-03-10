@@ -83,13 +83,18 @@ label: "7
 35 ADDA (33) (34)
 36 LOAD (35) 
 37 MOVE c_7 (36)
-38 MUL a_0 2
-39 SUB (38) 6
-40 MUL (39) 4
-41 ADD FP_0 foo_0
-42 ADDA (40) (41)
-43 LOAD (42) 
-44 MOVE a_0 (43)
+38 BRA (2) 
+39 MUL a_0 2
+40 SUB (39) 6
+41 MUL (40) 4
+42 ADD FP_0 foo_0
+43 ADDA (41) (42)
+44 LOAD (43) 
+45 MOVE a_0 (44)
 ]"
+}
+edge: { sourcename: "7"
+targetname: "2"
+label: "2"
 }
 }
