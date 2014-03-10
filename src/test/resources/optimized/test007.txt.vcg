@@ -21,7 +21,6 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-4 ADD 1 1
 11 BRA (3) 
 ]"
 }
@@ -33,7 +32,6 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-6 ADD 2 1
 ]"
 }
 edge: { sourcename: "2"
@@ -44,8 +42,8 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-9 PHI 2 b_6
-10 PHI a_4 1
+9 PHI 2 3
+10 PHI 2 1
 12 CMP a_10 b_9
 15 BGE (12) (5)
 ]"

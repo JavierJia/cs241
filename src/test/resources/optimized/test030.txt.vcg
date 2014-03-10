@@ -42,7 +42,6 @@ label: "8
 [BLOCK:8
 21 PHI b_17 2
 22 PHI a_18 1
-23 ADD 3 1
 ]"
 }
 node: {

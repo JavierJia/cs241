@@ -15,6 +15,8 @@ public class Instruction {
 		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN, CALL, RETURN, POP, PUSH,
 	}
 
+	public static EnumSet<OP> ARITHMETIC_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV);
+
 	public static EnumSet<OP> BRACH_SET = EnumSet.of(OP.BRA, OP.BNE, OP.BEQ, OP.BLE, OP.BLT,
 			OP.BGE, OP.BGT);
 

@@ -17,8 +17,7 @@ label: "1
 [BLOCK:1
 24 PHI 4 d_20
 25 PHI 1 a_21
-6 ADD 3 4
-7 CMP (6) d_24
+7 CMP 7 d_24
 23 BGE (7) (6)
 ]"
 }
@@ -36,8 +35,7 @@ label: "2
 [BLOCK:2
 8 ADD a_25 5
 9 SUB (8) 2
-10 MUL 2 6
-11 CMP (9) (10)
+11 CMP (9) 12
 19 BLE (11) (4)
 ]"
 }

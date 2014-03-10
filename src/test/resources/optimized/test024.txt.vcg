@@ -21,9 +21,7 @@ label: "1
 77 PHI 5 e_70
 78 PHI 1 a_13
 79 PHI 8 h_71
-9 DIV 2 4
-10 ADD (9) 5
-11 CMP (10) 8
+11 CMP 5 8
 73 BGE (11) (18)
 ]"
 }

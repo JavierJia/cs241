@@ -212,11 +212,42 @@ public class SSAInstruction extends Instruction {
 		}
 	}
 
+	public boolean isConstExpression() {
+
+		if (target != null || src != null) {
+			return false;
+		}
+		if (lValue != null && rValue != null) {
+			return true;
+		}
+		return lValue != null;
+	}
+
 	public void copyCommonExpression(Integer integer) {
 		op = OP.MOVE;
 		lValue = rValue = null;
 		target = new SSAVar(getId());
 		src = new SSAVar(integer);
+	}
+
+	public int computeArithmeticValue() {
+		if (!isConstExpression()) {
+			throw new IllegalStateException("not const expression");
+		}
+		switch (op) {
+		case ADD:
+			return lValue + rValue;
+		case SUB:
+			return lValue - rValue;
+		case MUL:
+			return lValue * rValue;
+		case DIV:
+			return lValue / rValue;
+		case NEG:
+			return -lValue;
+		default:
+			throw new IllegalStateException("not arithemetic op:" + op);
+		}
 	}
 
 }

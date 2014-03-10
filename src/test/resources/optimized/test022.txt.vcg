@@ -44,7 +44,6 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-23 ADD 3 1
 ]"
 }
 node: {

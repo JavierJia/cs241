@@ -21,7 +21,6 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-6 ADD 1 1
 ]"
 }
 edge: { sourcename: "1"
@@ -32,7 +31,6 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-17 ADD 1 2
 ]"
 }
 edge: { sourcename: "5"
@@ -128,7 +126,7 @@ label: "9
 [BLOCK:9
 29 PHI d_14 d_25
 30 PHI c_15 c_26
-31 PHI a_6 a_17
+31 PHI 2 3
 ]"
 }
 edge: { sourcename: "9"

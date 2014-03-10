@@ -450,6 +450,12 @@ public class Block {
 			}
 			// normal instruction
 			curIns.copyPropagate(returnPropagation);
+			if (Instruction.ARITHMETIC_SET.contains(curIns.getOP()) && curIns.isConstExpression()) {
+				// copy propagate const value again
+				returnPropagation.put(curIns.getId(),
+						new SSAorConst(curIns.computeArithmeticValue()));
+				iter.remove();
+			}
 		}
 		return returnPropagation;
 	}
