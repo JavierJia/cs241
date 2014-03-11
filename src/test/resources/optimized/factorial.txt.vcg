@@ -2,9 +2,9 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "7"
-label: "7
-[BLOCK:7
+title: "8"
+label: "8
+[BLOCK:8
 23 READ 
 25 PUSH input_23 
 26 CALL factIter_0 
@@ -16,11 +16,11 @@ label: "7
 32 WLN 
 ]"
 }
-edge: { sourcename: "7"
+edge: { sourcename: "8"
 targetname: "0"
 label: "j26"
 color:red}
-edge: { sourcename: "7"
+edge: { sourcename: "8"
 targetname: "4"
 label: "j30"
 color:red}
@@ -81,17 +81,12 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-18 SUB n_14 1
-19 PUSH (18) 
-20 CALL factRec_4 
-21 MUL (20) n_14
-22 RETURN (21) 
 ]"
 }
 edge: { sourcename: "6"
-targetname: "4"
-label: "j20"
-color:red}
+targetname: "7"
+label: "7"
+}
 node: {
 title: "2"
 label: "2
@@ -112,4 +107,19 @@ label: "3
 13 RETURN f_10 
 ]"
 }
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+18 SUB n_14 1
+19 PUSH (18) 
+20 CALL factRec_4 
+21 MUL (20) n_14
+22 RETURN (21) 
+]"
+}
+edge: { sourcename: "7"
+targetname: "4"
+label: "j20"
+color:red}
 }

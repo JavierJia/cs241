@@ -452,8 +452,14 @@ public class Block {
 		this.functionPopBackToBlocks = new ArrayList<Entry<Block, Integer>>();
 	}
 
-	public HashMap<Integer, SSAorConst> copyPropagate(Block parent,
-			HashMap<Integer, SSAorConst> propagation) {
+	/**
+	 * The static one
+	 * 
+	 * @param parent
+	 * @param propagation
+	 * @return
+	 */
+	public HashMap<Integer, SSAorConst> copyPropagate(HashMap<Integer, SSAorConst> propagation) {
 
 		HashMap<Integer, SSAorConst> returnPropagation = new HashMap<Integer, SSAorConst>(
 				propagation);
@@ -482,17 +488,113 @@ public class Block {
 		return returnPropagation;
 	}
 
-	public boolean isBackEdge(Block from) {
+	public HashMap<Integer, SSAorConst> fixConstPhi(HashSet<Block> removedBlocks) {
+		HashMap<Integer, SSAorConst> returnPropagation = new HashMap<Integer, SSAorConst>();
+		if (instructions.size() > 0) {
+
+			if (thenPre != null || elsePre != null) {
+				if (elsePre == null && thenPre != null || elsePre != null && thenPre == null) {
+					throw new IllegalStateException("then else must be both null or not null");
+				}
+				Block targetPre = null;
+				if (removedBlocks.contains(thenPre)) {
+					if (removedBlocks.contains(elsePre)) {
+						throw new IllegalStateException("else and then block can't be both removed");
+					}
+					targetPre = elsePre;
+				} else if (removedBlocks.contains(elsePre)) {
+					targetPre = thenPre;
+				}
+
+				if (targetPre != null) {
+					Iterator<SSAInstruction> iter = instructions.iterator();
+					while (iter.hasNext()) {
+						SSAInstruction curIns = iter.next();
+						if (curIns.getOP() != OP.PHI) {
+							break;
+						}
+						SSAorConst src = targetPre == thenPre ? curIns.getTarget() : curIns
+								.getSrc();
+
+						while (!src.isConst()
+								&& returnPropagation.containsKey(src.getSSAVar().getVersion())) {
+							src = returnPropagation.get(src.getSSAVar().getVersion());
+						}
+						returnPropagation.put(curIns.getId(), src);
+						iter.remove();
+					}
+					normalPre = targetPre;
+					thenPre = elsePre = null;
+				}
+			} else if (loopBack != null) {
+				if (removedBlocks.contains(loopBack)) {
+					Iterator<SSAInstruction> iter = instructions.iterator();
+					while (iter.hasNext()) {
+						SSAInstruction curIns = iter.next();
+						SSAorConst src = curIns.getTarget(); // outside value
+						while (!src.isConst()
+								&& returnPropagation.containsKey(src.getSSAVar().getVersion())) {
+							src = returnPropagation.get(src.getSSAVar().getVersion());
+						}
+						returnPropagation.put(curIns.getId(), src);
+						iter.remove();
+					}
+					loopBack = null;
+				}
+			} else {
+				if (instructions.get(0).getOP() == OP.PHI) {
+					throw new IllegalStateException(
+							"how comes this block contains a PHI, but not a if or while ?  ");
+				}
+			}
+		}
+
+		return returnPropagation;
+	}
+
+	public Block checkAndRemoveConstBranch() {
+		Block removed = null;
+		if (instructions.size() > 1) {
+			SSAInstruction branchIns = instructions.get(instructions.size() - 1);
+			SSAInstruction conditionIns = instructions.get(instructions.size() - 2);
+			if (Instruction.BRACH_SET.contains(branchIns.getOP()) && branchIns.getOP() != OP.BRA) {
+				if (conditionIns.isConstExpression()) {
+					boolean result = Instruction.computeConstCond(branchIns.getOP(), conditionIns
+							.getTarget().getConstValue(), conditionIns.getSrc().getConstValue());
+					if (result) {
+						removed = condNextBlock;
+						condNextBlock = condFalseBranchBlock;
+					} else {
+						removed = condFalseBranchBlock;
+					}
+					condFalseBranchBlock = null;
+					instructions.remove(instructions.size() - 1);
+					instructions.remove(instructions.size() - 1);
+				}
+			}
+		}
+		return removed;
+	}
+
+	public boolean isBackEdgeFrom(Block from) {
 		return from != this && from.dominators.contains(this);
 	}
 
+	// public void addDominator(Block dominator) {
+	// this.dominators.add(dominator);
+	// if (this.condNextBlock.dominators.contains(this)) {
+	// this.condNextBlock.addDominator(dominator);
+	// }
+	// if (this.condFalseBranchBlock.dominators.contains(this)) {
+	// this.condFalseBranchBlock.addDominator(dominator);
+	// }
+	// }
+
 	/**
-	 * return if the parent -> this is the back edge;
 	 * 
 	 * @param parent
-	 * @return
 	 */
-	public void addDominator(Block parent) {
+	public void updateDominator(Block parent) {
 		if (this.dominators.size() == 1) {
 			this.dominators.addAll(parent.dominators);
 			// this.dominators.add(parent);
@@ -519,7 +621,12 @@ public class Block {
 		return dominators;
 	}
 
+	public boolean isDominateBy(Block parent) {
+		return dominators.contains(parent);
+	}
+
 	public static void deadCodeElimination(Block blk) {
 		// TODO, should be done in the graph level. maybe skip it
 	}
+
 }

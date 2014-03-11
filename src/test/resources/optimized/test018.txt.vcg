@@ -2,13 +2,13 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "6"
-label: "6
-[BLOCK:6
+title: "7"
+label: "7
+[BLOCK:7
 34 CALL foo_0 
 ]"
 }
-edge: { sourcename: "6"
+edge: { sourcename: "7"
 targetname: "0"
 label: "j34"
 color:red}
@@ -37,12 +37,12 @@ title: "1"
 label: "1
 [BLOCK:1
 12 ADD g_4 1
-24 BRA (5) 
+24 BRA (6) 
 ]"
 }
 edge: { sourcename: "1"
-targetname: "5"
-label: "5"
+targetname: "6"
+label: "6"
 }
 node: {
 title: "2"
@@ -62,9 +62,9 @@ targetname: "4"
 label: "4"
 }
 node: {
-title: "5"
-label: "5
-[BLOCK:5
+title: "6"
+label: "6
+[BLOCK:6
 21 PHI f_6 f_14
 22 PHI c_1 c_19
 23 PHI h_12 h_0
@@ -85,18 +85,28 @@ label: "3
 ]"
 }
 edge: { sourcename: "3"
-targetname: "4"
-label: "4"
+targetname: "5"
+label: "5"
 }
 node: {
 title: "4"
 label: "4
 [BLOCK:4
-19 PHI 2 c_1
 ]"
 }
 edge: { sourcename: "4"
 targetname: "5"
 label: "5"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+19 PHI 2 c_1
+]"
+}
+edge: { sourcename: "5"
+targetname: "6"
+label: "6"
 }
 }

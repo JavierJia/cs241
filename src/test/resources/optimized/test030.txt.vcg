@@ -5,17 +5,11 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-4 CMP 2 3
-20 BGE (4) (8)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "2"
 label: "2"
-}
-edge: { sourcename: "0"
-targetname: "8"
-label: "8"
 }
 node: {
 title: "2"
@@ -37,14 +31,6 @@ targetname: "7"
 label: "7"
 }
 node: {
-title: "8"
-label: "8
-[BLOCK:8
-21 PHI b_17 2
-22 PHI a_18 1
-]"
-}
-node: {
 title: "3"
 label: "3
 [BLOCK:3
@@ -62,8 +48,8 @@ label: "7
 ]"
 }
 edge: { sourcename: "7"
-targetname: "8"
-label: "8"
+targetname: "9"
+label: "9"
 }
 node: {
 title: "4"
@@ -82,6 +68,12 @@ label: "5"
 edge: { sourcename: "4"
 targetname: "6"
 label: "6"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+]"
 }
 node: {
 title: "5"

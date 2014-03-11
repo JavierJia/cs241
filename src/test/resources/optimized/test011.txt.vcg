@@ -5,17 +5,11 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-5 CMP 1 2
-28 BGE (5) (5)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "1"
 label: "1"
-}
-edge: { sourcename: "0"
-targetname: "5"
-label: "5"
 }
 node: {
 title: "1"
@@ -26,16 +20,6 @@ label: "1
 edge: { sourcename: "1"
 targetname: "2"
 label: "2"
-}
-node: {
-title: "5"
-label: "5
-[BLOCK:5
-]"
-}
-edge: { sourcename: "5"
-targetname: "6"
-label: "6"
 }
 node: {
 title: "2"
@@ -54,24 +38,6 @@ label: "3"
 edge: { sourcename: "2"
 targetname: "4"
 label: "4"
-}
-node: {
-title: "6"
-label: "6
-[BLOCK:6
-25 PHI 4 d_22
-26 PHI 3 c_20
-19 CMP c_26 d_25
-24 BGE (19) (8)
-]"
-}
-edge: { sourcename: "6"
-targetname: "7"
-label: "7"
-}
-edge: { sourcename: "6"
-targetname: "8"
-label: "8"
 }
 node: {
 title: "3"
@@ -98,35 +64,9 @@ targetname: "9"
 label: "9"
 }
 node: {
-title: "7"
-label: "7
-[BLOCK:7
-20 ADD c_26 3
-22 ADD d_25 2
-27 BRA (6) 
-]"
-}
-edge: { sourcename: "7"
-targetname: "6"
-label: "6"
-}
-node: {
-title: "8"
-label: "8
-[BLOCK:8
-]"
-}
-edge: { sourcename: "8"
-targetname: "9"
-label: "9"
-}
-node: {
 title: "9"
 label: "9
 [BLOCK:9
-29 PHI d_14 d_25
-30 PHI c_15 c_26
-31 PHI 2 3
 ]"
 }
 edge: { sourcename: "9"
@@ -138,8 +78,8 @@ title: "10"
 label: "10
 [BLOCK:10
 42 PHI 2 b_38
-43 PHI c_30 c_39
-33 CMP b_42 d_29
+43 PHI c_15 c_39
+33 CMP b_42 d_14
 41 BGE (33) (15)
 ]"
 }
@@ -155,7 +95,7 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-34 CMP a_31 d_29
+34 CMP 2 d_14
 37 BLE (34) (13)
 ]"
 }

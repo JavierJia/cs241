@@ -132,8 +132,13 @@ public class SSAInstruction extends Instruction {
 		return op;
 	}
 
-	public SSAVar getTarget() {
-		return target;
+	public SSAorConst getTarget() {
+		if (target != null) {
+			return new SSAorConst(target);
+		} else if (lValue != null) {
+			return new SSAorConst(lValue);
+		}
+		return null;
 	}
 
 	public SSAorConst getSrc() {

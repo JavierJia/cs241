@@ -30,16 +30,16 @@ public class OptimizerTest {
 		}
 	}
 
-//	@Test
-//	public void TestDebug() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test003.txt", "optimized");
-//	}
+	@Test
+	public void TestDebug() throws IOException, SyntaxFormatException {
+		checkGraph("src/test/resources/testprogs/test008.txt", "optimized");
+	}
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,
 			SyntaxFormatException {
 		Parser parser = new Parser(fileName);
 		parser.parse();
-		Optimizer optimizer = new Optimizer();
+		Optimizer optimizer = new Optimizer(Optimizer.LEVEL.ALL);
 		// optimizer.copyPropagate(parser.getRootBlock());
 		// optimizer.commonExpressionChangeToMove(parser.getRootBlock());
 		optimizer.optimize(parser.getRootBlock());

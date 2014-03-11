@@ -103,10 +103,15 @@ public class Interpretor {
 				phiBlock.setElsePre(elseResult.getLastBlock());
 				result.setTail(phiBlock);
 			} else {
+				Block emptyElseBlock = new Block(condBlock.getLocalVarTable(),
+						condBlock.getGlobalVarTable());
 				Block phiBlock = Block.createJoinPointBlock(then.getLastBlock().getLocalVarTable(),
 						condBlock.getLocalVarTable(), then.getLastBlock().getGlobalVarTable());
-				condBlock.condNegBranch(phiBlock);
-				phiBlock.setElsePre(condBlock);
+
+				condBlock.condNegBranch(emptyElseBlock);
+				emptyElseBlock.setNext(phiBlock);
+
+				phiBlock.setElsePre(emptyElseBlock);
 				then.getLastBlock().setNext(phiBlock);
 				phiBlock.setThenPre(then.getLastBlock());
 				result.setTail(phiBlock);

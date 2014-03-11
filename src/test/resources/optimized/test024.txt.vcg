@@ -21,17 +21,11 @@ label: "1
 77 PHI 5 e_70
 78 PHI 1 a_13
 79 PHI 8 h_71
-11 CMP 5 8
-73 BGE (11) (18)
 ]"
 }
 edge: { sourcename: "1"
 targetname: "2"
 label: "2"
-}
-edge: { sourcename: "1"
-targetname: "18"
-label: "18"
 }
 node: {
 title: "2"
@@ -50,17 +44,6 @@ label: "3"
 edge: { sourcename: "2"
 targetname: "7"
 label: "7"
-}
-node: {
-title: "18"
-label: "18
-[BLOCK:18
-81 MUL a_78 d_76
-83 ADD g_75 h_79
-84 SUB (83) 7
-86 MUL 2 c_81
-87 ADD f_74 (86)
-]"
 }
 node: {
 title: "3"

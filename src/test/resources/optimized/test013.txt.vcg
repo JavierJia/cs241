@@ -2,13 +2,13 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "15"
-label: "15
-[BLOCK:15
+title: "16"
+label: "16
+[BLOCK:16
 70 CALL foo_0 
 ]"
 }
-edge: { sourcename: "15"
+edge: { sourcename: "16"
 targetname: "0"
 label: "j70"
 color:red}
@@ -16,49 +16,21 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-9 CMP 1 2
-53 BGE (9) (7)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "1"
 label: "1"
 }
-edge: { sourcename: "0"
-targetname: "7"
-label: "7"
-}
 node: {
 title: "1"
 label: "1
 [BLOCK:1
-14 CMP 2 3
-23 BGE (14) (6)
 ]"
 }
 edge: { sourcename: "1"
 targetname: "2"
 label: "2"
-}
-edge: { sourcename: "1"
-targetname: "6"
-label: "6"
-}
-node: {
-title: "7"
-label: "7
-[BLOCK:7
-31 CMP 1 3
-47 BGE (31) (12)
-]"
-}
-edge: { sourcename: "7"
-targetname: "8"
-label: "8"
-}
-edge: { sourcename: "7"
-targetname: "12"
-label: "12"
 }
 node: {
 title: "2"
@@ -69,39 +41,6 @@ label: "2
 edge: { sourcename: "2"
 targetname: "3"
 label: "3"
-}
-node: {
-title: "6"
-label: "6
-[BLOCK:6
-24 PHI 9 3
-25 PHI a_21 2
-62 BRA (14) 
-]"
-}
-edge: { sourcename: "6"
-targetname: "14"
-label: "14"
-}
-node: {
-title: "8"
-label: "8
-[BLOCK:8
-]"
-}
-edge: { sourcename: "8"
-targetname: "9"
-label: "9"
-}
-node: {
-title: "12"
-label: "12
-[BLOCK:12
-]"
-}
-edge: { sourcename: "12"
-targetname: "13"
-label: "13"
 }
 node: {
 title: "3"
@@ -119,58 +58,6 @@ label: "4"
 edge: { sourcename: "3"
 targetname: "5"
 label: "5"
-}
-node: {
-title: "14"
-label: "14
-[BLOCK:14
-54 PHI 6 7
-55 PHI 9 7
-56 PHI 4 d_48
-57 PHI 6 5
-58 PHI 2 b_49
-59 PHI c_24 c_50
-60 PHI a_25 1
-61 PHI 8 425
-63 WRITE a_60 
-64 WRITE b_58 
-65 WRITE c_59 
-66 WRITE d_56 
-67 WRITE e_57 
-68 WRITE f_54 
-69 WRITE h_61 
-]"
-}
-node: {
-title: "9"
-label: "9
-[BLOCK:9
-40 PHI 1 b_35
-41 PHI 9 c_37
-34 CMP b_40 c_41
-39 BGE (34) (11)
-]"
-}
-edge: { sourcename: "9"
-targetname: "10"
-label: "10"
-}
-edge: { sourcename: "9"
-targetname: "11"
-label: "11"
-}
-node: {
-title: "13"
-label: "13
-[BLOCK:13
-48 PHI 4 5
-49 PHI b_40 1
-50 PHI c_41 12
-]"
-}
-edge: { sourcename: "13"
-targetname: "14"
-label: "14"
 }
 node: {
 title: "4"
@@ -191,31 +78,31 @@ label: "5
 ]"
 }
 edge: { sourcename: "5"
-targetname: "6"
-label: "6"
+targetname: "7"
+label: "7"
 }
 node: {
-title: "10"
-label: "10
-[BLOCK:10
-35 ADD b_40 1
-37 SUB c_41 1
-42 BRA (9) 
+title: "7"
+label: "7
+[BLOCK:7
+62 BRA (15) 
 ]"
 }
-edge: { sourcename: "10"
-targetname: "9"
-label: "9"
+edge: { sourcename: "7"
+targetname: "15"
+label: "15"
 }
 node: {
-title: "11"
-label: "11
-[BLOCK:11
-51 BRA (13) 
+title: "15"
+label: "15
+[BLOCK:15
+63 WRITE a_21 
+64 WRITE 2 
+65 WRITE 9 
+66 WRITE 4 
+67 WRITE 6 
+68 WRITE 6 
+69 WRITE 8 
 ]"
-}
-edge: { sourcename: "11"
-targetname: "13"
-label: "13"
 }
 }

@@ -41,4 +41,23 @@ public class Instruction {
 		return PC;
 	}
 
+	public static boolean computeConstCond(OP op, int v1, int v2) {
+		switch (op) {
+		case BNE:
+			return v1 != v2;
+		case BEQ:
+			return v1 == v2;
+		case BLE:
+			return v1 <= v2;
+		case BLT:
+			return v1 < v2;
+		case BGE:
+			return v1 >= v2;
+		case BGT:
+			return v1 > v2;
+		default:
+			throw new IllegalArgumentException("Branch set expected, but now is : " + op);
+		}
+	}
+
 }

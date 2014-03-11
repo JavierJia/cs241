@@ -5,17 +5,11 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-3 CMP 2 3
-12 BGE (3) (2)
 ]"
 }
 edge: { sourcename: "0"
 targetname: "1"
 label: "1"
-}
-edge: { sourcename: "0"
-targetname: "2"
-label: "2"
 }
 node: {
 title: "1"
@@ -29,23 +23,10 @@ targetname: "3"
 label: "3"
 }
 node: {
-title: "2"
-label: "2
-[BLOCK:2
-]"
-}
-edge: { sourcename: "2"
-targetname: "3"
-label: "3"
-}
-node: {
 title: "3"
 label: "3
 [BLOCK:3
-13 PHI 2 3
-14 PHI c_0 2
-17 ADD a_13 1
-19 WRITE a_17 
+19 WRITE 3 
 ]"
 }
 }
