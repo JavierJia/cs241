@@ -2,36 +2,36 @@ graph: {title: "mainCFG"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "4"
-label: "4
-[BLOCK:4
+title: "0"
+label: "0
+[BLOCK:0
 ]"
 }
-edge: { sourcename: "4"
-targetname: "5"
-label: "5"
+edge: { sourcename: "0"
+targetname: "1"
+label: "1"
 }
 node: {
-title: "5"
-label: "5
-[BLOCK:5
-21 PHI 0 j_18
+title: "1"
+label: "1
+[BLOCK:1
+7 PHI 0 j_4
 ]"
 }
-edge: { sourcename: "5"
-targetname: "6"
-label: "6"
+edge: { sourcename: "1"
+targetname: "2"
+label: "2"
 }
 node: {
-title: "6"
-label: "6
-[BLOCK:6
-18 ADD j_21 1
-22 BRA (5) 
+title: "2"
+label: "2
+[BLOCK:2
+4 ADD j_7 1
+8 BRA (1) 
 ]"
 }
-edge: { sourcename: "6"
-targetname: "5"
-label: "5"
+edge: { sourcename: "2"
+targetname: "1"
+label: "1"
 }
 }

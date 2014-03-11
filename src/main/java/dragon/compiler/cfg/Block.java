@@ -570,6 +570,38 @@ public class Block {
 					condFalseBranchBlock = null;
 					instructions.remove(instructions.size() - 1);
 					instructions.remove(instructions.size() - 1);
+				} else { // check if is the phi while loop
+					SSAorConst left = conditionIns.getTarget();
+					SSAorConst right = conditionIns.getSrc();
+					for (int i = 0; i < instructions.size(); i++) {
+						SSAInstruction ins = instructions.get(i);
+						if (ins.getOP() != OP.PHI) {
+							break;
+						}
+						SSAorConst beforeLoopValue = ins.getTarget();
+						if (beforeLoopValue.isConst()) {
+							if (!left.isConst() && left.getSSAVar().getVersion() == ins.getId()) {
+								left = beforeLoopValue;
+							}
+							if (!right.isConst() && right.getSSAVar().getVersion() == ins.getId()) {
+								right = beforeLoopValue;
+							}
+						}
+					}
+					if (left.isConst() && right.isConst()) {
+						boolean result = Instruction.computeConstCond(branchIns.getOP(),
+								left.getConstValue(), right.getConstValue());
+						if (result) {
+							removed = condNextBlock;
+							condNextBlock = condFalseBranchBlock;
+
+							condFalseBranchBlock = null;
+							instructions.remove(instructions.size() - 1);
+							instructions.remove(instructions.size() - 1);
+						} else {
+							// goes into the condBlock, nothing to do;
+						}
+					}
 				}
 			}
 		}
