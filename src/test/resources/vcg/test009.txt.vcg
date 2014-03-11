@@ -9,7 +9,7 @@ label: "0
 2 MOVE b_0 2
 3 MOVE c_0 3
 4 CMP a_1 b_2
-27 BLE (4) (6)
+27 BLE (4) (8)
 ]"
 }
 edge: { sourcename: "0"
@@ -17,8 +17,8 @@ targetname: "1"
 label: "1"
 }
 edge: { sourcename: "0"
-targetname: "6"
-label: "6"
+targetname: "8"
+label: "8"
 }
 node: {
 title: "1"
@@ -27,7 +27,7 @@ label: "1
 5 ADD a_1 1
 6 MOVE a_1 (5)
 7 CMP a_6 b_2
-14 BGE (7) (5)
+14 BGE (7) (6)
 ]"
 }
 edge: { sourcename: "1"
@@ -35,26 +35,26 @@ targetname: "2"
 label: "2"
 }
 edge: { sourcename: "1"
-targetname: "5"
-label: "5"
+targetname: "6"
+label: "6"
 }
 node: {
-title: "6"
-label: "6
-[BLOCK:6
+title: "8"
+label: "8
+[BLOCK:8
 17 ADD b_2 5
 18 MOVE b_2 (17)
 19 CMP a_1 b_18
-24 BGE (19) (8)
+24 BGE (19) (10)
 ]"
 }
-edge: { sourcename: "6"
-targetname: "7"
-label: "7"
+edge: { sourcename: "8"
+targetname: "9"
+label: "9"
 }
-edge: { sourcename: "6"
-targetname: "8"
-label: "8"
+edge: { sourcename: "8"
+targetname: "10"
+label: "10"
 }
 node: {
 title: "2"
@@ -75,42 +75,39 @@ targetname: "4"
 label: "4"
 }
 node: {
-title: "5"
-label: "5
-[BLOCK:5
-15 PHI c_13 c_3
-16 PHI a_9 a_6
-31 BRA (10) 
+title: "6"
+label: "6
+[BLOCK:6
 ]"
 }
-edge: { sourcename: "5"
-targetname: "10"
-label: "10"
+edge: { sourcename: "6"
+targetname: "7"
+label: "7"
 }
 node: {
-title: "7"
-label: "7
-[BLOCK:7
+title: "9"
+label: "9
+[BLOCK:9
 20 SUB a_1 2
 21 MOVE a_1 (20)
-26 BRA (9) 
+26 BRA (11) 
 ]"
 }
-edge: { sourcename: "7"
-targetname: "9"
-label: "9"
+edge: { sourcename: "9"
+targetname: "11"
+label: "11"
 }
 node: {
-title: "8"
-label: "8
-[BLOCK:8
+title: "10"
+label: "10
+[BLOCK:10
 22 ADD a_1 3
 23 MOVE a_1 (22)
 ]"
 }
-edge: { sourcename: "8"
-targetname: "9"
-label: "9"
+edge: { sourcename: "10"
+targetname: "11"
+label: "11"
 }
 node: {
 title: "3"
@@ -120,14 +117,13 @@ label: "3
 ]"
 }
 edge: { sourcename: "3"
-targetname: "4"
-label: "4"
+targetname: "5"
+label: "5"
 }
 node: {
 title: "4"
 label: "4
 [BLOCK:4
-13 PHI c_11 c_3
 ]"
 }
 edge: { sourcename: "4"
@@ -135,9 +131,44 @@ targetname: "5"
 label: "5"
 }
 node: {
-title: "10"
-label: "10
-[BLOCK:10
+title: "7"
+label: "7
+[BLOCK:7
+15 PHI c_13 c_3
+16 PHI a_9 a_6
+31 BRA (12) 
+]"
+}
+edge: { sourcename: "7"
+targetname: "12"
+label: "12"
+}
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+25 PHI a_21 a_23
+]"
+}
+edge: { sourcename: "11"
+targetname: "12"
+label: "12"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+13 PHI c_11 c_3
+]"
+}
+edge: { sourcename: "5"
+targetname: "7"
+label: "7"
+}
+node: {
+title: "12"
+label: "12
+[BLOCK:12
 28 PHI b_2 b_18
 29 PHI c_15 c_3
 30 PHI a_16 a_25
@@ -145,16 +176,5 @@ label: "10
 33 MOVE a_30 (32)
 34 WRITE a_33 
 ]"
-}
-node: {
-title: "9"
-label: "9
-[BLOCK:9
-25 PHI a_21 a_23
-]"
-}
-edge: { sourcename: "9"
-targetname: "10"
-label: "10"
 }
 }

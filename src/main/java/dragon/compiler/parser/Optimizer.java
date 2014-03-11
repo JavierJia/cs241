@@ -23,15 +23,37 @@ public class Optimizer {
 		this.level = level;
 	}
 
+	protected static void checkStatus(Block root) {
+		Queue<Block> queue = new LinkedList<Block>();
+		queue.add(root);
+		HashSet<Block> visited = new HashSet<Block>();
+		while (!queue.isEmpty()) {
+			Block blk = queue.remove();
+			if (blk == null || visited.contains(blk)) {
+				continue;
+			}
+			visited.add(blk);
+			if (!blk.checkIfValidStatus()) {
+				throw new IllegalStateException("Block " + blk.getID() + " is not valid");
+			}
+			queue.add(blk.getNextBlock());
+			queue.add(blk.getNegBranchBlock());
+		}
+	}
+
 	public void optimize(Block root) {
+		checkStatus(root);
 		if (level.ordinal() >= LEVEL.COPYPROPAGATE.ordinal()) {
 			copyPropagate(root);
+			checkStatus(root);
 		}
 		if (level.ordinal() >= LEVEL.COMMONEXPRESSION_ELIMINATE.ordinal()) {
 			commonExpressionEliminate(root);
+			checkStatus(root);
 		}
 		if (level.ordinal() >= LEVEL.CONST_STATEMENT_REMOVE.ordinal()) {
 			constBranchEliminate(root);
+			checkStatus(root);
 		}
 	}
 

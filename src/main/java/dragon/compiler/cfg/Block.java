@@ -304,6 +304,9 @@ public class Block {
 	}
 
 	public void condNegBranch(Block condNegBlock) {
+		// if (this.getID() == 7) {
+		// System.out.println("here is the neg block:" + condNegBlock);
+		// }
 		if (!Instruction.isBranchInstruction(getLastInstruction().getOP())) {
 			throw new IllegalArgumentException("must be branch instructions!");
 		}
@@ -312,6 +315,9 @@ public class Block {
 	}
 
 	public void setNext(Block next) {
+//		if (this.getID() == 7) {
+//			System.out.println("here is the neg block:" + next);
+//		}
 		if (getNextBlock() != null) {
 			if (getNextBlock() == next) {
 				return;
@@ -594,7 +600,7 @@ public class Block {
 						if (result) {
 							removed = condNextBlock;
 							condNextBlock = condFalseBranchBlock;
-
+							// / TODO Left the useless phi function
 							condFalseBranchBlock = null;
 							instructions.remove(instructions.size() - 1);
 							instructions.remove(instructions.size() - 1);
@@ -661,4 +667,21 @@ public class Block {
 		// TODO, should be done in the graph level. maybe skip it
 	}
 
+	public boolean checkIfValidStatus() {
+		if (!check(this.condNextBlock)) {
+			return false;
+		}
+		if (!check(this.condFalseBranchBlock)) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean check(Block next) {
+		if (next != null) {
+			return next.thenPre == this || next.elsePre == this || next.normalPre == this
+					|| next.loopBack == this;
+		}
+		return true;
+	}
 }

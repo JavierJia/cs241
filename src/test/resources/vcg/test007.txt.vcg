@@ -71,13 +71,23 @@ label: "4
 ]"
 }
 edge: { sourcename: "4"
-targetname: "5"
-label: "5"
+targetname: "6"
+label: "6"
 }
 node: {
 title: "5"
 label: "5
 [BLOCK:5
+]"
+}
+edge: { sourcename: "5"
+targetname: "6"
+label: "6"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
 16 PHI a_14 a_10
 17 WRITE a_16 
 18 WRITE b_9 

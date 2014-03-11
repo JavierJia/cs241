@@ -84,13 +84,6 @@ label: "7
 36 LOAD (35) 
 37 MOVE c_7 (36)
 38 BRA (2) 
-39 MUL a_0 2
-40 SUB (39) 6
-41 MUL (40) 4
-42 ADD FP_0 foo_0
-43 ADDA (41) (42)
-44 LOAD (43) 
-45 MOVE a_0 (44)
 ]"
 }
 edge: { sourcename: "7"

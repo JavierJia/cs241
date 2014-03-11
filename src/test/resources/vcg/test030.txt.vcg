@@ -43,11 +43,11 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-21 PHI b_17 b_2
-22 PHI a_18 a_1
-23 ADD c_3 1
-24 MOVE b_21 (23)
 ]"
+}
+edge: { sourcename: "8"
+targetname: "9"
+label: "9"
 }
 node: {
 title: "3"
@@ -68,8 +68,18 @@ label: "7
 ]"
 }
 edge: { sourcename: "7"
-targetname: "8"
-label: "8"
+targetname: "9"
+label: "9"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+21 PHI b_17 b_2
+22 PHI a_18 a_1
+23 ADD c_3 1
+24 MOVE b_21 (23)
+]"
 }
 node: {
 title: "4"

@@ -109,6 +109,7 @@ public class Interpretor {
 						condBlock.getLocalVarTable(), then.getLastBlock().getGlobalVarTable());
 
 				condBlock.condNegBranch(emptyElseBlock);
+				emptyElseBlock.setNormalPre(condBlock);
 				emptyElseBlock.setNext(phiBlock);
 
 				phiBlock.setElsePre(emptyElseBlock);
@@ -138,8 +139,13 @@ public class Interpretor {
 				loopBody.getLastBlock().putCode(OP.BRA,
 						new SSAVar(loopBody.getFirstBlock().getID()));
 				loopBody.getLastBlock().setNext(loopBody.getFirstBlock());
-				loopBody.getFirstBlock().setNormalPre(loopBody.getLastBlock());
-				return loopBody;
+				loopBody.getFirstBlock().setLoopBackLink(loopBody.getLastBlock());
+				// Doen't matter actually, but we need to make sure the future
+				// block doesn't mess up
+				// with current one, in order to finish the whole compiling.
+				Block uselessBlock = new Block(condBlock.getLocalVarTable(),
+						condBlock.getGlobalVarTable());
+				return new CFGResult(loopBody.getFirstBlock(), uselessBlock);
 			} else {
 				return CFGResult.EMPTY_CFG_RESULT;
 			}

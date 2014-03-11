@@ -75,10 +75,6 @@ label: "7
 35 ADDA (33) (4)
 36 LOAD (35) 
 38 BRA (2) 
-40 SUB (1) 6
-41 MUL (40) 4
-43 ADDA (41) (4)
-44 LOAD (43) 
 ]"
 }
 edge: { sourcename: "7"

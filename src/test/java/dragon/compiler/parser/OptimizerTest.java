@@ -30,10 +30,10 @@ public class OptimizerTest {
 		}
 	}
 
-//	@Test
-//	public void TestDebug() throws IOException, SyntaxFormatException {
-//		checkGraph("src/test/resources/testprogs/test011.txt", "optimized");
-//	}
+	// @Test
+	// public void TestDebug() throws IOException, SyntaxFormatException {
+	// checkGraph("src/test/resources/testprogs/test027.txt", "optimized");
+	// }
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,
 			SyntaxFormatException {

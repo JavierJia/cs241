@@ -30,13 +30,23 @@ label: "1
 ]"
 }
 edge: { sourcename: "1"
-targetname: "2"
-label: "2"
+targetname: "3"
+label: "3"
 }
 node: {
 title: "2"
 label: "2
 [BLOCK:2
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+label: "3"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
 9 PHI d_7 d_0
 10 ADD a_1 b_2
 11 MOVE e_0 (10)
