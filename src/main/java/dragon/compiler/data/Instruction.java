@@ -37,6 +37,16 @@ public class Instruction {
 		return BRACH_SET.contains(op);
 	}
 
+	public static EnumSet<OP> NO_DEF_SET = EnumSet.of(OP.STORE, OP.END, OP.WRITE, OP.WLN,
+			OP.RETURN, OP.PUSH);
+	static {
+		NO_DEF_SET.addAll(BRACH_SET);
+	}
+
+	public static EnumSet<OP> CRITICAL_SET = EnumSet.of(OP.RETURN, OP.STORE, OP.WRITE, OP.PUSH);
+
+	public static EnumSet<OP> NO_USE_VAR_SET = EnumSet.of(OP.BRA, OP.READ, OP.CALL, OP.POP);
+
 	public static int getPC() {
 		return PC;
 	}

@@ -315,9 +315,9 @@ public class Block {
 	}
 
 	public void setNext(Block next) {
-//		if (this.getID() == 7) {
-//			System.out.println("here is the neg block:" + next);
-//		}
+		// if (this.getID() == 7) {
+		// System.out.println("here is the neg block:" + next);
+		// }
 		if (getNextBlock() != null) {
 			if (getNextBlock() == next) {
 				return;
@@ -663,10 +663,6 @@ public class Block {
 		return dominators.contains(parent);
 	}
 
-	public static void deadCodeElimination(Block blk) {
-		// TODO, should be done in the graph level. maybe skip it
-	}
-
 	public boolean checkIfValidStatus() {
 		if (!check(this.condNextBlock)) {
 			return false;
@@ -683,5 +679,94 @@ public class Block {
 					|| next.loopBack == this;
 		}
 		return true;
+	}
+
+	public boolean isLeaf() {
+		return getNegBranchBlock() != null || getNextBlock() != null;
+	}
+
+	public ArrayList<Block> getPredecessors() {
+		ArrayList<Block> predecessor = new ArrayList<Block>();
+		if (normalPre != null) {
+			predecessor.add(normalPre);
+		}
+		if (thenPre != null) {
+			predecessor.add(thenPre);
+		}
+		if (elsePre != null) {
+			predecessor.add(elsePre);
+		}
+		if (loopBack != null) {
+			predecessor.add(loopBack);
+		}
+		return predecessor;
+	}
+
+	public class Range {
+		public int Start;
+		public int End;
+
+		public Range(int is, int ie) {
+			Start = is;
+			End = ie;
+		}
+
+		public Range(int is) {
+			this(is, is);
+		}
+
+		public boolean isOverLap(Range other) {
+			if (this.End <= other.Start) {
+				return false;
+			}
+			return (this.Start <= other.Start && other.Start < this.End) || other.isOverLap(this);
+		}
+	}
+
+	public HashMap<Integer, HashSet<Integer>> calculateLocalInterference() {
+		HashMap<Integer, Range> eachRange = new HashMap<Integer, Range>();
+
+		for (int i = 0; i < instructions.size(); i++) {
+			SSAInstruction ins = instructions.get(i);
+			if (ins.getOP() == OP.PHI || !Instruction.NO_DEF_SET.contains(ins.getOP())) {
+				// src or target doesn't need to confict, they can share
+				eachRange.put(ins.getId(), new Range(i));
+			}
+			if (!Instruction.NO_USE_VAR_SET.contains(ins.getOP())) {
+				updateVarRange(ins.getTarget(), eachRange, i);
+				updateVarRange(ins.getSrc(), eachRange, i);
+			}
+		}
+
+		HashMap<Integer, HashSet<Integer>> overlap = new HashMap<Integer, HashSet<Integer>>();
+		for (Entry<Integer, Range> outer : eachRange.entrySet()) {
+			Integer id = outer.getKey();
+			overlap.put(id, new HashSet<Integer>());
+			for (Entry<Integer, Range> inner : eachRange.entrySet()) {
+				if (id == inner.getKey()) {
+					continue;
+				}
+				if (outer.getValue().isOverLap(inner.getValue())) {
+					overlap.get(id).add(inner.getKey());
+				}
+			}
+		}
+		return overlap;
+	}
+
+	private void updateVarRange(SSAorConst target, HashMap<Integer, Range> eachRange, int line) {
+		if (target == null || target.isConst()) {
+			return;
+		}
+		if (eachRange.containsKey(target.getSSAVar().getVersion())) {
+			eachRange.get(target.getSSAVar().getVersion()).End = line;
+		} else {
+			eachRange.put(target.getSSAVar().getVersion(), new Range(-1, line));
+		}
+	}
+
+	public HashSet<Integer> pushUpLiveness(HashSet<Integer> liveness) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
