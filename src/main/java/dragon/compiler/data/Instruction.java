@@ -43,7 +43,11 @@ public class Instruction {
 		NO_DEF_SET.addAll(BRACH_SET);
 	}
 
-	public static EnumSet<OP> CRITICAL_SET = EnumSet.of(OP.RETURN, OP.STORE, OP.WRITE, OP.PUSH);
+	public static EnumSet<OP> CRITICAL_SET = EnumSet.of(OP.RETURN, OP.STORE, OP.WRITE, OP.PUSH,
+			OP.CALL, OP.CMP);
+
+	public static EnumSet<OP> POSSIBLE_RETURN_EXP = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL,
+			OP.DIV, OP.LOAD);
 
 	public static EnumSet<OP> NO_USE_VAR_SET = EnumSet.of(OP.BRA, OP.READ, OP.CALL, OP.POP);
 

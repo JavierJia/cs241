@@ -1,0 +1,222 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main34"
+label: "34
+[34]"
+}
+node: {
+title: "main35"
+label: "35
+[35]"
+}
+node: {
+title: "main39"
+label: "39
+[39]"
+}
+node: {
+title: "main36"
+label: "36
+[36]"
+}
+node: {
+title: "main42"
+label: "42
+[42]"
+}
+node: {
+title: "main43"
+label: "43
+[43]"
+}
+node: {
+title: "main40"
+label: "40
+[40]"
+}
+node: {
+title: "main41"
+label: "41
+[41]"
+}
+node: {
+title: "main44"
+label: "44
+[44]"
+}
+node: {
+title: "main45"
+label: "45
+[45]"
+}
+}graph: {title: "boo"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "boo0"
+label: "0
+[0]"
+}
+edge: { sourcename: "boo0"
+targetname: "boo32"
+}
+edge: { sourcename: "boo0"
+targetname: "boo19"
+}
+edge: { sourcename: "boo0"
+targetname: "boo33"
+}
+edge: { sourcename: "boo0"
+targetname: "boo18"
+}
+edge: { sourcename: "boo0"
+targetname: "boo21"
+}
+edge: { sourcename: "boo0"
+targetname: "boo20"
+}
+edge: { sourcename: "boo0"
+targetname: "boo22"
+}
+edge: { sourcename: "boo0"
+targetname: "boo25"
+}
+edge: { sourcename: "boo0"
+targetname: "boo24"
+}
+edge: { sourcename: "boo0"
+targetname: "boo27"
+}
+edge: { sourcename: "boo0"
+targetname: "boo31"
+}
+edge: { sourcename: "boo0"
+targetname: "boo30"
+}
+node: {
+title: "boo19"
+label: "19
+[19]"
+}
+node: {
+title: "boo32"
+label: "32
+[32]"
+}
+node: {
+title: "boo18"
+label: "18
+[18]"
+}
+node: {
+title: "boo33"
+label: "33
+[33]"
+}
+node: {
+title: "boo21"
+label: "21
+[21]"
+}
+edge: { sourcename: "boo21"
+targetname: "boo22"
+}
+edge: { sourcename: "boo21"
+targetname: "boo25"
+}
+edge: { sourcename: "boo21"
+targetname: "boo24"
+}
+node: {
+title: "boo20"
+label: "20
+[20]"
+}
+node: {
+title: "boo22"
+label: "22
+[22]"
+}
+edge: { sourcename: "boo22"
+targetname: "boo24"
+}
+node: {
+title: "boo25"
+label: "25
+[25]"
+}
+node: {
+title: "boo24"
+label: "24
+[24]"
+}
+node: {
+title: "boo27"
+label: "27
+[27]"
+}
+node: {
+title: "boo31"
+label: "31
+[31]"
+}
+node: {
+title: "boo30"
+label: "30
+[30]"
+}
+}graph: {title: "baz"
+manhattan_edges:yes
+smanhattan_edges:yes
+}graph: {title: "foo"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "foo0"
+label: "0
+[0]"
+}
+edge: { sourcename: "foo0"
+targetname: "foo3"
+}
+node: {
+title: "foo3"
+label: "3
+[3]"
+}
+node: {
+title: "foo4"
+label: "4
+[4]"
+}
+node: {
+title: "foo5"
+label: "5
+[5]"
+}
+node: {
+title: "foo6"
+label: "6
+[6]"
+}
+}graph: {title: "bar"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "bar0"
+label: "0
+[0]"
+}
+node: {
+title: "bar10"
+label: "10
+[10]"
+}
+node: {
+title: "bar11"
+label: "11
+[11]"
+}
+}}

@@ -1,0 +1,92 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main70"
+label: "70
+[70]"
+}
+}graph: {title: "foo"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "foo17"
+label: "17
+[17]"
+}
+edge: { sourcename: "foo17"
+targetname: "foo18"
+}
+edge: { sourcename: "foo17"
+targetname: "foo21"
+}
+node: {
+title: "foo68"
+label: "68
+[68]"
+}
+edge: { sourcename: "foo68"
+targetname: "foo21"
+}
+node: {
+title: "foo69"
+label: "69
+[69]"
+}
+edge: { sourcename: "foo69"
+targetname: "foo21"
+}
+node: {
+title: "foo18"
+label: "18
+[18]"
+}
+edge: { sourcename: "foo18"
+targetname: "foo21"
+}
+node: {
+title: "foo21"
+label: "21
+[21]"
+}
+edge: { sourcename: "foo21"
+targetname: "foo64"
+}
+edge: { sourcename: "foo21"
+targetname: "foo65"
+}
+edge: { sourcename: "foo21"
+targetname: "foo66"
+}
+edge: { sourcename: "foo21"
+targetname: "foo67"
+}
+edge: { sourcename: "foo21"
+targetname: "foo63"
+}
+node: {
+title: "foo64"
+label: "64
+[64]"
+}
+node: {
+title: "foo65"
+label: "65
+[65]"
+}
+node: {
+title: "foo66"
+label: "66
+[66]"
+}
+node: {
+title: "foo67"
+label: "67
+[67]"
+}
+node: {
+title: "foo63"
+label: "63
+[63]"
+}
+}}

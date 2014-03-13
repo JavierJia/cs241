@@ -1,0 +1,17 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main3"
+label: "3
+[3]"
+}
+}graph: {title: "foo"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "foo2"
+label: "2
+[2]"
+}
+}}

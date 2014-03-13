@@ -1,0 +1,124 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main17"
+label: "17
+[17]"
+}
+edge: { sourcename: "main17"
+targetname: "main18"
+}
+edge: { sourcename: "main17"
+targetname: "main5"
+}
+edge: { sourcename: "main17"
+targetname: "main6"
+}
+edge: { sourcename: "main17"
+targetname: "main7"
+}
+edge: { sourcename: "main17"
+targetname: "main9"
+}
+edge: { sourcename: "main17"
+targetname: "main10"
+}
+edge: { sourcename: "main17"
+targetname: "main11"
+}
+edge: { sourcename: "main17"
+targetname: "main14"
+}
+node: {
+title: "main18"
+label: "18
+[18]"
+}
+edge: { sourcename: "main18"
+targetname: "main5"
+}
+edge: { sourcename: "main18"
+targetname: "main6"
+}
+edge: { sourcename: "main18"
+targetname: "main7"
+}
+edge: { sourcename: "main18"
+targetname: "main14"
+}
+node: {
+title: "main5"
+label: "5
+[5]"
+}
+edge: { sourcename: "main5"
+targetname: "main7"
+}
+edge: { sourcename: "main5"
+targetname: "main14"
+}
+node: {
+title: "main6"
+label: "6
+[6]"
+}
+edge: { sourcename: "main6"
+targetname: "main7"
+}
+edge: { sourcename: "main6"
+targetname: "main14"
+}
+node: {
+title: "main7"
+label: "7
+[7]"
+}
+edge: { sourcename: "main7"
+targetname: "main9"
+}
+edge: { sourcename: "main7"
+targetname: "main10"
+}
+edge: { sourcename: "main7"
+targetname: "main11"
+}
+edge: { sourcename: "main7"
+targetname: "main14"
+}
+node: {
+title: "main9"
+label: "9
+[9]"
+}
+edge: { sourcename: "main9"
+targetname: "main11"
+}
+edge: { sourcename: "main9"
+targetname: "main14"
+}
+node: {
+title: "main10"
+label: "10
+[10]"
+}
+edge: { sourcename: "main10"
+targetname: "main11"
+}
+edge: { sourcename: "main10"
+targetname: "main14"
+}
+node: {
+title: "main11"
+label: "11
+[11]"
+}
+edge: { sourcename: "main11"
+targetname: "main14"
+}
+node: {
+title: "main14"
+label: "14
+[14]"
+}
+}}

@@ -1,0 +1,76 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main0"
+label: "0
+[0]"
+}
+edge: { sourcename: "main0"
+targetname: "main2"
+}
+edge: { sourcename: "main0"
+targetname: "main3"
+}
+edge: { sourcename: "main0"
+targetname: "main5"
+}
+edge: { sourcename: "main0"
+targetname: "main8"
+}
+edge: { sourcename: "main0"
+targetname: "main9"
+}
+node: {
+title: "main2"
+label: "2
+[2]"
+}
+edge: { sourcename: "main2"
+targetname: "main3"
+}
+edge: { sourcename: "main2"
+targetname: "main5"
+}
+edge: { sourcename: "main2"
+targetname: "main9"
+}
+node: {
+title: "main3"
+label: "3
+[3]"
+}
+edge: { sourcename: "main3"
+targetname: "main5"
+}
+edge: { sourcename: "main3"
+targetname: "main8"
+}
+edge: { sourcename: "main3"
+targetname: "main9"
+}
+node: {
+title: "main5"
+label: "5
+[5]"
+}
+edge: { sourcename: "main5"
+targetname: "main8"
+}
+edge: { sourcename: "main5"
+targetname: "main9"
+}
+node: {
+title: "main8"
+label: "8
+[8]"
+}
+edge: { sourcename: "main8"
+targetname: "main9"
+}
+node: {
+title: "main9"
+label: "9
+[9]"
+}
+}}

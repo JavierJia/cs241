@@ -1,7 +1,9 @@
 package dragon.compiler.cfg;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Queue;
 
@@ -91,5 +93,69 @@ public class GraphPrinter {
 
 	public static String printCFGTailer() {
 		return "}";
+	}
+
+	public static class Edge {
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + from + to;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Edge other = (Edge) obj;
+			return (from == other.from && to == other.to || from == other.to && to == other.from);
+		}
+
+		public int from;
+		public int to;
+
+		public Edge(int f, int t) {
+			from = f;
+			to = t;
+		}
+
+	}
+
+	public static String printInterferenceGraph(HashMap<Integer, Set<Integer>> intergraph,
+			String name) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("graph: {title: \"").append(name).append("\"").append('\n');
+		sb.append("manhattan_edges:yes").append('\n');
+		sb.append("smanhattan_edges:yes").append('\n');
+
+		HashSet<Edge> vistedEdge = new HashSet<Edge>();
+		for (Entry<Integer, Set<Integer>> entry : intergraph.entrySet()) {
+			sb.append("node: {").append('\n');
+			sb.append("title: \"" + name + entry.getKey() + "\"").append('\n');
+			sb.append("label: \"" + entry.getKey() + "\n[");
+			sb.append(entry.getKey());
+			sb.append("]\"\n");
+			sb.append("}\n");
+
+			for (Integer dest : entry.getValue()) {
+				Edge edge = new Edge(entry.getKey(), dest);
+				if (vistedEdge.contains(edge)) {
+					continue;
+				}
+				sb.append("edge: { sourcename: \"" + name + entry.getKey() + "\"").append('\n');
+				sb.append("targetname: \"" + name + dest + "\"").append('\n');
+				// sb.append("label: \"" + b.getNextBlock().getID() +
+				// "\"").append('\n');
+				sb.append("}\n");
+				vistedEdge.add(edge);
+			}
+		}
+		sb.append('}');
+		return sb.toString();
 	}
 }

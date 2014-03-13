@@ -1,0 +1,398 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main0"
+label: "0
+[0]"
+}
+edge: { sourcename: "main0"
+targetname: "main1"
+}
+edge: { sourcename: "main0"
+targetname: "main2"
+}
+edge: { sourcename: "main0"
+targetname: "main8"
+}
+edge: { sourcename: "main0"
+targetname: "main42"
+}
+edge: { sourcename: "main0"
+targetname: "main9"
+}
+edge: { sourcename: "main0"
+targetname: "main13"
+}
+edge: { sourcename: "main0"
+targetname: "main14"
+}
+edge: { sourcename: "main0"
+targetname: "main45"
+}
+edge: { sourcename: "main0"
+targetname: "main15"
+}
+edge: { sourcename: "main0"
+targetname: "main17"
+}
+edge: { sourcename: "main0"
+targetname: "main16"
+}
+edge: { sourcename: "main0"
+targetname: "main19"
+}
+edge: { sourcename: "main0"
+targetname: "main18"
+}
+node: {
+title: "main1"
+label: "1
+[1]"
+}
+edge: { sourcename: "main1"
+targetname: "main32"
+}
+edge: { sourcename: "main1"
+targetname: "main2"
+}
+edge: { sourcename: "main1"
+targetname: "main33"
+}
+edge: { sourcename: "main1"
+targetname: "main8"
+}
+edge: { sourcename: "main1"
+targetname: "main42"
+}
+edge: { sourcename: "main1"
+targetname: "main9"
+}
+edge: { sourcename: "main1"
+targetname: "main41"
+}
+edge: { sourcename: "main1"
+targetname: "main13"
+}
+edge: { sourcename: "main1"
+targetname: "main14"
+}
+edge: { sourcename: "main1"
+targetname: "main15"
+}
+edge: { sourcename: "main1"
+targetname: "main45"
+}
+edge: { sourcename: "main1"
+targetname: "main51"
+}
+edge: { sourcename: "main1"
+targetname: "main17"
+}
+edge: { sourcename: "main1"
+targetname: "main16"
+}
+edge: { sourcename: "main1"
+targetname: "main19"
+}
+edge: { sourcename: "main1"
+targetname: "main18"
+}
+edge: { sourcename: "main1"
+targetname: "main52"
+}
+edge: { sourcename: "main1"
+targetname: "main30"
+}
+node: {
+title: "main32"
+label: "32
+[32]"
+}
+edge: { sourcename: "main32"
+targetname: "main2"
+}
+edge: { sourcename: "main32"
+targetname: "main42"
+}
+edge: { sourcename: "main32"
+targetname: "main9"
+}
+edge: { sourcename: "main32"
+targetname: "main15"
+}
+edge: { sourcename: "main32"
+targetname: "main45"
+}
+node: {
+title: "main2"
+label: "2
+[2]"
+}
+edge: { sourcename: "main2"
+targetname: "main33"
+}
+edge: { sourcename: "main2"
+targetname: "main8"
+}
+edge: { sourcename: "main2"
+targetname: "main42"
+}
+edge: { sourcename: "main2"
+targetname: "main9"
+}
+edge: { sourcename: "main2"
+targetname: "main41"
+}
+edge: { sourcename: "main2"
+targetname: "main13"
+}
+edge: { sourcename: "main2"
+targetname: "main14"
+}
+edge: { sourcename: "main2"
+targetname: "main15"
+}
+edge: { sourcename: "main2"
+targetname: "main45"
+}
+edge: { sourcename: "main2"
+targetname: "main51"
+}
+edge: { sourcename: "main2"
+targetname: "main17"
+}
+edge: { sourcename: "main2"
+targetname: "main16"
+}
+edge: { sourcename: "main2"
+targetname: "main19"
+}
+edge: { sourcename: "main2"
+targetname: "main18"
+}
+edge: { sourcename: "main2"
+targetname: "main52"
+}
+edge: { sourcename: "main2"
+targetname: "main30"
+}
+node: {
+title: "main33"
+label: "33
+[33]"
+}
+edge: { sourcename: "main33"
+targetname: "main42"
+}
+edge: { sourcename: "main33"
+targetname: "main9"
+}
+edge: { sourcename: "main33"
+targetname: "main15"
+}
+edge: { sourcename: "main33"
+targetname: "main45"
+}
+node: {
+title: "main8"
+label: "8
+[8]"
+}
+edge: { sourcename: "main8"
+targetname: "main9"
+}
+node: {
+title: "main42"
+label: "42
+[42]"
+}
+edge: { sourcename: "main42"
+targetname: "main9"
+}
+edge: { sourcename: "main42"
+targetname: "main41"
+}
+edge: { sourcename: "main42"
+targetname: "main13"
+}
+edge: { sourcename: "main42"
+targetname: "main14"
+}
+edge: { sourcename: "main42"
+targetname: "main45"
+}
+edge: { sourcename: "main42"
+targetname: "main15"
+}
+edge: { sourcename: "main42"
+targetname: "main17"
+}
+edge: { sourcename: "main42"
+targetname: "main16"
+}
+edge: { sourcename: "main42"
+targetname: "main19"
+}
+edge: { sourcename: "main42"
+targetname: "main18"
+}
+edge: { sourcename: "main42"
+targetname: "main30"
+}
+node: {
+title: "main9"
+label: "9
+[9]"
+}
+edge: { sourcename: "main9"
+targetname: "main41"
+}
+edge: { sourcename: "main9"
+targetname: "main13"
+}
+edge: { sourcename: "main9"
+targetname: "main14"
+}
+edge: { sourcename: "main9"
+targetname: "main45"
+}
+edge: { sourcename: "main9"
+targetname: "main15"
+}
+edge: { sourcename: "main9"
+targetname: "main17"
+}
+edge: { sourcename: "main9"
+targetname: "main16"
+}
+edge: { sourcename: "main9"
+targetname: "main19"
+}
+edge: { sourcename: "main9"
+targetname: "main18"
+}
+edge: { sourcename: "main9"
+targetname: "main30"
+}
+node: {
+title: "main41"
+label: "41
+[41]"
+}
+edge: { sourcename: "main41"
+targetname: "main15"
+}
+edge: { sourcename: "main41"
+targetname: "main45"
+}
+node: {
+title: "main13"
+label: "13
+[13]"
+}
+edge: { sourcename: "main13"
+targetname: "main15"
+}
+edge: { sourcename: "main13"
+targetname: "main45"
+}
+node: {
+title: "main14"
+label: "14
+[14]"
+}
+edge: { sourcename: "main14"
+targetname: "main17"
+}
+edge: { sourcename: "main14"
+targetname: "main16"
+}
+edge: { sourcename: "main14"
+targetname: "main18"
+}
+edge: { sourcename: "main14"
+targetname: "main15"
+}
+edge: { sourcename: "main14"
+targetname: "main45"
+}
+node: {
+title: "main45"
+label: "45
+[45]"
+}
+edge: { sourcename: "main45"
+targetname: "main15"
+}
+edge: { sourcename: "main45"
+targetname: "main17"
+}
+edge: { sourcename: "main45"
+targetname: "main16"
+}
+edge: { sourcename: "main45"
+targetname: "main19"
+}
+edge: { sourcename: "main45"
+targetname: "main18"
+}
+edge: { sourcename: "main45"
+targetname: "main30"
+}
+node: {
+title: "main15"
+label: "15
+[15]"
+}
+edge: { sourcename: "main15"
+targetname: "main17"
+}
+edge: { sourcename: "main15"
+targetname: "main16"
+}
+edge: { sourcename: "main15"
+targetname: "main19"
+}
+edge: { sourcename: "main15"
+targetname: "main18"
+}
+edge: { sourcename: "main15"
+targetname: "main30"
+}
+node: {
+title: "main17"
+label: "17
+[17]"
+}
+node: {
+title: "main51"
+label: "51
+[51]"
+}
+node: {
+title: "main16"
+label: "16
+[16]"
+}
+node: {
+title: "main19"
+label: "19
+[19]"
+}
+node: {
+title: "main18"
+label: "18
+[18]"
+}
+node: {
+title: "main52"
+label: "52
+[52]"
+}
+node: {
+title: "main30"
+label: "30
+[30]"
+}
+}}

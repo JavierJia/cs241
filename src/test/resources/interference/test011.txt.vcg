@@ -1,0 +1,158 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main34"
+label: "34
+[34]"
+}
+edge: { sourcename: "main34"
+targetname: "main42"
+}
+edge: { sourcename: "main34"
+targetname: "main43"
+}
+edge: { sourcename: "main34"
+targetname: "main14"
+}
+node: {
+title: "main33"
+label: "33
+[33]"
+}
+edge: { sourcename: "main33"
+targetname: "main38"
+}
+edge: { sourcename: "main33"
+targetname: "main39"
+}
+edge: { sourcename: "main33"
+targetname: "main42"
+}
+edge: { sourcename: "main33"
+targetname: "main43"
+}
+edge: { sourcename: "main33"
+targetname: "main14"
+}
+edge: { sourcename: "main33"
+targetname: "main15"
+}
+node: {
+title: "main38"
+label: "38
+[38]"
+}
+edge: { sourcename: "main38"
+targetname: "main39"
+}
+edge: { sourcename: "main38"
+targetname: "main42"
+}
+edge: { sourcename: "main38"
+targetname: "main43"
+}
+edge: { sourcename: "main38"
+targetname: "main14"
+}
+edge: { sourcename: "main38"
+targetname: "main15"
+}
+node: {
+title: "main39"
+label: "39
+[39]"
+}
+edge: { sourcename: "main39"
+targetname: "main42"
+}
+edge: { sourcename: "main39"
+targetname: "main43"
+}
+edge: { sourcename: "main39"
+targetname: "main14"
+}
+edge: { sourcename: "main39"
+targetname: "main15"
+}
+node: {
+title: "main8"
+label: "8
+[8]"
+}
+edge: { sourcename: "main8"
+targetname: "main9"
+}
+edge: { sourcename: "main8"
+targetname: "main11"
+}
+edge: { sourcename: "main8"
+targetname: "main14"
+}
+edge: { sourcename: "main8"
+targetname: "main15"
+}
+node: {
+title: "main42"
+label: "42
+[42]"
+}
+edge: { sourcename: "main42"
+targetname: "main43"
+}
+edge: { sourcename: "main42"
+targetname: "main14"
+}
+edge: { sourcename: "main42"
+targetname: "main15"
+}
+node: {
+title: "main9"
+label: "9
+[9]"
+}
+edge: { sourcename: "main9"
+targetname: "main11"
+}
+edge: { sourcename: "main9"
+targetname: "main14"
+}
+edge: { sourcename: "main9"
+targetname: "main15"
+}
+node: {
+title: "main43"
+label: "43
+[43]"
+}
+edge: { sourcename: "main43"
+targetname: "main14"
+}
+edge: { sourcename: "main43"
+targetname: "main15"
+}
+node: {
+title: "main11"
+label: "11
+[11]"
+}
+edge: { sourcename: "main11"
+targetname: "main14"
+}
+edge: { sourcename: "main11"
+targetname: "main15"
+}
+node: {
+title: "main14"
+label: "14
+[14]"
+}
+edge: { sourcename: "main14"
+targetname: "main15"
+}
+node: {
+title: "main15"
+label: "15
+[15]"
+}
+}}

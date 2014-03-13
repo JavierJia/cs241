@@ -1,0 +1,14 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main0"
+label: "0
+[0]"
+}
+node: {
+title: "main4"
+label: "4
+[4]"
+}
+}}

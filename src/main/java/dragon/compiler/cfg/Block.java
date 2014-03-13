@@ -1,6 +1,7 @@
 package dragon.compiler.cfg;
 
 import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -615,18 +616,8 @@ public class Block {
 	}
 
 	public boolean isBackEdgeFrom(Block from) {
-		return from != this && from.dominators.contains(this);
+		return from != this && (from.dominators.contains(this) || this.loopBack == from);
 	}
-
-	// public void addDominator(Block dominator) {
-	// this.dominators.add(dominator);
-	// if (this.condNextBlock.dominators.contains(this)) {
-	// this.condNextBlock.addDominator(dominator);
-	// }
-	// if (this.condFalseBranchBlock.dominators.contains(this)) {
-	// this.condFalseBranchBlock.addDominator(dominator);
-	// }
-	// }
 
 	/**
 	 * 
@@ -682,7 +673,7 @@ public class Block {
 	}
 
 	public boolean isLeaf() {
-		return getNegBranchBlock() != null || getNextBlock() != null;
+		return getNegBranchBlock() == null && getNextBlock() == null;
 	}
 
 	public ArrayList<Block> getPredecessors() {
@@ -703,6 +694,11 @@ public class Block {
 	}
 
 	public class Range {
+		@Override
+		public String toString() {
+			return "Range [Start=" + Start + ", End=" + End + "]";
+		}
+
 		public int Start;
 		public int End;
 
@@ -716,42 +712,39 @@ public class Block {
 		}
 
 		public boolean isOverLap(Range other) {
-			if (this.End <= other.Start) {
+			if (this.Start == this.End || other.Start == other.End) {
 				return false;
 			}
-			return (this.Start <= other.Start && other.Start < this.End) || other.isOverLap(this);
+			if (this.Start < 0 && other.Start < 0) {
+				return true;
+			}
+			if (this.Start < other.Start && this.End > other.Start || other.Start < this.Start
+					&& other.End > this.Start) {
+				return true;
+			}
+			return false;
 		}
+
 	}
 
-	public HashMap<Integer, HashSet<Integer>> calculateLocalInterference() {
-		HashMap<Integer, Range> eachRange = new HashMap<Integer, Range>();
+	// make it as the member to record the result
+	private HashMap<Integer, Range> localLiveness = new HashMap<Integer, Range>();
+	private HashSet<Integer> usefullVar = new HashSet<Integer>();
+
+	public void calculateLocalLiveness() {
 
 		for (int i = 0; i < instructions.size(); i++) {
 			SSAInstruction ins = instructions.get(i);
-			if (ins.getOP() == OP.PHI || !Instruction.NO_DEF_SET.contains(ins.getOP())) {
-				// src or target doesn't need to confict, they can share
-				eachRange.put(ins.getId(), new Range(i));
-			}
+			// if (ins.getOP() == OP.PHI || ins.getOP() == OP.MOVE
+			// || !Instruction.NO_DEF_SET.contains(ins.getOP())) {
+			// src or target doesn't need to conflict, they can share
+			localLiveness.put(ins.getId(), new Range(i));
+			// }
 			if (!Instruction.NO_USE_VAR_SET.contains(ins.getOP())) {
-				updateVarRange(ins.getTarget(), eachRange, i);
-				updateVarRange(ins.getSrc(), eachRange, i);
+				updateVarRange(ins.getTarget(), localLiveness, i);
+				updateVarRange(ins.getSrc(), localLiveness, i);
 			}
 		}
-
-		HashMap<Integer, HashSet<Integer>> overlap = new HashMap<Integer, HashSet<Integer>>();
-		for (Entry<Integer, Range> outer : eachRange.entrySet()) {
-			Integer id = outer.getKey();
-			overlap.put(id, new HashSet<Integer>());
-			for (Entry<Integer, Range> inner : eachRange.entrySet()) {
-				if (id == inner.getKey()) {
-					continue;
-				}
-				if (outer.getValue().isOverLap(inner.getValue())) {
-					overlap.get(id).add(inner.getKey());
-				}
-			}
-		}
-		return overlap;
 	}
 
 	private void updateVarRange(SSAorConst target, HashMap<Integer, Range> eachRange, int line) {
@@ -765,8 +758,105 @@ public class Block {
 		}
 	}
 
-	public HashSet<Integer> pushUpLiveness(HashSet<Integer> liveness) {
-		// TODO Auto-generated method stub
-		return null;
+	public SimpleEntry<HashSet<Integer>, Boolean> pushUpLiveness(HashSet<Integer> out) {
+		boolean changed = false;
+		for (Integer outVar : out) {
+			if (usefullVar.add(outVar)) {
+				changed = true;
+			}
+		}
+		if (instructions.size() > 0
+				&& Instruction.POSSIBLE_RETURN_EXP.contains(getLastInstruction().getOP())) {
+			// last exp as an return value
+			usefullVar.add(getLastInstruction().getId());
+		}
+		if (instructions.size() > 1
+				&& getLastInstruction().getOP() == OP.BRA
+				&& Instruction.POSSIBLE_RETURN_EXP.contains(instructions.get(
+						instructions.size() - 2).getOP())) {
+			// last exp as an return value
+			usefullVar.add(instructions.get(instructions.size() - 2).getId());
+		}
+
+		for (int i = instructions.size() - 1; i >= 0; --i) {
+			SSAInstruction ins = instructions.get(i);
+			// System.out.println(ins);
+			if (Instruction.CRITICAL_SET.contains(ins.getOP())) { // is
+																	// critical{
+				usefullVar.add(ins.getId());
+			}
+			if (usefullVar.contains(ins.getId())
+					&& !Instruction.NO_USE_VAR_SET.contains(ins.getOP())) {
+				if (updateUsage(ins.getTarget(), usefullVar)) {
+					changed = true;
+				}
+				if (updateUsage(ins.getSrc(), usefullVar)) {
+					changed = true;
+				}
+			}
+		}
+
+		HashSet<Integer> in = new HashSet<Integer>(usefullVar);
+		for (Entry<Integer, Range> varLive : localLiveness.entrySet()) {
+			if (varLive.getValue().Start >= 0) { // defined within my block
+				in.remove(varLive.getKey());
+			}
+		}
+		return new AbstractMap.SimpleEntry<HashSet<Integer>, Boolean>(in, changed);
 	}
+
+	public HashSet<Integer> chooseCorrectPushupPhi(final Block predecessor,
+			final HashSet<Integer> liveness) {
+		HashSet<Integer> validLive = new HashSet<Integer>(liveness);
+
+		for (SSAInstruction ins : instructions) {
+			if (ins.getOP() != OP.PHI) {
+				break;
+			}
+			if (predecessor == thenPre) {
+				removeLiveVarForOtherBranch(ins.getSrc(), validLive);
+			}
+			if (predecessor == elsePre) {
+				removeLiveVarForOtherBranch(ins.getTarget(), validLive);
+			}
+			if (predecessor == loopBack) {
+				removeLiveVarForOtherBranch(ins.getTarget(), validLive);
+			}
+			if (predecessor == normalPre) {
+				removeLiveVarForOtherBranch(ins.getSrc(), validLive);
+			}
+		}
+//		System.out.println("Block:" + predecessor.getID() + " out:" + validLive + " from:" + this.getID());
+		return validLive;
+	}
+
+	private void removeLiveVarForOtherBranch(SSAorConst src, HashSet<Integer> validLive) {
+		if (!src.isConst()) {
+			validLive.remove(src.getSSAVar().getVersion());
+		}
+	}
+
+	private boolean updateUsage(SSAorConst src, HashSet<Integer> in) {
+		boolean changed = false;
+		if (src != null && !src.isConst()) {
+			if (in.add(src.getSSAVar().getVersion())) {
+				changed = true;
+			}
+		}
+		return changed;
+	}
+
+	public HashSet<Integer> getUsefullVar() {
+		return usefullVar;
+	}
+
+	public boolean isOverLap(Integer v1, Integer v2) {
+		if (localLiveness.containsKey(v1) && localLiveness.containsKey(v2)) {
+			return localLiveness.get(v1).isOverLap(localLiveness.get(v2));
+		} else {
+			throw new IllegalArgumentException(v1 + " or " + v2
+					+ " donesn't contained inside the localliveness");
+		}
+	}
+
 }

@@ -12,7 +12,8 @@ import dragon.compiler.data.Function;
 import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.TouchDataHelper;
 
-public class OptimizerTest {
+public class RegisterAllocatorTest {
+
 	@Test
 	public void TestAll() throws IOException, SyntaxFormatException {
 		for (File file : new File("src/test/resources/testprogs/").listFiles()) {
@@ -25,14 +26,14 @@ public class OptimizerTest {
 				}
 				TouchDataHelper.resetAll();
 				System.out.println(file.getPath());
-				checkGraph(file.getPath(), "optimized");
+				checkGraph(file.getPath(), "interference");
 			}
 		}
 	}
 
 	// @Test
 	// public void TestDebug() throws IOException, SyntaxFormatException {
-	// checkGraph("src/test/resources/testprogs/test013.txt", "optimized");
+	// checkGraph("src/test/resources/testprogs/test010.txt", "interference");
 	// }
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,
@@ -40,19 +41,23 @@ public class OptimizerTest {
 		Parser parser = new Parser(fileName);
 		parser.parse();
 		Optimizer optimizer = new Optimizer(Optimizer.LEVEL.ALL);
-		// optimizer.copyPropagate(parser.getRootBlock());
-		// optimizer.commonExpressionChangeToMove(parser.getRootBlock());
 		optimizer.optimize(parser.getRootBlock());
 		for (Function func : Function.getAllFunction()) {
-			// optimizer.copyPropagate(func.getBody().getFirstBlock());
-			// optimizer.commonExpressionChangeToMove(func.getBody().getFirstBlock());
 			optimizer.optimize(func.getBody().getFirstBlock());
 		}
 
 		Block blk = parser.getRootBlock();
+		RegisterAllocator allocator = new RegisterAllocator(8);
+
 		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", dirName) + ".vcg",
 				"UTF-8");
-		writer.print(GraphPrinter.printCFGBody(blk, "main", true));
+		writer.print("graph: {");
+		writer.print(GraphPrinter.printInterferenceGraph(allocator.createInterferenceGraph(blk), "main"));
+		for (Function func : Function.getAllFunction()) {
+			writer.print(GraphPrinter.printInterferenceGraph(allocator.createInterferenceGraph(func
+					.getBody().getFirstBlock()), func.getName()));
+		}
+		writer.print("}");
 		writer.close();
 	}
 }

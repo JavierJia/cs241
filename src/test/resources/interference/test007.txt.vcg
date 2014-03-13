@@ -1,0 +1,14 @@
+graph: {graph: {title: "main"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "main17"
+label: "17
+[17]"
+}
+node: {
+title: "main18"
+label: "18
+[18]"
+}
+}}
