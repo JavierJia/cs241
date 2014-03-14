@@ -3,7 +3,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main2"
-label: "2
+color:8
+label: "2:8
 [2]"
 }
 }}

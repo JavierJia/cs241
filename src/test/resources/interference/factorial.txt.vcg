@@ -3,7 +3,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main23"
-label: "23
+color:7
+label: "23:7
 [23]"
 }
 edge: { sourcename: "main23"
@@ -11,32 +12,38 @@ targetname: "main26"
 }
 node: {
 title: "main25"
-label: "25
+color:8
+label: "25:8
 [25]"
 }
 node: {
 title: "main27"
-label: "27
+color:8
+label: "27:8
 [27]"
 }
 node: {
 title: "main26"
-label: "26
+color:8
+label: "26:8
 [26]"
 }
 node: {
 title: "main29"
-label: "29
+color:8
+label: "29:8
 [29]"
 }
 node: {
 title: "main31"
-label: "31
+color:8
+label: "31:8
 [31]"
 }
 node: {
 title: "main30"
-label: "30
+color:8
+label: "30:8
 [30]"
 }
 }graph: {title: "factIter"
@@ -44,7 +51,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "factIter1"
-label: "1
+color:3
+label: "1:3
 [1]"
 }
 edge: { sourcename: "factIter1"
@@ -64,7 +72,8 @@ targetname: "factIter11"
 }
 node: {
 title: "factIter4"
-label: "4
+color:4
+label: "4:4
 [4]"
 }
 edge: { sourcename: "factIter4"
@@ -81,7 +90,8 @@ targetname: "factIter11"
 }
 node: {
 title: "factIter5"
-label: "5
+color:5
+label: "5:5
 [5]"
 }
 edge: { sourcename: "factIter5"
@@ -95,7 +105,8 @@ targetname: "factIter11"
 }
 node: {
 title: "factIter7"
-label: "7
+color:6
+label: "7:6
 [7]"
 }
 edge: { sourcename: "factIter7"
@@ -106,7 +117,8 @@ targetname: "factIter11"
 }
 node: {
 title: "factIter10"
-label: "10
+color:7
+label: "10:7
 [10]"
 }
 edge: { sourcename: "factIter10"
@@ -117,12 +129,14 @@ targetname: "factIter13"
 }
 node: {
 title: "factIter11"
-label: "11
+color:8
+label: "11:8
 [11]"
 }
 node: {
 title: "factIter13"
-label: "13
+color:8
+label: "13:8
 [13]"
 }
 }graph: {title: "factRec"
@@ -130,7 +144,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "factRec1"
-label: "1
+color:6
+label: "1:6
 [1]"
 }
 edge: { sourcename: "factRec1"
@@ -144,7 +159,8 @@ targetname: "factRec15"
 }
 node: {
 title: "factRec16"
-label: "16
+color:8
+label: "16:8
 [16]"
 }
 edge: { sourcename: "factRec16"
@@ -152,7 +168,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec19"
-label: "19
+color:8
+label: "19:8
 [19]"
 }
 edge: { sourcename: "factRec19"
@@ -160,7 +177,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec18"
-label: "18
+color:8
+label: "18:8
 [18]"
 }
 edge: { sourcename: "factRec18"
@@ -168,7 +186,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec21"
-label: "21
+color:8
+label: "21:8
 [21]"
 }
 edge: { sourcename: "factRec21"
@@ -176,7 +195,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec20"
-label: "20
+color:8
+label: "20:8
 [20]"
 }
 edge: { sourcename: "factRec20"
@@ -184,7 +204,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec22"
-label: "22
+color:8
+label: "22:8
 [22]"
 }
 edge: { sourcename: "factRec22"
@@ -192,7 +213,8 @@ targetname: "factRec14"
 }
 node: {
 title: "factRec14"
-label: "14
+color:7
+label: "14:7
 [14]"
 }
 edge: { sourcename: "factRec14"
@@ -200,7 +222,8 @@ targetname: "factRec15"
 }
 node: {
 title: "factRec15"
-label: "15
+color:8
+label: "15:8
 [15]"
 }
 }}

@@ -826,7 +826,8 @@ public class Block {
 				removeLiveVarForOtherBranch(ins.getSrc(), validLive);
 			}
 		}
-//		System.out.println("Block:" + predecessor.getID() + " out:" + validLive + " from:" + this.getID());
+		// System.out.println("Block:" + predecessor.getID() + " out:" +
+		// validLive + " from:" + this.getID());
 		return validLive;
 	}
 
@@ -857,6 +858,10 @@ public class Block {
 			throw new IllegalArgumentException(v1 + " or " + v2
 					+ " donesn't contained inside the localliveness");
 		}
+	}
+
+	public ArrayList<SSAInstruction> getInstructions() {
+		return instructions;
 	}
 
 }

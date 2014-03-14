@@ -31,6 +31,7 @@ public class RegisterAllocatorTest {
 		}
 	}
 
+	
 	// @Test
 	// public void TestDebug() throws IOException, SyntaxFormatException {
 	// checkGraph("src/test/resources/testprogs/test010.txt", "interference");
@@ -52,10 +53,12 @@ public class RegisterAllocatorTest {
 		PrintWriter writer = new PrintWriter(fileName.replaceAll("testprogs", dirName) + ".vcg",
 				"UTF-8");
 		writer.print("graph: {");
-		writer.print(GraphPrinter.printInterferenceGraph(allocator.createInterferenceGraph(blk), "main"));
+		writer.print(GraphPrinter.printInterferenceGraph(allocator.createInterferenceGraph(blk),
+				allocator.allocate(blk), "main"));
 		for (Function func : Function.getAllFunction()) {
-			writer.print(GraphPrinter.printInterferenceGraph(allocator.createInterferenceGraph(func
-					.getBody().getFirstBlock()), func.getName()));
+			writer.print(GraphPrinter.printInterferenceGraph(
+					allocator.createInterferenceGraph(func.getBody().getFirstBlock()),
+					allocator.allocate(func.getBody().getFirstBlock()), func.getName()));
 		}
 		writer.print("}");
 		writer.close();

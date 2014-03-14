@@ -127,7 +127,7 @@ public class GraphPrinter {
 	}
 
 	public static String printInterferenceGraph(HashMap<Integer, Set<Integer>> intergraph,
-			String name) {
+			HashMap<Integer, Integer> regMap, String name) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("graph: {title: \"").append(name).append("\"").append('\n');
 		sb.append("manhattan_edges:yes").append('\n');
@@ -137,7 +137,8 @@ public class GraphPrinter {
 		for (Entry<Integer, Set<Integer>> entry : intergraph.entrySet()) {
 			sb.append("node: {").append('\n');
 			sb.append("title: \"" + name + entry.getKey() + "\"").append('\n');
-			sb.append("label: \"" + entry.getKey() + "\n[");
+			sb.append("color:").append(regMap.get(entry.getKey())).append('\n');
+			sb.append("label: \"" + entry.getKey() + ":" + regMap.get(entry.getKey()) + "\n[");
 			sb.append(entry.getKey());
 			sb.append("]\"\n");
 			sb.append("}\n");

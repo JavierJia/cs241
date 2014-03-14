@@ -3,7 +3,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main19"
-label: "19
+color:8
+label: "19:8
 [19]"
 }
 }}

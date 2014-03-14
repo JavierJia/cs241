@@ -3,7 +3,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main4"
-label: "4
+color:7
+label: "4:7
 [4]"
 }
 edge: { sourcename: "main4"
@@ -11,7 +12,8 @@ targetname: "main7"
 }
 node: {
 title: "main7"
-label: "7
+color:8
+label: "7:8
 [7]"
 }
 }}

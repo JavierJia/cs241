@@ -2,18 +2,15 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "main0"
-label: "0
-[0]"
-}
-node: {
 title: "main47"
-label: "47
+color:8
+label: "47:8
 [47]"
 }
 node: {
 title: "main45"
-label: "45
+color:8
+label: "45:8
 [45]"
 }
 }graph: {title: "foo"
@@ -21,7 +18,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "foo34"
-label: "34
+color:5
+label: "34:5
 [34]"
 }
 edge: { sourcename: "foo34"
@@ -47,7 +45,8 @@ targetname: "foo30"
 }
 node: {
 title: "foo39"
-label: "39
+color:10
+label: "39:10
 [39]"
 }
 edge: { sourcename: "foo39"
@@ -76,7 +75,8 @@ targetname: "foo30"
 }
 node: {
 title: "foo36"
-label: "36
+color:6
+label: "36:6
 [36]"
 }
 edge: { sourcename: "foo36"
@@ -87,7 +87,8 @@ targetname: "foo40"
 }
 node: {
 title: "foo42"
-label: "42
+color:8
+label: "42:8
 [42]"
 }
 edge: { sourcename: "foo42"
@@ -95,7 +96,8 @@ targetname: "foo40"
 }
 node: {
 title: "foo40"
-label: "40
+color:7
+label: "40:7
 [40]"
 }
 edge: { sourcename: "foo40"
@@ -109,12 +111,14 @@ targetname: "foo44"
 }
 node: {
 title: "foo27"
-label: "27
+color:8
+label: "27:8
 [27]"
 }
 node: {
 title: "foo28"
-label: "28
+color:6
+label: "28:6
 [28]"
 }
 edge: { sourcename: "foo28"
@@ -125,7 +129,8 @@ targetname: "foo30"
 }
 node: {
 title: "foo31"
-label: "31
+color:7
+label: "31:7
 [31]"
 }
 edge: { sourcename: "foo31"
@@ -133,148 +138,23 @@ targetname: "foo30"
 }
 node: {
 title: "foo44"
-label: "44
+color:8
+label: "44:8
 [44]"
 }
 node: {
 title: "foo30"
-label: "30
+color:8
+label: "30:8
 [30]"
 }
 }graph: {title: "bar"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "bar0"
-label: "0
-[0]"
-}
-edge: { sourcename: "bar0"
-targetname: "bar17"
-}
-edge: { sourcename: "bar0"
-targetname: "bar16"
-}
-edge: { sourcename: "bar0"
-targetname: "bar19"
-}
-edge: { sourcename: "bar0"
-targetname: "bar21"
-}
-edge: { sourcename: "bar0"
-targetname: "bar4"
-}
-edge: { sourcename: "bar0"
-targetname: "bar5"
-}
-edge: { sourcename: "bar0"
-targetname: "bar23"
-}
-edge: { sourcename: "bar0"
-targetname: "bar22"
-}
-edge: { sourcename: "bar0"
-targetname: "bar7"
-}
-edge: { sourcename: "bar0"
-targetname: "bar8"
-}
-edge: { sourcename: "bar0"
-targetname: "bar11"
-}
-edge: { sourcename: "bar0"
-targetname: "bar13"
-}
-node: {
-title: "bar4"
-label: "4
-[4]"
-}
-edge: { sourcename: "bar4"
-targetname: "bar17"
-}
-edge: { sourcename: "bar4"
-targetname: "bar16"
-}
-edge: { sourcename: "bar4"
-targetname: "bar11"
-}
-edge: { sourcename: "bar4"
-targetname: "bar13"
-}
-node: {
-title: "bar5"
-label: "5
-[5]"
-}
-edge: { sourcename: "bar5"
-targetname: "bar17"
-}
-edge: { sourcename: "bar5"
-targetname: "bar16"
-}
-edge: { sourcename: "bar5"
-targetname: "bar7"
-}
-edge: { sourcename: "bar5"
-targetname: "bar8"
-}
-edge: { sourcename: "bar5"
-targetname: "bar11"
-}
-node: {
-title: "bar7"
-label: "7
-[7]"
-}
-edge: { sourcename: "bar7"
-targetname: "bar16"
-}
-edge: { sourcename: "bar7"
-targetname: "bar8"
-}
-edge: { sourcename: "bar7"
-targetname: "bar11"
-}
-node: {
-title: "bar8"
-label: "8
-[8]"
-}
-edge: { sourcename: "bar8"
-targetname: "bar16"
-}
-edge: { sourcename: "bar8"
-targetname: "bar11"
-}
-node: {
-title: "bar11"
-label: "11
-[11]"
-}
-edge: { sourcename: "bar11"
-targetname: "bar17"
-}
-edge: { sourcename: "bar11"
-targetname: "bar16"
-}
-edge: { sourcename: "bar11"
-targetname: "bar13"
-}
-node: {
-title: "bar13"
-label: "13
-[13]"
-}
-edge: { sourcename: "bar13"
-targetname: "bar17"
-}
-edge: { sourcename: "bar13"
-targetname: "bar16"
-}
-node: {
 title: "bar17"
-label: "17
+color:10
+label: "17:10
 [17]"
 }
 edge: { sourcename: "bar17"
@@ -287,14 +167,27 @@ edge: { sourcename: "bar17"
 targetname: "bar21"
 }
 edge: { sourcename: "bar17"
+targetname: "bar4"
+}
+edge: { sourcename: "bar17"
+targetname: "bar5"
+}
+edge: { sourcename: "bar17"
 targetname: "bar23"
 }
 edge: { sourcename: "bar17"
 targetname: "bar22"
 }
+edge: { sourcename: "bar17"
+targetname: "bar11"
+}
+edge: { sourcename: "bar17"
+targetname: "bar13"
+}
 node: {
 title: "bar16"
-label: "16
+color:8
+label: "16:8
 [16]"
 }
 edge: { sourcename: "bar16"
@@ -304,14 +197,33 @@ edge: { sourcename: "bar16"
 targetname: "bar21"
 }
 edge: { sourcename: "bar16"
+targetname: "bar4"
+}
+edge: { sourcename: "bar16"
+targetname: "bar5"
+}
+edge: { sourcename: "bar16"
 targetname: "bar23"
 }
 edge: { sourcename: "bar16"
 targetname: "bar22"
 }
+edge: { sourcename: "bar16"
+targetname: "bar7"
+}
+edge: { sourcename: "bar16"
+targetname: "bar8"
+}
+edge: { sourcename: "bar16"
+targetname: "bar11"
+}
+edge: { sourcename: "bar16"
+targetname: "bar13"
+}
 node: {
 title: "bar19"
-label: "19
+color:6
+label: "19:6
 [19]"
 }
 edge: { sourcename: "bar19"
@@ -319,17 +231,83 @@ targetname: "bar21"
 }
 node: {
 title: "bar21"
-label: "21
+color:7
+label: "21:7
 [21]"
 }
 node: {
+title: "bar4"
+color:5
+label: "4:5
+[4]"
+}
+edge: { sourcename: "bar4"
+targetname: "bar11"
+}
+edge: { sourcename: "bar4"
+targetname: "bar13"
+}
+node: {
+title: "bar5"
+color:4
+label: "5:4
+[5]"
+}
+edge: { sourcename: "bar5"
+targetname: "bar7"
+}
+edge: { sourcename: "bar5"
+targetname: "bar8"
+}
+edge: { sourcename: "bar5"
+targetname: "bar11"
+}
+node: {
 title: "bar23"
-label: "23
+color:7
+label: "23:7
 [23]"
 }
 node: {
 title: "bar22"
-label: "22
+color:7
+label: "22:7
 [22]"
+}
+node: {
+title: "bar7"
+color:5
+label: "7:5
+[7]"
+}
+edge: { sourcename: "bar7"
+targetname: "bar8"
+}
+edge: { sourcename: "bar7"
+targetname: "bar11"
+}
+node: {
+title: "bar8"
+color:7
+label: "8:7
+[8]"
+}
+edge: { sourcename: "bar8"
+targetname: "bar11"
+}
+node: {
+title: "bar11"
+color:6
+label: "11:6
+[11]"
+}
+edge: { sourcename: "bar11"
+targetname: "bar13"
+}
+node: {
+title: "bar13"
+color:7
+label: "13:7
+[13]"
 }
 }}

@@ -3,7 +3,8 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main68"
-label: "68
+color:10
+label: "68:10
 [68]"
 }
 edge: { sourcename: "main68"
@@ -53,7 +54,8 @@ targetname: "main61"
 }
 node: {
 title: "main69"
-label: "69
+color:11
+label: "69:11
 [69]"
 }
 edge: { sourcename: "main69"
@@ -100,7 +102,8 @@ targetname: "main61"
 }
 node: {
 title: "main70"
-label: "70
+color:12
+label: "70:12
 [70]"
 }
 edge: { sourcename: "main70"
@@ -144,7 +147,8 @@ targetname: "main61"
 }
 node: {
 title: "main71"
-label: "71
+color:13
+label: "71:13
 [71]"
 }
 edge: { sourcename: "main71"
@@ -185,7 +189,8 @@ targetname: "main61"
 }
 node: {
 title: "main64"
-label: "64
+color:14
+label: "64:14
 [64]"
 }
 edge: { sourcename: "main64"
@@ -244,7 +249,8 @@ targetname: "main60"
 }
 node: {
 title: "main67"
-label: "67
+color:15
+label: "67:15
 [67]"
 }
 edge: { sourcename: "main67"
@@ -279,7 +285,8 @@ targetname: "main61"
 }
 node: {
 title: "main76"
-label: "76
+color:38
+label: "76:38
 [76]"
 }
 edge: { sourcename: "main76"
@@ -371,7 +378,8 @@ targetname: "main61"
 }
 node: {
 title: "main77"
-label: "77
+color:32
+label: "77:32
 [77]"
 }
 edge: { sourcename: "main77"
@@ -433,7 +441,8 @@ targetname: "main61"
 }
 node: {
 title: "main79"
-label: "79
+color:34
+label: "79:34
 [79]"
 }
 edge: { sourcename: "main79"
@@ -528,7 +537,8 @@ targetname: "main60"
 }
 node: {
 title: "main74"
-label: "74
+color:41
+label: "74:41
 [74]"
 }
 edge: { sourcename: "main74"
@@ -620,7 +630,8 @@ targetname: "main61"
 }
 node: {
 title: "main15"
-label: "15
+color:8
+label: "15:8
 [15]"
 }
 edge: { sourcename: "main15"
@@ -628,7 +639,8 @@ targetname: "main75"
 }
 node: {
 title: "main75"
-label: "75
+color:33
+label: "75:33
 [75]"
 }
 edge: { sourcename: "main75"
@@ -690,7 +702,8 @@ targetname: "main60"
 }
 node: {
 title: "main17"
-label: "17
+color:8
+label: "17:8
 [17]"
 }
 edge: { sourcename: "main17"
@@ -710,12 +723,14 @@ targetname: "main25"
 }
 node: {
 title: "main16"
-label: "16
+color:7
+label: "16:7
 [16]"
 }
 node: {
 title: "main19"
-label: "19
+color:6
+label: "19:6
 [19]"
 }
 edge: { sourcename: "main19"
@@ -726,7 +741,8 @@ targetname: "main23"
 }
 node: {
 title: "main20"
-label: "20
+color:7
+label: "20:7
 [20]"
 }
 edge: { sourcename: "main20"
@@ -734,7 +750,8 @@ targetname: "main23"
 }
 node: {
 title: "main23"
-label: "23
+color:39
+label: "23:39
 [23]"
 }
 edge: { sourcename: "main23"
@@ -751,7 +768,8 @@ targetname: "main61"
 }
 node: {
 title: "main25"
-label: "25
+color:16
+label: "25:16
 [25]"
 }
 edge: { sourcename: "main25"
@@ -765,7 +783,8 @@ targetname: "main61"
 }
 node: {
 title: "main29"
-label: "29
+color:8
+label: "29:8
 [29]"
 }
 edge: { sourcename: "main29"
@@ -773,7 +792,8 @@ targetname: "main30"
 }
 node: {
 title: "main28"
-label: "28
+color:8
+label: "28:8
 [28]"
 }
 edge: { sourcename: "main28"
@@ -781,7 +801,8 @@ targetname: "main30"
 }
 node: {
 title: "main30"
-label: "30
+color:17
+label: "30:17
 [30]"
 }
 edge: { sourcename: "main30"
@@ -804,7 +825,8 @@ targetname: "main40"
 }
 node: {
 title: "main34"
-label: "34
+color:18
+label: "34:18
 [34]"
 }
 edge: { sourcename: "main34"
@@ -824,7 +846,8 @@ targetname: "main40"
 }
 node: {
 title: "main32"
-label: "32
+color:19
+label: "32:19
 [32]"
 }
 edge: { sourcename: "main32"
@@ -838,7 +861,8 @@ targetname: "main40"
 }
 node: {
 title: "main33"
-label: "33
+color:20
+label: "33:20
 [33]"
 }
 edge: { sourcename: "main33"
@@ -852,7 +876,8 @@ targetname: "main40"
 }
 node: {
 title: "main39"
-label: "39
+color:35
+label: "39:35
 [39]"
 }
 edge: { sourcename: "main39"
@@ -887,7 +912,8 @@ targetname: "main60"
 }
 node: {
 title: "main36"
-label: "36
+color:21
+label: "36:21
 [36]"
 }
 edge: { sourcename: "main36"
@@ -895,7 +921,8 @@ targetname: "main40"
 }
 node: {
 title: "main42"
-label: "42
+color:22
+label: "42:22
 [42]"
 }
 edge: { sourcename: "main42"
@@ -924,7 +951,8 @@ targetname: "main60"
 }
 node: {
 title: "main40"
-label: "40
+color:40
+label: "40:40
 [40]"
 }
 edge: { sourcename: "main40"
@@ -950,7 +978,8 @@ targetname: "main60"
 }
 node: {
 title: "main46"
-label: "46
+color:23
+label: "46:23
 [46]"
 }
 edge: { sourcename: "main46"
@@ -967,7 +996,8 @@ targetname: "main47"
 }
 node: {
 title: "main47"
-label: "47
+color:24
+label: "47:24
 [47]"
 }
 edge: { sourcename: "main47"
@@ -984,7 +1014,8 @@ targetname: "main45"
 }
 node: {
 title: "main45"
-label: "45
+color:25
+label: "45:25
 [45]"
 }
 edge: { sourcename: "main45"
@@ -998,7 +1029,8 @@ targetname: "main52"
 }
 node: {
 title: "main49"
-label: "49
+color:26
+label: "49:26
 [49]"
 }
 edge: { sourcename: "main49"
@@ -1009,7 +1041,8 @@ targetname: "main52"
 }
 node: {
 title: "main55"
-label: "55
+color:8
+label: "55:8
 [55]"
 }
 edge: { sourcename: "main55"
@@ -1023,7 +1056,8 @@ targetname: "main56"
 }
 node: {
 title: "main53"
-label: "53
+color:36
+label: "53:36
 [53]"
 }
 edge: { sourcename: "main53"
@@ -1046,7 +1080,8 @@ targetname: "main60"
 }
 node: {
 title: "main52"
-label: "52
+color:37
+label: "52:37
 [52]"
 }
 edge: { sourcename: "main52"
@@ -1066,7 +1101,8 @@ targetname: "main60"
 }
 node: {
 title: "main59"
-label: "59
+color:27
+label: "59:27
 [59]"
 }
 edge: { sourcename: "main59"
@@ -1083,7 +1119,8 @@ targetname: "main60"
 }
 node: {
 title: "main56"
-label: "56
+color:28
+label: "56:28
 [56]"
 }
 edge: { sourcename: "main56"
@@ -1097,7 +1134,8 @@ targetname: "main60"
 }
 node: {
 title: "main62"
-label: "62
+color:29
+label: "62:29
 [62]"
 }
 edge: { sourcename: "main62"
@@ -1108,7 +1146,8 @@ targetname: "main60"
 }
 node: {
 title: "main61"
-label: "61
+color:30
+label: "61:30
 [61]"
 }
 edge: { sourcename: "main61"
@@ -1116,7 +1155,8 @@ targetname: "main60"
 }
 node: {
 title: "main60"
-label: "60
+color:31
+label: "60:31
 [60]"
 }
 }}
