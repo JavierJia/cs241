@@ -16,4 +16,6 @@ public class ArrayVar extends Variable {
 	public ArrayList<ArithmeticResult> getOffset() {
 		return offset;
 	}
+	
+
 }

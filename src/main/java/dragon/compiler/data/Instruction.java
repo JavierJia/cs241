@@ -12,7 +12,7 @@ public class Instruction {
 	}
 
 	public enum OP {
-		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN, CALL, RETURN, POP, PUSH,
+		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN, CALL, RETURN, POP, PUSH, SAVE_STATUS,
 	}
 
 	public static EnumSet<OP> ARITHMETIC_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV);
@@ -38,18 +38,19 @@ public class Instruction {
 	}
 
 	public static EnumSet<OP> NO_DEF_SET = EnumSet.of(OP.STORE, OP.END, OP.WRITE, OP.WLN,
-			OP.RETURN, OP.PUSH);
+			OP.RETURN, OP.PUSH, OP.SAVE_STATUS);
 	static {
 		NO_DEF_SET.addAll(BRACH_SET);
 	}
 
 	public static EnumSet<OP> CRITICAL_SET = EnumSet.of(OP.RETURN, OP.STORE, OP.WRITE, OP.PUSH,
-			OP.CALL, OP.CMP);
+			OP.POP, OP.CALL, OP.CMP, OP.SAVE_STATUS);
 
 	public static EnumSet<OP> POSSIBLE_RETURN_EXP = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL,
 			OP.DIV, OP.LOAD);
 
-	public static EnumSet<OP> NO_USE_VAR_SET = EnumSet.of(OP.BRA, OP.READ, OP.CALL, OP.POP);
+	public static EnumSet<OP> NO_USE_VAR_SET = EnumSet.of(OP.BRA, OP.READ, OP.CALL, OP.POP,
+			OP.SAVE_STATUS);
 
 	public static int getPC() {
 		return PC;

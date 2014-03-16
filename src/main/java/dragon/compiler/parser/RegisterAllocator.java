@@ -30,7 +30,15 @@ public class RegisterAllocator {
 		memCacheRight = -(REGNUM_LIMIT + 2);
 	}
 
-	public int allocateMemCache() {
+	public boolean isCachedReg(int reg) {
+		return reg > REGNUM_LIMIT && reg < REGNUM_LIMIT + 3;
+	}
+
+	public boolean isSpilled(int reg) {
+		return reg > REGNUM_LIMIT + 2;
+	}
+
+	public int allocateTempMemCache() {
 		if (memCacheLeft < 0) {
 			memCacheLeft *= -1;
 			return memCacheLeft;
@@ -59,7 +67,7 @@ public class RegisterAllocator {
 
 		HashMap<Integer, Set<Integer>> intergraph = generateInterferenceGraph(liveSpan);
 		HashMap<Integer, Integer> registers = analyseInterferenceGraph(intergraph, liveSpan);
-		writeRegisterResult(registers, root);
+		registers.put(0, 0);
 		return registers;
 	}
 
@@ -223,7 +231,7 @@ public class RegisterAllocator {
 
 		// The spilled ones
 		for (int i = 0; i < spilled.size(); i++) {
-			allocation.put(spilled.get(i), REGNUM_LIMIT + 2 + i);
+			allocation.put(spilled.get(i), REGNUM_LIMIT + 3 + i);
 		}
 		return allocation;
 	}
@@ -294,16 +302,15 @@ public class RegisterAllocator {
 		}
 	}
 
-	private void writeRegisterResult(HashMap<Integer, Integer> registers, Block root) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public HashMap<Integer, Set<Integer>> createInterferenceGraph(Block root) {
 		ArrayList<Block> leafnodes = findLeafNode(root);
 		HashMap<Block, HashSet<Integer>> liveSpan = calculateGlobalLiveSpan(leafnodes);
 
 		return generateInterferenceGraph(liveSpan);
+	}
+
+	public int getRegNumber() {
+		return REGNUM_LIMIT;
 	}
 
 }

@@ -216,7 +216,7 @@ public class Block {
 		return new SSAVar(instructions.get(instructions.size() - 1).getId());
 	}
 
-	private SSAVar loadToSSA(Variable var) {
+	public SSAVar loadToSSA(Variable var) {
 		if (var instanceof ArrayVar) {
 			return calculateOffset(var, OP.LOAD, null);
 		} else if (var.isVar()) {
@@ -232,7 +232,7 @@ public class Block {
 		}
 	}
 
-	private void storeSSA(Variable varTarget, SSAorConst ssAorConst) {
+	public void storeSSA(Variable varTarget, SSAorConst ssAorConst) {
 		if (varTarget instanceof ArrayVar) {
 			calculateOffset(varTarget, OP.STORE, ssAorConst);
 		} else if (varTarget.isVar()) {
@@ -428,6 +428,7 @@ public class Block {
 
 	public void pushParams(ArrayList<ArithmeticResult> argumentList) {
 		// ReversePush
+		instructions.add(new SSAInstruction(OP.SAVE_STATUS));
 		for (int i = argumentList.size() - 1; i >= 0; --i) {
 			ArithmeticResult result = argumentList.get(i);
 			if (result.getKind() == Kind.CONST) {
@@ -864,4 +865,41 @@ public class Block {
 		return instructions;
 	}
 
+	// code generation
+	public void pushUpPhi() {
+		Block left = null;
+		Block right = null;
+		if (thenPre != null && elsePre != null) {
+			left = thenPre;
+			right = elsePre;
+		} else if (loopBack != null && normalPre != null) {
+			left = normalPre;
+			right = loopBack;
+		}
+		for (Iterator<SSAInstruction> iter = instructions.iterator(); iter.hasNext();) {
+			SSAInstruction ins = iter.next();
+			if (ins.getOP() != OP.PHI) {
+				break;
+			}
+			if (left == null || right == null) {
+				throw new IllegalStateException("has phi, but no correct pre found");
+			}
+			left.insertCode(OP.MOVE, new SSAVar(ins.getId()), ins.getTarget());
+			right.insertCode(OP.MOVE, new SSAVar(ins.getId()), ins.getSrc());
+			iter.remove();
+		}
+	}
+
+	private void insertCode(OP move, SSAVar ssaVar, SSAorConst src) {
+		SSAInstruction ins = new SSAInstruction(OP.MOVE, ssaVar, src);
+		int idx = instructions.size();
+		if (Instruction.BRACH_SET.contains(getLastInstruction().getOP())) {
+			idx = instructions.size() - 1;
+		}
+		instructions.add(idx, ins);
+	}
+
+	public void clearDominator() {
+		this.dominators.clear();
+	}
 }

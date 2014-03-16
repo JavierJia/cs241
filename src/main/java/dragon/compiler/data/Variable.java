@@ -1,7 +1,7 @@
 package dragon.compiler.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 public class Variable {
 
@@ -15,7 +15,7 @@ public class Variable {
 	// var
 	public Variable(String name) {
 		this.name = name;
-		this.sizeList = new ArrayList<Integer>(Collections.singletonList(1));
+		this.sizeList = new ArrayList<Integer>(Arrays.asList(1));
 	}
 
 	// array
@@ -77,5 +77,13 @@ public class Variable {
 
 	public boolean isArray() {
 		return !isVar();
+	}
+
+	public int computeSize() {
+		int size = 1;
+		for (int s : sizeList) {
+			size *= s;
+		}
+		return size * 4;
 	}
 }

@@ -308,7 +308,7 @@ public class Interpretor {
 
 		codeBlock.call(func);
 		func.returnBack(codeBlock);
-
+		
 		return new ArithmeticResult(new SSAVar(codeBlock.getLastInstruction().getId()));
 		// return func.getArithmeticResult() == null ?
 		// ArithmeticResult.FUNC_RETURN_RESULT : func
