@@ -220,6 +220,13 @@ public class CodeGenerator {
 			}
 			return null;
 		}
+		// in the middle of the longer path.
+		if (!thenDescendent.isDominateBy(root)
+				&& root.getNegBranchBlock() == null
+				&& (root.getLastInstruction() == null || !Instruction.BRACH_SET.contains(root
+						.getLastInstruction().getOP()))) {
+			return thenDescendent;
+		}
 		int thenEndPos = codeList.size();
 		try {
 			fixupBranch(codeList, myEndPos - 1, thenEndPos - myEndPos + 1);
@@ -229,6 +236,7 @@ public class CodeGenerator {
 							.getLastInstruction().getOP()))) {
 				// dead loop, let it go
 			} else {
+
 				throw ex;
 			}
 		}
@@ -362,6 +370,10 @@ public class CodeGenerator {
 			codeList.add(DLX.assemble(DLX.BEQ, 0, 0));
 			break;
 		case MOVE:
+			if (regMap.get(ins.getTarget().getSSAVar().getVersion()) == null) {
+				System.out.println("ins:" + ins + " target is not usefull, removed it");
+				return;
+			}
 			leftReg = getWithoutLoadReg(regMap.get(ins.getTarget().getSSAVar().getVersion()));
 			rightReg = loadRightMaybeConst(codeList, ins.getSrc(), regMap);
 			int dlxOP = DLX.ADD;
@@ -475,6 +487,9 @@ public class CodeGenerator {
 		if (target.isConst()) {
 			return loadConstToReg(lst, target.getConstValue());
 		} else {
+			if (regMap.get(target.getSSAVar().getVersion()) == null) {
+				throw new IllegalStateException("target can't be null:" + target.getSSAVar());
+			}
 			return getOrLoadReg(lst, regMap.get(target.getSSAVar().getVersion()));
 		}
 	}

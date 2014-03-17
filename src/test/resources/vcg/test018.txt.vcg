@@ -5,13 +5,13 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-34 SAVE_STATUS 
-35 CALL foo_0 
+35 SAVE_STATUS 
+36 CALL foo_0 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "0"
-label: "j35"
+label: "j36"
 color:red}
 node: {
 title: "0"
@@ -28,7 +28,7 @@ label: "0
 9 ADD g_8 d_3
 10 MOVE a_0 (9)
 11 CMP a_10 c_2
-20 BGE (11) (2)
+21 BGE (11) (2)
 ]"
 }
 edge: { sourcename: "0"
@@ -45,7 +45,7 @@ label: "1
 [BLOCK:1
 12 ADD g_8 1
 13 MOVE h_0 (12)
-24 BRA (6) 
+25 BRA (6) 
 ]"
 }
 edge: { sourcename: "1"
@@ -74,18 +74,18 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-21 PHI f_7 f_15
-22 PHI c_2 c_19
-23 PHI h_13 h_0
-25 MUL g_8 a_10
-26 MOVE b_0 (25)
-27 WRITE a_10 
-28 WRITE b_26 
-29 WRITE c_22 
-30 WRITE d_3 
-31 WRITE f_21 
-32 WRITE g_8 
-33 WRITE h_23 
+22 PHI f_7 f_15
+23 PHI c_2 c_19
+24 PHI h_13 h_0
+26 MUL g_8 a_10
+27 MOVE b_0 (26)
+28 WRITE a_10 
+29 WRITE b_27 
+30 WRITE c_23 
+31 WRITE d_3 
+32 WRITE f_22 
+33 WRITE g_8 
+34 WRITE h_24 
 ]"
 }
 node: {
@@ -93,6 +93,7 @@ title: "3"
 label: "3
 [BLOCK:3
 17 MOVE c_2 2
+20 BRA (5) 
 ]"
 }
 edge: { sourcename: "3"

@@ -15,29 +15,25 @@ import dragon.compiler.data.TouchDataHelper;
 public class CodeGeneratorTest {
 	// @Test
 	// public void TestDebug() throws IOException, SyntaxFormatException {
-	// checkCode("src/test/resources/testprogs/test002.txt", "dlxcode");
+	// checkCode("src/test/resources/testprogs/test024.txt", "dlxcode");
 	// }
 
-	 @Test
-	 public void TestAll() throws IOException, SyntaxFormatException {
-	 for (File file : new File("src/test/resources/testprogs/").listFiles()) {
-	 if (file.isFile()) {
-	 if (file.getPath().indexOf(StatementTest.simpleFuncTest4) >= 0) {
-	 continue;
-	 }
-	 if (!file.getPath().endsWith(".txt")) {
-	 continue;
-	 }
-	 // TODO remove this
-	 if (!file.getPath().contains("test0")) {
-	 continue;
-	 }
-	 TouchDataHelper.resetAll();
-	 System.out.println(file.getPath());
-	 checkCode(file.getPath(), "dlxcode");
-	 }
-	 }
-	 }
+	@Test
+	public void TestAll() throws IOException, SyntaxFormatException {
+		for (File file : new File("src/test/resources/testprogs/").listFiles()) {
+			if (file.isFile()) {
+				if (file.getPath().indexOf(StatementTest.simpleFuncTest4) >= 0) {
+					continue;
+				}
+				if (!file.getPath().endsWith(".txt")) {
+					continue;
+				}
+				TouchDataHelper.resetAll();
+				System.out.println(file.getPath());
+				checkCode(file.getPath(), "dlxcode");
+			}
+		}
+	}
 
 	private void checkCode(String path, String dirName) throws IOException, SyntaxFormatException {
 		Parser parser = new Parser(path);

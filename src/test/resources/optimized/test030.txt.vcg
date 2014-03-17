@@ -45,6 +45,7 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
+23 BRA (9) 
 ]"
 }
 edge: { sourcename: "7"

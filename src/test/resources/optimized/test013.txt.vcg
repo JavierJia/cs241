@@ -5,13 +5,13 @@ node: {
 title: "16"
 label: "16
 [BLOCK:16
-70 SAVE_STATUS 
-71 CALL foo_0 
+71 SAVE_STATUS 
+72 CALL foo_0 
 ]"
 }
 edge: { sourcename: "16"
 targetname: "0"
-label: "j71"
+label: "j72"
 color:red}
 node: {
 title: "0"
@@ -76,6 +76,7 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
+26 BRA (7) 
 ]"
 }
 edge: { sourcename: "5"
@@ -86,7 +87,7 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-62 BRA (15) 
+63 BRA (15) 
 ]"
 }
 edge: { sourcename: "7"
@@ -97,13 +98,13 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-63 WRITE a_21 
-64 WRITE 2 
-65 WRITE 9 
-66 WRITE 4 
-67 WRITE 6 
+64 WRITE a_21 
+65 WRITE 2 
+66 WRITE 9 
+67 WRITE 4 
 68 WRITE 6 
-69 WRITE 8 
+69 WRITE 6 
+70 WRITE 8 
 ]"
 }
 }

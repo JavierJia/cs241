@@ -215,6 +215,18 @@ public class SSAInstruction extends Instruction {
 				}
 			}
 		}
+		if (BRACH_SET.contains(op) && op != OP.BRA) {
+			SSAorConst mapTo = propagation.get(target.getVersion());
+			if (mapTo != null) {
+				if (mapTo.isConst()) {
+					target = null;
+					lValue = mapTo.getConstValue();
+				} else {
+					target.setVersion(mapTo.getSSAVar().getVersion());
+				}
+			}
+		}
+
 	}
 
 	public boolean isConstExpression() {

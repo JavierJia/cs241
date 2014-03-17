@@ -5,26 +5,26 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-24 READ 
-26 SAVE_STATUS 
-27 PUSH input_24 
-28 CALL factIter_0 
-29 WRITE (28) 
-30 WLN 
-31 SAVE_STATUS 
-32 PUSH input_24 
-33 CALL factRec_4 
-34 WRITE (33) 
-35 WLN 
+25 READ 
+27 SAVE_STATUS 
+28 PUSH input_25 
+29 CALL factIter_0 
+30 WRITE (29) 
+31 WLN 
+32 SAVE_STATUS 
+33 PUSH input_25 
+34 CALL factRec_4 
+35 WRITE (34) 
+36 WLN 
 ]"
 }
 edge: { sourcename: "8"
 targetname: "0"
-label: "j28"
+label: "j29"
 color:red}
 edge: { sourcename: "8"
 targetname: "4"
-label: "j33"
+label: "j34"
 color:red}
 node: {
 title: "0"
@@ -77,7 +77,12 @@ title: "5"
 label: "5
 [BLOCK:5
 16 RETURN CONST_1 
+18 BRA (7) 
 ]"
+}
+edge: { sourcename: "5"
+targetname: "7"
+label: "7"
 }
 node: {
 title: "6"
@@ -113,16 +118,16 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-18 SUB n_14 1
-19 SAVE_STATUS 
-20 PUSH (18) 
-21 CALL factRec_4 
-22 MUL (21) n_14
-23 RETURN (22) 
+19 SUB n_14 1
+20 SAVE_STATUS 
+21 PUSH (19) 
+22 CALL factRec_4 
+23 MUL (22) n_14
+24 RETURN (23) 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "4"
-label: "j21"
+label: "j22"
 color:red}
 }

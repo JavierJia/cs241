@@ -9,7 +9,7 @@ label: "0
 2 MOVE b_0 2
 3 MOVE c_0 3
 4 CMP a_1 b_2
-27 BLE (4) (8)
+29 BLE (4) (8)
 ]"
 }
 edge: { sourcename: "0"
@@ -27,7 +27,7 @@ label: "1
 5 ADD a_1 1
 6 MOVE a_1 (5)
 7 CMP a_6 b_2
-14 BGE (7) (6)
+15 BGE (7) (6)
 ]"
 }
 edge: { sourcename: "1"
@@ -42,10 +42,10 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-17 ADD b_2 5
-18 MOVE b_2 (17)
-19 CMP a_1 b_18
-24 BGE (19) (10)
+19 ADD b_2 5
+20 MOVE b_2 (19)
+21 CMP a_1 b_20
+26 BGE (21) (10)
 ]"
 }
 edge: { sourcename: "8"
@@ -88,9 +88,9 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-20 SUB a_1 2
-21 MOVE a_1 (20)
-26 BRA (11) 
+22 SUB a_1 2
+23 MOVE a_1 (22)
+28 BRA (11) 
 ]"
 }
 edge: { sourcename: "9"
@@ -101,8 +101,8 @@ node: {
 title: "10"
 label: "10
 [BLOCK:10
-22 ADD a_1 3
-23 MOVE a_1 (22)
+24 ADD a_1 3
+25 MOVE a_1 (24)
 ]"
 }
 edge: { sourcename: "10"
@@ -114,6 +114,7 @@ title: "3"
 label: "3
 [BLOCK:3
 11 MOVE c_3 a_9
+14 BRA (5) 
 ]"
 }
 edge: { sourcename: "3"
@@ -134,9 +135,9 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-15 PHI c_13 c_3
-16 PHI a_9 a_6
-31 BRA (12) 
+16 PHI c_13 c_3
+17 PHI a_9 a_6
+33 BRA (12) 
 ]"
 }
 edge: { sourcename: "7"
@@ -147,7 +148,7 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-25 PHI a_21 a_23
+27 PHI a_23 a_25
 ]"
 }
 edge: { sourcename: "11"
@@ -159,6 +160,7 @@ title: "5"
 label: "5
 [BLOCK:5
 13 PHI c_11 c_3
+18 BRA (7) 
 ]"
 }
 edge: { sourcename: "5"
@@ -169,12 +171,12 @@ node: {
 title: "12"
 label: "12
 [BLOCK:12
-28 PHI b_2 b_18
-29 PHI c_15 c_3
-30 PHI a_16 a_25
-32 ADD a_30 1
-33 MOVE a_30 (32)
-34 WRITE a_33 
+30 PHI b_2 b_20
+31 PHI c_16 c_3
+32 PHI a_17 a_27
+34 ADD a_32 1
+35 MOVE a_32 (34)
+36 WRITE a_35 
 ]"
 }
 }

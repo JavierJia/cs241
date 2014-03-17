@@ -2,10 +2,10 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "main17"
+title: "main19"
 color:1
-label: "17:1
-[17]"
+label: "19:1
+[19]"
 }
 node: {
 title: "main18"

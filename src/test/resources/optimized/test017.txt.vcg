@@ -15,6 +15,7 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
+10 BRA (3) 
 ]"
 }
 edge: { sourcename: "1"

@@ -65,6 +65,7 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
+23 BRA (9) 
 ]"
 }
 edge: { sourcename: "7"
@@ -77,8 +78,8 @@ label: "9
 [BLOCK:9
 21 PHI b_17 b_2
 22 PHI a_18 a_1
-23 ADD c_3 1
-24 MOVE b_21 (23)
+24 ADD c_3 1
+25 MOVE b_21 (24)
 ]"
 }
 node: {

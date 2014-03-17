@@ -113,6 +113,7 @@ public class Interpretor {
 				emptyElseBlock.setNext(phiBlock);
 
 				phiBlock.setElsePre(emptyElseBlock);
+				then.getLastBlock().putCode(OP.BRA, new SSAVar(phiBlock.getID()));
 				then.getLastBlock().setNext(phiBlock);
 				phiBlock.setThenPre(then.getLastBlock());
 				result.setTail(phiBlock);
@@ -308,7 +309,7 @@ public class Interpretor {
 
 		codeBlock.call(func);
 		func.returnBack(codeBlock);
-		
+
 		return new ArithmeticResult(new SSAVar(codeBlock.getLastInstruction().getId()));
 		// return func.getArithmeticResult() == null ?
 		// ArithmeticResult.FUNC_RETURN_RESULT : func

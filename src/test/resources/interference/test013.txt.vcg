@@ -2,16 +2,16 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "main70"
-color:1
-label: "70:1
-[70]"
-}
-node: {
 title: "main71"
 color:1
 label: "71:1
 [71]"
+}
+node: {
+title: "main72"
+color:1
+label: "72:1
+[72]"
 }
 }graph: {title: "foo"
 manhattan_edges:yes
@@ -47,6 +47,15 @@ edge: { sourcename: "foo69"
 targetname: "foo21"
 }
 node: {
+title: "foo70"
+color:1
+label: "70:1
+[70]"
+}
+edge: { sourcename: "foo70"
+targetname: "foo21"
+}
+node: {
 title: "foo18"
 color:1
 label: "18:1
@@ -73,9 +82,6 @@ targetname: "foo66"
 edge: { sourcename: "foo21"
 targetname: "foo67"
 }
-edge: { sourcename: "foo21"
-targetname: "foo63"
-}
 node: {
 title: "foo64"
 color:1
@@ -99,11 +105,5 @@ title: "foo67"
 color:1
 label: "67:1
 [67]"
-}
-node: {
-title: "foo63"
-color:1
-label: "63:1
-[63]"
 }
 }}

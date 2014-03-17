@@ -68,6 +68,7 @@ label: "4
 [BLOCK:4
 13 SUB a_10 1
 14 MOVE a_10 (13)
+17 BRA (6) 
 ]"
 }
 edge: { sourcename: "4"
@@ -89,8 +90,8 @@ title: "6"
 label: "6
 [BLOCK:6
 16 PHI a_14 a_10
-17 WRITE a_16 
-18 WRITE b_9 
+18 WRITE a_16 
+19 WRITE b_9 
 ]"
 }
 }

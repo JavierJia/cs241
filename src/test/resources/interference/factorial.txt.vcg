@@ -8,6 +8,12 @@ label: "34:1
 [34]"
 }
 node: {
+title: "main35"
+color:1
+label: "35:1
+[35]"
+}
+node: {
 title: "main32"
 color:1
 label: "32:1
@@ -20,25 +26,19 @@ label: "33:1
 [33]"
 }
 node: {
-title: "main24"
+title: "main25"
 color:2
-label: "24:2
-[24]"
+label: "25:2
+[25]"
 }
-edge: { sourcename: "main24"
-targetname: "main28"
+edge: { sourcename: "main25"
+targetname: "main29"
 }
 node: {
 title: "main27"
 color:1
 label: "27:1
 [27]"
-}
-node: {
-title: "main26"
-color:1
-label: "26:1
-[26]"
 }
 node: {
 title: "main29"
@@ -53,10 +53,10 @@ label: "28:1
 [28]"
 }
 node: {
-title: "main31"
+title: "main30"
 color:1
-label: "31:1
-[31]"
+label: "30:1
+[30]"
 }
 }graph: {title: "factIter"
 manhattan_edges:yes
@@ -188,15 +188,6 @@ edge: { sourcename: "factRec19"
 targetname: "factRec14"
 }
 node: {
-title: "factRec18"
-color:1
-label: "18:1
-[18]"
-}
-edge: { sourcename: "factRec18"
-targetname: "factRec14"
-}
-node: {
 title: "factRec21"
 color:1
 label: "21:1
@@ -230,6 +221,15 @@ label: "22:1
 [22]"
 }
 edge: { sourcename: "factRec22"
+targetname: "factRec14"
+}
+node: {
+title: "factRec24"
+color:1
+label: "24:1
+[24]"
+}
+edge: { sourcename: "factRec24"
 targetname: "factRec14"
 }
 node: {

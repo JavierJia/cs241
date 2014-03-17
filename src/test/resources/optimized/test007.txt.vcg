@@ -35,6 +35,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
+17 BRA (6) 
 ]"
 }
 edge: { sourcename: "4"
@@ -45,8 +46,8 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-17 WRITE 0 
-18 WRITE 3 
+18 WRITE 0 
+19 WRITE 3 
 ]"
 }
 }

@@ -27,6 +27,7 @@ label: "1
 [BLOCK:1
 6 ADD b_2 2
 7 MOVE d_0 (6)
+10 BRA (3) 
 ]"
 }
 edge: { sourcename: "1"
@@ -48,8 +49,8 @@ title: "3"
 label: "3
 [BLOCK:3
 9 PHI d_7 d_0
-10 ADD a_1 b_2
-11 MOVE e_0 (10)
+11 ADD a_1 b_2
+12 MOVE e_0 (11)
 ]"
 }
 }
