@@ -224,6 +224,7 @@ public class RegisterAllocator {
 			for (int i = 1; i <= REGNUM_LIMIT; ++i) {
 				if (!occupied.get(i)) {
 					spare = i;
+					break;
 				}
 			}
 			allocation.put(node, spare);
@@ -238,15 +239,15 @@ public class RegisterAllocator {
 
 	private Integer spillAndRemoveLowestCost(HashMap<Integer, Set<Integer>> copyGraph,
 			HashMap<Integer, Integer> costMap) {
-		int max = Integer.MAX_VALUE;
+		int min = Integer.MAX_VALUE;
 		int theone = -1;
 		for (Entry<Integer, Set<Integer>> entry : copyGraph.entrySet()) {
 			int cost = 0;
 			if (costMap.containsKey(entry.getKey())) {
 				cost = costMap.get(entry.getKey());
 			}
-			if (cost < max) {
-				max = cost;
+			if (cost < min) {
+				min = cost;
 				theone = entry.getKey();
 				if (cost == 0) {
 					break;
@@ -261,19 +262,27 @@ public class RegisterAllocator {
 
 	private boolean graphColoring(HashMap<Integer, Set<Integer>> copyGraph,
 			Stack<Integer> colorStack) {
-		Iterator<Entry<Integer, Set<Integer>>> iter = copyGraph.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<Integer, Set<Integer>> node = iter.next();
-			if (node.getValue().size() < REGNUM_LIMIT) {
-				colorStack.push(node.getKey());
-				// remove edge
-				for (Integer to : node.getValue()) {
-					if (copyGraph.containsKey(to)) {
-						copyGraph.get(to).remove(node.getKey());
+
+		while (true) {
+			Iterator<Entry<Integer, Set<Integer>>> iter = copyGraph.entrySet().iterator();
+			boolean changed = false;
+			while (iter.hasNext()) {
+				Entry<Integer, Set<Integer>> node = iter.next();
+				if (node.getValue().size() < REGNUM_LIMIT) {
+					colorStack.push(node.getKey());
+					// remove edge
+					for (Integer to : node.getValue()) {
+						if (copyGraph.containsKey(to)) {
+							copyGraph.get(to).remove(node.getKey());
+						}
 					}
+					// remove node
+					iter.remove();
+					changed = true;
 				}
-				// remove node
-				iter.remove();
+			}
+			if (!changed) {
+				break;
 			}
 		}
 		return !copyGraph.isEmpty();

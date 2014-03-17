@@ -34,7 +34,7 @@ public class RegisterAllocatorTest {
 	
 	// @Test
 	// public void TestDebug() throws IOException, SyntaxFormatException {
-	// checkGraph("src/test/resources/testprogs/test010.txt", "interference");
+	// checkGraph("src/test/resources/testprogs/test002.txt", "interference");
 	// }
 
 	protected void checkGraph(String fileName, String dirName) throws IOException,

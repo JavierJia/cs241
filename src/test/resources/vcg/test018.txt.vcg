@@ -5,12 +5,13 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-34 CALL foo_0 
+34 SAVE_STATUS 
+35 CALL foo_0 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "0"
-label: "j34"
+label: "j35"
 color:red}
 node: {
 title: "0"

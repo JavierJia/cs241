@@ -16,10 +16,11 @@ import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.Variable;
 import dragon.compiler.data.VariableTable;
 
-public class FunctionCodeGenerator {
+public class CodeGenerator {
 	public static HashMap<OP, Integer> OP2DLX_MAP = new HashMap<OP, Integer>();
 	static {
 		OP2DLX_MAP.put(OP.ADD, DLX.ADD);
+		OP2DLX_MAP.put(OP.ADDA, DLX.ADD);
 		OP2DLX_MAP.put(OP.SUB, DLX.SUB);
 		OP2DLX_MAP.put(OP.MUL, DLX.MUL);
 		OP2DLX_MAP.put(OP.DIV, DLX.DIV);
@@ -30,7 +31,7 @@ public class FunctionCodeGenerator {
 		OP2DLX_MAP.put(OP.BLE, DLX.BLE);
 		OP2DLX_MAP.put(OP.BLT, DLX.BLT);
 		OP2DLX_MAP.put(OP.BNE, DLX.BNE);
-		OP2DLX_MAP.put(OP.BRA, DLX.BSR);
+		// OP2DLX_MAP.put(OP.BRA, DLX.BSR);
 	}
 
 	private RegisterAllocator allocator;
@@ -42,7 +43,7 @@ public class FunctionCodeGenerator {
 	private ArrayList<Integer> codeList = new ArrayList<Integer>();
 	private HashMap<Integer, String> pendingList = new HashMap<Integer, String>();
 
-	public FunctionCodeGenerator(String funcName, Block root, RegisterAllocator allocator) {
+	public CodeGenerator(String funcName, Block root, RegisterAllocator allocator) {
 		this.funcName = funcName;
 		this.root = root;
 		this.allocator = allocator;
@@ -79,6 +80,8 @@ public class FunctionCodeGenerator {
 	}
 
 	public ArrayList<Integer> generateCode() {
+		codeList.clear();
+		pendingList.clear();
 		pushUpPhiAndClearDominator(root);
 		recomputeDomination(root);
 		prepareHeaderCode();
@@ -96,20 +99,25 @@ public class FunctionCodeGenerator {
 	}
 
 	private void prepareHeaderCode() {
-		codeList.add(DLX.assemble(DLX.PSH, DLX.REG_FRAME, DLX.REG_STACK, -4));
-		codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_FRAME, DLX.REG_STACK, 0));
+		if (funcName.equals("main")) {
+			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_FRAME, DLX.REG_GLOBAL, 0));
+			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_FRAME, 0));
+		} else {
+			codeList.add(DLX.assemble(DLX.PSH, DLX.REG_FRAME, DLX.REG_STACK, -4));
+			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_FRAME, DLX.REG_STACK, 0));
+		}
 		reserveVarSpace();
 
 		// let memCache point to fp-1 as a stack value;
-		int cahced = allocator.allocateTempMemCache();
-		release(cahced);
-		codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, 4));
+		if (!funcName.equals("main")) {
+			int cahced = allocator.allocateTempMemCache();
+			release(cahced);
+			codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, 4));
+		}
 	}
 
 	private void reserveVarSpace() {
 		if (funcName.equals("main")) {
-			// fp = gp
-			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_FRAME, DLX.REG_GLOBAL, 0));
 			// sp = fp + sizeofArgs
 			int globalSize = computeGlobalSize();
 			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_FRAME, -globalSize));
@@ -158,10 +166,11 @@ public class FunctionCodeGenerator {
 	}
 
 	private void endRetCode() {
-		recoverDynamicLink();
+
 		if (this.funcName == "main") {
 			codeList.add(DLX.assemble(DLX.RET, 0));
 		} else {
+			recoverDynamicLink();
 			codeList.add(DLX.assemble(DLX.RET, DLX.REG_RETURN_PC));
 		}
 
@@ -182,9 +191,9 @@ public class FunctionCodeGenerator {
 				}
 			}
 			if (blk.getNegBranchBlock() != null) {
-				if (!blk.getNextBlock().isBackEdgeFrom(blk)) {
-					blk.getNextBlock().updateDominator(blk);
-					queue.add(blk.getNextBlock());
+				if (!blk.getNegBranchBlock().isBackEdgeFrom(blk)) {
+					blk.getNegBranchBlock().updateDominator(blk);
+					queue.add(blk.getNegBranchBlock());
 				}
 			}
 		}
@@ -194,6 +203,7 @@ public class FunctionCodeGenerator {
 		if (root == null) {
 			return null;
 		}
+		root.clearNotUsedBranch();
 		int myStartPos = codeList.size();
 		generateBlockCode(root.getInstructions(), regMap);
 		int myEndPos = codeList.size();
@@ -211,7 +221,17 @@ public class FunctionCodeGenerator {
 			return null;
 		}
 		int thenEndPos = codeList.size();
-		fixupBranch(codeList, myEndPos - 1, thenEndPos - myEndPos + 1);
+		try {
+			fixupBranch(codeList, myEndPos - 1, thenEndPos - myEndPos + 1);
+		} catch (IllegalArgumentException ex) {
+			if (thenDescendent == root
+					&& (root.getLastInstruction() == null || !Instruction.BRACH_SET.contains(root
+							.getLastInstruction().getOP()))) {
+				// dead loop, let it go
+			} else {
+				throw ex;
+			}
+		}
 
 		if (thenDescendent == root) { // while loop
 			fixupBranch(codeList, thenEndPos - 1, -(thenEndPos - myStartPos - 1));
@@ -232,8 +252,16 @@ public class FunctionCodeGenerator {
 	}
 
 	private static void fixupBranch(ArrayList<Integer> codeList, int id, int offset) {
-		int[] details = DLX.getF1Detail(codeList.get(id));
-		codeList.set(id, DLX.assemble(details[0], details[1], details[2], offset));
+		int[] details = DLX.getBranchDetail(codeList.get(id));
+		if (details[0] < 40 || details[0] > 46) {
+			throw new IllegalArgumentException(DLX.disassemble(codeList.get(id))
+					+ " is not branch op");
+		}
+		if (details[0] == DLX.BSR) {
+			codeList.set(id, DLX.assemble(details[0], offset));
+		} else {
+			codeList.set(id, DLX.assemble(details[0], details[1], offset));
+		}
 	}
 
 	public void pushUpPhiAndClearDominator(Block root) {
@@ -245,8 +273,12 @@ public class FunctionCodeGenerator {
 			if (blk == null || visited.contains(blk)) {
 				continue;
 			}
+			visited.add(blk);
 			blk.pushUpPhi();
+
 			blk.clearDominator();
+			queue.add(blk.getNextBlock());
+			queue.add(blk.getNegBranchBlock());
 		}
 	}
 
@@ -308,7 +340,7 @@ public class FunctionCodeGenerator {
 			}
 
 			dest = getWithoutLoadReg(regMap.get(ins.getId()));
-			codeList.add(arithimaticCode(regMap, dest, ins.getOP(), leftReg, rightReg, ins.getSrc()
+			codeList.add(arithimaticCode(dest, ins.getOP(), leftReg, rightReg, ins.getSrc()
 					.isConst()));
 			store(codeList, dest, regMap.get(ins.getId()));
 			release(dest);
@@ -326,10 +358,11 @@ public class FunctionCodeGenerator {
 			release(leftReg);
 			break;
 		case BRA:
-			codeList.add(DLX.assemble(OP2DLX_MAP.get(ins.getOP()), 0));
+			// use BEQ R0==0 to BRA
+			codeList.add(DLX.assemble(DLX.BEQ, 0, 0));
 			break;
 		case MOVE:
-			leftReg = getWithoutLoadReg(regMap.get(ins.getTarget()));
+			leftReg = getWithoutLoadReg(regMap.get(ins.getTarget().getSSAVar().getVersion()));
 			rightReg = loadRightMaybeConst(codeList, ins.getSrc(), regMap);
 			int dlxOP = DLX.ADD;
 			if (ins.getSrc().isConst()) {
@@ -379,9 +412,11 @@ public class FunctionCodeGenerator {
 
 			// pop args
 			int argsize = Function.getFunction(funcName).getParams().size() * 4;
-			codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_STACK, argsize));
+			if (argsize > 0) {
+				codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_STACK, argsize));
+			}
 			// pop regs
-			for (int i = 1; i <= allocator.getRegNumber(); ++i) {
+			for (int i = allocator.getRegNumber(); i > 0; --i) {
 				codeList.add(DLX.assemble(DLX.POP, i, DLX.REG_STACK, 4));
 			}
 			dest = getWithoutLoadReg(regMap.get(ins.getId()));
@@ -444,8 +479,10 @@ public class FunctionCodeGenerator {
 		}
 	}
 
-	private int arithimaticCode(HashMap<Integer, Integer> regMap, int dest, OP op, int leftReg,
-			int rightReg, boolean rightIsConst) {
+	private int arithimaticCode(int dest, OP op, int leftReg, int rightReg, boolean rightIsConst) {
+		if (op == null || OP2DLX_MAP.get(op) == null) {
+			throw new IllegalArgumentException("here is bug");
+		}
 		int dlxOP = OP2DLX_MAP.get(op);
 		if (rightIsConst) {
 			dlxOP = DLX.map2constOp(dlxOP);
@@ -461,7 +498,7 @@ public class FunctionCodeGenerator {
 	}
 
 	private void release(int reg) {
-		if (allocator.isSpilled(reg)) {
+		if (allocator.isCachedReg(reg)) {
 			allocator.releaseReg(reg);
 		}
 	}

@@ -8,21 +8,23 @@ label: "11
 53 MOVE x_0 0
 54 MOVE y_0 0
 55 MOVE z_0 0
-56 PUSH z_55 
-57 PUSH x_53 
-58 CALL bar_4 
-59 CALL foo_0 
-60 MOVE c_0 (59)
-61 WRITE c_60 
+56 SAVE_STATUS 
+57 PUSH z_55 
+58 PUSH x_53 
+59 CALL bar_4 
+60 SAVE_STATUS 
+61 CALL foo_0 
+62 MOVE c_0 (61)
+63 WRITE c_62 
 ]"
 }
 edge: { sourcename: "11"
 targetname: "4"
-label: "j58"
+label: "j59"
 color:red}
 edge: { sourcename: "11"
 targetname: "0"
-label: "j59"
+label: "j61"
 color:red}
 node: {
 title: "4"

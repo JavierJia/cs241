@@ -5,20 +5,22 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-56 PUSH 0 
+56 SAVE_STATUS 
 57 PUSH 0 
-58 CALL bar_4 
-59 CALL foo_0 
-61 WRITE c_59 
+58 PUSH 0 
+59 CALL bar_4 
+60 SAVE_STATUS 
+61 CALL foo_0 
+63 WRITE c_61 
 ]"
 }
 edge: { sourcename: "11"
 targetname: "4"
-label: "j58"
+label: "j59"
 color:red}
 edge: { sourcename: "11"
 targetname: "0"
-label: "j59"
+label: "j61"
 color:red}
 node: {
 title: "4"

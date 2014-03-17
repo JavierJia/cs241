@@ -18,16 +18,16 @@ public class DLX {
 	static final int MemSize = 10000; // bytes in memory (divisible by 4)
 	static int M[] = new int[MemSize / 4];
 
-	public static void load(int program[]) {
+	public static void load(Integer[] integers) {
 		int i;
-		for (i = 0; i < program.length; i++) {
-			M[i] = program[i];
+		for (i = 0; i < integers.length; i++) {
+			M[i] = integers[i];
 		}
 		M[i] = -1; // set first opcode of first instruction after program
 					// to ERR in order to detect 'fall off the edge' errors
 	}
 
-	public static void execute() throws IOException {
+	public static void execute(boolean debug) throws IOException {
 		int origc = 0; // used for F2 instruction RET
 		for (int i = 0; i < 32; i++) {
 			R[i] = 0;
@@ -42,6 +42,9 @@ public class DLX {
 				R[0] = 0;
 				disassem(M[PC]); // initializes op, a, b, c
 
+				if (debug) {
+					System.out.println(PC + ":" + disassemble(M[PC]));
+				}
 				int nextPC = PC + 1;
 				if (format == 2) {
 					origc = c; // used for RET
@@ -317,9 +320,14 @@ public class DLX {
 		return op + 16;
 	}
 
-	static int[] getF1Detail(int instructionWord) {
+	static int[] getBranchDetail(int instructionWord) {
+		return new int[] { instructionWord >>> 26, (instructionWord >>> 21) & 0x1F, };
+	}
+
+	static int[] getF1Details(int instructionWord) {
 		return new int[] { instructionWord >>> 26, (instructionWord >>> 21) & 0x1F,
 				(instructionWord >>> 16) & 0x1F, };
+
 	}
 
 	static int[] getJSRDetail(int instructionWord) {

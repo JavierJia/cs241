@@ -893,7 +893,8 @@ public class Block {
 	private void insertCode(OP move, SSAVar ssaVar, SSAorConst src) {
 		SSAInstruction ins = new SSAInstruction(OP.MOVE, ssaVar, src);
 		int idx = instructions.size();
-		if (Instruction.BRACH_SET.contains(getLastInstruction().getOP())) {
+		if (getLastInstruction() != null
+				&& Instruction.BRACH_SET.contains(getLastInstruction().getOP())) {
 			idx = instructions.size() - 1;
 		}
 		instructions.add(idx, ins);
@@ -901,5 +902,15 @@ public class Block {
 
 	public void clearDominator() {
 		this.dominators.clear();
+		this.dominators.add(this);
+	}
+
+	public void clearNotUsedBranch() {
+		if (getLastInstruction() != null
+				&& getLastInstruction().getOP() == OP.BRA
+				&& getLastInstruction().getTarget().getSSAVar().getVersion() == this.condNextBlock
+						.getID() && this.condNextBlock.isDominateBy(this)) {
+			instructions.remove(instructions.size() - 1);
+		}
 	}
 }

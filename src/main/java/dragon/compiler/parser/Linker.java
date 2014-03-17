@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 
 public class Linker {
 
-	private ArrayList<FunctionCodeGenerator> functionCodes = new ArrayList<FunctionCodeGenerator>();
-	private FunctionCodeGenerator mainGen;
+	private ArrayList<CodeGenerator> functionCodes = new ArrayList<CodeGenerator>();
+	private CodeGenerator mainGen;
 
-	public Linker(FunctionCodeGenerator mainCode, ArrayList<FunctionCodeGenerator> codes) {
+	public Linker(CodeGenerator mainCode, ArrayList<CodeGenerator> codes) {
 		this.mainGen = mainCode;
 		functionCodes = codes;
 	}
@@ -20,13 +20,13 @@ public class Linker {
 		ArrayList<Integer> codeLine = new ArrayList<Integer>();
 		codeLine.addAll(mainGen.generateCode());
 
-		for (FunctionCodeGenerator gen : functionCodes) {
+		for (CodeGenerator gen : functionCodes) {
 			functionOffset.put(gen.getFuncName(), codeLine.size());
 			codeLine.addAll(gen.generateCode());
 		}
 
 		fixupJumpAddress(codeLine, mainGen.getPendingList(), 0, functionOffset);
-		for (FunctionCodeGenerator gen : functionCodes) {
+		for (CodeGenerator gen : functionCodes) {
 			fixupJumpAddress(codeLine, gen.getPendingList(), functionOffset.get(gen.getFuncName()),
 					functionOffset);
 		}

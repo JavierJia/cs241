@@ -3,95 +3,131 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main34"
-color:8
-label: "34:8
+color:1
+label: "34:1
 [34]"
 }
 node: {
 title: "main35"
-color:8
-label: "35:8
+color:1
+label: "35:1
 [35]"
 }
 node: {
-title: "main39"
-color:8
-label: "39:8
-[39]"
+title: "main49"
+color:1
+label: "49:1
+[49]"
+}
+node: {
+title: "main48"
+color:1
+label: "48:1
+[48]"
+}
+node: {
+title: "main38"
+color:1
+label: "38:1
+[38]"
 }
 node: {
 title: "main36"
-color:8
-label: "36:8
+color:1
+label: "36:1
 [36]"
 }
 node: {
+title: "main37"
+color:1
+label: "37:1
+[37]"
+}
+node: {
 title: "main42"
-color:8
-label: "42:8
+color:1
+label: "42:1
 [42]"
 }
 node: {
 title: "main43"
-color:8
-label: "43:8
+color:1
+label: "43:1
 [43]"
 }
 node: {
-title: "main40"
-color:8
-label: "40:8
-[40]"
-}
-node: {
 title: "main41"
-color:8
-label: "41:8
+color:1
+label: "41:1
 [41]"
 }
 node: {
+title: "main46"
+color:1
+label: "46:1
+[46]"
+}
+node: {
+title: "main47"
+color:1
+label: "47:1
+[47]"
+}
+node: {
 title: "main44"
-color:8
-label: "44:8
+color:1
+label: "44:1
 [44]"
 }
 node: {
 title: "main45"
-color:8
-label: "45:8
+color:1
+label: "45:1
 [45]"
 }
 }graph: {title: "boo"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "boo19"
-color:8
-label: "19:8
-[19]"
-}
-node: {
 title: "boo32"
-color:8
-label: "32:8
+color:1
+label: "32:1
 [32]"
 }
 node: {
-title: "boo18"
-color:8
-label: "18:8
-[18]"
-}
-node: {
 title: "boo33"
-color:8
-label: "33:8
+color:1
+label: "33:1
 [33]"
 }
 node: {
+title: "boo15"
+color:1
+label: "15:1
+[15]"
+}
+node: {
+title: "boo16"
+color:1
+label: "16:1
+[16]"
+}
+node: {
+title: "boo19"
+color:1
+label: "19:1
+[19]"
+}
+node: {
+title: "boo18"
+color:1
+label: "18:1
+[18]"
+}
+node: {
 title: "boo21"
-color:6
-label: "21:6
+color:3
+label: "21:3
 [21]"
 }
 edge: { sourcename: "boo21"
@@ -105,14 +141,14 @@ targetname: "boo24"
 }
 node: {
 title: "boo20"
-color:8
-label: "20:8
+color:1
+label: "20:1
 [20]"
 }
 node: {
 title: "boo22"
-color:7
-label: "22:7
+color:2
+label: "22:2
 [22]"
 }
 edge: { sourcename: "boo22"
@@ -120,77 +156,95 @@ targetname: "boo24"
 }
 node: {
 title: "boo25"
-color:8
-label: "25:8
+color:1
+label: "25:1
 [25]"
 }
 node: {
 title: "boo24"
-color:8
-label: "24:8
+color:1
+label: "24:1
 [24]"
 }
 node: {
 title: "boo27"
-color:8
-label: "27:8
+color:1
+label: "27:1
 [27]"
 }
 node: {
 title: "boo31"
-color:8
-label: "31:8
+color:1
+label: "31:1
 [31]"
 }
 node: {
 title: "boo30"
-color:8
-label: "30:8
+color:1
+label: "30:1
 [30]"
 }
 }graph: {title: "baz"
 manhattan_edges:yes
 smanhattan_edges:yes
+node: {
+title: "baz12"
+color:1
+label: "12:1
+[12]"
+}
+node: {
+title: "baz13"
+color:1
+label: "13:1
+[13]"
+}
 }graph: {title: "foo"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "foo3"
-color:8
-label: "3:8
+color:1
+label: "3:1
 [3]"
 }
 node: {
 title: "foo4"
-color:8
-label: "4:8
+color:1
+label: "4:1
 [4]"
 }
 node: {
 title: "foo5"
-color:8
-label: "5:8
+color:1
+label: "5:1
 [5]"
 }
 node: {
 title: "foo6"
-color:8
-label: "6:8
+color:1
+label: "6:1
 [6]"
 }
 }graph: {title: "bar"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "bar7"
+color:1
+label: "7:1
+[7]"
+}
+node: {
 title: "bar10"
-color:8
-label: "10:8
+color:1
+label: "10:1
 [10]"
 }
 node: {
 title: "bar11"
-color:8
-label: "11:8
+color:1
+label: "11:1
 [11]"
 }
 }}

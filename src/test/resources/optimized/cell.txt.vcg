@@ -5,33 +5,36 @@ node: {
 title: "24"
 label: "24
 [BLOCK:24
-182 CALL ClearData_2 
-183 ADD FP_0 Data_0
-184 ADDA (183) 4
-185 STORE (184) 1
-187 ADDA (183) 320
-188 STORE (187) 1
-190 ADDA (183) 400
-191 STORE (190) 1
-193 ADDA (183) 480
-194 STORE (193) 1
-196 ADDA (183) 800
-197 STORE (196) 1
-199 CALL InitRuleBin_1 
-200 CALL Run_20 
+192 SAVE_STATUS 
+193 CALL ClearData_2 
+194 ADD FP_0 Data_0
+195 ADDA (194) 4
+196 STORE (195) 1
+198 ADDA (194) 320
+199 STORE (198) 1
+201 ADDA (194) 400
+202 STORE (201) 1
+204 ADDA (194) 480
+205 STORE (204) 1
+207 ADDA (194) 800
+208 STORE (207) 1
+210 SAVE_STATUS 
+211 CALL InitRuleBin_1 
+212 SAVE_STATUS 
+213 CALL Run_20 
 ]"
 }
 edge: { sourcename: "24"
 targetname: "2"
-label: "j182"
+label: "j193"
 color:red}
 edge: { sourcename: "24"
 targetname: "1"
-label: "j199"
+label: "j211"
 color:red}
 edge: { sourcename: "24"
 targetname: "20"
-label: "j200"
+label: "j213"
 color:red}
 node: {
 title: "2"
@@ -49,71 +52,75 @@ label: "1
 [BLOCK:1
 18 ADD FP_0 Rule_0
 19 LOAD (18) 
-21 PUSH Bits_19 
-22 PUSH 0 
+21 SAVE_STATUS 
+22 PUSH Bits_19 
 23 PUSH 0 
 24 PUSH 0 
-25 CALL SetNextBit_0 
-27 PUSH Bits_25 
-28 PUSH 1 
-29 PUSH 0 
-30 PUSH 0 
-31 CALL SetNextBit_0 
-33 PUSH Bits_31 
-34 PUSH 0 
-35 PUSH 1 
-36 PUSH 0 
-37 CALL SetNextBit_0 
-39 PUSH Bits_37 
-40 PUSH 1 
-41 PUSH 1 
-42 PUSH 0 
-43 CALL SetNextBit_0 
-45 PUSH Bits_43 
+25 PUSH 0 
+26 CALL SetNextBit_0 
+28 SAVE_STATUS 
+29 PUSH Bits_26 
+30 PUSH 1 
+31 PUSH 0 
+32 PUSH 0 
+33 CALL SetNextBit_0 
+35 SAVE_STATUS 
+36 PUSH Bits_33 
+37 PUSH 0 
+38 PUSH 1 
+39 PUSH 0 
+40 CALL SetNextBit_0 
+42 SAVE_STATUS 
+43 PUSH Bits_40 
+44 PUSH 1 
+45 PUSH 1 
 46 PUSH 0 
-47 PUSH 0 
-48 PUSH 1 
-49 CALL SetNextBit_0 
-51 PUSH Bits_49 
-52 PUSH 1 
-53 PUSH 0 
-54 PUSH 1 
-55 CALL SetNextBit_0 
-57 PUSH Bits_55 
-58 PUSH 0 
-59 PUSH 1 
+47 CALL SetNextBit_0 
+49 SAVE_STATUS 
+50 PUSH Bits_47 
+51 PUSH 0 
+52 PUSH 0 
+53 PUSH 1 
+54 CALL SetNextBit_0 
+56 SAVE_STATUS 
+57 PUSH Bits_54 
+58 PUSH 1 
+59 PUSH 0 
 60 PUSH 1 
 61 CALL SetNextBit_0 
-63 PUSH Bits_61 
-64 PUSH 1 
-65 PUSH 1 
+63 SAVE_STATUS 
+64 PUSH Bits_61 
+65 PUSH 0 
 66 PUSH 1 
-67 CALL SetNextBit_0 
+67 PUSH 1 
+68 CALL SetNextBit_0 
+70 SAVE_STATUS 
+71 PUSH Bits_68 
+72 PUSH 1 
+73 PUSH 1 
+74 PUSH 1 
+75 CALL SetNextBit_0 
 ]"
 }
 edge: { sourcename: "1"
 targetname: "0"
-label: "j25"
+label: "j26"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
-label: "j31"
+label: "j33"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
-label: "j37"
+label: "j40"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
-label: "j43"
+label: "j47"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
-label: "j49"
-color:red}
-edge: { sourcename: "1"
-targetname: "0"
-label: "j55"
+label: "j54"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
@@ -121,7 +128,11 @@ label: "j61"
 color:red}
 edge: { sourcename: "1"
 targetname: "0"
-label: "j67"
+label: "j68"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j75"
 color:red}
 node: {
 title: "20"
@@ -137,12 +148,12 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-81 PHI 0 i_78
-70 ADD FP_0 ColCount_0
-71 LOAD (70) 
-72 ADD (71) 2
-73 CMP i_81 (72)
-80 BGE (73) (5)
+89 PHI 0 i_86
+78 ADD FP_0 ColCount_0
+79 LOAD (78) 
+80 ADD (79) 2
+81 CMP i_89 (80)
+88 BGE (81) (5)
 ]"
 }
 edge: { sourcename: "3"
@@ -179,11 +190,11 @@ node: {
 title: "21"
 label: "21
 [BLOCK:21
-178 PHI 0 i_175
-170 ADD FP_0 RowCount_0
-171 LOAD (170) 
-172 CMP i_178 (171)
-177 BGE (172) (23)
+188 PHI 0 i_185
+178 ADD FP_0 RowCount_0
+179 LOAD (178) 
+180 CMP i_188 (179)
+187 BGE (180) (23)
 ]"
 }
 edge: { sourcename: "21"
@@ -198,12 +209,12 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-74 MUL i_81 4
-75 ADD FP_0 Data_0
-76 ADDA (74) (75)
-77 STORE (76) 0
-78 ADD i_81 1
-82 BRA (3) 
+82 MUL i_89 4
+83 ADD FP_0 Data_0
+84 ADDA (82) (83)
+85 STORE (84) 0
+86 ADD i_89 1
+90 BRA (3) 
 ]"
 }
 edge: { sourcename: "4"
@@ -220,10 +231,12 @@ node: {
 title: "22"
 label: "22
 [BLOCK:22
-173 CALL Output_6 
-174 CALL CalcNext_16 
-175 ADD i_178 1
-179 BRA (21) 
+181 SAVE_STATUS 
+182 CALL Output_6 
+183 SAVE_STATUS 
+184 CALL CalcNext_16 
+185 ADD i_188 1
+189 BRA (21) 
 ]"
 }
 edge: { sourcename: "22"
@@ -232,11 +245,11 @@ label: "21"
 }
 edge: { sourcename: "22"
 targetname: "6"
-label: "j173"
+label: "j182"
 color:red}
 edge: { sourcename: "22"
 targetname: "16"
-label: "j174"
+label: "j184"
 color:red}
 node: {
 title: "23"
@@ -258,25 +271,25 @@ node: {
 title: "16"
 label: "16
 [BLOCK:16
-110 ADD FP_0 Data_0
-111 ADDA (110) 4
-112 LOAD (111) 
-114 ADDA (110) 0
-115 STORE (114) (112)
-116 ADD FP_0 ColCount_0
-117 LOAD (116) 
-118 ADD (117) 1
-120 LOAD (116) 
-121 MUL (120) 4
-123 ADDA (121) (110)
-124 LOAD (123) 
-125 MUL (118) 4
-127 ADDA (125) (110)
-128 STORE (127) (124)
-130 ADDA (110) 0
-131 LOAD (130) 
-134 ADDA (110) 4
-135 LOAD (134) 
+118 ADD FP_0 Data_0
+119 ADDA (118) 4
+120 LOAD (119) 
+122 ADDA (118) 0
+123 STORE (122) (120)
+124 ADD FP_0 ColCount_0
+125 LOAD (124) 
+126 ADD (125) 1
+128 LOAD (124) 
+129 MUL (128) 4
+131 ADDA (129) (118)
+132 LOAD (131) 
+133 MUL (126) 4
+135 ADDA (133) (118)
+136 STORE (135) (132)
+138 ADDA (118) 0
+139 LOAD (138) 
+142 ADDA (118) 4
+143 LOAD (142) 
 ]"
 }
 edge: { sourcename: "16"
@@ -287,11 +300,11 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-107 PHI 1 i_104
-84 ADD FP_0 ColCount_0
-85 LOAD (84) 
-86 CMP i_107 (85)
-106 BGT (86) (15)
+115 PHI 1 i_112
+92 ADD FP_0 ColCount_0
+93 LOAD (92) 
+94 CMP i_115 (93)
+114 BGT (94) (15)
 ]"
 }
 edge: { sourcename: "7"
@@ -306,13 +319,13 @@ node: {
 title: "17"
 label: "17
 [BLOCK:17
-164 PHI Next_0 Next_145
-165 PHI Last_131 Last_166
-166 PHI Akt_135 Akt_145
-167 PHI 1 i_141
-139 LOAD (116) 
-140 CMP i_167 (139)
-163 BGT (140) (19)
+172 PHI Next_0 Next_153
+173 PHI Last_139 Last_174
+174 PHI Akt_143 Akt_153
+175 PHI 1 i_149
+147 LOAD (124) 
+148 CMP i_175 (147)
+171 BGT (148) (19)
 ]"
 }
 edge: { sourcename: "17"
@@ -327,12 +340,12 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-87 MUL i_107 4
-88 ADD FP_0 Data_0
-89 ADDA (87) (88)
-90 LOAD (89) 
-91 CMP (90) 0
-102 BNE (91) (10)
+95 MUL i_115 4
+96 ADD FP_0 Data_0
+97 ADDA (95) (96)
+98 LOAD (97) 
+99 CMP (98) 0
+110 BNE (99) (10)
 ]"
 }
 edge: { sourcename: "8"
@@ -347,29 +360,29 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-109 WLN 
+117 WLN 
 ]"
 }
 node: {
 title: "18"
 label: "18
 [BLOCK:18
-141 ADD i_167 1
-142 MUL (141) 4
-144 ADDA (142) (110)
-145 LOAD (144) 
-147 MUL Last_165 16
-148 MUL Akt_166 8
-149 ADD (147) (148)
-150 MUL Next_145 4
-151 ADD (149) (150)
-152 ADD FP_0 RuleBin_0
-153 ADDA (151) (152)
-154 LOAD (153) 
-155 MUL i_167 4
-157 ADDA (155) (110)
-158 STORE (157) (154)
-168 BRA (17) 
+149 ADD i_175 1
+150 MUL (149) 4
+152 ADDA (150) (118)
+153 LOAD (152) 
+155 MUL Last_173 16
+156 MUL Akt_174 8
+157 ADD (155) (156)
+158 MUL Next_153 4
+159 ADD (157) (158)
+160 ADD FP_0 RuleBin_0
+161 ADDA (159) (160)
+162 LOAD (161) 
+163 MUL i_175 4
+165 ADDA (163) (118)
+166 STORE (165) (162)
+176 BRA (17) 
 ]"
 }
 edge: { sourcename: "18"
@@ -386,8 +399,8 @@ node: {
 title: "9"
 label: "9
 [BLOCK:9
-92 WRITE CONST_1 
-103 BRA (14) 
+100 WRITE CONST_1 
+111 BRA (14) 
 ]"
 }
 edge: { sourcename: "9"
@@ -398,10 +411,10 @@ node: {
 title: "10"
 label: "10
 [BLOCK:10
-95 ADDA (87) (88)
-96 LOAD (95) 
-97 CMP (96) 1
-100 BNE (97) (12)
+103 ADDA (95) (96)
+104 LOAD (103) 
+105 CMP (104) 1
+108 BNE (105) (12)
 ]"
 }
 edge: { sourcename: "10"
@@ -416,8 +429,8 @@ node: {
 title: "14"
 label: "14
 [BLOCK:14
-104 ADD i_107 1
-108 BRA (7) 
+112 ADD i_115 1
+116 BRA (7) 
 ]"
 }
 edge: { sourcename: "14"
@@ -428,8 +441,8 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-98 WRITE CONST_8 
-101 BRA (13) 
+106 WRITE CONST_8 
+109 BRA (13) 
 ]"
 }
 edge: { sourcename: "11"
@@ -440,7 +453,7 @@ node: {
 title: "12"
 label: "12
 [BLOCK:12
-99 WRITE CONST_0 
+107 WRITE CONST_0 
 ]"
 }
 edge: { sourcename: "12"

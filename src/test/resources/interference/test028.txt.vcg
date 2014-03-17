@@ -3,14 +3,14 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main2"
-color:8
-label: "2:8
+color:1
+label: "2:1
 [2]"
 }
 node: {
 title: "main3"
-color:5
-label: "3:5
+color:4
+label: "3:4
 [3]"
 }
 edge: { sourcename: "main3"
@@ -27,8 +27,8 @@ targetname: "main15"
 }
 node: {
 title: "main6"
-color:6
-label: "6:6
+color:3
+label: "6:3
 [6]"
 }
 edge: { sourcename: "main6"
@@ -42,8 +42,8 @@ targetname: "main15"
 }
 node: {
 title: "main9"
-color:7
-label: "9:7
+color:2
+label: "9:2
 [9]"
 }
 edge: { sourcename: "main9"
@@ -51,14 +51,14 @@ targetname: "main11"
 }
 node: {
 title: "main11"
-color:8
-label: "11:8
+color:1
+label: "11:1
 [11]"
 }
 node: {
 title: "main15"
-color:8
-label: "15:8
+color:1
+label: "15:1
 [15]"
 }
 }}

@@ -5,36 +5,40 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-34 CALL foo_0 
-35 PUSH 1 
-36 CALL bar_1 
-37 MOVE x_0 8
-38 MOVE y_0 1790
-39 PUSH y_38 
-40 PUSH x_37 
-41 CALL baz_2 
-42 PUSH 4 
-43 PUSH 2 
-44 CALL boo_3 
-45 ADD y_38 (44)
-46 MOVE y_38 (45)
+34 SAVE_STATUS 
+35 CALL foo_0 
+36 SAVE_STATUS 
+37 PUSH 1 
+38 CALL bar_1 
+39 MOVE x_0 8
+40 MOVE y_0 1790
+41 SAVE_STATUS 
+42 PUSH y_40 
+43 PUSH x_39 
+44 CALL baz_2 
+45 SAVE_STATUS 
+46 PUSH 4 
+47 PUSH 2 
+48 CALL boo_3 
+49 ADD y_40 (48)
+50 MOVE y_40 (49)
 ]"
 }
 edge: { sourcename: "7"
 targetname: "0"
-label: "j34"
+label: "j35"
 color:red}
 edge: { sourcename: "7"
 targetname: "1"
-label: "j36"
+label: "j38"
 color:red}
 edge: { sourcename: "7"
 targetname: "2"
-label: "j41"
+label: "j44"
 color:red}
 edge: { sourcename: "7"
 targetname: "3"
-label: "j44"
+label: "j48"
 color:red}
 node: {
 title: "0"

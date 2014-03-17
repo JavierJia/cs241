@@ -5,25 +5,27 @@ node: {
 title: "8"
 label: "8
 [BLOCK:8
-23 READ 
-24 MOVE input_0 (23)
-25 PUSH input_24 
-26 CALL factIter_0 
-27 WRITE (26) 
-28 WLN 
-29 PUSH input_24 
-30 CALL factRec_4 
-31 WRITE (30) 
-32 WLN 
+24 READ 
+25 MOVE input_0 (24)
+26 SAVE_STATUS 
+27 PUSH input_25 
+28 CALL factIter_0 
+29 WRITE (28) 
+30 WLN 
+31 SAVE_STATUS 
+32 PUSH input_25 
+33 CALL factRec_4 
+34 WRITE (33) 
+35 WLN 
 ]"
 }
 edge: { sourcename: "8"
 targetname: "0"
-label: "j26"
+label: "j28"
 color:red}
 edge: { sourcename: "8"
 targetname: "4"
-label: "j30"
+label: "j33"
 color:red}
 node: {
 title: "0"
@@ -117,14 +119,15 @@ title: "7"
 label: "7
 [BLOCK:7
 18 SUB n_14 1
-19 PUSH (18) 
-20 CALL factRec_4 
-21 MUL (20) n_14
-22 RETURN (21) 
+19 SAVE_STATUS 
+20 PUSH (18) 
+21 CALL factRec_4 
+22 MUL (21) n_14
+23 RETURN (22) 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "4"
-label: "j20"
+label: "j21"
 color:red}
 }

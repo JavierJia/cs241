@@ -3,14 +3,14 @@ manhattan_edges:yes
 smanhattan_edges:yes
 node: {
 title: "main17"
-color:8
-label: "17:8
+color:1
+label: "17:1
 [17]"
 }
 node: {
 title: "main18"
-color:8
-label: "18:8
+color:1
+label: "18:1
 [18]"
 }
 }}
