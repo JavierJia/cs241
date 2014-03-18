@@ -9,9 +9,7 @@ label: "0
 9 ADD too_0 foo_0
 10 ADD (9) q_1
 11 MOVE af_11 (10)
-12 MEM_ADDRESS FP_0 af_0
-13 LOAD (12) 
-14 WRITE (13) 
+12 WRITE af_11 
 ]"
 }
 }

@@ -5,13 +5,13 @@ node: {
 title: "7"
 label: "7
 [BLOCK:7
-49 SAVE_STATUS 
-50 CALL foo_0 
+35 SAVE_STATUS 
+36 CALL foo_0 
 ]"
 }
 edge: { sourcename: "7"
 targetname: "0"
-label: "j50"
+label: "j36"
 color:red}
 node: {
 title: "0"
@@ -79,27 +79,13 @@ label: "6
 24 PHI h_13 h_0
 26 MUL g_8 a_10
 27 MOVE b_27 (26)
-28 MEM_ADDRESS FP_0 a_0
-29 LOAD (28) 
-30 WRITE (29) 
-31 MEM_ADDRESS FP_0 b_0
-32 LOAD (31) 
-33 WRITE (32) 
-34 MEM_ADDRESS FP_0 c_0
-35 LOAD (34) 
-36 WRITE (35) 
-37 MEM_ADDRESS FP_0 d_0
-38 LOAD (37) 
-39 WRITE (38) 
-40 MEM_ADDRESS FP_0 f_0
-41 LOAD (40) 
-42 WRITE (41) 
-43 MEM_ADDRESS FP_0 g_0
-44 LOAD (43) 
-45 WRITE (44) 
-46 MEM_ADDRESS FP_0 h_0
-47 LOAD (46) 
-48 WRITE (47) 
+28 WRITE a_10 
+29 WRITE b_27 
+30 WRITE c_23 
+31 WRITE d_3 
+32 WRITE f_22 
+33 WRITE g_8 
+34 WRITE h_24 
 ]"
 }
 node: {

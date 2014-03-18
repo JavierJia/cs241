@@ -7,16 +7,4 @@ color:1
 label: "4:1
 [4]"
 }
-node: {
-title: "main5"
-color:1
-label: "5:1
-[5]"
-}
-node: {
-title: "main6"
-color:1
-label: "6:1
-[6]"
-}
 }}

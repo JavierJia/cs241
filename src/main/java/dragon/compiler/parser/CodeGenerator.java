@@ -327,7 +327,7 @@ public class CodeGenerator {
 			release(dest);
 			release(cached);
 			break;
-		case MEM_ADDRESS:
+		case MEM:
 			if (ins.getTarget().isConst() || !ins.getTarget().getSSAVar().getVarName().equals("FP")) {
 				throw new IllegalArgumentException("Should not be none FP!");
 			}

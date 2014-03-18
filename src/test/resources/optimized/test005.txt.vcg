@@ -5,9 +5,7 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-2 MEM_ADDRESS FP_0 a_0
-3 LOAD (2) 
-4 WRITE (3) 
+2 WRITE 1 
 ]"
 }
 }

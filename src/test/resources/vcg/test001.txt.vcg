@@ -8,9 +8,7 @@ label: "0
 1 MOVE x_1 51
 2 MUL x_1 2
 3 MOVE y_3 (2)
-4 MEM_ADDRESS FP_0 y_0
-5 LOAD (4) 
-6 WRITE (5) 
+4 WRITE y_3 
 ]"
 }
 }

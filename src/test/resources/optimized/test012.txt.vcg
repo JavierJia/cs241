@@ -26,9 +26,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-19 MEM_ADDRESS FP_0 a_0
-20 LOAD (19) 
-21 WRITE (20) 
+19 WRITE 3 
 ]"
 }
 }

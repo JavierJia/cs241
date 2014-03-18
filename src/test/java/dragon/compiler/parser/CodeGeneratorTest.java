@@ -15,7 +15,8 @@ import dragon.compiler.data.TouchDataHelper;
 public class CodeGeneratorTest {
 	// @Test
 	// public void TestDebug() throws IOException, SyntaxFormatException {
-	// checkCode("src/test/resources/testprogs/test002.txt", "dlxcode", true);
+	// checkCode("src/test/resources/testprogs/test001.txt", "dlxcode", true,
+	// true);
 	// }
 
 	@Test
@@ -28,16 +29,19 @@ public class CodeGeneratorTest {
 				if (!file.getPath().endsWith(".txt")) {
 					continue;
 				}
+				// TODO remove
+				if (!file.getPath().contains("test0")) {
+					continue;
+				}
 				TouchDataHelper.resetAll();
 				System.out.println(file.getPath());
-				checkCode(file.getPath(), "dlxcode", false);
+				checkCode(file.getPath(), "dlxcode", false, false);
 			}
 		}
-
 	}
 
-	private void checkCode(String path, String dirName, boolean debug) throws IOException,
-			SyntaxFormatException {
+	private void checkCode(String path, String dirName, boolean debug, boolean run)
+			throws IOException, SyntaxFormatException {
 		Parser parser = new Parser(path);
 		parser.parse();
 		Optimizer optimizer = new Optimizer(Optimizer.LEVEL.ALL);
@@ -61,11 +65,10 @@ public class CodeGeneratorTest {
 		Integer[] fullCodes = linker.linkThem();
 		writer.print(printCode(fullCodes));
 		writer.close();
-		// if (path.contains("test008.txt")) {
-		// return;
-		// }
-		DLX.load(fullCodes);
-		DLX.execute(debug);
+		if (run) {
+			DLX.load(fullCodes);
+			DLX.execute(debug);
+		}
 	}
 
 	private String printCode(Integer[] integers) {

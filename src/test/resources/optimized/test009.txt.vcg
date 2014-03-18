@@ -46,9 +46,7 @@ node: {
 title: "12"
 label: "12
 [BLOCK:12
-36 MEM_ADDRESS FP_0 a_0
-37 LOAD (36) 
-38 WRITE (37) 
+36 WRITE 0 
 ]"
 }
 }

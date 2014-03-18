@@ -57,9 +57,7 @@ label: "3
 15 PHI a_8 a_10
 17 ADD a_15 1
 18 MOVE a_18 (17)
-19 MEM_ADDRESS FP_0 a_0
-20 LOAD (19) 
-21 WRITE (20) 
+19 WRITE a_18 
 ]"
 }
 }

@@ -6,23 +6,20 @@ title: "8"
 label: "8
 [BLOCK:8
 25 READ 
-26 MEM_ADDRESS FP_0 input_0
+26 MEM FP_0 input_0
 27 STORE (26) (25)
 28 SAVE_STATUS 
 30 LOAD (26) 
 31 PUSH (30) 
 32 CALL factIter_0 
-33 MEM_ADDRESS FP_0 (0)
-34 LOAD (33) 
-35 WRITE (34) 
-36 WLN 
-37 SAVE_STATUS 
-39 LOAD (26) 
-40 PUSH (39) 
-41 CALL factRec_4 
-43 LOAD (33) 
-44 WRITE (43) 
-45 WLN 
+33 WRITE (32) 
+34 WLN 
+35 SAVE_STATUS 
+37 LOAD (26) 
+38 PUSH (37) 
+39 CALL factRec_4 
+40 WRITE (39) 
+41 WLN 
 ]"
 }
 edge: { sourcename: "8"
@@ -31,7 +28,7 @@ label: "j32"
 color:red}
 edge: { sourcename: "8"
 targetname: "4"
-label: "j41"
+label: "j39"
 color:red}
 node: {
 title: "0"

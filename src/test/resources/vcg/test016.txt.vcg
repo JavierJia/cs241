@@ -10,15 +10,15 @@ label: "7
 36 SAVE_STATUS 
 37 PUSH 1 
 38 CALL bar_1 
-39 MEM_ADDRESS FP_0 x_0
+39 MEM FP_0 x_0
 40 STORE (39) 8
-41 MEM_ADDRESS FP_0 y_0
+41 MEM FP_0 y_0
 42 STORE (41) 1790
 43 SAVE_STATUS 
-44 MEM_ADDRESS FP_0 y_0
+44 MEM FP_0 y_0
 45 LOAD (44) 
 46 PUSH (45) 
-47 MEM_ADDRESS FP_0 x_0
+47 MEM FP_0 x_0
 48 LOAD (47) 
 49 PUSH (48) 
 50 CALL baz_2 
@@ -26,10 +26,10 @@ label: "7
 52 PUSH 4 
 53 PUSH 2 
 54 CALL boo_3 
-55 MEM_ADDRESS FP_0 y_0
+55 MEM FP_0 y_0
 56 LOAD (55) 
 57 ADD (56) (54)
-58 MEM_ADDRESS FP_0 y_0
+58 MEM FP_0 y_0
 59 STORE (58) (57)
 ]"
 }
@@ -55,9 +55,9 @@ label: "0
 [BLOCK:0
 1 MOVE a_1 1
 2 MOVE b_2 2
-3 MEM_ADDRESS FP_0 x_0
+3 MEM FP_0 x_0
 4 STORE (3) a_1
-5 MEM_ADDRESS FP_0 y_0
+5 MEM FP_0 y_0
 6 STORE (5) b_2
 ]"
 }
@@ -68,7 +68,7 @@ label: "1
 7 POP a_0 
 8 MOVE b_8 1
 9 MOVE c_9 1
-10 MEM_ADDRESS FP_0 y_0
+10 MEM FP_0 y_0
 11 STORE (10) b_8
 ]"
 }
@@ -98,7 +98,7 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-18 MEM_ADDRESS FP_0 y_0
+18 MEM FP_0 y_0
 19 LOAD (18) 
 20 CMP i_17 (19)
 28 BGE (20) (6)
@@ -116,12 +116,12 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-21 MEM_ADDRESS FP_0 x_0
+21 MEM FP_0 x_0
 22 LOAD (21) 
-23 MEM_ADDRESS FP_0 x_0
+23 MEM FP_0 x_0
 24 LOAD (23) 
 25 MUL (22) (24)
-26 MEM_ADDRESS FP_0 x_0
+26 MEM FP_0 x_0
 27 STORE (26) (25)
 29 BRA (4) 
 ]"
@@ -134,7 +134,7 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-30 MEM_ADDRESS FP_0 x_0
+30 MEM FP_0 x_0
 31 LOAD (30) 
 32 ADD (31) 4
 33 RETURN (32) 

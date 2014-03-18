@@ -172,7 +172,7 @@ public class Block {
 		}
 		// Add const field and var field;
 		if (lastIns == null) { // must load constOffset
-			instructions.add(new SSAInstruction(OP.MEM_ADDRESS, SSAVar.FPVar, new SSAVar(varTarget
+			instructions.add(new SSAInstruction(OP.MEM, SSAVar.FPVar, new SSAVar(varTarget
 					.getVarName(), 0)));
 			instructions.add(new SSAInstruction(OP.ADDA, new SSAVar(instructions.get(
 					instructions.size() - 1).getId()), constOffset));
@@ -195,8 +195,8 @@ public class Block {
 			lastIns = new SSAInstruction(OP.ADD, new SSAVar(lastIns.getId()), constOffset);
 			instructions.add(lastIns);
 		}
-		instructions.add(new SSAInstruction(OP.MEM_ADDRESS, SSAVar.FPVar, new SSAVar(varTarget
-				.getVarName(), 0)));
+		instructions.add(new SSAInstruction(OP.MEM, SSAVar.FPVar, new SSAVar(
+				varTarget.getVarName(), 0)));
 		instructions.add(new SSAInstruction(OP.ADDA, new SSAVar(lastIns.getId()), new SSAVar(
 				instructions.get(instructions.size() - 1).getId())));
 		if (op == OP.LOAD) {
@@ -220,7 +220,7 @@ public class Block {
 		if (var instanceof ArrayVar) {
 			return calculateOffset(var, OP.LOAD, null);
 		} else if (var.isVar()) {
-			SSAInstruction addr = new SSAInstruction(OP.MEM_ADDRESS, SSAVar.FPVar, new SSAVar(
+			SSAInstruction addr = new SSAInstruction(OP.MEM, SSAVar.FPVar, new SSAVar(
 					var.getVarName(), 0));
 			instructions.add(addr);
 			SSAInstruction loadins = new SSAInstruction(OP.LOAD, new SSAVar(addr.getId()));
@@ -236,7 +236,7 @@ public class Block {
 		if (varTarget instanceof ArrayVar) {
 			calculateOffset(varTarget, OP.STORE, ssAorConst);
 		} else if (varTarget.isVar()) {
-			SSAInstruction addr = new SSAInstruction(OP.MEM_ADDRESS, SSAVar.FPVar, new SSAVar(
+			SSAInstruction addr = new SSAInstruction(OP.MEM, SSAVar.FPVar, new SSAVar(
 					varTarget.getVarName(), 0));
 			instructions.add(addr);
 			SSAInstruction storeins = new SSAInstruction(OP.STORE, new SSAVar(addr.getId()),
@@ -374,8 +374,8 @@ public class Block {
 		if (variable == null) {
 			instructions.add(new SSAInstruction(OP.WLN));
 		} else {
-			SSAVar var = loadToSSA(variable);
-			instructions.add(new SSAInstruction(OP.WRITE, var));
+			SSAVar ssa = variable instanceof SSAVar ? (SSAVar) variable : loadToSSA(variable);
+			instructions.add(new SSAInstruction(OP.WRITE, ssa));
 		}
 	}
 

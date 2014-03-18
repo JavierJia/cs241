@@ -7,16 +7,4 @@ color:1
 label: "19:1
 [19]"
 }
-node: {
-title: "main21"
-color:1
-label: "21:1
-[21]"
-}
-node: {
-title: "main20"
-color:1
-label: "20:1
-[20]"
-}
 }}
