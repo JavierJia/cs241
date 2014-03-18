@@ -66,7 +66,6 @@ public class VariableTable implements Iterable<Variable> {
 		return variableTable.containsKey(identiName);
 	}
 
-	@Override
 	public Iterator<Variable> iterator() {
 		return variableTable.values().iterator();
 	}

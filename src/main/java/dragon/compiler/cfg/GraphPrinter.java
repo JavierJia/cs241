@@ -3,9 +3,11 @@ package dragon.compiler.cfg;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Set;
+
+import dragon.compiler.parser.DLX;
 
 public class GraphPrinter {
 	public static String printCFGHeader(String blockName) {
@@ -158,5 +160,13 @@ public class GraphPrinter {
 		}
 		sb.append('}');
 		return sb.toString();
+	}
+
+	public static String printCode(Integer[] integers) {
+		String result = "";
+		for (int word : integers) {
+			result += DLX.disassemble(word);
+		}
+		return result;
 	}
 }

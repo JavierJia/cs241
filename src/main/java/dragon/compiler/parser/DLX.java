@@ -410,7 +410,7 @@ public class DLX {
 		}
 	}
 
-	static String disassemble(int instructionWord) {
+	public static String disassemble(int instructionWord) {
 
 		disassem(instructionWord);
 		String line = mnemo[op] + "  ";
