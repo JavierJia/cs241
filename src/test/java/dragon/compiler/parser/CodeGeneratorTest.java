@@ -13,32 +13,27 @@ import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.TouchDataHelper;
 
 public class CodeGeneratorTest {
-	// @Test
-	// public void TestDebug() throws IOException, SyntaxFormatException {
-	// checkCode("src/test/resources/testprogs/test001.txt", "dlxcode", true,
-	// true);
-	// }
+//	@Test
+//	public void TestDebug() throws IOException, SyntaxFormatException {
+//		checkCode("src/test/resources/testprogs/test026.txt", "dlxcode", true, true);
+//	}
 
-	@Test
-	public void TestAll() throws IOException, SyntaxFormatException {
-		for (File file : new File("src/test/resources/testprogs/").listFiles()) {
-			if (file.isFile()) {
-				if (file.getPath().indexOf(StatementTest.simpleFuncTest4) >= 0) {
-					continue;
-				}
-				if (!file.getPath().endsWith(".txt")) {
-					continue;
-				}
-				// TODO remove
-				if (!file.getPath().contains("test0")) {
-					continue;
-				}
-				TouchDataHelper.resetAll();
-				System.out.println(file.getPath());
-				checkCode(file.getPath(), "dlxcode", false, false);
-			}
-		}
-	}
+	 @Test
+	 public void TestAll() throws IOException, SyntaxFormatException {
+	 for (File file : new File("src/test/resources/testprogs/").listFiles()) {
+	 if (file.isFile()) {
+	 if (file.getPath().indexOf(StatementTest.simpleFuncTest4) >= 0) {
+	 continue;
+	 }
+	 if (!file.getPath().endsWith(".txt")) {
+	 continue;
+	 }
+	 TouchDataHelper.resetAll();
+	 System.out.println(file.getPath());
+	 checkCode(file.getPath(), "dlxcode", false, false);
+	 }
+	 }
+	 }
 
 	private void checkCode(String path, String dirName, boolean debug, boolean run)
 			throws IOException, SyntaxFormatException {

@@ -47,10 +47,8 @@ public class CodeGenerator {
 		this.root = root;
 		this.allocator = allocator;
 		this.regMap = allocator.allocate(root);
-		if (funcName.equals("main")) {
-			if (Function.getAllFunction().size() > 0) {
-				this.globalAddressOffset = computeGlobalAddress(root.getGlobalVarTable());
-			}
+		if (funcName.equals("main") && Function.getAllFunction().size() > 0) {
+			this.globalAddressOffset = computeGlobalAddress(root.getGlobalVarTable());
 		} else {
 			this.localFPOffset = computeLocalVarOffset(root.getLocalVarTable());
 			this.globalAddressOffset = computeGlobalAddress(root.getGlobalVarTable());
@@ -412,15 +410,13 @@ public class CodeGenerator {
 			break;
 		case STORE:
 			leftReg = loadLeftMaybeInMem(codeList, ins.getTarget(), regMap);
-			rightReg = loadRightMaybeConst(codeList, ins.getSrc(), regMap);
+			rightReg = loadLeftMaybeInMem(codeList, ins.getSrc(), regMap);
 			release(leftReg);
 			release(rightReg);
 			int dlxOp = DLX.STX;
-			if (ins.getSrc().isConst()) {
-				dlxOp = DLX.STW;
-			}
 			codeList.add(DLX.assemble(dlxOp, rightReg, leftReg, 0));
-			store(codeList, leftReg, regMap.get(ins.getTarget().getSSAVar().getVersion()));
+			// store(codeList, leftReg,
+			// regMap.get(ins.getTarget().getSSAVar().getVersion()));
 			break;
 		case SAVE_STATUS:
 			for (int i = 1; i <= allocator.getRegNumber(); i++) {
@@ -545,9 +541,9 @@ public class CodeGenerator {
 		}
 	}
 
-	private void store(ArrayList<Integer> lst, int cachedReg, Integer possibleMemReg) {
-		if (allocator.isSpilled(possibleMemReg)) {
-			lst.add(DLX.assemble(DLX.STW, cachedReg, DLX.REG_FRAME, -possibleMemReg * 4));
+	private void store(ArrayList<Integer> lst, int currentTempReg, Integer regMaybeSpilled) {
+		if (allocator.isSpilled(regMaybeSpilled)) {
+			lst.add(DLX.assemble(DLX.STW, currentTempReg, DLX.REG_FRAME, -regMaybeSpilled * 4));
 		}
 	}
 
