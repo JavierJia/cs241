@@ -13,10 +13,11 @@ import dragon.compiler.data.SyntaxFormatException;
 import dragon.compiler.data.TouchDataHelper;
 
 public class CodeGeneratorTest {
-//	@Test
-//	public void TestDebug() throws IOException, SyntaxFormatException {
-//		checkCode("src/test/resources/testprogs/factorial.txt", "dlxcode", false, true);
-//	}
+	// @Test
+	// public void TestDebug() throws IOException, SyntaxFormatException {
+	// checkCode("src/test/resources/testprogs/cell.txt", "dlxcode", true,
+	// true);
+	// }
 
 	@Test
 	public void TestAll() throws IOException, SyntaxFormatException {

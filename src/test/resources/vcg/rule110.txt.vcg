@@ -1,0 +1,507 @@
+graph: {title: "mainCFG"
+manhattan_edges:yes
+smanhattan_edges:yes
+node: {
+title: "24"
+label: "24
+[BLOCK:24
+190 WRITE 22 
+191 MEM FP_0 colcount_0
+192 STORE (191) 80
+193 MEM FP_0 rowcount_0
+194 STORE (193) 60
+195 SAVE_STATUS 
+196 CALL cleardata_2 
+197 MEM FP_0 data_0
+198 ADDA (197) 160
+199 STORE (198) 1
+200 MEM FP_0 rule_0
+201 STORE (200) 45
+202 SAVE_STATUS 
+203 CALL initrulebin_1 
+204 SAVE_STATUS 
+205 CALL run_20 
+]"
+}
+edge: { sourcename: "24"
+targetname: "2"
+label: "j196"
+color:red}
+edge: { sourcename: "24"
+targetname: "1"
+label: "j203"
+color:red}
+edge: { sourcename: "24"
+targetname: "20"
+label: "j205"
+color:red}
+node: {
+title: "2"
+label: "2
+[BLOCK:2
+77 MOVE i_77 0
+]"
+}
+edge: { sourcename: "2"
+targetname: "3"
+label: "3"
+}
+node: {
+title: "1"
+label: "1
+[BLOCK:1
+18 MEM FP_0 rule_0
+19 LOAD (18) 
+20 MOVE bits_20 (19)
+21 SAVE_STATUS 
+22 PUSH bits_20 
+23 PUSH 0 
+24 PUSH 0 
+25 PUSH 0 
+26 CALL setnextbit_0 
+27 MOVE bits_27 (26)
+28 SAVE_STATUS 
+29 PUSH bits_27 
+30 PUSH 1 
+31 PUSH 0 
+32 PUSH 0 
+33 CALL setnextbit_0 
+34 MOVE bits_34 (33)
+35 SAVE_STATUS 
+36 PUSH bits_34 
+37 PUSH 0 
+38 PUSH 1 
+39 PUSH 0 
+40 CALL setnextbit_0 
+41 MOVE bits_41 (40)
+42 SAVE_STATUS 
+43 PUSH bits_41 
+44 PUSH 1 
+45 PUSH 1 
+46 PUSH 0 
+47 CALL setnextbit_0 
+48 MOVE bits_48 (47)
+49 SAVE_STATUS 
+50 PUSH bits_48 
+51 PUSH 0 
+52 PUSH 0 
+53 PUSH 1 
+54 CALL setnextbit_0 
+55 MOVE bits_55 (54)
+56 SAVE_STATUS 
+57 PUSH bits_55 
+58 PUSH 1 
+59 PUSH 0 
+60 PUSH 1 
+61 CALL setnextbit_0 
+62 MOVE bits_62 (61)
+63 SAVE_STATUS 
+64 PUSH bits_62 
+65 PUSH 0 
+66 PUSH 1 
+67 PUSH 1 
+68 CALL setnextbit_0 
+69 MOVE bits_69 (68)
+70 SAVE_STATUS 
+71 PUSH bits_69 
+72 PUSH 1 
+73 PUSH 1 
+74 PUSH 1 
+75 CALL setnextbit_0 
+76 MOVE bits_76 (75)
+]"
+}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j26"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j33"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j40"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j47"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j54"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j61"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j68"
+color:red}
+edge: { sourcename: "1"
+targetname: "0"
+label: "j75"
+color:red}
+node: {
+title: "20"
+label: "20
+[BLOCK:20
+177 MOVE i_177 0
+]"
+}
+edge: { sourcename: "20"
+targetname: "21"
+label: "21"
+}
+node: {
+title: "3"
+label: "3
+[BLOCK:3
+89 PHI i_77 i_87
+78 MEM FP_0 colcount_0
+79 LOAD (78) 
+80 ADD (79) 2
+81 CMP i_89 (80)
+88 BGE (81) (5)
+]"
+}
+edge: { sourcename: "3"
+targetname: "4"
+label: "4"
+}
+edge: { sourcename: "3"
+targetname: "5"
+label: "5"
+}
+node: {
+title: "0"
+label: "0
+[BLOCK:0
+1 POP last_0 
+2 POP akt_0 
+3 POP next_0 
+4 POP bits_0 
+5 DIV bits_4 2
+6 MUL (5) 2
+7 SUB bits_4 (6)
+8 MUL last_1 16
+9 MUL akt_2 8
+10 ADD (8) (9)
+11 MUL next_3 4
+12 ADD (10) (11)
+13 MEM FP_0 rulebin_0
+14 ADDA (12) (13)
+15 STORE (14) (7)
+16 DIV bits_4 2
+17 RETURN (16) 
+]"
+}
+node: {
+title: "21"
+label: "21
+[BLOCK:21
+188 PHI i_177 i_186
+178 MEM FP_0 rowcount_0
+179 LOAD (178) 
+180 CMP i_188 (179)
+187 BGE (180) (23)
+]"
+}
+edge: { sourcename: "21"
+targetname: "22"
+label: "22"
+}
+edge: { sourcename: "21"
+targetname: "23"
+label: "23"
+}
+node: {
+title: "4"
+label: "4
+[BLOCK:4
+82 MUL i_89 4
+83 MEM FP_0 data_0
+84 ADDA (82) (83)
+85 STORE (84) 0
+86 ADD i_89 1
+87 MOVE i_87 (86)
+90 BRA (3) 
+]"
+}
+edge: { sourcename: "4"
+targetname: "3"
+label: "3"
+}
+node: {
+title: "5"
+label: "5
+[BLOCK:5
+]"
+}
+node: {
+title: "22"
+label: "22
+[BLOCK:22
+181 SAVE_STATUS 
+182 CALL output_6 
+183 SAVE_STATUS 
+184 CALL calcnext_16 
+185 ADD i_188 1
+186 MOVE i_186 (185)
+189 BRA (21) 
+]"
+}
+edge: { sourcename: "22"
+targetname: "21"
+label: "21"
+}
+edge: { sourcename: "22"
+targetname: "6"
+label: "j182"
+color:red}
+edge: { sourcename: "22"
+targetname: "16"
+label: "j184"
+color:red}
+node: {
+title: "23"
+label: "23
+[BLOCK:23
+]"
+}
+node: {
+title: "6"
+label: "6
+[BLOCK:6
+91 MOVE i_91 1
+]"
+}
+edge: { sourcename: "6"
+targetname: "7"
+label: "7"
+}
+node: {
+title: "16"
+label: "16
+[BLOCK:16
+118 MEM FP_0 data_0
+119 ADDA (118) 4
+120 LOAD (119) 
+121 MEM FP_0 data_0
+122 ADDA (121) 0
+123 STORE (122) (120)
+124 MEM FP_0 colcount_0
+125 LOAD (124) 
+126 ADD (125) 1
+127 MEM FP_0 colcount_0
+128 LOAD (127) 
+129 MUL (128) 4
+130 MEM FP_0 data_0
+131 ADDA (129) (130)
+132 LOAD (131) 
+133 MUL (126) 4
+134 MEM FP_0 data_0
+135 ADDA (133) (134)
+136 STORE (135) (132)
+137 MEM FP_0 data_0
+138 ADDA (137) 0
+139 LOAD (138) 
+140 MOVE last_140 (139)
+141 MEM FP_0 data_0
+142 ADDA (141) 4
+143 LOAD (142) 
+144 MOVE akt_144 (143)
+145 MOVE i_145 1
+]"
+}
+edge: { sourcename: "16"
+targetname: "17"
+label: "17"
+}
+node: {
+title: "7"
+label: "7
+[BLOCK:7
+115 PHI i_91 i_113
+92 MEM FP_0 colcount_0
+93 LOAD (92) 
+94 CMP i_115 (93)
+114 BGT (94) (15)
+]"
+}
+edge: { sourcename: "7"
+targetname: "8"
+label: "8"
+}
+edge: { sourcename: "7"
+targetname: "15"
+label: "15"
+}
+node: {
+title: "17"
+label: "17
+[BLOCK:17
+172 PHI last_140 last_167
+173 PHI akt_144 akt_168
+174 PHI next_0 next_154
+175 PHI i_145 i_170
+146 MEM FP_0 colcount_0
+147 LOAD (146) 
+148 CMP i_175 (147)
+171 BGT (148) (19)
+]"
+}
+edge: { sourcename: "17"
+targetname: "18"
+label: "18"
+}
+edge: { sourcename: "17"
+targetname: "19"
+label: "19"
+}
+node: {
+title: "8"
+label: "8
+[BLOCK:8
+95 MUL i_115 4
+96 MEM FP_0 data_0
+97 ADDA (95) (96)
+98 LOAD (97) 
+99 CMP (98) 0
+110 BNE (99) (10)
+]"
+}
+edge: { sourcename: "8"
+targetname: "9"
+label: "9"
+}
+edge: { sourcename: "8"
+targetname: "10"
+label: "10"
+}
+node: {
+title: "15"
+label: "15
+[BLOCK:15
+117 WLN 
+]"
+}
+node: {
+title: "18"
+label: "18
+[BLOCK:18
+149 ADD i_175 1
+150 MUL (149) 4
+151 MEM FP_0 data_0
+152 ADDA (150) (151)
+153 LOAD (152) 
+154 MOVE next_154 (153)
+155 MUL last_172 16
+156 MUL akt_173 8
+157 ADD (155) (156)
+158 MUL next_154 4
+159 ADD (157) (158)
+160 MEM FP_0 rulebin_0
+161 ADDA (159) (160)
+162 LOAD (161) 
+163 MUL i_175 4
+164 MEM FP_0 data_0
+165 ADDA (163) (164)
+166 STORE (165) (162)
+167 MOVE last_167 akt_173
+168 MOVE akt_168 next_154
+169 ADD i_175 1
+170 MOVE i_170 (169)
+176 BRA (17) 
+]"
+}
+edge: { sourcename: "18"
+targetname: "17"
+label: "17"
+}
+node: {
+title: "19"
+label: "19
+[BLOCK:19
+]"
+}
+node: {
+title: "9"
+label: "9
+[BLOCK:9
+100 WRITE 1 
+111 BRA (14) 
+]"
+}
+edge: { sourcename: "9"
+targetname: "14"
+label: "14"
+}
+node: {
+title: "10"
+label: "10
+[BLOCK:10
+101 MUL i_115 4
+102 MEM FP_0 data_0
+103 ADDA (101) (102)
+104 LOAD (103) 
+105 CMP (104) 1
+108 BNE (105) (12)
+]"
+}
+edge: { sourcename: "10"
+targetname: "11"
+label: "11"
+}
+edge: { sourcename: "10"
+targetname: "12"
+label: "12"
+}
+node: {
+title: "14"
+label: "14
+[BLOCK:14
+112 ADD i_115 1
+113 MOVE i_113 (112)
+116 BRA (7) 
+]"
+}
+edge: { sourcename: "14"
+targetname: "7"
+label: "7"
+}
+node: {
+title: "11"
+label: "11
+[BLOCK:11
+106 WRITE 8 
+109 BRA (13) 
+]"
+}
+edge: { sourcename: "11"
+targetname: "13"
+label: "13"
+}
+node: {
+title: "12"
+label: "12
+[BLOCK:12
+107 WRITE 0 
+]"
+}
+edge: { sourcename: "12"
+targetname: "13"
+label: "13"
+}
+node: {
+title: "13"
+label: "13
+[BLOCK:13
+]"
+}
+edge: { sourcename: "13"
+targetname: "14"
+label: "14"
+}
+}
