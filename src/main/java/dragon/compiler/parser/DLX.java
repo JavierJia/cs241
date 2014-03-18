@@ -39,15 +39,15 @@ public class DLX {
 		try {
 
 			execloop: while (true) {
-				
+
 				R[0] = 0;
 				disassem(M[PC]); // initializes op, a, b, c
 
-				if (debug ) {
+				if (debug) {
 					System.out.println(PC + ":" + disassemble(M[PC]));
 				}
-				if (PC == 58){
-					System.out.println("here it is");
+				if (PC == 74) {
+					System.out.print("");
 				}
 				int nextPC = PC + 1;
 				if (format == 2) {
@@ -147,11 +147,14 @@ public class DLX {
 					break;
 				case POP:
 					R[a] = M[R[b] / 4];
+//					System.out.println(PC + " POP: R[" + a + "] = " + "MEM[" + R[b] + "]" + " = " + R[a]);
 					R[b] = R[b] + c;
+					
 					break;
 				case PSH:
 					R[b] = R[b] + c;
 					M[R[b] / 4] = R[a];
+//					System.out.println(PC + " PSH: MEM[" + R[b] + "] = R[" + a + "]" + " = " + R[a]);
 					break;
 				case BEQ:
 					if (R[a] == 0)

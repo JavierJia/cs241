@@ -123,7 +123,7 @@ public class CodeGenerator {
 		if (!funcName.equals("main")) {
 			int cahced = allocator.allocateTempMemCache();
 			release(cahced);
-			codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, -4));
+			codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, 4));
 		}
 	}
 
@@ -319,7 +319,7 @@ public class CodeGenerator {
 		switch (ins.getOP()) {
 		case POP:
 			int cached = allocator.allocateTempMemCache();
-			dest = getWithoutLoadReg(ins.getId());
+			dest = getWithoutLoadReg(regMap.get(ins.getId()));
 			codeList.add(DLX.assemble(DLX.POP, dest, cached, 4));
 			store(codeList, dest, regMap.get(ins.getId()));
 			release(dest);
@@ -422,6 +422,8 @@ public class CodeGenerator {
 			for (int i = 1; i <= allocator.getRegNumber(); i++) {
 				codeList.add(DLX.assemble(DLX.PSH, i, DLX.REG_STACK, -4));
 			}
+			// also save nextPC
+			codeList.add(DLX.assemble(DLX.PSH, DLX.REG_RETURN_PC, DLX.REG_STACK, -4));
 			break;
 		case PUSH:
 			leftReg = loadLeftMaybeInMem(codeList, ins.getTarget(), regMap);
@@ -438,10 +440,14 @@ public class CodeGenerator {
 			if (argsize > 0) {
 				codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_STACK, argsize));
 			}
+
+			// pop next pc
+			codeList.add(DLX.assemble(DLX.POP, DLX.REG_RETURN_PC, DLX.REG_STACK, 4));
 			// pop regs
 			for (int i = allocator.getRegNumber(); i > 0; --i) {
 				codeList.add(DLX.assemble(DLX.POP, i, DLX.REG_STACK, 4));
 			}
+
 			dest = getWithoutLoadReg(regMap.get(ins.getId()));
 			codeList.add(DLX.assemble(DLX.ADDI, dest, DLX.REG_RETURN_VALUE, 0));
 			store(codeList, dest, regMap.get(ins.getId()));
@@ -480,7 +486,7 @@ public class CodeGenerator {
 	}
 
 	private void recoverDynamicLink() {
-		codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_FRAME, 4));
+		codeList.add(DLX.assemble(DLX.ADDI, DLX.REG_STACK, DLX.REG_FRAME, 0));
 		codeList.add(DLX.assemble(DLX.POP, DLX.REG_FRAME, DLX.REG_STACK, 4));
 	}
 

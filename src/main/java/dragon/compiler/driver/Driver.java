@@ -70,6 +70,9 @@ public class Driver {
 		} catch (SyntaxFormatException e) {
 			System.err.println("Syntax error:" + e.getMessage());
 			return;
+		} catch (Exception e) {
+			System.err.println("Sementic error:" + e.getMessage());
+			return;
 		}
 
 		Block mainBlock = parser.getRootBlock();
