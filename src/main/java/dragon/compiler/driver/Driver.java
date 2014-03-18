@@ -29,9 +29,6 @@ public class Driver {
 		@Option(name = "-optimize-level", usage = "recursively run something\n, 0: Nothing, 1: Copy propagation, 2: Common expression elimination, 3: Const branch elimination; each bigger one is include the previous level, default all", required = false)
 		private int optimizeLevel = Optimizer.LEVEL.ALL.ordinal();
 
-		@Option(name = "-compile", usage = "compile the input file", required = false)
-		private boolean compile = true;
-
 		@Option(name = "-run", usage = "if run the dlxcode", required = false)
 		private boolean runDLX = false;
 
