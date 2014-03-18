@@ -12,10 +12,10 @@ public class Instruction {
 	}
 
 	public enum OP {
-		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN, CALL, RETURN, POP, PUSH, SAVE_STATUS,
+		NEG, ADD, SUB, MUL, DIV, CMP, ADDA, LOAD, STORE, MOVE, PHI, END, BRA, BNE, BEQ, BLE, BLT, BGE, BGT, READ, WRITE, WLN, CALL, RETURN, POP, PUSH, SAVE_STATUS, MEM_ADDRESS,
 	}
 
-	public static EnumSet<OP> ARITHMETIC_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV);
+	public static EnumSet<OP> ARITHMETIC_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV, OP.MEM_ADDRESS);
 
 	public static EnumSet<OP> BRACH_SET = EnumSet.of(OP.BRA, OP.BNE, OP.BEQ, OP.BLE, OP.BLT,
 			OP.BGE, OP.BGT);
@@ -23,7 +23,7 @@ public class Instruction {
 	public static EnumSet<OP> SINGLE_ARGS_SET = EnumSet.of(OP.END, OP.READ, OP.WRITE, OP.WLN);
 
 	public static EnumSet<OP> PHI_UPDATE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL, OP.DIV,
-			OP.CMP, OP.ADDA, OP.LOAD, OP.WRITE, OP.STORE, OP.RETURN, OP.PUSH);
+			OP.CMP, OP.ADDA, OP.LOAD, OP.WRITE, OP.STORE, OP.RETURN, OP.PUSH, OP.MEM_ADDRESS);
 
 	public static EnumSet<OP> PROPAGATING_SET = EnumSet.copyOf(PHI_UPDATE_SET);
 	static {
@@ -31,7 +31,7 @@ public class Instruction {
 	}
 
 	public static EnumSet<OP> COMMON_ELIMINATE_SET = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL,
-			OP.DIV, OP.CMP, OP.ADDA, OP.PHI);
+			OP.DIV, OP.CMP, OP.ADDA, OP.PHI, OP.MEM_ADDRESS);
 
 	public static boolean isBranchInstruction(OP op) {
 		return BRACH_SET.contains(op);
@@ -47,7 +47,7 @@ public class Instruction {
 			OP.POP, OP.CALL, OP.CMP, OP.SAVE_STATUS);
 
 	public static EnumSet<OP> POSSIBLE_RETURN_EXP = EnumSet.of(OP.NEG, OP.ADD, OP.SUB, OP.MUL,
-			OP.DIV, OP.LOAD);
+			OP.DIV, OP.LOAD, OP.MEM_ADDRESS);
 
 	public static EnumSet<OP> NO_USE_VAR_SET = EnumSet.of(OP.BRA, OP.READ, OP.CALL, OP.POP,
 			OP.SAVE_STATUS);

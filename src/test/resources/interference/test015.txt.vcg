@@ -2,6 +2,54 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "main51"
+color:1
+label: "51:1
+[51]"
+}
+node: {
+title: "main49"
+color:1
+label: "49:1
+[49]"
+}
+node: {
+title: "main48"
+color:2
+label: "48:2
+[48]"
+}
+edge: { sourcename: "main48"
+targetname: "main47"
+}
+node: {
+title: "main54"
+color:1
+label: "54:1
+[54]"
+}
+node: {
+title: "main53"
+color:2
+label: "53:2
+[53]"
+}
+edge: { sourcename: "main53"
+targetname: "main52"
+}
+node: {
+title: "main52"
+color:1
+label: "52:1
+[52]"
+}
+node: {
+title: "main46"
+color:1
+label: "46:1
+[46]"
+}
+node: {
 title: "main47"
 color:1
 label: "47:1

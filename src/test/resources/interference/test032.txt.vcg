@@ -2,61 +2,31 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "main16"
+color:1
+label: "16:1
+[16]"
+}
+node: {
 title: "main4"
-color:5
-label: "4:5
+color:3
+label: "4:3
 [4]"
 }
 edge: { sourcename: "main4"
-targetname: "main5"
-}
-edge: { sourcename: "main4"
 targetname: "main7"
 }
 edge: { sourcename: "main4"
-targetname: "main10"
-}
-edge: { sourcename: "main4"
-targetname: "main11"
-}
-node: {
-title: "main5"
-color:4
-label: "5:4
-[5]"
-}
-edge: { sourcename: "main5"
-targetname: "main7"
-}
-edge: { sourcename: "main5"
-targetname: "main10"
-}
-edge: { sourcename: "main5"
 targetname: "main11"
 }
 node: {
 title: "main7"
-color:3
-label: "7:3
+color:2
+label: "7:2
 [7]"
 }
 edge: { sourcename: "main7"
-targetname: "main10"
-}
-edge: { sourcename: "main7"
 targetname: "main11"
-}
-node: {
-title: "main10"
-color:2
-label: "10:2
-[10]"
-}
-edge: { sourcename: "main10"
-targetname: "main11"
-}
-edge: { sourcename: "main10"
-targetname: "main14"
 }
 node: {
 title: "main11"
@@ -69,5 +39,11 @@ title: "main14"
 color:1
 label: "14:1
 [14]"
+}
+node: {
+title: "main15"
+color:1
+label: "15:1
+[15]"
 }
 }}

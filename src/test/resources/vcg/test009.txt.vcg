@@ -176,7 +176,9 @@ label: "12
 32 PHI a_17 a_27
 34 ADD a_32 1
 35 MOVE a_35 (34)
-36 WRITE a_35 
+36 MEM_ADDRESS FP_0 a_0
+37 LOAD (36) 
+38 WRITE (37) 
 ]"
 }
 }

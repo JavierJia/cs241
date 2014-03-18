@@ -2,9 +2,21 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "main38"
+color:1
+label: "38:1
+[38]"
+}
+node: {
 title: "main36"
 color:1
 label: "36:1
 [36]"
+}
+node: {
+title: "main37"
+color:1
+label: "37:1
+[37]"
 }
 }}

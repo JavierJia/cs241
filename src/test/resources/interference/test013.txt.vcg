@@ -2,40 +2,25 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "main71"
+title: "main85"
 color:1
-label: "71:1
-[71]"
+label: "85:1
+[85]"
 }
 node: {
-title: "main72"
+title: "main86"
 color:1
-label: "72:1
-[72]"
+label: "86:1
+[86]"
 }
 }graph: {title: "foo"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "foo17"
-color:3
-label: "17:3
-[17]"
-}
-edge: { sourcename: "foo17"
-targetname: "foo18"
-}
-edge: { sourcename: "foo17"
-targetname: "foo21"
-}
-node: {
 title: "foo68"
 color:1
 label: "68:1
 [68]"
-}
-edge: { sourcename: "foo68"
-targetname: "foo21"
 }
 node: {
 title: "foo69"
@@ -43,44 +28,17 @@ color:1
 label: "69:1
 [69]"
 }
-edge: { sourcename: "foo69"
-targetname: "foo21"
-}
 node: {
 title: "foo70"
 color:1
 label: "70:1
 [70]"
 }
-edge: { sourcename: "foo70"
-targetname: "foo21"
-}
 node: {
-title: "foo18"
+title: "foo71"
 color:1
-label: "18:1
-[18]"
-}
-edge: { sourcename: "foo18"
-targetname: "foo21"
-}
-node: {
-title: "foo21"
-color:2
-label: "21:2
-[21]"
-}
-edge: { sourcename: "foo21"
-targetname: "foo64"
-}
-edge: { sourcename: "foo21"
-targetname: "foo65"
-}
-edge: { sourcename: "foo21"
-targetname: "foo66"
-}
-edge: { sourcename: "foo21"
-targetname: "foo67"
+label: "71:1
+[71]"
 }
 node: {
 title: "foo64"
@@ -105,5 +63,110 @@ title: "foo67"
 color:1
 label: "67:1
 [67]"
+}
+node: {
+title: "foo76"
+color:1
+label: "76:1
+[76]"
+}
+node: {
+title: "foo77"
+color:1
+label: "77:1
+[77]"
+}
+node: {
+title: "foo78"
+color:1
+label: "78:1
+[78]"
+}
+node: {
+title: "foo79"
+color:1
+label: "79:1
+[79]"
+}
+node: {
+title: "foo72"
+color:1
+label: "72:1
+[72]"
+}
+node: {
+title: "foo73"
+color:1
+label: "73:1
+[73]"
+}
+node: {
+title: "foo74"
+color:1
+label: "74:1
+[74]"
+}
+node: {
+title: "foo75"
+color:1
+label: "75:1
+[75]"
+}
+node: {
+title: "foo17"
+color:3
+label: "17:3
+[17]"
+}
+edge: { sourcename: "foo17"
+targetname: "foo18"
+}
+edge: { sourcename: "foo17"
+targetname: "foo21"
+}
+node: {
+title: "foo84"
+color:1
+label: "84:1
+[84]"
+}
+node: {
+title: "foo18"
+color:2
+label: "18:2
+[18]"
+}
+edge: { sourcename: "foo18"
+targetname: "foo21"
+}
+node: {
+title: "foo21"
+color:1
+label: "21:1
+[21]"
+}
+node: {
+title: "foo81"
+color:1
+label: "81:1
+[81]"
+}
+node: {
+title: "foo80"
+color:1
+label: "80:1
+[80]"
+}
+node: {
+title: "foo83"
+color:1
+label: "83:1
+[83]"
+}
+node: {
+title: "foo82"
+color:1
+label: "82:1
+[82]"
 }
 }}

@@ -5,8 +5,15 @@ node: {
 title: "15"
 label: "15
 [BLOCK:15
-45 ADD too_0 3
-47 ADD foo_45 6
+45 MEM_ADDRESS FP_0 too_0
+46 LOAD (45) 
+47 ADD (46) 3
+48 MEM_ADDRESS FP_0 foo_0
+49 STORE (48) (47)
+51 LOAD (48) 
+52 ADD (51) 6
+53 MEM_ADDRESS FP_0 af_0
+54 STORE (53) (52)
 ]"
 }
 }

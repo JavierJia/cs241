@@ -52,7 +52,11 @@ public class Parser {
 		}
 
 		assertAndMoveNext(TokenType.BEGIN_BRACE);
-		rootBlock = new Block(globalVarList, null);
+		if (Function.getAllFunction().size() > 0) {
+			rootBlock = new Block(new VariableTable(), globalVarList);
+		} else {
+			rootBlock = new Block(globalVarList, null);
+		}
 		CFGResult allStateSequence = statSequence(rootBlock);
 		if (allStateSequence == null) {
 			throwFormatException("statSequence is missing");

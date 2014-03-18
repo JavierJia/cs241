@@ -12,7 +12,6 @@ import dragon.compiler.data.Function;
 import dragon.compiler.data.Instruction;
 import dragon.compiler.data.Instruction.OP;
 import dragon.compiler.data.SSAInstruction;
-import dragon.compiler.data.SSAVar;
 import dragon.compiler.data.Variable;
 import dragon.compiler.data.VariableTable;
 
@@ -47,23 +46,37 @@ public class CodeGenerator {
 		this.funcName = funcName;
 		this.root = root;
 		this.allocator = allocator;
+		this.regMap = allocator.allocate(root);
 		if (funcName.equals("main")) {
-			this.globalAddressOffset = computeGlobalAddress(root.getLocalVarTable());
-			this.localFPOffset = this.globalAddressOffset;
+			if (Function.getAllFunction().size() > 0) {
+				this.globalAddressOffset = computeGlobalAddress(root.getGlobalVarTable());
+			}
 		} else {
 			this.localFPOffset = computeLocalVarOffset(root.getLocalVarTable());
 			this.globalAddressOffset = computeGlobalAddress(root.getGlobalVarTable());
 		}
-		this.regMap = allocator.allocate(root);
+
 	}
 
-	private static HashMap<String, Integer> computeLocalVarOffset(VariableTable localVarTable) {
+	private HashMap<String, Integer> computeLocalVarOffset(VariableTable localVarTable) {
 		HashMap<String, Integer> addr = new HashMap<String, Integer>();
-		int offset = 0;
+		int offset = (allocator.getRegNumber() + 2) * 4; // useless, just to
+															// make
+		// code logic simple
+		int maxReg = 0;
+		for (int reg : regMap.values()) {
+			if (maxReg < reg) {
+				maxReg = reg;
+			}
+		}
+		if (maxReg > allocator.getRegNumber() + 2) {
+			offset = maxReg * 4;
+		}
+		offset = -offset;
 		for (Variable var : localVarTable) {
 			if (var.isArray()) {
-				addr.put(var.getVarName(), offset);
 				offset -= var.computeSize();
+				addr.put(var.getVarName(), offset);
 			}
 		}
 		return addr;
@@ -112,7 +125,7 @@ public class CodeGenerator {
 		if (!funcName.equals("main")) {
 			int cahced = allocator.allocateTempMemCache();
 			release(cahced);
-			codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, 4));
+			codeList.add(DLX.assemble(DLX.ADDI, cahced, DLX.REG_FRAME, -4));
 		}
 	}
 
@@ -137,7 +150,7 @@ public class CodeGenerator {
 			}
 		}
 		if (maxReg > allocator.getRegNumber() + 2) {
-			size += maxReg * 4;
+			size = maxReg * 4;
 		}
 		for (Variable var : root.getLocalVarTable()) {
 			size += var.computeSize();
@@ -155,7 +168,7 @@ public class CodeGenerator {
 			}
 		}
 		if (maxReg > allocator.getRegNumber() + 2) {
-			size += maxReg * 4;
+			size = maxReg * 4;
 		}
 		for (Variable var : root.getLocalVarTable()) {
 			if (var.isArray()) {
@@ -314,26 +327,28 @@ public class CodeGenerator {
 			release(dest);
 			release(cached);
 			break;
-		case ADD:
-			if (!ins.getTarget().isConst() && ins.getTarget().getSSAVar() == SSAVar.FPVar) {
-				String varName = ins.getSrc().getSSAVar().getVarName();
-				if (localFPOffset.containsKey(varName)) {
-					leftReg = DLX.REG_FRAME;
-					rightReg = localFPOffset.get(varName);
-				} else if (globalAddressOffset.containsKey(varName)) {
-					leftReg = DLX.REG_GLOBAL;
-					rightReg = globalAddressOffset.get(varName);
-				} else {
-					throw new IllegalArgumentException("undefined:" + varName);
-				}
-
-				dest = getWithoutLoadReg(regMap.get(ins.getId()));
-
-				codeList.add(DLX.assemble(DLX.ADDI, dest, leftReg, rightReg));
-				store(codeList, dest, regMap.get(ins.getId()));
-				release(dest);
-				break;
+		case MEM_ADDRESS:
+			if (ins.getTarget().isConst() || !ins.getTarget().getSSAVar().getVarName().equals("FP")) {
+				throw new IllegalArgumentException("Should not be none FP!");
 			}
+			String varName = ins.getSrc().getSSAVar().getVarName();
+			if (localFPOffset.containsKey(varName)) {
+				leftReg = DLX.REG_FRAME;
+				rightReg = localFPOffset.get(varName);
+			} else if (globalAddressOffset.containsKey(varName)) {
+				leftReg = DLX.REG_GLOBAL;
+				rightReg = globalAddressOffset.get(varName);
+			} else {
+				throw new IllegalArgumentException("undefined:" + varName);
+			}
+
+			dest = getWithoutLoadReg(regMap.get(ins.getId()));
+
+			codeList.add(DLX.assemble(DLX.ADDI, dest, leftReg, rightReg));
+			store(codeList, dest, regMap.get(ins.getId()));
+			release(dest);
+			break;
+		case ADD:
 		case ADDA:
 		case DIV:
 		case MUL:
@@ -404,7 +419,7 @@ public class CodeGenerator {
 			if (ins.getSrc().isConst()) {
 				dlxOp = DLX.STW;
 			}
-			codeList.add(DLX.assemble(dlxOp, leftReg, 0, rightReg));
+			codeList.add(DLX.assemble(dlxOp, rightReg, leftReg, 0));
 			store(codeList, leftReg, regMap.get(ins.getTarget().getSSAVar().getVersion()));
 			break;
 		case SAVE_STATUS:
@@ -523,7 +538,7 @@ public class CodeGenerator {
 			int cached = allocator.allocateTempMemCache();
 			// at this time the reg can be used as the relative mem var
 			// location.
-			lst.add(DLX.assemble(DLX.LDW, cached, DLX.REG_FRAME, -reg));
+			lst.add(DLX.assemble(DLX.LDW, cached, DLX.REG_FRAME, -reg * 4));
 			return cached;
 		} else {
 			return reg;
@@ -532,7 +547,7 @@ public class CodeGenerator {
 
 	private void store(ArrayList<Integer> lst, int cachedReg, Integer possibleMemReg) {
 		if (allocator.isSpilled(possibleMemReg)) {
-			lst.add(DLX.assemble(DLX.STW, cachedReg, DLX.REG_FRAME, -possibleMemReg));
+			lst.add(DLX.assemble(DLX.STW, cachedReg, DLX.REG_FRAME, -possibleMemReg * 4));
 		}
 	}
 

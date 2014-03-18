@@ -2,91 +2,64 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
-title: "main17"
-color:5
-label: "17:5
-[17]"
-}
-edge: { sourcename: "main17"
-targetname: "main16"
-}
-edge: { sourcename: "main17"
-targetname: "main5"
-}
-edge: { sourcename: "main17"
-targetname: "main6"
-}
-edge: { sourcename: "main17"
-targetname: "main8"
-}
-edge: { sourcename: "main17"
-targetname: "main10"
-}
-edge: { sourcename: "main17"
-targetname: "main12"
-}
-node: {
-title: "main16"
-color:4
-label: "16:4
-[16]"
-}
-edge: { sourcename: "main16"
-targetname: "main5"
-}
-edge: { sourcename: "main16"
-targetname: "main6"
-}
-edge: { sourcename: "main16"
-targetname: "main8"
-}
-edge: { sourcename: "main16"
-targetname: "main10"
-}
-edge: { sourcename: "main16"
-targetname: "main12"
-}
-node: {
-title: "main1"
-color:1
-label: "1:1
-[1]"
-}
-node: {
 title: "main3"
 color:1
 label: "3:1
 [3]"
 }
 node: {
-title: "main5"
-color:2
-label: "5:2
-[5]"
-}
-edge: { sourcename: "main5"
-targetname: "main8"
-}
-edge: { sourcename: "main5"
-targetname: "main12"
+title: "main4"
+color:1
+label: "4:1
+[4]"
 }
 node: {
-title: "main6"
-color:2
-label: "6:2
-[6]"
+title: "main5"
+color:1
+label: "5:1
+[5]"
 }
-edge: { sourcename: "main6"
+node: {
+title: "main7"
+color:7
+label: "7:7
+[7]"
+}
+edge: { sourcename: "main7"
+targetname: "main16"
+}
+edge: { sourcename: "main7"
+targetname: "main19"
+}
+edge: { sourcename: "main7"
+targetname: "main21"
+}
+edge: { sourcename: "main7"
+targetname: "main20"
+}
+edge: { sourcename: "main7"
 targetname: "main8"
 }
-edge: { sourcename: "main6"
-targetname: "main12"
+edge: { sourcename: "main7"
+targetname: "main10"
 }
 node: {
 title: "main8"
-color:3
-label: "8:3
+color:2
+label: "8:2
 [8]"
+}
+edge: { sourcename: "main8"
+targetname: "main16"
+}
+edge: { sourcename: "main8"
+targetname: "main19"
+}
+edge: { sourcename: "main8"
+targetname: "main21"
+}
+edge: { sourcename: "main8"
+targetname: "main20"
 }
 edge: { sourcename: "main8"
 targetname: "main10"
@@ -94,19 +67,133 @@ targetname: "main10"
 edge: { sourcename: "main8"
 targetname: "main12"
 }
+edge: { sourcename: "main8"
+targetname: "main13"
+}
+edge: { sourcename: "main8"
+targetname: "main14"
+}
 node: {
 title: "main10"
-color:2
-label: "10:2
+color:1
+label: "10:1
 [10]"
+}
+edge: { sourcename: "main10"
+targetname: "main16"
+}
+edge: { sourcename: "main10"
+targetname: "main19"
+}
+edge: { sourcename: "main10"
+targetname: "main21"
+}
+edge: { sourcename: "main10"
+targetname: "main20"
 }
 edge: { sourcename: "main10"
 targetname: "main12"
 }
+edge: { sourcename: "main10"
+targetname: "main13"
+}
+edge: { sourcename: "main10"
+targetname: "main14"
+}
 node: {
 title: "main12"
-color:1
-label: "12:1
+color:7
+label: "12:7
 [12]"
+}
+edge: { sourcename: "main12"
+targetname: "main16"
+}
+edge: { sourcename: "main12"
+targetname: "main19"
+}
+edge: { sourcename: "main12"
+targetname: "main21"
+}
+edge: { sourcename: "main12"
+targetname: "main20"
+}
+node: {
+title: "main13"
+color:7
+label: "13:7
+[13]"
+}
+edge: { sourcename: "main13"
+targetname: "main16"
+}
+edge: { sourcename: "main13"
+targetname: "main19"
+}
+edge: { sourcename: "main13"
+targetname: "main21"
+}
+edge: { sourcename: "main13"
+targetname: "main20"
+}
+node: {
+title: "main14"
+color:7
+label: "14:7
+[14]"
+}
+edge: { sourcename: "main14"
+targetname: "main16"
+}
+edge: { sourcename: "main14"
+targetname: "main19"
+}
+edge: { sourcename: "main14"
+targetname: "main21"
+}
+edge: { sourcename: "main14"
+targetname: "main20"
+}
+node: {
+title: "main16"
+color:6
+label: "16:6
+[16]"
+}
+edge: { sourcename: "main16"
+targetname: "main19"
+}
+edge: { sourcename: "main16"
+targetname: "main21"
+}
+edge: { sourcename: "main16"
+targetname: "main20"
+}
+node: {
+title: "main19"
+color:5
+label: "19:5
+[19]"
+}
+edge: { sourcename: "main19"
+targetname: "main21"
+}
+edge: { sourcename: "main19"
+targetname: "main20"
+}
+node: {
+title: "main21"
+color:4
+label: "21:4
+[21]"
+}
+edge: { sourcename: "main21"
+targetname: "main20"
+}
+node: {
+title: "main20"
+color:3
+label: "20:3
+[20]"
 }
 }}

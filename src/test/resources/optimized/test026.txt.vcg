@@ -6,7 +6,7 @@ title: "0"
 label: "0
 [BLOCK:0
 1 MUL i_0 4
-2 ADD FP_0 a_0
+2 MEM_ADDRESS FP_0 a_0
 3 ADDA (1) (2)
 4 LOAD (3) 
 8 ADDA (1) (2)
@@ -27,7 +27,7 @@ label: "1
 13 ADDA (1) (2)
 14 LOAD (13) 
 15 MUL j_0 4
-16 ADD FP_0 b_0
+16 MEM_ADDRESS FP_0 b_0
 17 ADDA (15) (16)
 18 LOAD (17) 
 19 CMP (14) (18)

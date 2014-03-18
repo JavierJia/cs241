@@ -2,6 +2,90 @@ graph: {graph: {title: "main"
 manhattan_edges:yes
 smanhattan_edges:yes
 node: {
+title: "main68"
+color:2
+label: "68:2
+[68]"
+}
+edge: { sourcename: "main68"
+targetname: "main69"
+}
+node: {
+title: "main69"
+color:1
+label: "69:1
+[69]"
+}
+node: {
+title: "main70"
+color:1
+label: "70:1
+[70]"
+}
+node: {
+title: "main64"
+color:1
+label: "64:1
+[64]"
+}
+node: {
+title: "main65"
+color:1
+label: "65:1
+[65]"
+}
+node: {
+title: "main66"
+color:1
+label: "66:1
+[66]"
+}
+node: {
+title: "main67"
+color:1
+label: "67:1
+[67]"
+}
+node: {
+title: "main72"
+color:1
+label: "72:1
+[72]"
+}
+node: {
+title: "main73"
+color:1
+label: "73:1
+[73]"
+}
+node: {
+title: "main55"
+color:1
+label: "55:1
+[55]"
+}
+edge: { sourcename: "main55"
+targetname: "main53"
+}
+node: {
+title: "main54"
+color:1
+label: "54:1
+[54]"
+}
+node: {
+title: "main53"
+color:2
+label: "53:2
+[53]"
+}
+edge: { sourcename: "main53"
+targetname: "main57"
+}
+edge: { sourcename: "main53"
+targetname: "main61"
+}
+node: {
 title: "main59"
 color:1
 label: "59:1
@@ -26,22 +110,16 @@ label: "56:1
 [56]"
 }
 node: {
-title: "main63"
+title: "main62"
 color:1
-label: "63:1
-[63]"
+label: "62:1
+[62]"
 }
 node: {
 title: "main61"
 color:1
 label: "61:1
 [61]"
-}
-node: {
-title: "main60"
-color:1
-label: "60:1
-[60]"
 }
 }graph: {title: "foo"
 manhattan_edges:yes

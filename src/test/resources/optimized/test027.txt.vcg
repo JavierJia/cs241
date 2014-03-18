@@ -8,7 +8,7 @@ label: "0
 1 MUL a_0 2
 2 SUB (1) 6
 3 MUL (2) 4
-4 ADD FP_0 foo_0
+4 MEM_ADDRESS FP_0 foo_0
 5 ADDA (3) (4)
 6 LOAD (5) 
 ]"
@@ -56,7 +56,7 @@ title: "5"
 label: "5
 [BLOCK:5
 22 MUL c_6 4
-23 ADD FP_0 boo_0
+23 MEM_ADDRESS FP_0 boo_0
 24 ADDA (22) (23)
 25 STORE (24) 3
 30 BRA (3) 

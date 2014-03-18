@@ -14,22 +14,22 @@ label: "35:1
 [35]"
 }
 node: {
-title: "main49"
-color:1
-label: "49:1
-[49]"
-}
-node: {
-title: "main48"
-color:1
-label: "48:1
-[48]"
-}
-node: {
 title: "main38"
 color:1
 label: "38:1
 [38]"
+}
+node: {
+title: "main39"
+color:2
+label: "39:2
+[39]"
+}
+edge: { sourcename: "main39"
+targetname: "main41"
+}
+edge: { sourcename: "main39"
+targetname: "main45"
 }
 node: {
 title: "main36"
@@ -56,10 +56,31 @@ label: "43:1
 [43]"
 }
 node: {
-title: "main41"
+title: "main40"
 color:1
-label: "41:1
+label: "40:1
+[40]"
+}
+node: {
+title: "main41"
+color:3
+label: "41:3
 [41]"
+}
+edge: { sourcename: "main41"
+targetname: "main45"
+}
+edge: { sourcename: "main41"
+targetname: "main48"
+}
+edge: { sourcename: "main41"
+targetname: "main54"
+}
+edge: { sourcename: "main41"
+targetname: "main57"
+}
+edge: { sourcename: "main41"
+targetname: "main56"
 }
 node: {
 title: "main46"
@@ -68,22 +89,73 @@ label: "46:1
 [46]"
 }
 node: {
-title: "main47"
-color:1
-label: "47:1
-[47]"
-}
-node: {
-title: "main44"
-color:1
-label: "44:1
-[44]"
-}
-node: {
 title: "main45"
 color:1
 label: "45:1
 [45]"
+}
+node: {
+title: "main51"
+color:1
+label: "51:1
+[51]"
+}
+node: {
+title: "main50"
+color:1
+label: "50:1
+[50]"
+}
+node: {
+title: "main49"
+color:1
+label: "49:1
+[49]"
+}
+node: {
+title: "main48"
+color:1
+label: "48:1
+[48]"
+}
+node: {
+title: "main54"
+color:2
+label: "54:2
+[54]"
+}
+edge: { sourcename: "main54"
+targetname: "main56"
+}
+node: {
+title: "main53"
+color:1
+label: "53:1
+[53]"
+}
+node: {
+title: "main52"
+color:1
+label: "52:1
+[52]"
+}
+node: {
+title: "main59"
+color:1
+label: "59:1
+[59]"
+}
+node: {
+title: "main57"
+color:1
+label: "57:1
+[57]"
+}
+node: {
+title: "main56"
+color:1
+label: "56:1
+[56]"
 }
 }graph: {title: "boo"
 manhattan_edges:yes

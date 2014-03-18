@@ -5,22 +5,33 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-56 SAVE_STATUS 
-57 PUSH 0 
-58 PUSH 0 
-59 CALL bar_4 
-60 SAVE_STATUS 
-61 CALL foo_0 
-63 WRITE c_61 
+53 MEM_ADDRESS FP_0 x_0
+54 STORE (53) 0
+55 MEM_ADDRESS FP_0 y_0
+56 STORE (55) 0
+57 MEM_ADDRESS FP_0 z_0
+58 STORE (57) 0
+59 SAVE_STATUS 
+61 LOAD (57) 
+62 PUSH (61) 
+64 LOAD (53) 
+65 PUSH (64) 
+66 CALL bar_4 
+67 SAVE_STATUS 
+68 CALL foo_0 
+69 MEM_ADDRESS FP_0 c_0
+70 STORE (69) (68)
+72 LOAD (69) 
+73 WRITE (72) 
 ]"
 }
 edge: { sourcename: "11"
 targetname: "4"
-label: "j59"
+label: "j66"
 color:red}
 edge: { sourcename: "11"
 targetname: "0"
-label: "j61"
+label: "j68"
 color:red}
 node: {
 title: "4"
@@ -107,14 +118,14 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-3 ADD FP_0 y_0
+3 MEM_ADDRESS FP_0 y_0
 4 LOAD (3) 
 5 ADD (4) 2
 7 STORE (3) (5)
-8 ADD FP_0 x_0
+8 MEM_ADDRESS FP_0 x_0
 9 LOAD (8) 
 10 ADD (9) 2
-11 ADD FP_0 z_0
+11 MEM_ADDRESS FP_0 z_0
 12 STORE (11) (10)
 14 LOAD (3) 
 16 LOAD (11) 
@@ -141,7 +152,7 @@ label: "8
 32 MUL i_51 16
 33 MUL j_41 4
 34 ADD (32) (33)
-35 ADD FP_0 b_0
+35 MEM_ADDRESS FP_0 b_0
 36 ADDA (34) (35)
 37 STORE (36) j_41
 38 ADD j_41 1
@@ -157,7 +168,7 @@ title: "9"
 label: "9
 [BLOCK:9
 43 MUL i_51 4
-44 ADD FP_0 a_0
+44 MEM_ADDRESS FP_0 a_0
 45 ADDA (43) (44)
 46 STORE (45) i_51
 47 ADD i_51 1

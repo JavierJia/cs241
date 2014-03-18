@@ -5,7 +5,7 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-23 ADD FP_0 a_0
+23 MEM_ADDRESS FP_0 a_0
 24 ADDA (23) 44
 25 STORE (24) 1
 27 ADDA (23) 40
@@ -69,17 +69,20 @@ label: "5
 [BLOCK:5
 49 ADDA (23) 36
 50 LOAD (49) 
-52 WRITE b_50 
+51 MEM_ADDRESS FP_0 b_0
+52 STORE (51) (50)
+54 LOAD (51) 
+55 WRITE (54) 
 ]"
 }
 node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 WRITE CONST_55 
-2 ADD FP_0 b_0
+1 WRITE 55 
+2 MEM_ADDRESS FP_0 b_0
 3 STORE (2) 2
-4 ADD FP_0 c_0
+4 MEM_ADDRESS FP_0 c_0
 5 STORE (4) 3
 7 LOAD (2) 
 9 LOAD (4) 

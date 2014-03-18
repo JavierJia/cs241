@@ -18,11 +18,11 @@ node: {
 title: "1"
 label: "1
 [BLOCK:1
-18 PHI b_2 b_15
-19 PHI c_3 c_8
-20 PHI a_1 a_6
-4 CMP a_20 b_18
-17 BGE (4) (6)
+22 PHI b_2 b_19
+23 PHI c_3 c_8
+24 PHI a_1 a_6
+4 CMP a_24 b_22
+21 BGE (4) (6)
 ]"
 }
 edge: { sourcename: "1"
@@ -37,11 +37,13 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-5 ADD a_20 1
+5 ADD a_24 1
 6 MOVE a_6 (5)
-7 ADD c_19 1
+7 ADD c_23 1
 8 MOVE c_8 (7)
-9 WRITE a_6 
+9 MEM_ADDRESS FP_0 a_0
+10 LOAD (9) 
+11 WRITE (10) 
 ]"
 }
 edge: { sourcename: "2"
@@ -52,18 +54,24 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-22 WRITE a_20 
-23 WRITE b_18 
-24 WRITE c_19 
+26 MEM_ADDRESS FP_0 a_0
+27 LOAD (26) 
+28 WRITE (27) 
+29 MEM_ADDRESS FP_0 b_0
+30 LOAD (29) 
+31 WRITE (30) 
+32 MEM_ADDRESS FP_0 c_0
+33 LOAD (32) 
+34 WRITE (33) 
 ]"
 }
 node: {
 title: "3"
 label: "3
 [BLOCK:3
-15 PHI b_18 b_13
-10 CMP b_15 c_8
-14 BGE (10) (5)
+19 PHI b_22 b_17
+12 CMP b_19 c_8
+18 BGE (12) (5)
 ]"
 }
 edge: { sourcename: "3"
@@ -78,10 +86,12 @@ node: {
 title: "4"
 label: "4
 [BLOCK:4
-11 WRITE c_8 
-12 ADD b_15 1
-13 MOVE b_13 (12)
-16 BRA (3) 
+13 MEM_ADDRESS FP_0 c_0
+14 LOAD (13) 
+15 WRITE (14) 
+16 ADD b_19 1
+17 MOVE b_17 (16)
+20 BRA (3) 
 ]"
 }
 edge: { sourcename: "4"
@@ -92,7 +102,7 @@ node: {
 title: "5"
 label: "5
 [BLOCK:5
-21 BRA (1) 
+25 BRA (1) 
 ]"
 }
 edge: { sourcename: "5"

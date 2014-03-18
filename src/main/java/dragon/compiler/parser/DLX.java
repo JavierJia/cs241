@@ -39,11 +39,15 @@ public class DLX {
 		try {
 
 			execloop: while (true) {
+				
 				R[0] = 0;
 				disassem(M[PC]); // initializes op, a, b, c
 
-				if (debug) {
+				if (debug ) {
 					System.out.println(PC + ":" + disassemble(M[PC]));
+				}
+				if (PC == 58){
+					System.out.println("here it is");
 				}
 				int nextPC = PC + 1;
 				if (format == 2) {
@@ -246,9 +250,17 @@ public class DLX {
 			}
 
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-			System.out.println("failed at " + PC * 4 + ",   " + disassemble(M[PC]));
+			System.out.println("failed at " + PC + ",   " + disassemble(M[PC]));
+			printStatus();
 		}
 
+	}
+
+	static void printStatus() {
+		System.out.println("R[STACK]:" + R[REG_STACK]);
+		System.out.println("R[a]:" + R[a]);
+		System.out.println("R[b]:" + R[b]);
+		System.out.println("c:" + c + " R[c]:" + R[c]);
 	}
 
 	// Mnemonic-to-Opcode mapping

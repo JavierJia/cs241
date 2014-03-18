@@ -90,8 +90,12 @@ title: "6"
 label: "6
 [BLOCK:6
 16 PHI a_14 a_10
-18 WRITE a_16 
-19 WRITE b_9 
+18 MEM_ADDRESS FP_0 a_0
+19 LOAD (18) 
+20 WRITE (19) 
+21 MEM_ADDRESS FP_0 b_0
+22 LOAD (21) 
+23 WRITE (22) 
 ]"
 }
 }

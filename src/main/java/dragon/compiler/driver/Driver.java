@@ -100,6 +100,8 @@ public class Driver {
 		Integer[] codes = linker.linkThem();
 		printCode(path, codes);
 
+		printFinalGraph(mainBlock, path);
+
 		if (opt.runDLX) {
 			DLX.load(codes);
 			try {
@@ -152,4 +154,12 @@ public class Driver {
 		writer.print(GraphPrinter.printCFGBody(mainBlock, "main", true));
 		writer.close();
 	}
+
+	private static void printFinalGraph(Block mainBlock, String path) throws FileNotFoundException,
+			UnsupportedEncodingException {
+		PrintWriter writer = new PrintWriter(path + ".final.vcg", "UTF-8");
+		writer.print(GraphPrinter.printCFGBody(mainBlock, "main", true));
+		writer.close();
+	}
+
 }
