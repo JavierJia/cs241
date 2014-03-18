@@ -275,6 +275,12 @@ public class Interpretor {
 			throw new IllegalArgumentException("assign value kind is not valid");
 		}
 		targetBlock.updateVarVersion(assignTarget.getVariable());
+		// change MOVE target version
+		if (targetBlock.getLastInstruction().getOP() == OP.MOVE) {
+			targetBlock.getLastInstruction().getTarget().getSSAVar()
+					.setVersion(Instruction.getPC());
+		}
+
 		return new CFGResult(targetBlock);
 	}
 

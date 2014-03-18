@@ -75,7 +75,7 @@ label: "5
 48 ADD FP_0 a_0
 49 ADDA (48) 36
 50 LOAD (49) 
-51 MOVE b_0 (50)
+51 MOVE b_51 (50)
 52 WRITE b_51 
 ]"
 }

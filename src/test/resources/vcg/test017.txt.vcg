@@ -5,10 +5,10 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
-2 MOVE b_0 a_1
+1 MOVE a_1 1
+2 MOVE b_2 a_1
 3 MUL b_2 4
-4 MOVE c_0 (3)
+4 MOVE c_4 (3)
 5 CMP c_4 b_2
 8 BLE (5) (2)
 ]"
@@ -26,7 +26,7 @@ title: "1"
 label: "1
 [BLOCK:1
 6 ADD b_2 2
-7 MOVE d_0 (6)
+7 MOVE d_7 (6)
 10 BRA (3) 
 ]"
 }
@@ -50,7 +50,7 @@ label: "3
 [BLOCK:3
 9 PHI d_7 d_0
 11 ADD a_1 b_2
-12 MOVE e_0 (11)
+12 MOVE e_12 (11)
 ]"
 }
 }

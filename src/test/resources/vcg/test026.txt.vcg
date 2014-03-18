@@ -9,12 +9,12 @@ label: "0
 2 ADD FP_0 a_0
 3 ADDA (1) (2)
 4 LOAD (3) 
-5 MOVE x_0 (4)
+5 MOVE x_5 (4)
 6 MUL i_0 4
 7 ADD FP_0 a_0
 8 ADDA (6) (7)
 9 LOAD (8) 
-10 MOVE k_0 (9)
+10 MOVE k_10 (9)
 ]"
 }
 edge: { sourcename: "0"
@@ -56,12 +56,12 @@ label: "2
 21 ADD FP_0 a_0
 22 ADDA (20) (21)
 23 LOAD (22) 
-24 MOVE x_47 (23)
+24 MOVE x_24 (23)
 25 MUL j_0 4
 26 ADD FP_0 a_0
 27 ADDA (25) (26)
 28 LOAD (27) 
-29 MOVE y_46 (28)
+29 MOVE y_29 (28)
 30 MUL k_10 4
 31 ADD FP_0 a_0
 32 ADDA (30) (31)
@@ -70,12 +70,12 @@ label: "2
 35 ADD FP_0 b_0
 36 ADDA (34) (35)
 37 LOAD (36) 
-38 MOVE z_45 (37)
+38 MOVE z_38 (37)
 39 MUL j_0 4
 40 ADD FP_0 a_0
 41 ADDA (39) (40)
 42 LOAD (41) 
-43 MOVE z_38 (42)
+43 MOVE z_43 (42)
 48 BRA (1) 
 ]"
 }
@@ -91,7 +91,7 @@ label: "3
 50 ADD FP_0 a_0
 51 ADDA (49) (50)
 52 LOAD (51) 
-53 MOVE w_0 (52)
+53 MOVE w_53 (52)
 ]"
 }
 }

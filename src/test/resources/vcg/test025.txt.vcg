@@ -6,12 +6,12 @@ title: "0"
 label: "0
 [BLOCK:0
 1 ADD b_0 c_0
-2 MOVE a_0 (1)
+2 MOVE a_2 (1)
 3 ADD b_0 c_0
-4 MOVE d_0 (3)
+4 MOVE d_4 (3)
 5 ADD c_0 b_0
 6 ADD (5) d_4
-7 MOVE e_0 (6)
+7 MOVE e_7 (6)
 8 CMP a_2 d_4
 25 BEQ (8) (2)
 ]"
@@ -30,16 +30,16 @@ label: "1
 [BLOCK:1
 9 ADD c_0 b_0
 10 ADD (9) d_4
-11 MOVE e_7 (10)
+11 MOVE e_11 (10)
 12 MUL a_2 d_4
-13 MOVE f_0 (12)
+13 MOVE f_13 (12)
 14 MUL d_4 a_2
 15 ADD (14) 4
-16 MOVE g_0 (15)
-17 MOVE b_0 5
+16 MOVE g_16 (15)
+17 MOVE b_17 5
 18 ADD c_0 b_17
 19 ADD (18) d_4
-20 MOVE e_11 (19)
+20 MOVE e_20 (19)
 30 BRA (3) 
 ]"
 }
@@ -52,9 +52,9 @@ title: "2"
 label: "2
 [BLOCK:2
 21 DIV a_2 d_4
-22 MOVE f_0 (21)
+22 MOVE f_22 (21)
 23 DIV d_4 a_2
-24 MOVE g_0 (23)
+24 MOVE g_24 (23)
 ]"
 }
 edge: { sourcename: "2"
@@ -70,9 +70,9 @@ label: "3
 28 PHI e_20 e_7
 29 PHI b_17 b_0
 31 MUL a_2 d_4
-32 MOVE f_26 (31)
+32 MOVE f_32 (31)
 33 DIV d_4 a_2
-34 MOVE g_27 (33)
+34 MOVE g_34 (33)
 ]"
 }
 }

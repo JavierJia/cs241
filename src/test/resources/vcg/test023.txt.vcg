@@ -5,11 +5,11 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
-2 MOVE b_0 2
-3 MOVE c_0 3
-4 MOVE d_0 4
-5 MOVE e_0 5
+1 MOVE a_1 1
+2 MOVE b_2 2
+3 MOVE c_3 3
+4 MOVE d_4 4
+5 MOVE e_5 5
 ]"
 }
 edge: { sourcename: "0"
@@ -60,9 +60,9 @@ label: "6
 [BLOCK:6
 27 SUB c_3 a_25
 28 ADD (27) b_2
-29 MOVE e_5 (28)
+29 MOVE e_29 (28)
 30 ADD a_25 b_2
-31 MOVE a_25 (30)
+31 MOVE a_31 (30)
 ]"
 }
 node: {
@@ -71,9 +71,9 @@ label: "3
 [BLOCK:3
 12 DIV a_25 c_3
 13 MUL (12) d_24
-14 MOVE a_25 (13)
+14 MOVE a_14 (13)
 15 SUB d_24 1
-16 MOVE d_24 (15)
+16 MOVE d_16 (15)
 22 BRA (5) 
 ]"
 }
@@ -86,7 +86,7 @@ title: "4"
 label: "4
 [BLOCK:4
 17 ADD a_25 b_2
-18 MOVE d_24 (17)
+18 MOVE d_18 (17)
 ]"
 }
 edge: { sourcename: "4"

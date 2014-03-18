@@ -5,7 +5,7 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
+1 MOVE a_1 1
 ]"
 }
 edge: { sourcename: "0"
@@ -35,9 +35,9 @@ title: "2"
 label: "2
 [BLOCK:2
 3 ADD a_9 1
-4 MOVE b_8 (3)
+4 MOVE b_4 (3)
 5 MUL a_9 2
-6 MOVE a_9 (5)
+6 MOVE a_6 (5)
 10 BRA (1) 
 ]"
 }
@@ -49,7 +49,7 @@ node: {
 title: "3"
 label: "3
 [BLOCK:3
-11 MOVE b_8 a_9
+11 MOVE b_11 a_9
 ]"
 }
 }

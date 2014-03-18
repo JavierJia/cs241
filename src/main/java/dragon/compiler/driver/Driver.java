@@ -27,8 +27,9 @@ public class Driver {
 			e.printStackTrace();
 			return;
 		} catch (SyntaxFormatException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(); // should be removed finally.
+			System.err.println("SyntaxError:" + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Some other error happend: " + e.getMessage());
 		}
 	}
 

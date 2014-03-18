@@ -5,11 +5,11 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE b_0 a_0
-2 MOVE c_0 b_1
-3 MOVE d_0 c_2
+1 MOVE b_1 a_0
+2 MOVE c_2 b_1
+3 MOVE d_3 c_2
 4 ADD d_3 1
-5 MOVE d_3 (4)
+5 MOVE d_5 (4)
 ]"
 }
 }

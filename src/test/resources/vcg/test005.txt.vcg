@@ -5,7 +5,7 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
+1 MOVE a_1 1
 2 WRITE a_1 
 ]"
 }

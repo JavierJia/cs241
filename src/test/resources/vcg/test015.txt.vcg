@@ -6,9 +6,9 @@ title: "15"
 label: "15
 [BLOCK:15
 45 ADD too_0 3
-46 MOVE foo_0 (45)
+46 MOVE foo_46 (45)
 47 ADD foo_46 6
-48 MOVE af_0 (47)
+48 MOVE af_48 (47)
 ]"
 }
 }

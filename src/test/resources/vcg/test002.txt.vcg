@@ -5,16 +5,16 @@ node: {
 title: "11"
 label: "11
 [BLOCK:11
-53 MOVE x_0 0
-54 MOVE y_0 0
-55 MOVE z_0 0
+53 MOVE x_53 0
+54 MOVE y_54 0
+55 MOVE z_55 0
 56 SAVE_STATUS 
 57 PUSH z_55 
 58 PUSH x_53 
 59 CALL bar_4 
 60 SAVE_STATUS 
 61 CALL foo_0 
-62 MOVE c_0 (61)
+62 MOVE c_62 (61)
 63 WRITE c_62 
 ]"
 }
@@ -32,8 +32,8 @@ label: "4
 [BLOCK:4
 26 POP x_0 
 27 POP z_0 
-28 MOVE i_0 0
-29 MOVE j_0 0
+28 MOVE i_28 0
+29 MOVE j_29 0
 ]"
 }
 edge: { sourcename: "4"
@@ -44,7 +44,7 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE i_0 0
+1 MOVE i_1 0
 ]"
 }
 edge: { sourcename: "0"
@@ -129,9 +129,9 @@ label: "2
 15 ADD FP_0 z_0
 16 LOAD (15) 
 17 ADD (14) (16)
-18 MOVE d_22 (17)
+18 MOVE d_18 (17)
 19 ADD i_23 1
-20 MOVE i_23 (19)
+20 MOVE i_20 (19)
 24 BRA (1) 
 ]"
 }
@@ -157,7 +157,7 @@ label: "8
 36 ADDA (34) (35)
 37 STORE (36) j_41
 38 ADD j_41 1
-39 MOVE j_41 (38)
+39 MOVE j_39 (38)
 42 BRA (7) 
 ]"
 }
@@ -174,7 +174,7 @@ label: "9
 45 ADDA (43) (44)
 46 STORE (45) i_51
 47 ADD i_51 1
-48 MOVE i_51 (47)
+48 MOVE i_48 (47)
 52 BRA (5) 
 ]"
 }

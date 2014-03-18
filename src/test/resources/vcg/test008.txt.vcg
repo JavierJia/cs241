@@ -5,8 +5,8 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE i_0 0
-2 MOVE j_0 0
+1 MOVE i_1 0
+2 MOVE j_2 0
 ]"
 }
 edge: { sourcename: "0"
@@ -35,7 +35,7 @@ title: "2"
 label: "2
 [BLOCK:2
 4 ADD j_7 1
-5 MOVE j_7 (4)
+5 MOVE j_5 (4)
 8 BRA (1) 
 ]"
 }

@@ -5,8 +5,8 @@ node: {
 title: "24"
 label: "24
 [BLOCK:24
-190 MOVE ColCount_0 200
-191 MOVE RowCount_0 150
+190 MOVE ColCount_190 200
+191 MOVE RowCount_191 150
 192 SAVE_STATUS 
 193 CALL ClearData_2 
 194 ADD FP_0 Data_0
@@ -24,7 +24,7 @@ label: "24
 206 ADD FP_0 Data_0
 207 ADDA (206) 800
 208 STORE (207) 1
-209 MOVE Rule_0 110
+209 MOVE Rule_209 110
 210 SAVE_STATUS 
 211 CALL InitRuleBin_1 
 212 SAVE_STATUS 
@@ -47,7 +47,7 @@ node: {
 title: "2"
 label: "2
 [BLOCK:2
-77 MOVE i_0 0
+77 MOVE i_77 0
 ]"
 }
 edge: { sourcename: "2"
@@ -60,63 +60,63 @@ label: "1
 [BLOCK:1
 18 ADD FP_0 Rule_0
 19 LOAD (18) 
-20 MOVE Bits_0 (19)
+20 MOVE Bits_20 (19)
 21 SAVE_STATUS 
 22 PUSH Bits_20 
 23 PUSH 0 
 24 PUSH 0 
 25 PUSH 0 
 26 CALL SetNextBit_0 
-27 MOVE Bits_20 (26)
+27 MOVE Bits_27 (26)
 28 SAVE_STATUS 
 29 PUSH Bits_27 
 30 PUSH 1 
 31 PUSH 0 
 32 PUSH 0 
 33 CALL SetNextBit_0 
-34 MOVE Bits_27 (33)
+34 MOVE Bits_34 (33)
 35 SAVE_STATUS 
 36 PUSH Bits_34 
 37 PUSH 0 
 38 PUSH 1 
 39 PUSH 0 
 40 CALL SetNextBit_0 
-41 MOVE Bits_34 (40)
+41 MOVE Bits_41 (40)
 42 SAVE_STATUS 
 43 PUSH Bits_41 
 44 PUSH 1 
 45 PUSH 1 
 46 PUSH 0 
 47 CALL SetNextBit_0 
-48 MOVE Bits_41 (47)
+48 MOVE Bits_48 (47)
 49 SAVE_STATUS 
 50 PUSH Bits_48 
 51 PUSH 0 
 52 PUSH 0 
 53 PUSH 1 
 54 CALL SetNextBit_0 
-55 MOVE Bits_48 (54)
+55 MOVE Bits_55 (54)
 56 SAVE_STATUS 
 57 PUSH Bits_55 
 58 PUSH 1 
 59 PUSH 0 
 60 PUSH 1 
 61 CALL SetNextBit_0 
-62 MOVE Bits_55 (61)
+62 MOVE Bits_62 (61)
 63 SAVE_STATUS 
 64 PUSH Bits_62 
 65 PUSH 0 
 66 PUSH 1 
 67 PUSH 1 
 68 CALL SetNextBit_0 
-69 MOVE Bits_62 (68)
+69 MOVE Bits_69 (68)
 70 SAVE_STATUS 
 71 PUSH Bits_69 
 72 PUSH 1 
 73 PUSH 1 
 74 PUSH 1 
 75 CALL SetNextBit_0 
-76 MOVE Bits_69 (75)
+76 MOVE Bits_76 (75)
 ]"
 }
 edge: { sourcename: "1"
@@ -155,7 +155,7 @@ node: {
 title: "20"
 label: "20
 [BLOCK:20
-177 MOVE i_0 0
+177 MOVE i_177 0
 ]"
 }
 edge: { sourcename: "20"
@@ -233,7 +233,7 @@ label: "4
 84 ADDA (82) (83)
 85 STORE (84) 0
 86 ADD i_89 1
-87 MOVE i_89 (86)
+87 MOVE i_87 (86)
 90 BRA (3) 
 ]"
 }
@@ -256,7 +256,7 @@ label: "22
 183 SAVE_STATUS 
 184 CALL CalcNext_16 
 185 ADD i_188 1
-186 MOVE i_188 (185)
+186 MOVE i_186 (185)
 189 BRA (21) 
 ]"
 }
@@ -282,7 +282,7 @@ node: {
 title: "6"
 label: "6
 [BLOCK:6
-91 MOVE i_0 1
+91 MOVE i_91 1
 ]"
 }
 edge: { sourcename: "6"
@@ -315,12 +315,12 @@ label: "16
 137 ADD FP_0 Data_0
 138 ADDA (137) 0
 139 LOAD (138) 
-140 MOVE Last_0 (139)
+140 MOVE Last_140 (139)
 141 ADD FP_0 Data_0
 142 ADDA (141) 4
 143 LOAD (142) 
-144 MOVE Akt_0 (143)
-145 MOVE i_0 1
+144 MOVE Akt_144 (143)
+145 MOVE i_145 1
 ]"
 }
 edge: { sourcename: "16"
@@ -404,7 +404,7 @@ label: "18
 151 ADD FP_0 Data_0
 152 ADDA (150) (151)
 153 LOAD (152) 
-154 MOVE Next_172 (153)
+154 MOVE Next_154 (153)
 155 MUL Last_173 16
 156 MUL Akt_174 8
 157 ADD (155) (156)
@@ -417,10 +417,10 @@ label: "18
 164 ADD FP_0 Data_0
 165 ADDA (163) (164)
 166 STORE (165) (162)
-167 MOVE Last_173 Akt_174
-168 MOVE Akt_174 Next_154
+167 MOVE Last_167 Akt_174
+168 MOVE Akt_168 Next_154
 169 ADD i_175 1
-170 MOVE i_175 (169)
+170 MOVE i_170 (169)
 176 BRA (17) 
 ]"
 }
@@ -471,7 +471,7 @@ title: "14"
 label: "14
 [BLOCK:14
 112 ADD i_115 1
-113 MOVE i_115 (112)
+113 MOVE i_113 (112)
 116 BRA (7) 
 ]"
 }

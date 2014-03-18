@@ -5,9 +5,9 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
-2 MOVE b_0 2
-3 MOVE c_0 3
+1 MOVE a_1 1
+2 MOVE b_2 2
+3 MOVE c_3 3
 ]"
 }
 edge: { sourcename: "0"
@@ -38,9 +38,9 @@ title: "2"
 label: "2
 [BLOCK:2
 5 ADD a_20 1
-6 MOVE a_20 (5)
+6 MOVE a_6 (5)
 7 ADD c_19 1
-8 MOVE c_19 (7)
+8 MOVE c_8 (7)
 9 WRITE a_6 
 ]"
 }
@@ -80,7 +80,7 @@ label: "4
 [BLOCK:4
 11 WRITE c_8 
 12 ADD b_15 1
-13 MOVE b_15 (12)
+13 MOVE b_13 (12)
 16 BRA (3) 
 ]"
 }

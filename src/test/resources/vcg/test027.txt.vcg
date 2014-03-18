@@ -11,7 +11,7 @@ label: "0
 4 ADD FP_0 foo_0
 5 ADDA (3) (4)
 6 LOAD (5) 
-7 MOVE c_0 (6)
+7 MOVE c_7 (6)
 ]"
 }
 edge: { sourcename: "0"
@@ -28,7 +28,7 @@ label: "2
 11 ADD FP_0 foo_0
 12 ADDA (10) (11)
 13 LOAD (12) 
-14 MOVE b_0 (13)
+14 MOVE b_14 (13)
 ]"
 }
 edge: { sourcename: "2"
@@ -82,7 +82,7 @@ label: "7
 34 ADD FP_0 foo_0
 35 ADDA (33) (34)
 36 LOAD (35) 
-37 MOVE c_7 (36)
+37 MOVE c_37 (36)
 38 BRA (2) 
 ]"
 }

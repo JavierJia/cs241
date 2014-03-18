@@ -17,14 +17,14 @@ node: {
 title: "0"
 label: "0
 [BLOCK:0
-1 MOVE a_0 1
-2 MOVE b_0 2
-3 MOVE c_0 3
-4 MOVE d_0 4
-5 MOVE e_0 5
-6 MOVE f_0 6
-7 MOVE g_0 7
-8 MOVE h_0 8
+1 MOVE a_1 1
+2 MOVE b_2 2
+3 MOVE c_3 3
+4 MOVE d_4 4
+5 MOVE e_5 5
+6 MOVE f_6 6
+7 MOVE g_7 7
+8 MOVE h_8 8
 9 CMP a_1 b_2
 54 BGE (9) (8)
 ]"
@@ -42,9 +42,9 @@ title: "1"
 label: "1
 [BLOCK:1
 10 ADD a_1 1
-11 MOVE a_1 (10)
+11 MOVE a_11 (10)
 12 ADD e_5 1
-13 MOVE e_5 (12)
+13 MOVE e_13 (12)
 14 CMP b_2 c_3
 23 BGE (14) (6)
 ]"
@@ -62,9 +62,9 @@ title: "8"
 label: "8
 [BLOCK:8
 28 SUB b_2 1
-29 MOVE b_2 (28)
+29 MOVE b_29 (28)
 30 ADD f_6 1
-31 MOVE f_6 (30)
+31 MOVE f_31 (30)
 32 CMP b_29 c_3
 48 BGE (32) (13)
 ]"
@@ -82,7 +82,7 @@ title: "2"
 label: "2
 [BLOCK:2
 15 MUL c_3 3
-16 MOVE c_3 (15)
+16 MOVE c_16 (15)
 ]"
 }
 edge: { sourcename: "2"
@@ -104,7 +104,7 @@ title: "9"
 label: "9
 [BLOCK:9
 33 MUL c_3 3
-34 MOVE c_3 (33)
+34 MOVE c_34 (33)
 ]"
 }
 edge: { sourcename: "9"
@@ -116,9 +116,9 @@ title: "13"
 label: "13
 [BLOCK:13
 44 MUL c_3 4
-45 MOVE c_3 (44)
+45 MOVE c_45 (44)
 46 ADD d_4 1
-47 MOVE d_4 (46)
+47 MOVE d_47 (46)
 ]"
 }
 edge: { sourcename: "13"
@@ -148,7 +148,7 @@ label: "7
 [BLOCK:7
 24 PHI c_16 c_3
 25 PHI a_21 a_11
-27 MOVE g_7 9
+27 MOVE g_27 9
 63 BRA (15) 
 ]"
 }
@@ -181,7 +181,7 @@ label: "14
 49 PHI d_4 d_47
 50 PHI b_41 b_29
 51 PHI c_42 c_45
-53 MOVE h_8 425
+53 MOVE h_53 425
 ]"
 }
 edge: { sourcename: "14"
@@ -193,7 +193,7 @@ title: "4"
 label: "4
 [BLOCK:4
 18 ADD a_21 1
-19 MOVE a_21 (18)
+19 MOVE a_19 (18)
 22 BRA (3) 
 ]"
 }
@@ -238,9 +238,9 @@ title: "11"
 label: "11
 [BLOCK:11
 36 ADD b_41 1
-37 MOVE b_41 (36)
+37 MOVE b_37 (36)
 38 SUB c_42 1
-39 MOVE c_42 (38)
+39 MOVE c_39 (38)
 43 BRA (10) 
 ]"
 }
