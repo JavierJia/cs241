@@ -279,6 +279,10 @@ public class Block {
 		instructions.add(new SSAInstruction(op, ssa));
 	}
 
+	public void putCode(OP return1, int constValue) {
+		instructions.add(new SSAInstruction(return1, constValue));
+	}
+
 	public void putCode(OP op) {
 		instructions.add(new SSAInstruction(op));
 	}
@@ -363,7 +367,7 @@ public class Block {
 	}
 
 	public void putOutputFuncCode(int constValue) {
-		instructions.add(new SSAInstruction(OP.WRITE, new SSAVar("CONST", constValue)));
+		instructions.add(new SSAInstruction(OP.WRITE, constValue));
 	}
 
 	public void putOutputFuncCode(Variable variable) {
@@ -913,4 +917,5 @@ public class Block {
 			instructions.remove(instructions.size() - 1);
 		}
 	}
+
 }

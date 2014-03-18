@@ -81,7 +81,7 @@
         </g>
       </g>
     </g>
-    <g id="y.node.11">
+    <g id="y.node.9">
       <g fill="rgb(170,30,30)" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke="rgb(170,30,30)">
         <circle r="10" cx="125" cy="562.3906" stroke="none"/>
       </g>
@@ -90,7 +90,7 @@
         <circle fill="none" r="10" cx="125" cy="562.3906"/>
       </g>
     </g>
-    <g id="y.node.12">
+    <g id="y.node.10">
       <g fill="rgb(170,30,30)" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke="rgb(170,30,30)">
         <circle r="10" cx="83" cy="899.9844" stroke="none"/>
       </g>
@@ -147,7 +147,7 @@
         </g>
       </g>
     </g>
-    <g id="y.node.9">
+    <g id="y.node.11">
       <g fill="rgb(170,30,30)" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke="rgb(170,30,30)">
         <circle r="10" cx="165.25" cy="186.7969" stroke="none"/>
       </g>
@@ -156,7 +156,7 @@
         <circle fill="none" r="10" cx="165.25" cy="186.7969"/>
       </g>
     </g>
-    <g id="y.node.10">
+    <g id="y.node.12">
       <g fill="rgb(170,30,30)" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke="rgb(170,30,30)">
         <circle r="10" cx="146.5" cy="1113.7812" stroke="none"/>
       </g>
@@ -262,28 +262,6 @@
     </g>
     <g id="y.edge.6">
       <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
-        <path fill="none" d="M184.5 236.7578 L184.5 216.7969 L165.25 216.7969 L165.25 204.7969"/>
-        <path d="M165.25 196.7969 L160.25 208.7969 L165.25 205.7969 L170.25 208.7969 Z" stroke="none"/>
-      </g>
-      <g>
-        <g stroke-miterlimit="1.45" font-family="sans-serif" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
-          <text xml:space="preserve" x="188.5" y="226.7695" stroke="none">2</text>
-        </g>
-      </g>
-    </g>
-    <g id="y.edge.7">
-      <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
-        <path fill="none" d="M146.5 1103.7812 L146.5 1071.8203"/>
-        <path d="M146.5 1063.8203 L141.5 1075.8203 L146.5 1072.8203 L151.5 1075.8203 Z" stroke="none"/>
-      </g>
-      <g>
-        <g stroke-miterlimit="1.45" font-family="sans-serif" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
-          <text xml:space="preserve" x="150.5" y="1089.125" stroke="none">2</text>
-        </g>
-      </g>
-    </g>
-    <g id="y.edge.8">
-      <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
         <path fill="none" d="M145 612.3516 L145 592.3906 L125 592.3906 L125 580.3906"/>
         <path d="M125 572.3906 L120 584.3906 L125 581.3906 L130 584.3906 Z" stroke="none"/>
       </g>
@@ -293,7 +271,7 @@
         </g>
       </g>
     </g>
-    <g id="y.edge.9">
+    <g id="y.edge.7">
       <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
         <path fill="none" d="M83 889.9844 L83 858.0234"/>
         <path d="M83 850.0234 L78 862.0234 L83 859.0234 L88 862.0234 Z" stroke="none"/>
@@ -301,6 +279,28 @@
       <g>
         <g stroke-miterlimit="1.45" font-family="sans-serif" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
           <text xml:space="preserve" x="87" y="875.3281" stroke="none">4</text>
+        </g>
+      </g>
+    </g>
+    <g id="y.edge.8">
+      <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
+        <path fill="none" d="M184.5 236.7578 L184.5 216.7969 L165.25 216.7969 L165.25 204.7969"/>
+        <path d="M165.25 196.7969 L160.25 208.7969 L165.25 205.7969 L170.25 208.7969 Z" stroke="none"/>
+      </g>
+      <g>
+        <g stroke-miterlimit="1.45" font-family="sans-serif" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
+          <text xml:space="preserve" x="188.5" y="226.7695" stroke="none">2</text>
+        </g>
+      </g>
+    </g>
+    <g id="y.edge.9">
+      <g stroke-miterlimit="1.45" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
+        <path fill="none" d="M146.5 1103.7812 L146.5 1071.8203"/>
+        <path d="M146.5 1063.8203 L141.5 1075.8203 L146.5 1072.8203 L151.5 1075.8203 Z" stroke="none"/>
+      </g>
+      <g>
+        <g stroke-miterlimit="1.45" font-family="sans-serif" transform="matrix(0.9231,0,0,0.9231,9.2308,47.0769)" stroke-linecap="butt">
+          <text xml:space="preserve" x="150.5" y="1089.125" stroke="none">2</text>
         </g>
       </g>
     </g>

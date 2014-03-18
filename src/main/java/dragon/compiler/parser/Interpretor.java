@@ -339,7 +339,7 @@ public class Interpretor {
 
 	public CFGResult computeReturn(Block lastBlock, ArithmeticResult ret) {
 		if (ret.getKind() == Kind.CONST) {
-			lastBlock.putCode(OP.RETURN, new SSAVar("CONST", ret.getConstValue()));
+			lastBlock.putCode(OP.RETURN, ret.getConstValue());
 		} else if (ret.getKind() == Kind.VAR) {
 			lastBlock.putCode(OP.RETURN, ret.getVariable());
 		} else {
